@@ -3,7 +3,7 @@ package Catan;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// commentaar
 		System.out.println("hello world2");
 	}
 
