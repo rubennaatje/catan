@@ -31,7 +31,7 @@ public class Main {
             @Override
             protected Void doInBackground() throws Exception {
                 for (int i = 0; i < 100; i++) {
-                    Thread.sleep(50);// Simulate loading
+                    Thread.sleep(20);// Simulate loading
                     publish(i);// Notify progress
                 }
                 return null;
@@ -73,6 +73,8 @@ public class Main {
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+        progress.setStringPainted(true);
+        progress.setForeground(Color.RED);
     }
 
     protected void showFrame() {
