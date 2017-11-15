@@ -1,4 +1,4 @@
-package Catan;
+package controller;
 
 public class Main {
 
