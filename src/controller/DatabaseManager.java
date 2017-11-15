@@ -7,15 +7,16 @@ import java.sql.Statement;
 
 public final class DatabaseManager {
 	
-	private final static String url = "jdbc:mysql://databases.aii.avans.nl/";    
-    private final static String driverName = "com.mysql.jdbc.Driver";
+	private final static String sUrl = "jdbc:mysql://databases.aii.avans.nl/";    
+    private final static String sDriverName = "com.mysql.jdbc.Driver";
     private static Connection connection;
     private static Statement statement;
     
+    public final static String sLogin = "SELECT password FROM account WHERE username = '%s'";
     
     public static void connect() {
     	try {
-			Class.forName(driverName);
+			Class.forName(sDriverName);
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver not found");
 		}
@@ -23,7 +24,7 @@ public final class DatabaseManager {
     	
     	
     	try {
-    		connection = DriverManager.getConnection(url + "tajlinde_db", "tajlinde", "Vtb1avans");
+    		connection = DriverManager.getConnection(sUrl + "tajlinde_db", "tajlinde", "Vtb1avans");
     		statement = connection.createStatement();
 		} catch (SQLException e) {
 			System.out.println("Could not open connection");
