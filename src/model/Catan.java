@@ -1,7 +1,9 @@
-package Catan;
+package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import controller.DatabaseManager;
 
 public class Catan {
 	
