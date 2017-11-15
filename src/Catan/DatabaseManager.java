@@ -13,9 +13,6 @@ public final class DatabaseManager {
     private static Statement statement;
     
     public final static String sLogin = "SELECT password FROM account WHERE username = '%s'";
-    public final static String sGetColor = "SELECT * FROM speelkleur";
-
-    
     
     public static void connect() {
     	try {
