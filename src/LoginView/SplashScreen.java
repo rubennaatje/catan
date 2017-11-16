@@ -75,7 +75,7 @@ public class SplashScreen
 	        dialog.setModal(false);
 	        dialog.setUndecorated(true);
 	        //splashscreen background image
-	        JLabel background = new JLabel(new ImageIcon(new URL("https://i.imgur.com/M11oxFv.png")));  
+	        JLabel background = new JLabel(new ImageIcon(("@../../images/Splashscreen.png")));  
 	        background.setLayout(new BorderLayout());
 	        dialog.add(background);
 	        //spalshscreen text
