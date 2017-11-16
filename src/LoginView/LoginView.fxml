@@ -46,6 +46,11 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </JFXButton>
+            <JFXButton layoutX="133.0" layoutY="280.0" prefHeight="37.0" prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Login" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </JFXButton>
          </children></AnchorPane>
    </children>
 </AnchorPane>
