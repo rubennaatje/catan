@@ -1,4 +1,4 @@
-package Catan;
+package controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,8 +19,6 @@ public final class DatabaseManager {
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver not found");
 		}
-    	
-    	
     	
     	try {
     		connection = DriverManager.getConnection(url + "tajlinde_db", "tajlinde", "Vtb1avans");
@@ -43,7 +41,4 @@ public final class DatabaseManager {
     	return statement;
     }
     
-    public Connection getConnection() {
-        return connection;
-    }
 }
