@@ -26,14 +26,10 @@ public abstract class PaneTemplate extends Pane {
 
 	private void loadFxml(URL url, Object rootController) {
 		FXMLLoader loader = new FXMLLoader(url);
-		
-		if (loader.getRoot() != null) {
-			loader.setController(rootController);
-			loader.setRoot(rootController);
-		}
-		
+		loader.setController(rootController);
+		loader.setRoot(rootController);
 		try {
-			pane = loader.load();
+			loader.load();
 		} catch (IOException e) {
 			
 		}
