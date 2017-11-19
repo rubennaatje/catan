@@ -15,17 +15,8 @@ public class PlayBoardView extends PaneTemplate {
 	}
 
 	
-	public void addHex(Point[] pointsIn, Point location) {
-		Polygon poly = new Polygon();
-		poly.setFill(Color.RED);
-		for (int i = 0; i < pointsIn.length; i++) {
-			poly.getPoints().add(pointsIn[i].getX() - location.getX());
-			poly.getPoints().add(pointsIn[i].getY() - location.getY());
-		}
-		poly.setLayoutX(location.getX());
-		poly.setLayoutY(location.getY());
-		poly.setStroke(Color.BLACK);
-		poly.setStroke(Color.BLACK);
+	public void addHex(Point[] pointsIn, Point location, int value) {
+		HexView poly = new HexView(pointsIn, location, value);
 		getChildren().add(0, poly);
 	}
 }

@@ -14,7 +14,7 @@ public class Location {
 		for (int i = 0; i <= 12; i++) {
 			for (int j = 0; j <= 12; j++) {
 				double tempX = i * (d/12);
-				double tempY = (((12 -j) * (d/12)) + (i * (d/24)));
+				double tempY = (((8 -j) * (d/11)) + (i * (d/22)));
 				coordinates[i][j] = new Point((int)tempX, (int)tempY);
 			}
 		}

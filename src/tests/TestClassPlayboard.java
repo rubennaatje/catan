@@ -22,7 +22,7 @@ public class TestClassPlayboard extends Application{
 		PlayBoardView playboardview = new PlayBoardView(primaryStage);
 		
 		
-		Location locs = new Location(500);
+		Location locs = new Location(1000);
 		System.out.println(locs.getCoordinate(1, 10));
 		
 /*		for (int i = 0; i < arff.length; i++) {
@@ -34,25 +34,25 @@ public class TestClassPlayboard extends Application{
 		
 		
 		
-		playboardview.addHex(locs.getHexEdges(2, 4), new Point(2,4));
-		playboardview.addHex(locs.getHexEdges(3,6), new Point(3,6));
-		playboardview.addHex(locs.getHexEdges(4,8), new Point(4,8));
-		playboardview.addHex(locs.getHexEdges(3,3), new Point(3,3));
-		playboardview.addHex(locs.getHexEdges(4,5), new Point(4,5));
-		playboardview.addHex(locs.getHexEdges(5,7), new Point(5,7));
-		playboardview.addHex(locs.getHexEdges(6,9), new Point(6,9));
-		playboardview.addHex(locs.getHexEdges(4,2), new Point(4,2));
-		playboardview.addHex(locs.getHexEdges(5,4), new Point(5,4));
-		playboardview.addHex(locs.getHexEdges(6,6), new Point(6,6));
-		playboardview.addHex(locs.getHexEdges(7,8), new Point(7,8));
-		playboardview.addHex(locs.getHexEdges(8,10), new Point(8,10));
-		playboardview.addHex(locs.getHexEdges(6,3), new Point(6,3));
-		playboardview.addHex(locs.getHexEdges(7,5), new Point(7,5));
-		playboardview.addHex(locs.getHexEdges(8,7), new Point(8,7));
-		playboardview.addHex(locs.getHexEdges(9,9), new Point(9,9));
-		playboardview.addHex(locs.getHexEdges(8,4), new Point(8,4));
-		playboardview.addHex(locs.getHexEdges(9,6), new Point(9,6));
-		playboardview.addHex(locs.getHexEdges(10,8), new Point(10,8));
+		playboardview.addHex(locs.getHexEdges(2,4), locs.getCoordinate(2,4), 0);
+		playboardview.addHex(locs.getHexEdges(3,6), locs.getCoordinate(3,6), 0);
+		playboardview.addHex(locs.getHexEdges(4,8), locs.getCoordinate(4,8), 0);
+		playboardview.addHex(locs.getHexEdges(3,3), locs.getCoordinate(3,3), 0);
+		playboardview.addHex(locs.getHexEdges(4,5), locs.getCoordinate(4,5), 0);
+		playboardview.addHex(locs.getHexEdges(5,7), locs.getCoordinate(5,7), 0);
+		playboardview.addHex(locs.getHexEdges(6,9), locs.getCoordinate(6,9), 0);
+		playboardview.addHex(locs.getHexEdges(4,2), locs.getCoordinate(4,2), 0);
+		playboardview.addHex(locs.getHexEdges(5,4), locs.getCoordinate(5,4), 0);
+		playboardview.addHex(locs.getHexEdges(6,6), locs.getCoordinate(6,6), 0);
+		playboardview.addHex(locs.getHexEdges(7,8), locs.getCoordinate(7,8), 3);
+		playboardview.addHex(locs.getHexEdges(8,10), locs.getCoordinate(8,10), 3);
+		playboardview.addHex(locs.getHexEdges(6,3), locs.getCoordinate(6,3), 9);
+		playboardview.addHex(locs.getHexEdges(7,5), locs.getCoordinate(7,5), 3);
+		playboardview.addHex(locs.getHexEdges(8,7), locs.getCoordinate(8,7), 2);
+		playboardview.addHex(locs.getHexEdges(9,9), locs.getCoordinate(9,9), 1);
+		playboardview.addHex(locs.getHexEdges(8,4), locs.getCoordinate(8,4), 9);
+		playboardview.addHex(locs.getHexEdges(9,6), locs.getCoordinate(9,6), 2);
+		playboardview.addHex(locs.getHexEdges(10,8), locs.getCoordinate(10,8), 0);
 		Scene scene = new Scene(playboardview);
 		primaryStage.setScene(scene);
 		primaryStage.show();
