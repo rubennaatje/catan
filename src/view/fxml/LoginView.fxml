@@ -51,6 +51,7 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </JFXButton>
-         </children></AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
 </Pane>
