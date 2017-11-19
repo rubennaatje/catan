@@ -20,9 +20,7 @@ public abstract class PaneTemplate extends Pane {
 
 	public PaneTemplate(URL url, Stage stage) {
 		super();
-		
 		this.stage = stage;
-		
 		loadFxml(url, this);
 	}
 
@@ -43,7 +41,6 @@ public abstract class PaneTemplate extends Pane {
 	
 	public void show() {
 		Scene scene = new Scene(pane);
-	
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();

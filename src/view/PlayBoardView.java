@@ -1,12 +1,18 @@
 package view;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import java.awt.Point;
 
-public class PlayBoardView extends Scene {
+import javafx.stage.Stage;
+import view.javaFXTemplates.PaneTemplate;
+
+public class PlayBoardView extends PaneTemplate {
 	
-	public PlayBoardView(Parent stageIn) {
-		super(stageIn);
+	public PlayBoardView(Stage stageIn) {
+		super(PlayerView.class.getResource("fxml/playboard.fxml"),stageIn);
 	}
 
+	
+	public void addHex(Point[] pointsIn) {
+		
+	}
 }
