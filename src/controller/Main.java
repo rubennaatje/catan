@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.LoginView;
+import view.PlayBoardView;
 import view.SplashScreenView;
 
 public class Main extends Application {
@@ -35,8 +36,13 @@ public class Main extends Application {
 		
 		//Load loginView
 		LoginView loginview = new LoginView();
-		loginview.laucnhview(stage);
+		loginview.launchview(stage);
 		System.out.println("ready");
+		
+		//load playfield
+		PlayBoardView playView = new PlayBoardView();
+		playView.launchView(stage);
+		
 	}
 
 }

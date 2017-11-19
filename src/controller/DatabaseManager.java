@@ -39,11 +39,4 @@ public final class DatabaseManager {
 		}
     }
     
-    public static Statement getStatement() {
-    	return statement;
-    }
-    
-    public Connection getConnection() {
-        return connection;
-    }
 }

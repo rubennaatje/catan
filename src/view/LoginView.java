@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class LoginView {
 
-	public void laucnhview(Stage primaryStage) {
+	public void launchview(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/fxml/LoginView.fxml"));
 			AnchorPane pane = loader.load();
