@@ -1,13 +1,15 @@
 package view;
 
-import java.net.URL;
-
+import javafx.stage.Stage;
 import view.javaFXTemplates.PaneTemplate;
 
 public class PlayerView extends PaneTemplate {
 
-	public PlayerView() {
-		super(PlayerView.class.getResource("fxml/PlayerView.fxml"));
+	public PlayerView(Stage stage) {
+		super(PlayerView.class.getResource("fxml/PlayerView.fxml"), stage);
 	}
 
+	public void show() {
+		super.show();
+	}
 }

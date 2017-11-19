@@ -1,5 +1,5 @@
 package model;
 
-public class Locatie {
+public class Location {
 
 }

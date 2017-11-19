@@ -20,8 +20,6 @@ public final class DatabaseManager {
 			System.out.println("Driver not found");
 		}
     	
-    	
-    	
     	try {
     		connection = DriverManager.getConnection(url + "tajlinde_db", "tajlinde", "Vtb1avans");
     		statement = connection.createStatement();
@@ -37,6 +35,10 @@ public final class DatabaseManager {
 		} catch (SQLException e) {
 			System.out.println("Could not close connection");
 		}
+    }
+    
+    public static Statement getStatement() {
+    	return statement;
     }
     
 }

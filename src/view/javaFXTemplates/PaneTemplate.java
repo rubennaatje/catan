@@ -1,4 +1,5 @@
 package view.javaFXTemplates;
+
 import java.io.IOException;
 import java.net.URL;
 import javafx.beans.DefaultProperty;
@@ -6,32 +7,49 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 @DefaultProperty("extension")
-
 public abstract class PaneTemplate extends Pane {
 
 	private @FXML Pane extension;
+	private Pane pane;
+	private Stage stage;
 
-	public PaneTemplate(URL fxmlIn) {
+	public PaneTemplate(URL url, Stage stage) {
 		super();
-		loadFxml(fxmlIn, this);
+		
+		this.stage = stage;
+		
+		loadFxml(url, this);
 	}
 
+	private void loadFxml(URL url, Object rootController) {
+		FXMLLoader loader = new FXMLLoader(url);
+		
+		if (loader.getRoot() != null) {
+			loader.setController(rootController);
+			loader.setRoot(rootController);
+		}
+		
+		try {
+			pane = loader.load();
+		} catch (IOException e) {
+			
+		}
+	}
+	
+	public void show() {
+		Scene scene = new Scene(pane);
+	
+		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 	public ObservableList<Node> getExtension() {
 		return extension.getChildren();
-	}
-
-	protected static void loadFxml(URL fxmlFile, Object rootController) {
-		FXMLLoader loader = new FXMLLoader(fxmlFile);
-		loader.setController(rootController);
-		loader.setRoot(rootController);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
