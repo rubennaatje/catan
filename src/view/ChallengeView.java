@@ -9,7 +9,5 @@ public class ChallengeView extends PaneTemplate {
 		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
 	}
 	
-	public void show() {
-		super.show();
-	}
+
 }

@@ -9,7 +9,4 @@ public class SplashScreenView extends PaneTemplate {
 		super(SplashScreenView.class.getResource("fxml/SplashScreenView.fxml"), stage);
 	}
 	
-	public void show() {
-		super.show();
-	}
 }
