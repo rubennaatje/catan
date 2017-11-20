@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Location;
 import view.LoginView;
@@ -25,14 +26,7 @@ public class TestClassPlayboard extends Application{
 		Location locs = new Location(1000);
 		System.out.println(locs.getCoordinate(1, 10));
 		
-/*		for (int i = 0; i < arff.length; i++) {
-			for (int j = 0; j < arff[i].length; j++) {
-				System.out.println("x=" + i+ "|" + "y=" + j + arff[i][j].toString());				
-			}
-		}*/
-		Point[] points = {locs.getCoordinate(3, 1),locs.getCoordinate(4, 1),locs.getCoordinate(5, 2),locs.getCoordinate(5, 3),locs.getCoordinate(4, 3),locs.getCoordinate(3, 2)};
-		
-		
+				
 		
 		playboardview.addHex(locs.getHexEdges(2,4), locs.getCoordinate(2,4), 0);
 		playboardview.addHex(locs.getHexEdges(3,6), locs.getCoordinate(3,6), 0);
@@ -54,7 +48,10 @@ public class TestClassPlayboard extends Application{
 		playboardview.addHex(locs.getHexEdges(9,6), locs.getCoordinate(9,6), 2);
 		playboardview.addHex(locs.getHexEdges(10,8), locs.getCoordinate(10,8), 0);
 		
+		playboardview.addStreet(locs.getCoordinate(4,4), locs.getCoordinate(4,3), Color.YELLOW);
 		
+		
+		playboardview.show();
 //	new ChallengeView(primaryStage).show();
 //		new PlayerView(primaryStage).show();
 //		new SplashScreenView(primaryStage).show();
