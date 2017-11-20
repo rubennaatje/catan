@@ -20,30 +20,23 @@ public abstract class PaneTemplate extends Pane {
 
 	public PaneTemplate(URL url, Stage stage) {
 		super();
-		
 		this.stage = stage;
-		
 		loadFxml(url, this);
 	}
 
 	private void loadFxml(URL url, Object rootController) {
 		FXMLLoader loader = new FXMLLoader(url);
-		
-		if (loader.getRoot() != null) {
-			loader.setController(rootController);
-			loader.setRoot(rootController);
-		}
-		
+		loader.setController(rootController);
+		loader.setRoot(rootController);
 		try {
-			pane = loader.load();
+			loader.load();
 		} catch (IOException e) {
 			
 		}
 	}
 	
 	public void show() {
-		Scene scene = new Scene(pane);
-	
+		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
