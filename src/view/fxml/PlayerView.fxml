@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+	      <BorderPane layoutY="420.0" prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: YELLOW;" />
+      <BorderPane layoutX="575.0" layoutY="420.0" prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: GREEN;">
+         <left>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../images/Playericon.png" />
+               </image>
+            </ImageView>
+         </left>
+      </BorderPane>
+      <BorderPane layoutX="575.0" prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: RED;">
+         <left>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../images/Playericon.png" />
+               </image>
+            </ImageView>
+         </left>
+      </BorderPane>
+      <BorderPane prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: BLUE;" />
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Cards.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Devcard.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Knights.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Score.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Road.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="60.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="60.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="555.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Road.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Score.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="524.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Knights.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Devcard.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Cards.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="763.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="763.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="763.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="763.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="763.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="717.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Road.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="717.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Score.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="717.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Knights.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="717.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Devcard.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="717.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Cards.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="760.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="760.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="760.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="760.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="760.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="714.0" layoutY="555.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Road.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="714.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Score.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="714.0" layoutY="524.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Knights.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="714.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Devcard.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="714.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Cards.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="90.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Playericon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="90.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Playericon.png" />
+         </image>
+      </ImageView>
+	</children>
+</fx:root>
