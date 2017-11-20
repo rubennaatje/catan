@@ -51,9 +51,9 @@ public class TestClassPlayboard extends Application{
 		
 		
 		playboardview.show();
-//	new ChallengeView(primaryStage).show();
-//		new PlayerView(primaryStage).show();
-//		new SplashScreenView(primaryStage).show();
+	//new ChallengeView(primaryStage).show();
+		//new PlayerView(primaryStage).show();
+		//new SplashScreenView(primaryStage).show();
 		
 		
 	}

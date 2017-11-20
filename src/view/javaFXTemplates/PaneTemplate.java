@@ -31,17 +31,17 @@ public abstract class PaneTemplate extends Pane {
 		try {
 			loader.load();
 		} catch (IOException e) {
-			
+
 		}
 	}
-	
+
 	public void show() {
 		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+
 	public ObservableList<Node> getExtension() {
 		return extension.getChildren();
 	}
