@@ -1,7 +1,5 @@
 package controller;
 
-import java.sql.SQLException;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.LoginView;
