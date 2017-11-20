@@ -53,9 +53,13 @@ public class TestClassPlayboard extends Application{
 		playboardview.addHex(locs.getHexEdges(8,4), locs.getCoordinate(8,4), 9);
 		playboardview.addHex(locs.getHexEdges(9,6), locs.getCoordinate(9,6), 2);
 		playboardview.addHex(locs.getHexEdges(10,8), locs.getCoordinate(10,8), 0);
-		Scene scene = new Scene(playboardview);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		
+		
+//	new ChallengeView(primaryStage).show();
+//		new PlayerView(primaryStage).show();
+//		new SplashScreenView(primaryStage).show();
+		
+		
 	}
 
 }

@@ -36,7 +36,7 @@ public abstract class PaneTemplate extends Pane {
 	}
 	
 	public void show() {
-		Scene scene = new Scene(pane);
+		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
