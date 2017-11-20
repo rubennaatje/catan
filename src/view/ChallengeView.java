@@ -6,7 +6,7 @@ import view.javaFXTemplates.PaneTemplate;
 public class ChallengeView extends PaneTemplate {
 	
 	public ChallengeView(Stage stage) {
-		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
+		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stasadfge);
 	}
 	
 
