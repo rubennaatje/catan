@@ -14,7 +14,7 @@ public final class DatabaseManager {
     private static Statement statement;
     
     public final static String sLogin = "SELECT password FROM account WHERE username = '%s'";
-    public final static String sSendChat = ""
+    public final static String sSendChat = "";
     
     public static void connect() {
     	try {
@@ -44,7 +44,7 @@ public final class DatabaseManager {
     	return statement;
     }
     
-    public static ResultSet executeQuery(String sQuery) {
+    public static ResultSet executeSelectQuery(String sQuery) {
     	try {
     		statement = connection.createStatement();
     		
@@ -58,9 +58,20 @@ public final class DatabaseManager {
     	return null;
     }
     
-    public static void sendChat(int idSpel, String userName, String message, String time) {
-    	
+    public static int executeInsertQuery (String sQuery) {
+    	try {
+	    	Statement statement = connection.createStatement();
+	
+			int nRowsUpdated = statement.executeUpdate(sQuery);
+			
+			return nRowsUpdated;
+			
+    	}catch(SQLException eSQL) {
+    		System.out.println("Something went wrong");
+    	}
+    	return 0;
     }
+
     
     
 }
