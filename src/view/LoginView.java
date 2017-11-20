@@ -9,7 +9,4 @@ public class LoginView extends PaneTemplate {
 		super(LoginView.class.getResource("fxml/LoginView.fxml"), stage);
 	}
 	
-	public void show() {
-		super.show();
-	}
 }

@@ -9,48 +9,66 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="718.0" prefWidth="1280.0" style="-fx-background-color: #e5e5e5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView fitHeight="740.0" fitWidth="1363.0" layoutX="-42.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/Catan-Background.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="480.0" fitWidth="488.0" layoutX="403.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/Goldenframe.PNG" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="448.0" layoutY="240.0" prefHeight="412.0" prefWidth="384.0" style="-fx-background-color: white;">
-         <children>
-            <JFXTextField focusColor="#ffc100" layoutX="34.0" layoutY="110.0" prefHeight="37.0" prefWidth="320.0" promptText="Gebruikersnaam" unFocusColor="#ff7b00">
-               <font>
-                  <Font size="16.0" />
-               </font></JFXTextField>
-            <JFXPasswordField focusColor="#ffc100" layoutX="34.0" layoutY="206.0" prefHeight="37.0" prefWidth="320.0" promptText="Wachtwoord" unFocusColor="#ff7b00">
-               <font>
-                  <Font size="16.0" />
-               </font></JFXPasswordField>
-            <Text layoutX="157.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Bold" size="25.0" />
-               </font>
-            </Text>
-            <Text layoutX="81.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Geen Account?">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Text>
-            <JFXButton layoutX="204.0" layoutY="362.0" prefHeight="37.0" prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Registreer" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </JFXButton>
-            <JFXButton layoutX="133.0" layoutY="280.0" prefHeight="37.0" prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Login" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </JFXButton>
-         </children></AnchorPane>
-   </children>
-</Pane>
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ImageView fitHeight="740.0" fitWidth="1363.0" layoutX="-42.0"
+			layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../images/Catan-Background.png" />
+			</image>
+		</ImageView>
+		<ImageView fitHeight="480.0" fitWidth="488.0" layoutX="403.0"
+			layoutY="206.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../images/Goldenframe.PNG" />
+			</image>
+		</ImageView>
+		<AnchorPane layoutX="448.0" layoutY="240.0" prefHeight="412.0"
+			prefWidth="384.0" style="-fx-background-color: white;">
+			<children>
+				<JFXTextField focusColor="#ffc100" layoutX="34.0"
+					layoutY="110.0" prefHeight="37.0" prefWidth="320.0" promptText="Gebruikersnaam"
+					unFocusColor="#ff7b00">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</JFXTextField>
+				<JFXPasswordField focusColor="#ffc100" layoutX="34.0"
+					layoutY="206.0" prefHeight="37.0" prefWidth="320.0" promptText="Wachtwoord"
+					unFocusColor="#ff7b00">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</JFXPasswordField>
+				<Text layoutX="157.0" layoutY="55.0" strokeType="OUTSIDE"
+					strokeWidth="0.0" text="Log in" textAlignment="CENTER">
+					<font>
+						<Font name="Arial Bold" size="25.0" />
+					</font>
+				</Text>
+				<Text layoutX="81.0" layoutY="385.0" strokeType="OUTSIDE"
+					strokeWidth="0.0" text="Geen Account?">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</Text>
+				<JFXButton layoutX="204.0" layoutY="362.0" prefHeight="37.0"
+					prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Registreer"
+					textFill="WHITE">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</JFXButton>
+				<JFXButton layoutX="133.0" layoutY="280.0" prefHeight="37.0"
+					prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Login"
+					textFill="WHITE">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</JFXButton>
+			</children>
+		</AnchorPane>
+	</children>
+</fx:root>

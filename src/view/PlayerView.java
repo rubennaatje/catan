@@ -9,7 +9,4 @@ public class PlayerView extends PaneTemplate {
 		super(PlayerView.class.getResource("fxml/PlayerView.fxml"), stage);
 	}
 
-	public void show() {
-		super.show();
-	}
 }

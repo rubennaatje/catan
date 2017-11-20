@@ -22,7 +22,10 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		new LoginView(stage).show();		
+		new LoginView(stage).show();
+
+		
+		
 	}
 
 }
