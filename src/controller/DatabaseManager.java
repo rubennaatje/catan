@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -13,6 +14,7 @@ public final class DatabaseManager {
     private static Statement statement;
     
     public final static String sLogin = "SELECT password FROM account WHERE username = '%s'";
+    public final static String sSendChat = ""
     
     public static void connect() {
     	try {
@@ -41,5 +43,24 @@ public final class DatabaseManager {
     public static Statement getStatement() {
     	return statement;
     }
+    
+    public static ResultSet executeQuery(String sQuery) {
+    	try {
+    		statement = connection.createStatement();
+    		
+    		ResultSet result = statement.executeQuery(sQuery);
+    		
+    		return result;
+    	} catch(SQLException eSQL) {
+    		System.out.println("Something went wrong");
+    	}
+    	
+    	return null;
+    }
+    
+    public static void sendChat(int idSpel, String userName, String message, String time) {
+    	
+    }
+    
     
 }
