@@ -49,6 +49,8 @@ public class TestClassPlayboard extends Application{
 		playboardview.addStreet(locs.getCoordinate(4,4), locs.getCoordinate(4,3), Color.YELLOW);
 		playboardview.addStreet(locs.getCoordinate(5,3), locs.getCoordinate(6,4), Color.GREEN);
 		
+		playboardview.addPiece(locs.getCoordinate(2, 5), Color.YELLOW);
+		playboardview.addRobber(locs.getCoordinate(6,6));
 		
 		playboardview.show();
 	//new ChallengeView(primaryStage).show();
