@@ -34,15 +34,15 @@ public class PlayBoardView extends PaneTemplate {
 		if (angle < 0) {
 			angle += 360;
 		}
-		street.getTransforms().add(new Rotate(angle, 0, 0));
 		System.out.println(angle);
 
-		street.setLayoutX(start.getX());
+		street.setLayoutX(start.getX() - (squareWidth/2));
 		street.setLayoutY(start.getY());
 
 		street.setHeight(squareSize);
 		street.setWidth(squareWidth);
 
+		street.getTransforms().add(new Rotate(angle, (squareWidth/2), 0));
 		getChildren().add(street);
 	}
 }
