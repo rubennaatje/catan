@@ -11,10 +11,10 @@ import javafx.scene.shape.Polygon;
 public class HexView extends Group {
 	
 	
-	public HexView(Point[] pointsIn, Point location, Integer value) {
+	public HexView(Point[] pointsIn, Point location, Integer value, Color fillColor) {
 		Polygon hex = new Polygon();
 		
-		hex.setFill(Color.RED);
+		hex.setFill(fillColor);
 		for (int i = 0; i < pointsIn.length; i++) {
 			hex.getPoints().add(pointsIn[i].getX() - location.getX());
 			hex.getPoints().add(pointsIn[i].getY() - location.getY());

@@ -8,14 +8,14 @@ public class Location {
 	
 	//probably gonna make this a static utility class
 	
-	public Location(double d) {
+	public Location(double dimension) {
 		//leftside of array is X, right is Y
 		coordinates = new Point[13][13];
-		for (int i = 0; i <= 12; i++) {
-			for (int j = 0; j <= 12; j++) {
-				double tempX = i * (d/12);
-				double tempY = (((8 -j) * (d/11)) + (i * (d/22)));
-				coordinates[i][j] = new Point((int)tempX, (int)tempY);
+		for (int x = 0; x <= 12; x++) {
+			for (int y = 0; y <= 12; y++) {
+				double tempX = x * (dimension/12);
+				double tempY = (((8 -y) * (dimension/10.5)) + (x * (dimension/21)));
+				coordinates[x][y] = new Point((int)tempX, (int)tempY);
 			}
 		}
 	}
