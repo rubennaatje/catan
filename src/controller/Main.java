@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.LoginView;
@@ -11,13 +13,10 @@ public class Main extends Application {
 		
 		launch(args);
 		
-		Runtime.getRuntime().addShutdownHook(new Thread()
-		{
-		    @Override
-		    public void run() {
-		    	DatabaseManager.disconnect();
-		    }
-		});
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			DatabaseManager.disconnect();
+			System.out.println("databasemanager shut down");
+		}));
 	}
 
 	@Override
