@@ -1,5 +1,12 @@
 package model;
 
-public class Tile {
+import java.awt.Point;
 
+public class Tile {
+	TileType type;
+	int chipVal;
+	
+	public Tile(TileType typeIn) {
+		this.type = typeIn;
+	}
 }

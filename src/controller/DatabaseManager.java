@@ -52,7 +52,8 @@ public final class DatabaseManager {
     		
     		return result;
     	} catch(SQLException eSQL) {
-    		System.out.println("Something went wrong");
+    		System.out.println();
+    		eSQL.printStackTrace();
     	}
     	
     	return null;
@@ -68,6 +69,7 @@ public final class DatabaseManager {
 			
     	}catch(SQLException eSQL) {
     		System.out.println("Something went wrong");
+    		eSQL.printStackTrace();
     	}
     	return 0;
     }
