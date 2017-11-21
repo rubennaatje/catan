@@ -9,7 +9,7 @@ import view.javaFXTemplates.PaneTemplate;
 public class ChallangeViewDemo extends PaneTemplate {
 
 	public ChallangeViewDemo(Stage stage) {
-		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
+		super(ChallangeViewDemo.class.getResource("fxml/ChallengeView.fxml"), stage);
 	}
 	
 	
