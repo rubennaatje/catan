@@ -19,7 +19,7 @@ public class ScoreBoard
 		try
 		{
 			DatabaseManager.connect();
-			scores = DatabaseManager.executeQuery(
+			scores = DatabaseManager.executeSelectQuery(
 					"SELECT username, aantal_spellen_gewonnen FROM speelresultaat ORDER BY som_behaalde_punten DESC");
 			Integer i = 0;
 			ObservableList<PlayerRank> data = FXCollections.observableArrayList();

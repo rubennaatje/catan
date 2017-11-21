@@ -74,7 +74,4 @@ public final class DatabaseManager {
     	return 0;
     }
 
-    
-    
->>>>>>> branch 'development' of git@github.com:Stijn98s/Catan.git
 }

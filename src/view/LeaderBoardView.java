@@ -1,7 +1,5 @@
 package view;
 
-import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -13,7 +11,7 @@ import view.javaFXTemplates.PaneTemplate;
 
 public class LeaderBoardView extends PaneTemplate {
 	
-    @FXML private TableView<PlayerRank> tableView;
+    @FXML private TableView<PlayerRank> TableView;
     @FXML private TableColumn<PlayerRank, String> PlayerPosition;
     @FXML private TableColumn<PlayerRank, String> PlayerName;
     @FXML private TableColumn<PlayerRank, String> AmountOfWins;
@@ -34,8 +32,8 @@ public class LeaderBoardView extends PaneTemplate {
 		PlayerName = new TableColumn<>("Name");
 		AmountOfWins.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("gamesWon"));
 		AmountOfWins = new TableColumn<>("AmountOfWins");
-		tableView.setItems(null);
-		tableView.getColumns().addAll(PlayerPosition,PlayerName,AmountOfWins);
+		TableView.setItems(fillLeaderboard);
+		TableView.getColumns().addAll(PlayerPosition,PlayerName,AmountOfWins);
 	}	
 	
 }
