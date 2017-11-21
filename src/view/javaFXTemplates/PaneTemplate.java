@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 public abstract class PaneTemplate extends Pane {
 
 	private @FXML Pane extension;
-	private Pane pane;
 	private Stage stage;
 
 	public PaneTemplate(URL url, Stage stage) {
