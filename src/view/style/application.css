@@ -1,1 +1,52 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+/*Player piece style */
+.player_piece{
+	-fx-stroke: black;	
+}
+.player_red, .player_red:hover {
+	-fx-fill: red;
+}
+.player_white, .player_white:hover {
+	-fx-fill: white;
+}
+.player_blue, .player_blue:hover {
+	-fx-fill: blue;
+}
+.player_orange, .player_orange:hover {
+	-fx-fill: orange;
+}
+
+.placeholder {
+	-fx-cursor: hand;
+	-fx-fill: rgba(255,255,255,0.21176470816135406);
+}
+
+/*hex style */
+.hex_tile{
+	-fx-stroke: black;	
+}
+.hout {
+	-fx-fill: radial-gradient( focus-angle 0.0deg, focus-distance 0.0%, center 50.0% 50.0%, radius 100.0%, rgb(67,118,11) 0.0, rgb(0,0,0) 100.0 );
+}
+.wol{
+	-fx-fill: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, rgb(4,224,2) 0.0, rgb(0,0,0) 100.0);
+}
+.graan{
+	-fx-fill: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, rgb(255,255,77) 0.0, rgb(0,0,0) 100.0);
+}
+.baksteen{
+	-fx-fill: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, rgb(234,120,0) 0.0, rgb(0,0,0) 100.0);
+}
+.erts{
+	-fx-fill: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, rgb(128,128,128) 0.0, rgb(0,0,0) 100.0);
+}
+.woestijn{
+	-fx-fill: rgb(216,208,102)
+}
+/*fische */
+.fische{
+	-fx-fill: white;
+	-fx-stroke: black;	
+}
