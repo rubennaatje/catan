@@ -43,35 +43,4 @@ public final class DatabaseManager {
     public static Statement getStatement() {
     	return statement;
     }
-    
-    public static ResultSet executeSelectQuery(String sQuery) {
-    	try {
-    		statement = connection.createStatement();
-    		
-    		ResultSet result = statement.executeQuery(sQuery);
-    		
-    		return result;
-    	} catch(SQLException eSQL) {
-    		System.out.println();
-    		eSQL.printStackTrace();
-    	}
-    	
-    	return null;
-    }
-    
-    public static int executeInsertQuery (String sQuery) {
-    	try {
-	    	Statement statement = connection.createStatement();
-	
-			int nRowsUpdated = statement.executeUpdate(sQuery);
-			
-			return nRowsUpdated;
-			
-    	}catch(SQLException eSQL) {
-    		System.out.println("Something went wrong");
-    		eSQL.printStackTrace();
-    	}
-    	return 0;
-    }
-
 }

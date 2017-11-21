@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.LoginView;
+import view.SplashScreenView;
 
 public class Main extends Application {
 
@@ -19,6 +20,6 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		new LoginView(stage).show();
+		new SplashScreenView(stage).show();
 	}
 }

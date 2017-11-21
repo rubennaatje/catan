@@ -1,8 +1,12 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import controller.DatabaseManager;
+
 public class Board {
+	
 	Integer[][] conf = {{1,2,4,12},
 			{2,3,6,18},
 			{3,4,8,14},
@@ -12,7 +16,7 @@ public class Board {
 			{6,5,7,8},
 			{7,6,9,1},
 			{8,4,2,6},
-			{9,4,2,2},
+			{9,5,4,2},
 			{10,6,6,0},
 			
 			{11,7,8,4},
@@ -25,7 +29,9 @@ public class Board {
 			{17,8,4,17},
 			{18,9,6,7},
 			{19,10,8,11}};
+	
 	public Board() {
+		
 	}
 
 	public void createBoard(int gameId) throws Exception {
@@ -57,7 +63,7 @@ public class Board {
 			}
 			if(i > 9) resourceValue = tiles[i-1].toString();
 			System.out.println("INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES (" + gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue + "', " + chipValue + ")");
-			DatabaseManager.executeInsertQuery("INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES (" + gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue + "', " + chipValue + ")");
+			DatabaseManager.getStatement().executeUpdate("INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES (" + gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue + "', " + chipValue + ")");
 			i++;
 		}
 	}
@@ -71,5 +77,13 @@ public class Board {
 			array[i] = a;
 		}
 		return array;
+	}
+	
+	public void getAvailableStreetPositions(Integer spelId, String username) throws SQLException {
+		ResultSet results = DatabaseManager.getStatement().executeQuery("select username, idstuk, x_van, y_van, x_naar, y_naar from spelerstuk where idstuk IN (select idstuk from stuk where stuksoort = \"straat\") and idspel = " + spelId.toString() + ")");
+		//String[]
+		while(results.next()) {
+			results.getString(0);
+		}
 	}
 }
