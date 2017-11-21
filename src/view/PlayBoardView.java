@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Point;
 
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -21,7 +22,7 @@ public class PlayBoardView extends PaneTemplate {
 		getChildren().add(poly);
 	}
 
-	public void addStreet(Point start, Point end, String cssSel, boolean placeHolder) {
+	public void addStreet(Point start, Point end, String cssSel, EventHandler<? super MouseEvent> event) {
 		Rectangle street = new Rectangle();
 
 		// calculates Rectangle size according to difference between points
@@ -34,9 +35,9 @@ public class PlayBoardView extends PaneTemplate {
 		street.getStyleClass().add("player_piece");
 
 		// binds fill on mouseover as event
-		if (placeHolder) {
+		if (event != null) {
 			street.getStyleClass().add("placeholder");
-			street.setOnMouseClicked(e -> pieceClick(e));
+			street.setOnMouseClicked(event);
 		}
 		
 
@@ -63,7 +64,7 @@ public class PlayBoardView extends PaneTemplate {
 		getChildren().add(street);
 	}
 
-	public void addPiece(Point posIn, String cssSel, boolean placeHolder) {
+	public void addPiece(Point posIn, String cssSel, EventHandler<? super MouseEvent> event) {
 		Rectangle piece = new Rectangle();
 		piece.setLayoutX(posIn.getX() - 10);
 		piece.setLayoutY(posIn.getY() - 10);
@@ -73,11 +74,10 @@ public class PlayBoardView extends PaneTemplate {
 		piece.getStyleClass().add(cssSel);
 		piece.getStyleClass().add("player_piece");
 
-		// binds fill on mouseover as event
-		if (placeHolder) {
+		// binds placeholder selector and event
+		if (event != null) {
 			piece.getStyleClass().add("placeholder");
-			
-			piece.setOnMouseClicked(e -> pieceClick(e));
+			piece.setOnMouseClicked(event);
 		}
 		;
 
@@ -94,9 +94,5 @@ public class PlayBoardView extends PaneTemplate {
 		robber.setFill(Color.BLACK);
 		robber.setStroke(Color.BLACK);
 		getChildren().add(robber);
-	}
-
-	public void pieceClick(MouseEvent t) {
-		System.out.println("this is a test");
 	}
 }
