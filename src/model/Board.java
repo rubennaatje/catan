@@ -29,7 +29,6 @@ public class Board {
 			{19,10,8,11}};
 	public Board() {
 	}
-
 	public void createBoard(int gameId) throws Exception {
 		if(gameId < 0) throw new Exception("Parameter cannot be negative!");
 		TileType[] tiles = new TileType[18];
