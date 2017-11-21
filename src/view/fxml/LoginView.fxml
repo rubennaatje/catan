@@ -33,7 +33,7 @@
 						<Font size="16.0" />
 					</font>
 				</JFXTextField>
-				<JFXPasswordField focusColor="#ffc100" layoutX="34.0"
+				<JFXPasswordField fx:id="testID" focusColor="#ffc100" layoutX="34.0"
 					layoutY="206.0" prefHeight="37.0" prefWidth="320.0" promptText="Wachtwoord"
 					unFocusColor="#ff7b00">
 					<font>
@@ -60,7 +60,7 @@
 					</font>
 				</JFXButton>
 				<JFXButton layoutX="133.0" layoutY="280.0" prefHeight="37.0"
-					prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Login"
+					prefWidth="103.0" onMouseClicked="#getFieldValue" style="-fx-background-color: #ef8200;" text="Login"
 					textFill="WHITE">
 					<font>
 						<Font name="Arial Bold" size="14.0" />

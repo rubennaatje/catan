@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import controller.DatabaseManager;
 
@@ -14,7 +16,7 @@ public class Board {
 			{6,5,7,8},
 			{7,6,9,1},
 			{8,4,2,6},
-			{9,4,2,2},
+			{9,5,4,2},
 			{10,6,6,0},
 			
 			{11,7,8,4},
@@ -75,5 +77,13 @@ public class Board {
 			array[i] = a;
 		}
 		return array;
+	}
+	
+	public void getAvailableStreetPositions(Integer spelId, String username) throws SQLException {
+		ResultSet results = DatabaseManager.getStatement().executeQuery("select username, idstuk, x_van, y_van, x_naar, y_naar from spelerstuk where idstuk IN (select idstuk from stuk where stuksoort = \"straat\") and idspel = " + spelId.toString() + ")");
+		//String[]
+		while(results.next()) {
+			results.getString(0);
+		}
 	}
 }
