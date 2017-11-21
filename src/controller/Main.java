@@ -11,21 +11,14 @@ public class Main extends Application {
 		
 		launch(args);
 		
-		Runtime.getRuntime().addShutdownHook(new Thread()
-		{
-		    @Override
-		    public void run() {
-		    	DatabaseManager.disconnect();
-		    }
-		});
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			DatabaseManager.disconnect();
+			System.out.println("databasemanager shut down");
+		}));
 	}
 
 	@Override
 	public void start(Stage stage) {
 		new LoginView(stage).show();
-
-		
-		
 	}
-
 }

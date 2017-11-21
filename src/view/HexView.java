@@ -11,22 +11,22 @@ import javafx.scene.shape.Polygon;
 public class HexView extends Group {
 	
 	
-	public HexView(Point[] pointsIn, Point location, Integer value) {
+	public HexView(Point[] pointsIn, Point location, Integer value, String cssSel) {
 		Polygon hex = new Polygon();
 		
-		hex.setFill(Color.RED);
+		hex.getStyleClass().add("hex_tile");
+		hex.getStyleClass().add(cssSel);
+
 		for (int i = 0; i < pointsIn.length; i++) {
 			hex.getPoints().add(pointsIn[i].getX() - location.getX());
 			hex.getPoints().add(pointsIn[i].getY() - location.getY());
 		}
 
-		hex.setStroke(Color.BLACK);
 		Circle fiche = new Circle();
-
-		fiche.setRadius(15);
-		fiche.setFill(Color.WHITE);
-		fiche.setStroke(Color.BLACK);
 		
+		fiche.getStyleClass().add("fische");
+		
+		fiche.setRadius(15);
 		Label val = new Label();
 		
 		val.setText(value.toString());

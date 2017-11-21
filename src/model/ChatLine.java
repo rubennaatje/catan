@@ -4,12 +4,11 @@ import java.sql.Timestamp;
 
 public class ChatLine {
 	String username;
-	Timestamp time;
 	String message;
+	String timeStamp;
 	
-	public ChatLine(String username, Timestamp time, String message) {
+	public ChatLine(String username, String message) {
 		this.username = username;
-		this.time = time;
 		this.message = message;
 	}
 	
@@ -21,7 +20,14 @@ public class ChatLine {
 		return message;
 	}
 	
-	public String getTime() {
-		return time.toString();
+	public boolean save() {
+		
+//		sQuery = "";
+		
+		return true;
+	    
+//	    public static void sendChat(int idSpel, String userName, String message, String time) {
+//	    	
+//	    }
 	}
 }

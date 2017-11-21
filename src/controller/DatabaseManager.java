@@ -44,7 +44,7 @@ public final class DatabaseManager {
     	return statement;
     }
     
-    public static ResultSet executeQuery(String sQuery) {
+    public static ResultSet executeSelectQuery(String sQuery) {
     	try {
     		statement = connection.createStatement();
     		
@@ -52,15 +52,29 @@ public final class DatabaseManager {
     		
     		return result;
     	} catch(SQLException eSQL) {
-    		System.out.println("Something went wrong");
+    		System.out.println();
+    		eSQL.printStackTrace();
     	}
     	
     	return null;
     }
     
-    public static void sendChat(int idSpel, String userName, String message, String time) {
-    	
+    public static int executeInsertQuery (String sQuery) {
+    	try {
+	    	Statement statement = connection.createStatement();
+	
+			int nRowsUpdated = statement.executeUpdate(sQuery);
+			
+			return nRowsUpdated;
+			
+    	}catch(SQLException eSQL) {
+    		System.out.println("Something went wrong");
+    		eSQL.printStackTrace();
+    	}
+    	return 0;
     }
+
     
     
+>>>>>>> branch 'development' of git@github.com:Stijn98s/Catan.git
 }
