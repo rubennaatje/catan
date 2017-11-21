@@ -1,38 +1,24 @@
 package view;
 
-import java.io.IOException;
 import javafx.animation.PauseTransition;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import view.javaFXTemplates.PaneTemplate;
 
-public class SplashScreenView
+public class SplashScreenView extends PaneTemplate
 {
-	protected void initUI(Stage primaryStage)
-	{
-		Parent root;
-		try
-		{
-			root = FXMLLoader.load(getClass().getResource("SplashScreenView.fxml"));
-			Scene scene = new Scene(root);
+	public SplashScreenView(Stage stage) {
+		super(SplashScreenView.class.getResource("fxml/SplashScreenView.fxml"), stage);
+	}
 
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Splash Screen");
-			primaryStage.initStyle(StageStyle.UNDECORATED);
-			primaryStage.show();
-
-			PauseTransition pause = new PauseTransition(Duration.seconds(3));
-			pause.setOnFinished(e -> {
-				primaryStage.hide();
-			});
-			pause.play();
-
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+	public void show() {
+		super.show();
+		
+		PauseTransition pause = new PauseTransition(Duration.seconds(3));
+		pause.setOnFinished(e -> {
+			new LoginView(stage).show();
+		});
+		
+		pause.play();
 	}
 }
