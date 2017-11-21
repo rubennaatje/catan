@@ -31,6 +31,7 @@ public class TestClassPlayboard extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				System.out.println("this is a test");
+
 				System.out.println(((Node)event.getSource()).getId());
 			};
 		};
@@ -55,12 +56,14 @@ public class TestClassPlayboard extends Application {
 		playboardview.addHex(locs.getHexEdges(9, 6), locs.getCoordinate(9, 6), 2, "wol");
 		playboardview.addHex(locs.getHexEdges(10, 8), locs.getCoordinate(10, 8), 0, "baksteen");
 		playboardview.addStreet(locs.getCoordinate(4, 4), locs.getCoordinate(4, 3), "player_blue", null);
+
 		playboardview.addStreet(locs.getCoordinate(5, 3), locs.getCoordinate(6, 4), "player_blue", event);
 
 		playboardview.addPiece(locs.getCoordinate(2, 5), "player_blue", event);
 		playboardview.addRobber(locs.getCoordinate(6, 6));
 
 		playboardview.show();
+
 		// new ChallengeView(primaryStage).show();
 		// new PlayerView(primaryStage).show();
 		// new SplashScreenView(primaryStage).show();

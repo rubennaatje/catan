@@ -79,7 +79,7 @@ public class PlayBoardView extends PaneTemplate {
 			piece.getStyleClass().add("placeholder");
 			piece.setOnMouseClicked(event);
 		}
-		;
+
 
 		getChildren().add(piece);
 	}
