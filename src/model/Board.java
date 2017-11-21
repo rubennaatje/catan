@@ -9,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 import controller.DatabaseManager;
+
 public class Board {
+	
 	Integer[][] conf = {{1,2,4,12},
 			{2,3,6,18},
 			{3,4,8,14},
@@ -32,7 +34,9 @@ public class Board {
 			{17,8,4,17},
 			{18,9,6,7},
 			{19,10,8,11}};
+	
 	public Board() {
+		
 	}
 	public void createBoard(int gameId) throws Exception {
 		if(gameId < 0) throw new Exception("Parameter cannot be negative!");

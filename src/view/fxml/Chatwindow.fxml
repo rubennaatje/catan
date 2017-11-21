@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="189.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="164.0" prefWidth="600.0">
+         <children>
+            <TextArea prefHeight="164.0" prefWidth="589.0" />
+            <ScrollBar orientation="VERTICAL" />
+         </children>
+      </HBox>
+      <HBox layoutY="164.0" prefHeight="25.0" prefWidth="600.0">
+         <children>
+            <TextArea prefHeight="14.0" prefWidth="557.0" promptText="Text" />
+            <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="43.0" text="Send" />
+         </children>
+      </HBox>
+   </children>
+</Pane>
