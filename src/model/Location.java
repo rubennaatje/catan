@@ -1,6 +1,10 @@
 package model;
 
 import java.awt.Point;
+/*responsibility:
+	-builds a playboard in gridlocations
+	-returns Point for a specific location
+	-returns bordering points for a Hex*/
 
 public class Location {
 	

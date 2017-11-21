@@ -1,4 +1,9 @@
 package model;
+/*Responsibilities:
+	- Create playboard in db
+	- Give list of available street placing positions for user
+	- Give list of available town placing positions for user
+	- update changes to the board placement*/
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
