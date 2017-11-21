@@ -58,7 +58,7 @@ public class Board {
 			}
 			if(i > 9) resourceValue = tiles[i-1].toString();
 			System.out.println("INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES (" + gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue + "', " + chipValue + ")");
-			DatabaseManager.executeInsertQuery("INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES (" + gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue + "', " + chipValue + ")");
+			DatabaseManager.getStatement().executeUpdate("INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES (" + gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue + "', " + chipValue + ")");
 			i++;
 		}
 	}
@@ -75,7 +75,7 @@ public class Board {
 	}
 	
 	public void getAvailableStreetPositions(Integer spelId, String username) throws SQLException {
-		ResultSet results = DatabaseManager.executeSelectQuery("select username, idstuk, x_van, y_van, x_naar, y_naar from spelerstuk where idstuk IN (select idstuk from stuk where stuksoort = \"straat\") and idspel = " + spelId.toString() + ")");
+		ResultSet results = DatabaseManager.getStatement().executeQuery("select username, idstuk, x_van, y_van, x_naar, y_naar from spelerstuk where idstuk IN (select idstuk from stuk where stuksoort = \"straat\") and idspel = " + spelId.toString() + ")");
 		//String[]
 		while(results.next()) {
 			results.getString(0);
