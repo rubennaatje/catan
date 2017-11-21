@@ -14,7 +14,7 @@ public final class DatabaseManager {
     private static Statement statement;
     
     public final static String sLogin = "SELECT password FROM account WHERE username = '%s'";
-    public final static String sSendChat = ""
+    public final static String sSendChat = "";
     
     public static void connect() {
     	try {
