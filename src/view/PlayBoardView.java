@@ -3,6 +3,7 @@ package view;
 import java.awt.Point;
 
 import javafx.event.EventHandler;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -78,8 +79,7 @@ public class PlayBoardView extends PaneTemplate {
 		if (event != null) {
 			piece.getStyleClass().add("placeholder");
 			piece.setOnMouseClicked(event);
-		}
-		;
+        }
 
 		getChildren().add(piece);
 	}
@@ -94,5 +94,9 @@ public class PlayBoardView extends PaneTemplate {
 		robber.setFill(Color.BLACK);
 		robber.setStroke(Color.BLACK);
 		getChildren().add(robber);
+	}
+
+	public void pieceClick(MouseEvent t) {
+		System.out.println("this is a test");
 	}
 }
