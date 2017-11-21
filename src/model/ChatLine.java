@@ -1,7 +1,9 @@
 package model;
 
 import java.sql.Timestamp;
-
+/*responsibility:
+	-builds a chatline
+	-returns chatline values*/
 public class ChatLine {
 	String username;
 	String message;

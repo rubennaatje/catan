@@ -1,4 +1,9 @@
 package model;
+/*Responsibilities:
+	- Create playboard in db
+	- Give list of available street placing positions for user
+	- Give list of available town placing positions for user
+	- update changes to the board placement*/
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +38,6 @@ public class Board {
 	public Board() {
 		
 	}
-
 	public void createBoard(int gameId) throws Exception {
 		if(gameId < 0) throw new Exception("Parameter cannot be negative!");
 		TileType[] tiles = new TileType[18];
