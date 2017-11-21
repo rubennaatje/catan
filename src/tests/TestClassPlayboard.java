@@ -1,18 +1,9 @@
 package tests;
 
-import java.awt.Point;
-
-import controller.DatabaseManager;
 import view.*;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Board;
 import model.Location;
-import view.LoginView;
 
 public class TestClassPlayboard extends Application{
 
@@ -23,7 +14,9 @@ public class TestClassPlayboard extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+
 		PlayBoardView playboardview = new PlayBoardView(primaryStage);
+
 		
 		
 		Location locs = new Location(1000);
