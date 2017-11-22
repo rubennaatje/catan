@@ -15,8 +15,7 @@ import javafx.stage.Stage;
 public abstract class PaneTemplate extends Pane {
 
 	private @FXML Pane extension;
-	private Pane pane;
-	private Stage stage;
+	protected Stage stage;
 
 	public PaneTemplate(URL url, Stage stage) {
 		super();
@@ -31,17 +30,18 @@ public abstract class PaneTemplate extends Pane {
 		try {
 			loader.load();
 		} catch (IOException e) {
-			
+
 		}
 	}
-	
+
 	public void show() {
 		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		stage.setScene(scene);
+		stage.centerOnScreen();
 		stage.show();
 	}
-	
+
 	public ObservableList<Node> getExtension() {
 		return extension.getChildren();
 	}

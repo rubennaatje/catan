@@ -14,7 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ChallengeView extends PaneTemplate {
-	
+		
 	@FXML Button accept; 
 	@FXML Button decline;
 	@FXML Button back;

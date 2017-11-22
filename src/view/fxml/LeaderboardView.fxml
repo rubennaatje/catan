@@ -13,12 +13,12 @@
 				<Font size="30.0" />
 			</font>
 		</Label>
-		<TableView layoutX="50.0" layoutY="100.0" prefHeight="245.0"
+		<TableView fx:id ="TableView" layoutX="50.0" layoutY="100.0" prefHeight="245.0"
 			prefWidth="489.0">
 			<columns>
-				<TableColumn prefWidth="70.0" text="Position" />
-				<TableColumn minWidth="0.0" prefWidth="213.0" text="Name" />
-				<TableColumn minWidth="0.0" prefWidth="205.0" text="Wins" />
+				<TableColumn fx:id="PlayerPosition" prefWidth="70.0" text="Position" />
+				<TableColumn fx:id="PlayerName" minWidth="0.0" prefWidth="213.0" text="Name" />
+				<TableColumn fx:id="AmountOfWins" minWidth="0.0" prefWidth="205.0" text="Wins" />
 			</columns>
 		</TableView>
 		<Button layoutX="19.0" layoutY="14.0" mnemonicParsing="false"

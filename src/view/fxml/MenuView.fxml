@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #cecece;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="728.0" fitWidth="1344.0" layoutX="-26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Catan-Background.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="454.0" fitWidth="445.0" layoutX="424.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Goldenframe.PNG" />
+         </image>
+      </ImageView>
+      <Pane layoutX="473.0" layoutY="251.0" prefHeight="386.0" prefWidth="347.0" style="-fx-background-color: white;">
+         <children>
+            <JFXButton layoutX="78.0" layoutY="107.0" prefHeight="55.0" prefWidth="190.0" style="-fx-background-color: #d44227;" text="Spel aanmaken" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font></JFXButton>
+            <Text layoutX="139.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welkom" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="92.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Gebruikersnaam&gt;" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Text>
+            <JFXButton layoutX="78.0" layoutY="180.0" prefHeight="55.0" prefWidth="190.0" style="-fx-background-color: #d44227;" text="Uitdagingen bekijken" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="78.0" layoutY="254.0" prefHeight="55.0" prefWidth="190.0" style="-fx-background-color: #d44227;" text="Ranglijst bekijken" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="131.0" layoutY="355.0" style="-fx-background-color: #d44227;" text="Uitloggen" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
