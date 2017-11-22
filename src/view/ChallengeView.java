@@ -19,7 +19,7 @@ public class ChallengeView extends PaneTemplate {
 	@FXML Button decline;
 	@FXML Button back;
 	
-	@FXML private TableView<Challenges> TableView;
+	@FXML private TableView<Challenges> uitdager;
 	@FXML private TableColumn<Challenges, String> playerName;
 	@FXML private TableColumn<Challenges, String> gameId;
 	
@@ -53,7 +53,7 @@ public class ChallengeView extends PaneTemplate {
 
 		playerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("playerName"));
 		gameId.setCellValueFactory(new PropertyValueFactory<Challenges, String>("gameId")); 
-		TableView.setItems(fillChallenges);
+		uitdager.setItems(fillChallenges);
 
 	}
 	

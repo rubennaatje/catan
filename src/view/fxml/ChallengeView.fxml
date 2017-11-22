@@ -28,7 +28,7 @@
             </HBox>
             <TableView fx:id="uitdager" layoutX="376.0" layoutY="208.0" prefHeight="154.0" prefWidth="396.0">
               <columns>
-                <TableColumn fx:id="PlayerName" prefWidth="323.0" text="Speler" />
+                <TableColumn fx:id="playerName" prefWidth="323.0" text="Speler" />
                 <TableColumn fx:id="gameId" prefWidth="72.0" text="Spelid" />
               </columns>
             </TableView>
