@@ -17,8 +17,7 @@ public class Challenges {
 		this.playerName.set(name);
 	}
 
-    public String getName()
-	{
+    public String getPlayerName() {
 		return playerName.get();
 	}
     
