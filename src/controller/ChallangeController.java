@@ -1,17 +1,18 @@
 package controller;
 
+import javafx.collections.ObservableList;
+import model.ChallengeData;
+import model.Challenges;
 import view.ChallengeView;
 
 public class ChallangeController {
 
-	private ChallengeView view; 
-	
-	public ChallangeController(Challange view) {
+	public static void main(String[] args) {
+		ChallengeData model = new ChallengeData();
+		ChallengeView view = new ChallengeView(null);
 		
-		this.view = View;
-		this.theModel = theModel; 
 		
-		this.theView.
+		ObservableList<Challenges> gegevens = model.fillChallenges();
+		view.addBoard(gegevens);
 	}
-	
 }

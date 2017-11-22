@@ -20,8 +20,8 @@ public class ChallengeView extends PaneTemplate {
 	@FXML Button back;
 	
 	@FXML private TableView<Challenges> TableView;
-	@FXML private TableColumn<Challenges, String> PlayerName;
-	@FXML private TableColumn<Challenges, String> PlayerId;
+	@FXML private TableColumn<Challenges, String> playerName;
+	@FXML private TableColumn<Challenges, String> gameId;
 	
 	//met die bovenste dingetejs doe ik eigl niks..
 	
@@ -50,18 +50,11 @@ public class ChallengeView extends PaneTemplate {
 	
 	
 	public void addBoard(ObservableList<Challenges> fillChallenges){
-		//hier wordt verteld vul t bord. 
-		//naam kolom
-		PlayerName = new TableColumn<>("name");
-		PlayerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("name"));
-		// name moet precies t zelfde zijn als in challanges
-		
-		//id kolom
-		PlayerId = new TableColumn<>("id");
-		PlayerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("id")); 
-		
+
+		playerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("playerName"));
+		gameId.setCellValueFactory(new PropertyValueFactory<Challenges, String>("gameId")); 
 		TableView.setItems(fillChallenges);
-		TableView.getColumns().addAll(PlayerName, PlayerId);
+
 	}
 	
 	
