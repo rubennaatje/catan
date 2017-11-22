@@ -1,4 +1,7 @@
 package model;
+
+import java.util.Observable;
+
 /*responsibility:
 	-updates playerview
 	-is observable
@@ -7,6 +10,19 @@ package model;
 	-stores amount of resources, turn and such
 	*
 	*/
-public class Player {
-
+public class Player extends Observable{
+	PlayerType type;
+	String username;
+	
+	public Player(PlayerType type, String username) {
+		this.type = type;
+		this.username = username;
+	}
+	
+	public PlayerType getType() {
+		return type;
+	}
+	public String getUsername() {
+		return username;
+	}
 }
