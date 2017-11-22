@@ -13,6 +13,10 @@ public class Street {
 		this.endPos = endPos;
 		this.player = player;
 	}
+	public Street(Point startPos, Point endPos) {
+		this.startPos = startPos;
+		this.endPos = endPos;
+	}
 	public Point getEndPos() {
 		return endPos;
 	}
@@ -21,6 +25,9 @@ public class Street {
 	}
 	public Player getPlayer() {
 		return player;
+	}
+	public void setPlayer(Player user) {
+		player = user;
 	}
 	
 }

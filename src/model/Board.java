@@ -15,7 +15,7 @@ import controller.DatabaseManager;
 public class Board {
 
 	// all legal (x,y) on hex edges
-	private final Integer[][] conf1 = { { 1, 4 }, { 1, 3 }, { 2, 2 }, { 2, 3 }, { 2, 5 }, { 2, 6 }, { 3, 1 }, { 3, 2 },
+	private final Integer[][] conf1 = { { 1, 3 }, { 1, 4 }, { 2, 2 }, { 2, 3 }, { 2, 5 }, { 2, 6 }, { 3, 1 }, { 3, 2 },
 			{ 3, 4 }, { 3, 5 }, { 3, 7 }, { 3, 8 }, { 4, 1 }, { 4, 3 }, { 4, 4 }, { 4, 6 }, { 4, 7 }, { 4, 9 },
 			{ 5, 2 }, { 5, 3 }, { 5, 5 }, { 5, 6 }, { 5, 8 }, { 5, 9 }, { 6, 2 }, { 6, 4 }, { 6, 5 }, { 6, 7 },
 			{ 6, 8 }, { 6, 10 }, { 7, 3 }, { 7, 4 }, { 7, 6 }, { 7, 7 }, { 7, 9 }, { 7, 10 }, { 8, 3 }, { 8, 5 },
@@ -99,6 +99,7 @@ public class Board {
 			returnStreet.add(new Street(new Point(results.getInt(0), results.getInt(1)),
 					new Point(results.getInt(2), results.getInt(3)), player));
 		}
+		results.close();
 		return returnStreet;
 	}
 
@@ -116,47 +117,51 @@ public class Board {
 			}
 			returnPiece.add(new Piece(new Point(results.getInt(0), results.getInt(1)), tempType, player));
 		}
+		results.close();
 		return returnPiece;
 	}
 
 	// returns a list of all empty street positions
-	public ArrayList<Point[]> getAvailableStreetPositions(Integer spelId) throws SQLException {
+	public ArrayList<Street> getAvailableStreetPositions(String spelId, Player user) throws SQLException {
 		ResultSet results = DatabaseManager.getStatement().executeQuery(
-				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
+				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND idspel = "
 						+ spelId + ";");
-		ArrayList<Point[]> resultList = populateStreetXYPairs();
+		ArrayList<Street> resultList = populateStreetXYPairs(user);
 
+		
 		while (results.next()) {
 			Point pointA = new Point(results.getInt(0), results.getInt(1));
 			Point pointB = new Point(results.getInt(2), results.getInt(3));
-
-			for (int i = resultList.size() - 1; i >= 0; i--) {
-				if ((pointA.equals(resultList.get(i)[0]) && pointB.equals(resultList.get(i)[1]))
-						|| (pointB.equals(resultList.get(i)[0]) && pointA.equals(resultList.get(i)[1]))) {
+			for (int i = resultList.size() - 1; i >= 0; i--) {				
+				if ((pointA.equals(resultList.get(i).getStartPos()) && pointB.equals(resultList.get(i).getEndPos()))
+						|| (pointB.equals(resultList.get(i).getStartPos()) && pointA.equals(resultList.get(i).getEndPos()))) {
 					resultList.remove(i);
+				} else {
 				}
 			}
 		}
+		results.close();
 		return resultList;
 	}
 
 	// returns only streetPositions where available and adjacent to users streets
-	public ArrayList<Point[]> getPlacableStreePos(Integer spelId, String username) throws SQLException {
+	public ArrayList<Street> getPlacableStreePos(String spelId, Player user) throws SQLException {
 		ResultSet results = DatabaseManager.getStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
-						+ spelId + " AND username = '" + username + "';");
-		ArrayList<Point[]> emptyStreetPos = getAvailableStreetPositions(spelId);
-		ArrayList<Point[]> validStreetPos = new ArrayList<Point[]>();
+						+ spelId + " AND username = '" + user.getUsername() + "';");
+		ArrayList<Street> emptyStreetPos = getAvailableStreetPositions(spelId, user);
+		ArrayList<Street> validStreetPos = new ArrayList<>();
 		while (results.next()) {
 			Point pointA = new Point(results.getInt(0), results.getInt(1));
 			Point pointB = new Point(results.getInt(2), results.getInt(3));
 			for (int i = emptyStreetPos.size() - 1; i >= 0; i--) {
-				if (pointA.equals(emptyStreetPos.get(i)[0]) || pointA.equals(emptyStreetPos.get(i)[1])
-						|| pointB.equals(emptyStreetPos.get(i)[0]) || pointB.equals(emptyStreetPos.get(i)[i])) {
+				if (pointA.equals(emptyStreetPos.get(i).getStartPos()) || pointA.equals(emptyStreetPos.get(i).getEndPos())
+						|| pointB.equals(emptyStreetPos.get(i).getStartPos()) || pointB.equals(emptyStreetPos.get(i).getStartPos())) {
 					validStreetPos.add(emptyStreetPos.get(i));
 				}
 			}
 		}
+		results.close();
 		return validStreetPos;
 	}
 
@@ -168,20 +173,21 @@ public class Board {
 
 	// returns all possible location for villages on the map during first round ||
 	// any that match
-	public ArrayList<Point[]> getValidFirstRoundStreetPos(String spelId, String username) throws SQLException {
+	public ArrayList<Street> getValidFirstRoundStreetPos(String spelId, Player user) throws SQLException {
 		ResultSet userStreetPos = DatabaseManager.getStatement().executeQuery(
 				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'dorp') AND x_van IS NOT NULL AND idspel = "
-						+ spelId + " AND username = '" + username + "';");
-		ArrayList<Point[]> allPossibleStreets = populateStreetXYPairs();
-		ArrayList<Point[]> returnStreet = new ArrayList<>();
+						+ spelId + " AND username = '" + user.getUsername() + "';");
+		ArrayList<Street> allPossibleStreets = populateStreetXYPairs(user);
+		ArrayList<Street> returnStreet = new ArrayList<>();
 		while (userStreetPos.next()) {
 			Point pointA = new Point(userStreetPos.getInt(0), userStreetPos.getInt(1));
-			for (Point[] pos : allPossibleStreets) {
-				if (pos[0].equals(pointA) || pos[1].equals(pointA)) {
+			for (Street pos : allPossibleStreets) {
+				if (pos.getStartPos().equals(pointA) || pos.getEndPos().equals(pointA)) {
 					returnStreet.add(pos);
 				}
 			}
 		}
+		userStreetPos.close();
 		return returnStreet;
 	}
 
@@ -201,6 +207,7 @@ public class Board {
 					returnPos.add(point);
 			}
 		}
+		userStreetPos.close();
 		return checkDistanceRule(returnPos, spelId);
 	}
 
@@ -225,6 +232,7 @@ public class Board {
 				}
 			}
 		}
+		placedPiece.close();
 		return posToCheck;
 	}
 
@@ -241,35 +249,29 @@ public class Board {
 					outResult.remove(i);
 			}
 		}
+		results.close();
 		return outResult;
 	}
 
 	// creates a Point[] arraylist with all possible street locations
-	private ArrayList<Point[]> populateStreetXYPairs() {
-		// for each viable coordinate we're going to if the 3 coordinates to the top
-		// right are valid. if they are: add them to list
-		ArrayList<Point[]> xyPair = new ArrayList<>();
+	public ArrayList<Street> populateStreetXYPairs(Player user) {
+		ArrayList<Street> xyPair = new ArrayList<>();
 		for (int j = 0; j < conf1.length; j++) {
-			Point current = new Point(conf1[j][0] + 1, conf1[j][1]);
+			Point current = new Point(conf1[j][0], conf1[j][1]);
 			Point bottomRight = new Point(conf1[j][0] + 1, conf1[j][1]);
 			Point top = new Point(conf1[j][0], conf1[j][1] + 1);
 			Point topRight = new Point(conf1[j][0] + 1, conf1[j][1] + 1);
-
+			
 			for (int j2 = 0; j2 < conf1.length; j2++) {
-				Point[] tempPair = new Point[2];
-				tempPair[0] = current;
 				Point compare = new Point(conf1[j2][0], conf1[j2][1]);
 				if (bottomRight.equals(compare)) {
-					tempPair[1] = bottomRight;
-					xyPair.add(tempPair);
+					xyPair.add(new Street(current, bottomRight, user));
 				}
 				if (top.equals(compare)) {
-					tempPair[1] = top;
-					xyPair.add(tempPair);
+					xyPair.add(new Street(current, top, user));
 				}
 				if (topRight.equals(compare)) {
-					tempPair[1] = topRight;
-					xyPair.add(tempPair);
+					xyPair.add(new Street(current, topRight, user));
 				}
 			}
 		}
@@ -282,5 +284,28 @@ public class Board {
 			outResult.add(new Point(conf1[i][0], conf1[i][1]));
 		}
 		return outResult;
+	}
+
+	public ArrayList<Tile> getAllHexes(int gameId) throws Exception {
+		ResultSet rs = DatabaseManager.getStatement().executeQuery("SELECT * FROM `tegels` where `idspel` =" + gameId);
+
+		ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+		while (rs.next()) {
+
+			int x = rs.getInt("x");
+			int y = rs.getInt("y");
+
+			System.out.println(rs.getInt("x"));
+
+			TileType resource = TileType.valueOf(rs.getString("grondstof"));
+
+			Tile tile = new Tile(new Point(x, y), resource);
+
+			tiles.add(tile);
+		}
+
+		rs.close();
+		return tiles;
 	}
 }
