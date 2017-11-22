@@ -23,17 +23,17 @@
 				<Image url="@../images/Goldenframe.PNG" />
 			</image>
 		</ImageView>
-		<AnchorPane layoutX="448.0" layoutY="240.0" prefHeight="412.0"
+		<Pane layoutX="448.0" layoutY="240.0" prefHeight="412.0"
 			prefWidth="384.0" style="-fx-background-color: white;">
 			<children>
-				<JFXTextField focusColor="#ffc100" layoutX="34.0"
+				<JFXTextField fx:id="txtUsername" focusColor="#ffc100" layoutX="34.0"
 					layoutY="110.0" prefHeight="37.0" prefWidth="320.0" promptText="Gebruikersnaam"
 					unFocusColor="#ff7b00">
 					<font>
 						<Font size="16.0" />
 					</font>
 				</JFXTextField>
-				<JFXPasswordField fx:id="testID" focusColor="#ffc100" layoutX="34.0"
+				<JFXPasswordField fx:id="txtPassword" focusColor="#ffc100" layoutX="34.0"
 					layoutY="206.0" prefHeight="37.0" prefWidth="320.0" promptText="Wachtwoord"
 					unFocusColor="#ff7b00">
 					<font>
@@ -52,21 +52,21 @@
 						<Font name="Arial Bold" size="14.0" />
 					</font>
 				</Text>
-				<JFXButton layoutX="204.0" layoutY="362.0" prefHeight="37.0"
+				<JFXButton fx:id="btnRegister" layoutX="204.0" layoutY="362.0" prefHeight="37.0"
 					prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Registreer"
 					textFill="WHITE">
 					<font>
 						<Font name="Arial Bold" size="14.0" />
 					</font>
 				</JFXButton>
-				<JFXButton layoutX="133.0" layoutY="280.0" prefHeight="37.0"
-					prefWidth="103.0" onMouseClicked="#getFieldValue" style="-fx-background-color: #ef8200;" text="Login"
+				<JFXButton fx:id="btnLogin" layoutX="133.0" layoutY="280.0" prefHeight="37.0"
+					prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Login"
 					textFill="WHITE">
 					<font>
 						<Font name="Arial Bold" size="14.0" />
 					</font>
 				</JFXButton>
 			</children>
-		</AnchorPane>
+		</Pane>
 	</children>
 </fx:root>
