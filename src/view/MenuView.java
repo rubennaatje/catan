@@ -1,34 +1,27 @@
 package view;
 
-import java.io.IOException;
+import com.jfoenix.controls.JFXButton;
 
-import javafx.animation.PauseTransition;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
+import view.javaFXTemplates.PaneTemplate;
 
-public class MenuView
-{
+public class MenuView extends PaneTemplate {
+	
+	@FXML private JFXButton btnLogout;
 
-	public void initUI(Stage primaryStage)
-	{
-		Parent root;
-		try
-		{
-			root = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
-			Scene scene = new Scene(root);
-
-			primaryStage.setScene(scene);
-			primaryStage.show();
-
-
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+	public MenuView(Stage stage) {
+		super(MenuView.class.getResource("fxml/MenuView.fxml"), stage);
+		
+		btnLogout.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				new LoginView(stage).show();
+			}
+		});
 	}
 	
 }
