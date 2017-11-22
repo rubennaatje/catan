@@ -26,14 +26,10 @@ public class LeaderBoardView extends PaneTemplate {
 	{
 		
 		
-		PlayerPosition = new TableColumn<>("Rank");
 		PlayerPosition.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("rank"));
 		PlayerName.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("name"));
-		PlayerName = new TableColumn<>("Name");
 		AmountOfWins.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("gamesWon"));
-		AmountOfWins = new TableColumn<>("AmountOfWins");
 		TableView.setItems(fillLeaderboard);
-		TableView.getColumns().addAll(PlayerPosition,PlayerName,AmountOfWins);
 	}	
 	
 }
