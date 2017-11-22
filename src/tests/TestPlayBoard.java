@@ -26,7 +26,9 @@ public class TestPlayBoard extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		Board demo = new Board();
-		ArrayList<Point[]> tempvar = demo.getAvailableStreetPositions(40);
+
+		ArrayList<Point[]> tempvar = demo.getEmptyPiecePos("");
+
 		
 		
 	}
