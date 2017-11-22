@@ -283,4 +283,34 @@ public class Board {
 		}
 		return outResult;
 	}
+
+	public ArrayList<Tile> getAllHexes(int gameId) throws Exception {
+		DatabaseManager.connect();
+
+		ResultSet rs = DatabaseManager.getStatement().executeQuery("SELECT * FROM `tegels` where `idspel` =" + gameId);
+
+		  ArrayList<Tile> tiles = new ArrayList<Tile>(); 
+		
+		while (rs.next()) {
+
+			int x = rs.getInt("x");
+			int y = rs.getInt("y");
+			
+			
+			
+			System.out.println(rs.getInt("x"));
+
+			TileType resource = TileType.valueOf(rs.getString("grondstof"));	
+			
+			Tile tile = new Tile(new Point(x,y), resource);
+			
+			tiles.add(tile);
+		}
+		
+		rs.close();
+
+		DatabaseManager.disconnect();
+		
+		return tiles;
+	}
 }
