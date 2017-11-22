@@ -1,34 +1,41 @@
 package view;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 
-import javafx.animation.PauseTransition;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
+import view.javaFXTemplates.PaneTemplate;
 
-public class RegisterView
-{
-	protected void initUI(Stage primaryStage)
-	{
-		Parent root;
-		try
-		{
-			root = FXMLLoader.load(getClass().getResource("Registerview.fxml"));
-			Scene scene = new Scene(root);
+public class RegisterView extends PaneTemplate {
+
+	@FXML private JFXTextField txtUsername;
+	@FXML private JFXPasswordField txtPassword;
+	@FXML private JFXPasswordField txtRePassword;
+	@FXML private JFXButton btnRegister;
+	@FXML private JFXButton btnBack;
+	
+	public RegisterView(Stage stage) {
+		super(MenuView.class.getResource("fxml/RegisterView.fxml"), stage);
+		
+		btnRegister.setOnAction(new EventHandler<ActionEvent>() {
 			
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Catan");
-			primaryStage.show();
-
-
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+			@Override
+			public void handle(ActionEvent event) {
+				
+			}
+		});
+		
+		btnBack.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				new LoginView(stage).show();
+			}
+		});
 	}
+	
 }
