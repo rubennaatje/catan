@@ -11,8 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.ChallengeData;
 import model.Challenges;
-import model.Location;
-import view.LoginView;
 
 public class TestChallenge extends Application{
 

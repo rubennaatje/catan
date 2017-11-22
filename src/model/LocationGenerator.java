@@ -6,13 +6,13 @@ import java.awt.Point;
 	-returns Point for a specific location
 	-returns bordering points for a Hex*/
 
-public class Location {
+public class LocationGenerator {
 	
 	private Point[][] coordinates;
 	
 	//probably gonna make this a static utility class
 	
-	public Location(double dimension) {
+	public LocationGenerator(double dimension) {
 		//leftside of array is X, right is Y
 		coordinates = new Point[13][13];
 		for (int x = 0; x <= 12; x++) {

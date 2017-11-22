@@ -9,7 +9,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Location;
 
 public class TestChallangeView extends Application {
 

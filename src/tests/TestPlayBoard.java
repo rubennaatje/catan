@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Board;
-import model.Location;
 
 public class TestPlayBoard extends Application {
 
