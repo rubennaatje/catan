@@ -23,13 +23,13 @@ public class BoardController extends Application {
         	
         	int x = (int)t.getLocation().getX();
         	int y = (int)t.getLocation().getY();
-        	playboardview.addHex(locs.getHexEdges(x,y), locs.getCoordinate(x,y), 0, t.getTileType().getCssClass());
+        	playboardview.addHex(t);
         }
         playboardview.show();
         Player orange = new Player(PlayerType.ORANJE, spelId);
-        ArrayList<Street> listOfStreets = board.getValidFirstRoundStreetPos(spelId, orange);
-        for(Street street: listOfStreets) {
-        	playboardview.addStreet(street, null);
+        ArrayList<Piece> listOfStreets = board.getValidFirstRoundVillagePos(spelId, orange);
+        for(Piece street: listOfStreets) {
+        	playboardview.addPiece(street, null);
         }
 	}
 

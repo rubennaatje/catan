@@ -4,22 +4,27 @@ import java.awt.Point;
 
 public class Tile {
 
-	private Point location;
-	//TODO: remove after pulling from 'geordie' branch
-	
+	private GridLocation location;
 	private TileType tileType;
+	private Integer value;
 	
-	public Tile(Point location,TileType resource) {
+	//TODO: remove after pulling from 'geordie' branch
+		
+	public Tile(GridLocation location,TileType resource, Integer value) {
 		setTileType(resource);
 		this.setLocation(location);
+		this.value = value;
 
 	}
 
-	public Point getLocation() {
+	public Integer getValue() {
+		return value;
+	}
+	public GridLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(Point location) {
+	public void setLocation(GridLocation location) {
 		this.location = location;
 	}
 
