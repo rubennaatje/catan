@@ -1,14 +1,12 @@
 package model;
 
-import java.awt.Point;
-
 //will be used as container/packet for street information
 public class Piece {
-	private Point pos;
+	private GridLocation pos;
 	private PieceType type;
 	private Player player;
 	
-	public Piece(Point pos, PieceType type, Player player) {
+	public Piece(GridLocation pos, PieceType type, Player player) {
 		this.pos = pos;
 		this.type = type;
 		this.player = player;
@@ -17,7 +15,7 @@ public class Piece {
 	public Player getPlayer() {
 		return player;
 	}
-	public Point getPos() {
+	public GridLocation getPos() {
 		return pos;
 	}
 	public PieceType getType() {

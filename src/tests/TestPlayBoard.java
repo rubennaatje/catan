@@ -25,9 +25,14 @@ public class TestPlayBoard extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		Board demo = new Board();
-
-		ArrayList<Point[]> tempvar = demo.getEmptyPiecePos("");
-
+		
+		PlayBoardView playView = new PlayBoardView(primaryStage);
+		PlayerView playerView = new PlayerView(primaryStage);
+		ChatView chat = new ChatView(primaryStage);
+		
+		GameMergeView gameView = new GameMergeView(chat, playerView, primaryStage);
+		
+		gameView.show();
 		
 		
 	}
