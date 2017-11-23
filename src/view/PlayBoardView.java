@@ -48,13 +48,13 @@ public class PlayBoardView extends PaneTemplate {
 	}
 
 	public void addStreet(Street streetData, EventHandler<? super MouseEvent> event) throws Exception {
-		Rectangle street = addStreet(streetData);
+		StreetView street = addStreet(streetData);
 		street.getStyleClass().add("placeholder");
 		street.setOnMouseClicked(event);
 	}
 
-	public Rectangle addStreet(Street streetData) throws Exception {
-		Rectangle street = new Rectangle();
+	public StreetView addStreet(Street streetData) throws Exception {
+		StreetView street = new StreetView(streetData);
 		Point endPoint = null;
 		Point startPoint = null;
 
@@ -92,14 +92,11 @@ public class PlayBoardView extends PaneTemplate {
 	}
 
 	public PieceView addPiece(Piece pieceData) throws Exception {
-		PieceView piece = new PieceView();
+		PieceView piece = new PieceView(pieceData);
 		piece.setLayoutX(locs.getCoordinate(pieceData.getPos()).getX() - 10);
 		piece.setLayoutY(locs.getCoordinate(pieceData.getPos()).getY() - 10);
 		piece.setHeight(20);
 		piece.setWidth(20);
-		// adds input CSS selector to item
-		piece.getStyleClass().add(pieceData.getPlayer().getType().getCSSClass());
-		piece.getStyleClass().add("player_piece");
 		getChildren().add(piece);
 		return piece;
 	}
@@ -107,14 +104,13 @@ public class PlayBoardView extends PaneTemplate {
 		PieceView piece = addPiece(pieceData);
 		piece.getStyleClass().add("placeholder");
 		piece.setOnMouseClicked(event);
-		piece.setPieceData(pieceData);
 	}
 
 	public void addRobber(GridLocation posIn) throws Exception {
 		Point pos = locs.getCoordinate(posIn);
 		Ellipse robber = new Ellipse();
-		robber.setCenterX(posIn.getX());
-		robber.setCenterY(posIn.getY());
+		robber.setCenterX(pos.getX());
+		robber.setCenterY(pos.getY());
 
 		robber.setRadiusY(60);
 		robber.setRadiusX(20);
