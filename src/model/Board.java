@@ -177,6 +177,7 @@ public class Board {
 		ArrayList<Piece> returnPiece = new ArrayList<>();
 		for (GridLocation p : temp) {
 			returnPiece.add(new Piece(p, PieceType.DORP, user));
+
 		}
 		return returnPiece;
 	}
@@ -202,6 +203,7 @@ public class Board {
 	}
 
 	public ArrayList<Piece> getPlacebleVillagePos(Player user, String spelId) throws Exception {
+
 		ResultSet userStreetPos = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
 						+ spelId + " AND username = '" + user.getUsername() + "';");
@@ -212,6 +214,7 @@ public class Board {
 		while (userStreetPos.next()) {
 			GridLocation GridLocationA = new GridLocation(userStreetPos.getInt(1), userStreetPos.getInt(2));
 			GridLocation GridLocationB = new GridLocation(userStreetPos.getInt(3), userStreetPos.getInt(4));
+
 			for (GridLocation GridLocation : empPiecePos) {
 				if (GridLocationA.equals(GridLocation) || GridLocationB.equals(GridLocation))
 					returnPos.add(GridLocation);
@@ -334,21 +337,12 @@ public class Board {
 				+ "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
 				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = '" + pieceModel.getType().toString()
 				+ "' AND username = '" + pieceModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '" + pieceModel.getPlayer().getUsername() + "'");
-		System.out.println("UPDATE spelerstuk SET x_van = "
-				+ pieceModel.getPos().x + ", y_van = " + pieceModel.getPos().y
-				+ "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
-				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = '" + pieceModel.getType().toString()
-				+ "' AND username = '" + pieceModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '" + pieceModel.getPlayer().getUsername() + "'");
 		
+
 	}
 
 	public void registerPlacement(Street streetModel, String idSpel) throws SQLException {
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = "
-				+ streetModel.getStartPos().x + ", y_van = " + streetModel.getStartPos().y
-				+ ", x_naar = " + streetModel.getEndPos().x + ", y_naar = " + streetModel.getEndPos().y + "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
-				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = 'straat"
-				+ "' AND username = '" + streetModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '" + streetModel.getPlayer().getUsername() + "'");
-		System.out.println("UPDATE spelerstuk SET x_van = "
 				+ streetModel.getStartPos().x + ", y_van = " + streetModel.getStartPos().y
 				+ ", x_naar = " + streetModel.getEndPos().x + ", y_naar = " + streetModel.getEndPos().y + "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
 				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = 'straat"

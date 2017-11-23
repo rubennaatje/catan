@@ -15,7 +15,6 @@ import view.*;
 public class BoardController extends Application {
 
 	Player[] players;
-
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
@@ -32,6 +31,7 @@ public class BoardController extends Application {
 		EventHandler<? super MouseEvent> event = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+
 				try {
 					if (event.getSource() instanceof PieceView) {
 						PieceView caller = (PieceView) event.getSource();
@@ -47,6 +47,7 @@ public class BoardController extends Application {
 			};
 		};
 		playboardview.show();
+
 
 		Player white = new Player(PlayerType.WIT, "bart");
 		Player orange = new Player(PlayerType.ORANJE, "rik");
@@ -94,7 +95,6 @@ public class BoardController extends Application {
 		for (Piece street : listOfStreets) {
 			playboardview.addPiece(street);
 		}
-
 	}
 
 }
