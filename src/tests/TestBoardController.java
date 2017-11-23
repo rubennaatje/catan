@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 public class TestBoardController extends Application{
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		DatabaseManager.connect();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {

@@ -91,8 +91,8 @@ public class PlayBoardView extends PaneTemplate {
 		return street;
 	}
 
-	public void addPiece(Piece pieceData, EventHandler<? super MouseEvent> event) throws Exception {
-		Rectangle piece = new Rectangle();
+	public PieceView addPiece(Piece pieceData) throws Exception {
+		PieceView piece = new PieceView();
 		piece.setLayoutX(locs.getCoordinate(pieceData.getPos()).getX() - 10);
 		piece.setLayoutY(locs.getCoordinate(pieceData.getPos()).getY() - 10);
 		piece.setHeight(20);
@@ -100,13 +100,14 @@ public class PlayBoardView extends PaneTemplate {
 		// adds input CSS selector to item
 		piece.getStyleClass().add(pieceData.getPlayer().getType().getCSSClass());
 		piece.getStyleClass().add("player_piece");
-
-		// binds placeholder selector and event
-		if (event != null) {
-			piece.getStyleClass().add("placeholder");
-			piece.setOnMouseClicked(event);
-		}
 		getChildren().add(piece);
+		return piece;
+	}
+	public void addPiece(Piece pieceData, EventHandler<? super MouseEvent> event) throws Exception {
+		PieceView piece = addPiece(pieceData);
+		piece.getStyleClass().add("placeholder");
+		piece.setOnMouseClicked(event);
+		piece.setPieceData(pieceData);
 	}
 
 	public void addRobber(GridLocation posIn) throws Exception {

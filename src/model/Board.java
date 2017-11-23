@@ -69,7 +69,7 @@ public class Board {
 					"INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES ("
 							+ gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue
 							+ "', " + chipValue + ")");
-			DatabaseManager.getStatement().executeUpdate(
+			DatabaseManager.createStatement().executeUpdate(
 					"INSERT INTO tegel (`idspel`, `idtegel`, `x`, `y`, `idgrondstofsoort`, `idgetalfiche`) VALUES ("
 							+ gameId + ", " + conf[i][0] + ", " + conf[i][1] + ", " + conf[i][2] + ", '" + resourceValue
 							+ "', " + chipValue + ")");
@@ -90,22 +90,24 @@ public class Board {
 
 	// returns all streets for a specific user in Street format
 	public ArrayList<Street> getStreetsPlayer(Player player, String spelId) throws Exception {
-		ResultSet results = DatabaseManager.getStatement().executeQuery(
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
 						+ spelId + " AND username = '" + player.getUsername() + "';");
 		ArrayList<Street> returnStreet = new ArrayList<>();
 		while (results.next()) {
-			returnStreet.add(new Street(new GridLocation(results.getInt(0), results.getInt(1)),
-					new GridLocation(results.getInt(2), results.getInt(3)), player));
+			returnStreet.add(new Street(new GridLocation(results.getInt(1), results.getInt(2)),
+					new GridLocation(results.getInt(3), results.getInt(4)), player));
 		}
 		results.close();
 		return returnStreet;
 	}
 
 	public ArrayList<Piece> getPiecesPlayer(Player player, String spelId) throws Exception {
-		ResultSet results = DatabaseManager.getStatement().executeQuery(
-				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 where s2.stuksoort in ('straat','dorp') and s.idspel = "
-						+ spelId + " and username= '" + player.getUsername() + "';");
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
+				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
+						+ spelId + " and username= '" + player.getUsername() + "' and x_van is not null;");
+		System.out.println("SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('straat','dorp') and s.idspel = "
+				+ spelId + " and username= '" + player.getUsername() + "' and x_van is not null;");
 		ArrayList<Piece> returnPiece = new ArrayList<>();
 		while (results.next()) {
 			PieceType tempType = null;
@@ -114,26 +116,27 @@ public class Board {
 			} else if (results.getString(3).equals("stad")) {
 				tempType = PieceType.CITY;
 			}
-			returnPiece.add(new Piece(new GridLocation(results.getInt(0), results.getInt(1)), tempType, player));
+			returnPiece.add(new Piece(new GridLocation(results.getInt(1), results.getInt(2)), tempType, player));
 		}
 		results.close();
 		return returnPiece;
 	}
 
 	// returns a list of all empty street positions
-	public ArrayList<Street> getAvailableStreetPositions(String spelId, Player user) throws Exception {
-		ResultSet results = DatabaseManager.getStatement().executeQuery(
+	public ArrayList<Street> getAvailableStreetPositions(Player user, String spelId) throws Exception {
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND idspel = "
 						+ spelId + ";");
 		ArrayList<Street> resultList = populateStreetXYPairs(user);
 
-		
 		while (results.next()) {
-			GridLocation GridLocationA = new GridLocation(results.getInt(0), results.getInt(1));
-			GridLocation GridLocationB = new GridLocation(results.getInt(2), results.getInt(3));
-			for (int i = resultList.size() - 1; i >= 0; i--) {				
-				if ((GridLocationA.equals(resultList.get(i).getStartPos()) && GridLocationB.equals(resultList.get(i).getEndPos()))
-						|| (GridLocationB.equals(resultList.get(i).getStartPos()) && GridLocationA.equals(resultList.get(i).getEndPos()))) {
+			GridLocation a = new GridLocation(results.getInt(1), results.getInt(2));
+			GridLocation b = new GridLocation(results.getInt(3), results.getInt(4));
+			for (int i = resultList.size() - 1; i >= 0; i--) {
+				if ((a.equals(resultList.get(i).getStartPos())
+						&& b.equals(resultList.get(i).getEndPos()))
+						|| (b.equals(resultList.get(i).getStartPos())
+								&& a.equals(resultList.get(i).getEndPos()))) {
 					resultList.remove(i);
 				} else {
 				}
@@ -144,32 +147,35 @@ public class Board {
 	}
 
 	// returns only streetPositions where available and adjacent to users streets
-	public ArrayList<Street> getPlacableStreePos(String spelId, Player user) throws Exception {
-		ResultSet results = DatabaseManager.getStatement().executeQuery(
+	public ArrayList<Street> getPlacableStreePos(Player user, String spelId) throws Exception {
+		ResultSet playersStrt = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
 						+ spelId + " AND username = '" + user.getUsername() + "';");
-		ArrayList<Street> emptyStreetPos = getAvailableStreetPositions(spelId, user);
+		
+		ArrayList<Street> emptyStreetPos = getAvailableStreetPositions(user, spelId);
 		ArrayList<Street> validStreetPos = new ArrayList<>();
-		while (results.next()) {
-			GridLocation GridLocationA = new GridLocation(results.getInt(0), results.getInt(1));
-			GridLocation GridLocationB = new GridLocation(results.getInt(2), results.getInt(3));
+		while (playersStrt.next()) {
+			GridLocation a = new GridLocation(playersStrt.getInt(1), playersStrt.getInt(2));
+			GridLocation b = new GridLocation(playersStrt.getInt(3), playersStrt.getInt(4));
 			for (int i = emptyStreetPos.size() - 1; i >= 0; i--) {
-				if (GridLocationA.equals(emptyStreetPos.get(i).getStartPos()) || GridLocationA.equals(emptyStreetPos.get(i).getEndPos())
-						|| GridLocationB.equals(emptyStreetPos.get(i).getStartPos()) || GridLocationB.equals(emptyStreetPos.get(i).getStartPos())) {
+				if (a.equals(emptyStreetPos.get(i).getStartPos())
+						|| a.equals(emptyStreetPos.get(i).getEndPos())
+						|| b.equals(emptyStreetPos.get(i).getStartPos())
+						|| b.equals(emptyStreetPos.get(i).getEndPos())) {
 					validStreetPos.add(emptyStreetPos.get(i));
 				}
 			}
 		}
-		results.close();
+		playersStrt.close();
 		return validStreetPos;
 	}
 
 	// returns all possible location for villages on the map during first round
-	public ArrayList<Piece> getValidFirstRoundVillagePos(String spelId, Player user) throws Exception {
+	public ArrayList<Piece> getValidFirstRoundVillagePos(Player user, String spelId) throws Exception {
 		ArrayList<GridLocation> returnPos = getEmptyPiecePos(spelId);
 		ArrayList<GridLocation> temp = checkDistanceRule(returnPos, spelId);
 		ArrayList<Piece> returnPiece = new ArrayList<>();
-		for(GridLocation p : temp) {
+		for (GridLocation p : temp) {
 			returnPiece.add(new Piece(p, PieceType.VILLAGE, user));
 		}
 		return returnPiece;
@@ -178,7 +184,7 @@ public class Board {
 	// returns all possible location for villages on the map during first round ||
 	// any that match
 	public ArrayList<Street> getValidFirstRoundStreetPos(String spelId, Player user) throws Exception {
-		ResultSet userStreetPos = DatabaseManager.getStatement().executeQuery(
+		ResultSet userStreetPos = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'dorp') AND x_van IS NOT NULL AND idspel = "
 						+ spelId + " AND username = '" + user.getUsername() + "';");
 		ArrayList<Street> allPossibleStreets = populateStreetXYPairs(user);
@@ -196,7 +202,7 @@ public class Board {
 	}
 
 	public ArrayList<GridLocation> getPlacebleVillagePos(String spelId, String username) throws Exception {
-		ResultSet userStreetPos = DatabaseManager.getStatement().executeQuery(
+		ResultSet userStreetPos = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
 						+ spelId + " AND username = '" + username + "';");
 
@@ -217,18 +223,20 @@ public class Board {
 
 	// removes all positions from a arraylist that are within 2 steps of a city or
 	// village
-	private ArrayList<GridLocation> checkDistanceRule(ArrayList<GridLocation> posToCheck, String spelId) throws Exception {
+	private ArrayList<GridLocation> checkDistanceRule(ArrayList<GridLocation> posToCheck, String spelId)
+			throws Exception {
 		// logic for distance rule| removing all that don't follow
-		ResultSet placedPiece = DatabaseManager.getStatement().executeQuery(
-				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') AND idspel = "
+		ResultSet placedPiece = DatabaseManager.createStatement().executeQuery(
+				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') AND x_van is not null AND idspel = "
 						+ spelId + ";");
+		
 		while (placedPiece.next()) {
-			GridLocation n = new GridLocation(placedPiece.getInt(0), placedPiece.getInt(1) + 1);
-			GridLocation ne = new GridLocation(placedPiece.getInt(0) + 1, placedPiece.getInt(1) + 1);
-			GridLocation nw = new GridLocation(placedPiece.getInt(0) - 1, placedPiece.getInt(1));
-			GridLocation s = new GridLocation(placedPiece.getInt(0), placedPiece.getInt(1) - 1);
-			GridLocation sw = new GridLocation(placedPiece.getInt(0) - 1, placedPiece.getInt(1) - 1);
-			GridLocation se = new GridLocation(placedPiece.getInt(0) + 1, placedPiece.getInt(1));
+			GridLocation n = new GridLocation(placedPiece.getInt(1), placedPiece.getInt(2) + 1);
+			GridLocation ne = new GridLocation(placedPiece.getInt(1) + 1, placedPiece.getInt(2) + 1);
+			GridLocation nw = new GridLocation(placedPiece.getInt(1) - 1, placedPiece.getInt(2));
+			GridLocation s = new GridLocation(placedPiece.getInt(1), placedPiece.getInt(2) - 1);
+			GridLocation sw = new GridLocation(placedPiece.getInt(1) - 1, placedPiece.getInt(2) - 1);
+			GridLocation se = new GridLocation(placedPiece.getInt(1) + 1, placedPiece.getInt(2));
 			for (int i = posToCheck.size() - 1; i >= 0; i--) {
 				GridLocation c = posToCheck.get(i);
 				if (n.equals(c) || ne.equals(c) || nw.equals(c) || s.equals(c) || sw.equals(c) || se.equals(c)) {
@@ -242,13 +250,15 @@ public class Board {
 
 	// returns all un-ocupied GridLocations on map
 	public ArrayList<GridLocation> getEmptyPiecePos(String spelId) throws Exception {
-		ResultSet results = DatabaseManager.getStatement().executeQuery(
-				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') AND idspel = "
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
+				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') and x_van is not null AND idspel = "
+						+ spelId + ";");
+		System.out.println(				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') and x_van is not null AND idspel = "
 						+ spelId + ";");
 		ArrayList<GridLocation> outResult = getValidLocations();
 		while (results.next()) {
-			GridLocation GridLocationA = new GridLocation(results.getInt(0), results.getInt(1));
-			for (int i = outResult.size(); i >= 0; i--) {
+			GridLocation GridLocationA = new GridLocation(results.getInt(1), results.getInt(2));
+			for (int i = outResult.size() -1; i >= 0; i--) {
 				if (outResult.get(i).equals(GridLocationA))
 					outResult.remove(i);
 			}
@@ -265,7 +275,7 @@ public class Board {
 			GridLocation bottomRight = new GridLocation(conf1[j][0] + 1, conf1[j][1]);
 			GridLocation top = new GridLocation(conf1[j][0], conf1[j][1] + 1);
 			GridLocation topRight = new GridLocation(conf1[j][0] + 1, conf1[j][1] + 1);
-			
+
 			for (int j2 = 0; j2 < conf1.length; j2++) {
 				GridLocation compare = new GridLocation(conf1[j2][0], conf1[j2][1]);
 				if (bottomRight.equals(compare)) {
@@ -291,7 +301,7 @@ public class Board {
 	}
 
 	public ArrayList<Tile> getAllHexes(int gameId) throws Exception {
-		ResultSet rs = DatabaseManager.getStatement().executeQuery("SELECT * FROM `tegels` where `idspel` =" + gameId);
+		ResultSet rs = DatabaseManager.createStatement().executeQuery("SELECT * FROM `tegels` where `idspel` =" + gameId);
 
 		ArrayList<Tile> tiles = new ArrayList<Tile>();
 
@@ -311,5 +321,22 @@ public class Board {
 
 		rs.close();
 		return tiles;
+	}
+
+	public void registerPlacement(Piece pieceModel, String idSpel) throws SQLException {
+		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = "
+				+ pieceModel.getPos().x + ", y_van = " + pieceModel.getPos().y
+				+ "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
+				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = '" + pieceModel.getType().toString()
+				+ "' AND username = '" + pieceModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '" + pieceModel.getPlayer().getUsername() + "'");
+	}
+
+	public void registerPlacement(Street streetModel, String idSpel) throws SQLException {
+		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = "
+				+ streetModel.getStartPos().x + ", y_van = " + streetModel.getStartPos().y
+				+ ", x_naar = " + streetModel.getEndPos().x + ", y_naar = " + streetModel.getEndPos().y + "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
+				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = 'straat"
+				+ "' AND username = '" + streetModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '" + streetModel.getPlayer().getUsername() + "'");
+
 	}
 }

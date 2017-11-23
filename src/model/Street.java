@@ -1,7 +1,5 @@
 package model;
 
-import java.awt.Point;
-
 //will be used as container/packet for street information
 public class Street {
 	private GridLocation startPos;
