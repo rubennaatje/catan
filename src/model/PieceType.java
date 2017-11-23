@@ -1,7 +1,7 @@
 package model;
 
 public enum PieceType {
-	CITY,VILLAGE;
+	DORP,STAD;
 	@Override
 	public String toString() {
 		return super.toString().toLowerCase();
