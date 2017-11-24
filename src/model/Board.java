@@ -88,30 +88,42 @@ public class Board {
 		return array;
 	}
 
-	
-	public ArrayList<Street> getLongestRoad(Player player, String spelId) throws Exception {
+	//retrieves count for longest road for player and game
+	public int getLongestRoad(Player player, String spelId) throws Exception {
 		ArrayList<GridLocation> endStreets = getDeadEndGridlocation(player, spelId);
+		int returnVal= 0;
 		for (GridLocation street : endStreets) {
-			System.out.println(getStreetLength(getStreetsPlayer(player, spelId), street));
+			int result = getStreetLength(getStreetsPlayer(player, spelId), street);
+			if(result > returnVal) returnVal = result;
 		}
-		return null;
+		return returnVal;
 	}
 
 	// recursive function to find street length
 	public Integer getStreetLength(ArrayList<Street> streetsIn, GridLocation start) {
+		GridLocation a = null;
+		GridLocation b = null;
 		
-		for (Street searching : streetsIn) {
-			if (searching.getEndPos().equals(start)) {
-				System.out.println(searching);
-				streetsIn.remove(searching);
-				return getStreetLength(streetsIn, searching.getStartPos()) + 1;
-			} else if (searching.getStartPos().equals(start)) {
-				System.out.println(searching);
-				streetsIn.remove(searching);
-				return getStreetLength(streetsIn, searching.getEndPos()) + 1;
+		for (int i = streetsIn.size()-1; i >= 0; i--) {
+			if (streetsIn.get(i).getEndPos().equals(start)) {
+				System.out.println(streetsIn.get(i));
+				b = streetsIn.get(i).getStartPos();
+				streetsIn.remove(streetsIn.get(i));
+			} else if (streetsIn.get(i).getStartPos().equals(start)) {
+				System.out.println(streetsIn.get(i));
+				a = streetsIn.get(i).getEndPos();
+				streetsIn.remove(streetsIn.get(i));
 			}
 		}
-		return 0;
+		if(a !=null && b!=null) {
+			return Math.max(getStreetLength(streetsIn, a), getStreetLength(streetsIn, b))+1;			
+		} else if (a!= null) {
+			return getStreetLength(streetsIn, a) +1;
+		} else if (b!= null) {
+			return getStreetLength(streetsIn, b) +1;
+		} else {
+			return 0;
+		}
 	}
 
 	// returns all streets on a deadEnd for a player
