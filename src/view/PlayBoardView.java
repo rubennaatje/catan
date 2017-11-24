@@ -21,12 +21,14 @@ public class PlayBoardView extends PaneTemplate {
 
 	public PlayBoardView(Stage stageIn) {
 		super(PlayBoardView.class.getResource("fxml/playboard.fxml"), stageIn);
-		locs = new LocationGenerator(1000);
-
+		
+		locs = new LocationGenerator(getPrefHeight(),getPrefWidth());
+		
+		getStyleClass().add("playboard_background");
 	}
 
 	private void updateLocations() {
-		locs = new LocationGenerator(Math.round(getHeight()));
+		locs = new LocationGenerator(getPrefHeight(),getPrefWidth());
 	}
 
 	@Deprecated

@@ -12,12 +12,12 @@ public class LocationGenerator {
 	
 	//probably gonna make this a static utility class
 	
-	public LocationGenerator(double dimension) {
+	public LocationGenerator(double dimension, double width) {
 		//leftside of array is X, right is Y
 		coordinates = new Point[13][13];
 		for (int x = 0; x <= 12; x++) {
 			for (int y = 0; y <= 12; y++) {
-				double tempX = x * (dimension/12);
+				double tempX = (x * (dimension/12)) + ( (width - dimension)/2);
 				double tempY = (((8 -y) * (dimension/10.5)) + (x * (dimension/21)));
 				coordinates[x][y] = new Point((int)tempX, (int)tempY);
 			}
