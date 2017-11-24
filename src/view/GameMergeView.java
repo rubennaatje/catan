@@ -5,11 +5,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GameMergeView extends Pane {
-	ChatView playBoard;
+	PlayBoardView playBoard;
 	PlayerView players;
 	Stage stage;
 	
-	public GameMergeView(ChatView playBoard, PlayerView players, Stage stage) {
+	public GameMergeView(PlayBoardView playBoard, PlayerView players, Stage stage) {
 		this.playBoard = playBoard;
 		this.players = players;
 		this.stage = stage;

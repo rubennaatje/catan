@@ -18,7 +18,7 @@ public class BoardController extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
-		LocationGenerator locs = new LocationGenerator(1000);
+
 		PlayBoardView playboardview = new PlayBoardView(stage);
 		Board board = new Board();
 		String spelId = "770";
