@@ -6,10 +6,12 @@ import javafx.stage.Stage;
 
 public class GameMergeView extends Pane {
 	PlayBoardView playBoard;
+
 	GameControlerView buttons;
 	Stage stage;
 	
 	public GameMergeView(PlayBoardView playBoard, GameControlerView buttons, Stage stage) {
+
 		this.playBoard = playBoard;
 		this.buttons = buttons;
 		this.stage = stage;

@@ -16,6 +16,7 @@ import view.*;
 public class BoardController extends Application {
 
 	Player[] players;
+
 	String spelId;
 	Integer usrPlayer; // 0..3
 	PlayBoardView playboardview;
@@ -28,6 +29,7 @@ public class BoardController extends Application {
 		players = new Player[4];
 
 		usrPlayer = 1;
+
 
 		players[0] = new Player(PlayerType.WIT, "bart");
 		players[1] = new Player(PlayerType.ORANJE, "rik");

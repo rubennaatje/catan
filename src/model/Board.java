@@ -88,15 +88,18 @@ public class Board {
 
 	//retrieves count for longest road for player and game
 	public int getLongestRoad(Player player, String spelId) throws Exception {
+
 		ArrayList<GridLocation> enemyPieces = getEnemyPieceLocation(player, spelId);
 		ArrayList<GridLocation> endStreets = getDeadEndGridlocation(player, spelId);
 		int returnVal= 0;
 		for (GridLocation street : endStreets) {
 			int result = getStreetLength(getStreetsPlayer(player, spelId), street, enemyPieces);
+
 			if(result > returnVal) returnVal = result;
 		}
 		return returnVal;
 	}
+
 
 	private ArrayList<GridLocation> getEnemyPieceLocation(Player player, String spelId) throws Exception {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
@@ -121,16 +124,19 @@ public class Board {
 				b = streetsIn.get(i).getStartPos();
 				streetsIn.remove(streetsIn.get(i));
 			} else if (streetsIn.get(i).getStartPos().equals(start)) {
+
 				a = streetsIn.get(i).getEndPos();
 				streetsIn.remove(streetsIn.get(i));
 			}
 		}
 		if(a !=null && b!=null) {
+
 			return Math.max(getStreetLength(streetsIn, a, enemyPieces), getStreetLength(streetsIn, b, enemyPieces))+1;			
 		} else if (a!= null) {
 			return getStreetLength(streetsIn, a, enemyPieces) +1;
 		} else if (b!= null) {
 			return getStreetLength(streetsIn, b, enemyPieces) +1;
+
 		} else {
 			return 0;
 		}
@@ -333,6 +339,7 @@ public class Board {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') and x_van is not null AND idspel = "
 						+ spelId + ";");
+
 		ArrayList<GridLocation> outResult = getValidLocations();
 		while (results.next()) {
 			GridLocation GridLocationA = new GridLocation(results.getInt(1), results.getInt(2));
@@ -378,7 +385,9 @@ public class Board {
 		return outResult;
 	}
 
+
 	public ArrayList<Tile> getAllHexes(String gameId) throws Exception {
+
 		ResultSet rs = DatabaseManager.createStatement()
 				.executeQuery("SELECT * FROM `tegels` where `idspel` =" + gameId);
 
@@ -420,6 +429,7 @@ public class Board {
 				+ streetModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '"
 				+ streetModel.getPlayer().getUsername() + "'");
 
+
 	}
 
 	public ArrayList<Piece> getPlacableCity(Player player, String spelId) throws Exception {
@@ -432,5 +442,6 @@ public class Board {
 		}
 		results.close();
 		return returnPiece;
+
 	}
 }
