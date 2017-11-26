@@ -399,7 +399,7 @@ public class Board {
 		rs.close();
 		return tiles;
 	}
-
+	//for pieces 
 	public void registerPlacement(Piece pieceModel, String idSpel) throws SQLException {
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + pieceModel.getPos().x
 				+ ", y_van = " + pieceModel.getPos().y
@@ -410,6 +410,7 @@ public class Board {
 
 	}
 
+	//for street
 	public void registerPlacement(Street streetModel, String idSpel) throws SQLException {
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + streetModel.getStartPos().x
 				+ ", y_van = " + streetModel.getStartPos().y + ", x_naar = " + streetModel.getEndPos().x + ", y_naar = "
@@ -419,5 +420,17 @@ public class Board {
 				+ streetModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '"
 				+ streetModel.getPlayer().getUsername() + "'");
 
+	}
+
+	public ArrayList<Piece> getPlacableCity(Player player, String spelId) throws Exception {
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
+				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('dorp') and s.idspel = "
+						+ spelId + " and username= '" + player.getUsername() + "' and x_van is not null;");
+		ArrayList<Piece> returnPiece = new ArrayList<>();
+		while (results.next()) {
+			returnPiece.add(new Piece(new GridLocation(results.getInt(1), results.getInt(2)), PieceType.STAD, player));
+		}
+		results.close();
+		return returnPiece;
 	}
 }

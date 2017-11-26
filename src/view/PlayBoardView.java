@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import model.GridLocation;
 import model.LocationGenerator;
 import model.Piece;
+import model.PieceType;
 import model.Street;
 import model.Tile;
 import view.javaFXTemplates.PaneTemplate;
@@ -95,10 +96,15 @@ public class PlayBoardView extends PaneTemplate {
 
 	public PieceView addPiece(Piece pieceData) throws Exception {
 		PieceView piece = new PieceView(pieceData);
-		piece.setLayoutX(locs.getCoordinate(pieceData.getPos()).getX() - 10);
-		piece.setLayoutY(locs.getCoordinate(pieceData.getPos()).getY() - 10);
-		piece.setHeight(20);
-		piece.setWidth(20);
+		if(pieceData.getType() == PieceType.DORP) {				
+			piece.setHeight(20);
+			piece.setWidth(20);
+		} else {
+			piece.setHeight(30);
+			piece.setWidth(30);			
+		}
+		piece.setLayoutX(locs.getCoordinate(pieceData.getPos()).getX() - (piece.getWidth()/2));
+		piece.setLayoutY(locs.getCoordinate(pieceData.getPos()).getY() - (piece.getHeight()/2));
 		getChildren().add(piece);
 		return piece;
 	}
