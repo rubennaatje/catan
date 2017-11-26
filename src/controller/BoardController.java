@@ -15,85 +15,102 @@ import view.*;
 public class BoardController extends Application {
 
 	Player[] players;
-	@Override
-	public void start(Stage stage) throws Exception {
-		// TODO Auto-generated method stub
+	String spelId;
+	Integer usrPlayer; // 0..3
+	PlayBoardView playboardview;
+	Board board;
+	EventHandler<? super MouseEvent> pieceEvent;
 
-		PlayBoardView playboardview = new PlayBoardView(stage);
-		Board board = new Board();
-		String spelId = "770";
-		// board.createBoard(40);
-		ArrayList<Tile> tiles = board.getAllHexes(40);
-		for (Tile t : tiles) {
-			playboardview.addHex(t);
-		}
+	public BoardController() {
+		players = new Player[4];
 
-		EventHandler<? super MouseEvent> event = new EventHandler<MouseEvent>() {
+		usrPlayer = 1;
+
+		players[0] = new Player(PlayerType.WIT, "bart");
+		players[1] = new Player(PlayerType.ORANJE, "rik");
+		players[2] = new Player(PlayerType.BLAUW, "lesley");
+		players[3] = new Player(PlayerType.ROOD, "ger");
+
+		board = new Board();
+
+		spelId = "770";
+
+		this.pieceEvent = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-
 				try {
 					if (event.getSource() instanceof PieceView) {
 						PieceView caller = (PieceView) event.getSource();
-						board.registerPlacement(caller.getPieceModel(), "770");
+						board.registerPlacement(caller.getPieceModel(), spelId);
 					} else if (event.getSource() instanceof StreetView) {
 						StreetView caller = (StreetView) event.getSource();
-						board.registerPlacement(caller.getStreetModel(), "770");
+						board.registerPlacement(caller.getStreetModel(), spelId);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			};
 		};
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
+
+		playboardview = new PlayBoardView(stage);
+
 		playboardview.show();
 
+		refresh();
+		showPiecePlacable();
 
-		Player white = new Player(PlayerType.WIT, "bart");
-		Player orange = new Player(PlayerType.ORANJE, "rik");
-		Player blue = new Player(PlayerType.BLAUW, "lesley");
-		Player red = new Player(PlayerType.ROOD, "ger");
+	}
 
-		ArrayList<Street> listOfStr = board.getStreetsPlayer(white, spelId);
-		for (Street street : listOfStr) {
-			playboardview.addStreet(street);
+	public void showPiecePlacable() {
+		ArrayList<Piece> listOfPiece;
+		try {
+			listOfPiece = board.getPlacebleVillagePos(players[usrPlayer], spelId);
+			for (Piece piece : listOfPiece) {
+				playboardview.addPiece(piece, pieceEvent);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		listOfStr = board.getStreetsPlayer(orange, spelId);
-		for (Street street : listOfStr) {
-			playboardview.addStreet(street);
-		}
-		listOfStr = board.getStreetsPlayer(blue, spelId);
-		for (Street street : listOfStr) {
-			playboardview.addStreet(street);
-		}
-		listOfStr = board.getStreetsPlayer(red, spelId);
-		for (Street street : listOfStr) {
-			playboardview.addStreet(street);
-		}
-		ArrayList<Piece> listOfPiece = board.getPlacebleVillagePos(orange, spelId);
-		for (Piece street : listOfPiece) {
-			playboardview.addPiece(street, event);
-		}
+	}
 
-		/*
-		 * ArrayList<Street> listOfStr = board.populateStreetXYPairs(orange); for
-		 * (Street street : listOfStr) { playboardview.addStreet(street, event); }
-		 */
-		ArrayList<Piece> listOfStreets = board.getPiecesPlayer(white, spelId);
-		for (Piece street : listOfStreets) {
-			playboardview.addPiece(street);
+	public void showStreetPlacable() {
+		ArrayList<Street> listOfStreet;
+		try {
+			listOfStreet = board.getPlacableStreePos(players[usrPlayer], spelId);
+			for (Street piece : listOfStreet) {
+				playboardview.addStreet(piece, pieceEvent);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		listOfStreets = board.getPiecesPlayer(orange, spelId);
-		for (Piece street : listOfStreets) {
-			playboardview.addPiece(street);
-		}
-		listOfStreets = board.getPiecesPlayer(blue, spelId);
-		for (Piece street : listOfStreets) {
-			playboardview.addPiece(street);
-		}
-		listOfStreets = board.getPiecesPlayer(red, spelId);
-		for (Piece street : listOfStreets) {
-			playboardview.addPiece(street);
+	}
+
+	// updateing field
+	public void refresh() {
+		// updates all hexes and attached values
+		try {
+			for (Tile t : board.getAllHexes(spelId)) {
+				playboardview.addHex(t);
+			}
+			for (Player player : players) {
+				// places all streets for player
+				for (Street street : board.getStreetsPlayer(player, spelId)) {
+					playboardview.addStreet(street);
+				}
+				// places all cities and towns for player
+				for (Piece street : board.getPiecesPlayer(player, spelId)) {
+					playboardview.addPiece(street);
+				}
+			}
+		} catch (Exception e) {
+			// TODO show error to user??? //
+			e.printStackTrace();
 		}
 	}
 
