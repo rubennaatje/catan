@@ -24,8 +24,6 @@ public class LeaderBoardView extends PaneTemplate {
 
 	public void addBoard(ObservableList<PlayerRank> fillLeaderboard)
 	{
-		
-		
 		PlayerPosition.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("rank"));
 		PlayerName.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("name"));
 		AmountOfWins.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("gamesWon"));

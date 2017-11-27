@@ -18,14 +18,12 @@ public class ScoreBoard
 			DatabaseManager.connect();
 			scores = DatabaseManager.executeSelectQuery(
 					"SELECT username, aantal_spellen_gewonnen FROM speelresultaat ORDER BY som_behaalde_punten DESC");
-			Integer i = 0;
 			Integer index = 0;
 			ObservableList<PlayerRank> data = FXCollections.observableArrayList();
 			while (scores.next())
 			{
 				index++;
 				data.add(new PlayerRank(index.toString(),scores.getString(1), scores.getString(2)));
-				i++;
 			}
 			return data;
 		} catch (SQLException e)
