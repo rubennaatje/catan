@@ -1,14 +1,8 @@
 package tests;
 
-import view.*;
-
-import com.sun.javafx.geom.Shape;
-
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import view.ChallengeView;
 
 public class TestChallangeView extends Application {
 
@@ -21,7 +15,7 @@ public class TestChallangeView extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		System.out.println("geordiiiii");
 		
-		ChallangeViewDemo demo = new ChallangeViewDemo(primaryStage);
+		ChallengeView demo = new ChallengeView(primaryStage);
 		
 		demo.show();
 	}
