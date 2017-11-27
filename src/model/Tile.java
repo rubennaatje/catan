@@ -3,10 +3,39 @@ package model;
 import java.awt.Point;
 
 public class Tile {
-	TileType type;
-	int chipVal;
+
+	private GridLocation location;
+	private TileType tileType;
+	private Integer value;
 	
-	public Tile(TileType typeIn) {
-		this.type = typeIn;
+	//TODO: remove after pulling from 'geordie' branch
+		
+	public Tile(GridLocation location,TileType resource, Integer value) {
+		setTileType(resource);
+		this.setLocation(location);
+		this.value = value;
+
 	}
+
+	public Integer getValue() {
+		return value;
+	}
+	public GridLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(GridLocation location) {
+		this.location = location;
+	}
+
+	public TileType getTileType() {
+		return tileType;
+	}
+
+	public void setTileType(TileType tileType) {
+		this.tileType = tileType;
+	}
+	
+	
+	
 }

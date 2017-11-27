@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="101.0" layoutY="364.0" prefHeight="58.0" prefWidth="398.0" style="-fx-background-color: #3A1900; -fx-background-radius: 100;">
+         <children>
+            <HBox alignment="CENTER" layoutX="39.0" layoutY="-11.0" prefHeight="30.0" prefWidth="321.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Erts.png" />
+                     </image>
+                  </ImageView>
+                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                     <font>
+                        <Font size="7.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Hooi.png" />
+                     </image>
+                  </ImageView>
+                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                     <font>
+                        <Font size="7.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Schaap.png" />
+                     </image>
+                  </ImageView>
+                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                     <font>
+                        <Font size="7.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Hout.png" />
+                     </image>
+                  </ImageView>
+                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                     <font>
+                        <Font size="7.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Steen.png" />
+                     </image>
+                  </ImageView>
+                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                     <font>
+                        <Font size="7.0" />
+                     </font>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </Pane>
+      <Group layoutX="156.0" layoutY="70.0" />
+   </children>
+</Pane>

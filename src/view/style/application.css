@@ -1,5 +1,7 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-
+.playboard_background{
+	-fx-background-color: radial-gradient( focus-angle 0.0deg, focus-distance 0.0%, center 50.0% 50.0%, radius 100.0%, rgb(101,195,250) 0.0, rgb(0,0,0) 100.0 )
+}
 
 /*Player piece style */
 .player_piece{
@@ -31,7 +33,7 @@
 	-fx-fill: radial-gradient( focus-angle 0.0deg, focus-distance 0.0%, center 50.0% 50.0%, radius 100.0%, rgb(67,118,11) 0.0, rgb(0,0,0) 100.0 );
 }
 .wol{
-	-fx-fill: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, rgb(4,224,2) 0.0, rgb(0,0,0) 100.0);
+	-fx-fill: rgb(54,245,54);
 }
 .graan{
 	-fx-fill: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, rgb(255,255,77) 0.0, rgb(0,0,0) 100.0);

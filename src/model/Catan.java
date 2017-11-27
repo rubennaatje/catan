@@ -9,7 +9,7 @@ public class Catan {
 	
 	public boolean login(String username, String password) {
 		try {
-			ResultSet result = DatabaseManager.getStatement().executeQuery(String.format(DatabaseManager.sLogin, username));
+			ResultSet result = DatabaseManager.createStatement().executeQuery(String.format(DatabaseManager.sLogin, username));
 		if (result != null && result.next()) {
 			if (result.getString("password") == password) {
 				return true;
@@ -25,7 +25,7 @@ public class Catan {
 	
 	public boolean register(String username, String password) {
 		try {
-			return DatabaseManager.getStatement().execute(String.format(DatabaseManager.sLogin, username, password));
+			return DatabaseManager.createStatement().execute(String.format(DatabaseManager.sLogin, username, password));
 		} catch (SQLException e) {
 
 		}

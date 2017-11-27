@@ -30,7 +30,7 @@ public abstract class PaneTemplate extends Pane {
 		try {
 			loader.load();
 		} catch (IOException e) {
-
+			e.printStackTrace();
 		}
 	}
 
