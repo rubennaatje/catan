@@ -103,6 +103,23 @@ public class Board {
 
 	
 	/**
+	 * Returns all placed pieces except for the ones of the player
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
+	private ArrayList<GridLocation> getEnemyPieceLocation(Player player, String spelId) throws Exception {
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
+				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
+						+ spelId + " and not username = '" + player.getUsername() + "' and x_van is not null;");
+		ArrayList<GridLocation> returnPiece = new ArrayList<>();
+		while (results.next()) {
+			returnPiece.add(new GridLocation(results.getInt(1), results.getInt(2)));
+		}
+		return returnPiece;
+	}
+	/**
 	 * retrieves count for longest road for player and game
 	 * @param player
 	 * @param spelId
@@ -123,23 +140,6 @@ public class Board {
 	}
 
 
-	/**
-	 * Returns all placed pieces except for the ones of the player
-	 * @param player
-	 * @param spelId
-	 * @return
-	 * @throws Exception
-	 */
-	private ArrayList<GridLocation> getEnemyPieceLocation(Player player, String spelId) throws Exception {
-		ResultSet results = DatabaseManager.createStatement().executeQuery(
-				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
-						+ spelId + " and not username = '" + player.getUsername() + "' and x_van is not null;");
-		ArrayList<GridLocation> returnPiece = new ArrayList<>();
-		while (results.next()) {
-			returnPiece.add(new GridLocation(results.getInt(1), results.getInt(2)));
-		}
-		return returnPiece;
-	}
 
 	/**
 	 * recursive function to find street length
@@ -149,29 +149,27 @@ public class Board {
 	 * @return
 	 */
 	public int getStreetLength(ArrayList<Street> streetsIn, GridLocation start, ArrayList<GridLocation> enemyPieces) {
-		GridLocation a = null;
-		GridLocation b = null;
+		int result = 0;
+		//checks enemy pieces on pos
 		for (GridLocation gridLocation : enemyPieces) {
 			if(start.equals(gridLocation)) return 0;
 		}
-		for (int i = streetsIn.size()-1; i >= 0; i--) {
+		ArrayList<GridLocation> toCheck = new ArrayList<>(2);
+		
+		for (int i = streetsIn.size()-1; i >= 0 && toCheck.size() < 2; i--) {
 			if (streetsIn.get(i).getEndPos().equals(start)) {
-				b = streetsIn.get(i).getStartPos();
+				toCheck.add(streetsIn.get(i).getStartPos());
 				streetsIn.remove(streetsIn.get(i));
 			} else if (streetsIn.get(i).getStartPos().equals(start)) {
-				a = streetsIn.get(i).getEndPos();
+				toCheck.add(streetsIn.get(i).getEndPos());
 				streetsIn.remove(streetsIn.get(i));
 			}
 		}
-		if(a !=null && b!=null) {
-			return Math.max(getStreetLength(streetsIn, a, enemyPieces), getStreetLength(streetsIn, b, enemyPieces))+1;			
-		} else if (a!= null) {
-			return getStreetLength(streetsIn, a, enemyPieces) +1;
-		} else if (b!= null) {
-			return getStreetLength(streetsIn, b, enemyPieces) +1;
-		} else {
-			return 0;
+		for (GridLocation gridLocation : toCheck) {
+			int tmpLength = getStreetLength(streetsIn, gridLocation, enemyPieces) +1;
+			if(tmpLength > result) result = tmpLength;
 		}
+		return result;
 	}
 
 

@@ -19,9 +19,8 @@ public class TestBoardController extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		System.out.println("rub");
-		
-		BoardController boardController = new BoardController();
+
+		BoardController boardController = new BoardController(null, null, 0);
 		
 		boardController.start(primaryStage);
 		

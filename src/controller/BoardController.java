@@ -1,13 +1,11 @@
 package controller;
 
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
@@ -25,24 +23,22 @@ public class BoardController extends Application {
 	EventHandler<? super MouseEvent> pieceEvent;
 	EventHandler<MouseEvent> buyEvent;
 
-	public BoardController() {
-		players = new Player[4];
+	private EventHandler<MouseEvent> endTurn;
 
-		usrPlayer = 2;
+	public BoardController(String spelId, Player[] players, int usrPlayer) {
+		this.players = new Player[4];
 
-
-		players[0] = new Player(PlayerType.WIT, "bart");
-		players[1] = new Player(PlayerType.ORANJE, "rik");
-		players[2] = new Player(PlayerType.BLAUW, "lesley");
-		players[3] = new Player(PlayerType.ROOD, "ger");
+		this.usrPlayer = 2;
 
 		board = new Board();
 
-		spelId = "770";
+		this.players[0] = new Player(PlayerType.WIT, "bart");
+		this.players[1] = new Player(PlayerType.ORANJE, "rik");
+		this.players[2] = new Player(PlayerType.BLAUW, "lesley");
+		this.players[3] = new Player(PlayerType.ROOD, "ger");
 
+		this.spelId = "770";
 
-		
-		
 		buyEvent = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -71,6 +67,7 @@ public class BoardController extends Application {
 		 * 
 		 * @Override public void handle(MouseEvent arg0) { showStreetPlacable(); } };
 		 */
+
 
 		this.pieceEvent = new EventHandler<MouseEvent>() {
 			@Override
