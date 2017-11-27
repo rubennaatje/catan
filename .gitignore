@@ -1,4 +1,4 @@
-/bin/
+/src/tests/*
 Catan.iml
 .idea/vcs.xml
 .idea/misc.xml
