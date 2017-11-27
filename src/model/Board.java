@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import controller.DatabaseManager;
 
+/**
+ * @author laptopG
+ *
+ */
+
 public class Board {
 
 	// all legal (x,y) on hex edges
@@ -23,7 +28,7 @@ public class Board {
 			{ 8, 6 }, { 8, 8 }, { 8, 9 }, { 8, 11 }, { 9, 4 }, { 9, 5 }, { 9, 7 }, { 9, 8 }, { 9, 10 }, { 9, 11 },
 			{ 10, 6 }, { 10, 7 }, { 10, 9 }, { 10, 10 }, { 11, 8 }, { 11, 9 } };
 
-	// all tile id's tilecoordinates(x,y), fischevalues
+	/** all tile id's tilecoordinates(x,y), fischevalues */
 	private final Integer[][] conf = { { 1, 2, 4, 12 }, { 2, 3, 6, 18 }, { 3, 4, 8, 14 }, { 4, 3, 3, 10 },
 			{ 5, 4, 5, 16 },
 
@@ -36,6 +41,11 @@ public class Board {
 	public Board() {
 	}
 
+	/**
+	 * Creates a random playboard in the database
+	 * @param gameId
+	 * @throws Exception
+	 */
 	public void createBoard(int gameId) throws Exception {
 		if (gameId < 0)
 			throw new Exception("Parameter cannot be negative!");
@@ -75,6 +85,11 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Shuffles an array
+	 * @param array
+	 * @return
+	 */
 	private TileType[] shuffleArray(TileType[] array) {
 		Random rnd = new Random();
 		for (int i = array.length - 1; i > 0; i--) {
@@ -86,7 +101,14 @@ public class Board {
 		return array;
 	}
 
-	//retrieves count for longest road for player and game
+	
+	/**
+	 * retrieves count for longest road for player and game
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public int getLongestRoad(Player player, String spelId) throws Exception {
 
 		ArrayList<GridLocation> enemyPieces = getEnemyPieceLocation(player, spelId);
@@ -101,6 +123,13 @@ public class Board {
 	}
 
 
+	/**
+	 * Returns all placed pieces except for the ones of the player
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	private ArrayList<GridLocation> getEnemyPieceLocation(Player player, String spelId) throws Exception {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
@@ -112,7 +141,13 @@ public class Board {
 		return returnPiece;
 	}
 
-	// recursive function to find street length
+	/**
+	 * recursive function to find street length
+	 * @param streetsIn
+	 * @param start
+	 * @param enemyPieces
+	 * @return
+	 */
 	public int getStreetLength(ArrayList<Street> streetsIn, GridLocation start, ArrayList<GridLocation> enemyPieces) {
 		GridLocation a = null;
 		GridLocation b = null;
@@ -124,25 +159,29 @@ public class Board {
 				b = streetsIn.get(i).getStartPos();
 				streetsIn.remove(streetsIn.get(i));
 			} else if (streetsIn.get(i).getStartPos().equals(start)) {
-
 				a = streetsIn.get(i).getEndPos();
 				streetsIn.remove(streetsIn.get(i));
 			}
 		}
 		if(a !=null && b!=null) {
-
 			return Math.max(getStreetLength(streetsIn, a, enemyPieces), getStreetLength(streetsIn, b, enemyPieces))+1;			
 		} else if (a!= null) {
 			return getStreetLength(streetsIn, a, enemyPieces) +1;
 		} else if (b!= null) {
 			return getStreetLength(streetsIn, b, enemyPieces) +1;
-
 		} else {
 			return 0;
 		}
 	}
 
-	// returns all streets on a deadEnd for a player
+
+	/**
+	 * returns all streets on a deadEnd for a player
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<GridLocation> getDeadEndGridlocation(Player player, String spelId) throws Exception {
 		ArrayList<Street> playerStreet = getStreetsPlayer(player, spelId);
 		ArrayList<GridLocation> endLocations = new ArrayList<>();
@@ -171,7 +210,14 @@ public class Board {
 		return endLocations;
 	}
 
-	// returns all streets for a specific user in Street format
+
+	/**
+	 * returns all streets for a specific user in Street format
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Street> getStreetsPlayer(Player player, String spelId) throws Exception {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
@@ -185,6 +231,13 @@ public class Board {
 		return returnStreet;
 	}
 
+	/**
+	 * Returns a list of all pieces placed by a player;
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Piece> getPiecesPlayer(Player player, String spelId) throws Exception {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
@@ -203,7 +256,13 @@ public class Board {
 		return returnPiece;
 	}
 
-	// returns a list of all empty street positions
+	/**
+	 * returns a list of all empty street positions
+	 * @param user
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Street> getAvailableStreetPositions(Player user, String spelId) throws Exception {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND idspel = "
@@ -225,7 +284,13 @@ public class Board {
 		return resultList;
 	}
 
-	// returns only streetPositions where available and adjacent to users streets
+	/**
+	 * Returns only streetPositions where available and adjacent to users streets
+	 * @param user
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Street> getPlacableStreePos(Player user, String spelId) throws Exception {
 		ResultSet playersStrt = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
@@ -248,7 +313,14 @@ public class Board {
 		return validStreetPos;
 	}
 
-	// returns all possible location for villages on the map during first round
+	
+	/**
+	 * returns all possible location for villages on the map during first round
+	 * @param user
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Piece> getValidFirstRoundVillagePos(Player user, String spelId) throws Exception {
 		ArrayList<GridLocation> returnPos = getEmptyPiecePos(spelId);
 		ArrayList<GridLocation> temp = checkDistanceRule(returnPos, spelId);
@@ -260,8 +332,14 @@ public class Board {
 		return returnPiece;
 	}
 
-	// returns all possible location for villages on the map during first round ||
-	// any that match
+	 
+	/**
+	 * returns all possible location for villages on the map during first round
+	 * @param spelId
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Street> getValidFirstRoundStreetPos(String spelId, Player user) throws Exception {
 		ResultSet userStreetPos = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'dorp') AND x_van IS NOT NULL AND idspel = "
@@ -280,7 +358,14 @@ public class Board {
 		return returnStreet;
 	}
 
-	public ArrayList<Piece> getPlacebleVillagePos(Player user, String spelId) throws Exception {
+	/**
+	 * Returns a list of all placable towns
+	 * @param user
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<Piece> getPlacableTownPos(Player user, String spelId) throws Exception {
 
 		ResultSet userStreetPos = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
@@ -307,8 +392,14 @@ public class Board {
 		return returnPiece;
 	}
 
-	// removes all positions from a arraylist that are within 2 steps of a city or
-	// village
+	
+	/**
+	 * removes all positions from a arraylist that are within 2 steps of a city or village
+	 * @param posToCheck
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	private ArrayList<GridLocation> checkDistanceRule(ArrayList<GridLocation> posToCheck, String spelId)
 			throws Exception {
 		// logic for distance rule| removing all that don't follow
@@ -334,7 +425,13 @@ public class Board {
 		return posToCheck;
 	}
 
-	// returns all un-ocupied GridLocations on map
+
+	/**
+	 * returns all un-ocupied GridLocations on map
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<GridLocation> getEmptyPiecePos(String spelId) throws Exception {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') and x_van is not null AND idspel = "
@@ -352,7 +449,13 @@ public class Board {
 		return outResult;
 	}
 
-	// creates a GridLocation[] arraylist with all possible street locations
+	
+	/**
+	 * creates a GridLocation[] arraylist with all possible street locations
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Street> populateStreetXYPairs(Player user) throws Exception {
 		ArrayList<Street> xyPair = new ArrayList<>();
 		for (int j = 0; j < conf1.length; j++) {
@@ -385,11 +488,18 @@ public class Board {
 		return outResult;
 	}
 
-
-	public ArrayList<Tile> getAllHexes(String gameId) throws Exception {
+	
+	/**
+	 * 
+	 * retrieves all resource tiles from DB
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<Tile> getAllHexes(String spelId) throws Exception {
 
 		ResultSet rs = DatabaseManager.createStatement()
-				.executeQuery("SELECT * FROM `tegels` where `idspel` =" + gameId);
+				.executeQuery("SELECT * FROM `tegels` where `idspel` =" + spelId);
 
 		ArrayList<Tile> tiles = new ArrayList<Tile>();
 
@@ -408,7 +518,13 @@ public class Board {
 		rs.close();
 		return tiles;
 	}
-	//for pieces 
+	
+	/**
+	 * Registers the placement of pieces(City/towN) in de Database
+	 * @param pieceModel
+	 * @param idSpel
+	 * @throws SQLException
+	 */
 	public void registerPlacement(Piece pieceModel, String idSpel) throws SQLException {
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + pieceModel.getPos().x
 				+ ", y_van = " + pieceModel.getPos().y
@@ -419,7 +535,12 @@ public class Board {
 
 	}
 
-	//for street
+	/**
+	 * Registers the placement of streets in de Database
+	 * @param streetModel
+	 * @param idSpel
+	 * @throws SQLException
+	 */
 	public void registerPlacement(Street streetModel, String idSpel) throws SQLException {
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + streetModel.getStartPos().x
 				+ ", y_van = " + streetModel.getStartPos().y + ", x_naar = " + streetModel.getEndPos().x + ", y_naar = "
@@ -432,6 +553,13 @@ public class Board {
 
 	}
 
+	/**
+	 * Returns all placeable Cities for a specific user
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Piece> getPlacableCity(Player player, String spelId) throws Exception {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('dorp') and s.idspel = "

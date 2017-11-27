@@ -28,7 +28,7 @@ public class BoardController extends Application {
 	public BoardController() {
 		players = new Player[4];
 
-		usrPlayer = 1;
+		usrPlayer = 2;
 
 
 		players[0] = new Player(PlayerType.WIT, "bart");
@@ -40,6 +40,8 @@ public class BoardController extends Application {
 
 		spelId = "770";
 
+
+		
 		
 		buyEvent = new EventHandler<MouseEvent>() {
 			@Override
@@ -108,7 +110,7 @@ public class BoardController extends Application {
 	public void showTownPlacable() {
 		ArrayList<Piece> listOfPiece;
 		try {
-			listOfPiece = board.getPlacebleVillagePos(players[usrPlayer], spelId);
+			listOfPiece = board.getPlacableTownPos(players[usrPlayer], spelId);
 			for (Piece piece : listOfPiece) {
 				playboardview.addPiece(piece, pieceEvent);
 			}
