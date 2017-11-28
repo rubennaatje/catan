@@ -27,26 +27,26 @@
       				<Font name="Arial Bold" size="30.0" />
       			</font>
       		</Label>
-      		<Button fx:id="back" layoutX="1101.0" layoutY="654.0" mnemonicParsing="false" onMouseClicked="#Back" style="-fx-background-color: #ef8200;" text="Terug naar het menu" textFill="WHITE">
+      		<Button fx:id="btnBack" layoutX="1125.0" layoutY="654.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #ef8200;" text="Terug" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold" size="13.0" />
+                  <Font name="Arial Bold" size="14.0" />
                </font>
             </Button>
             <HBox alignment="CENTER" layoutX="404.0" layoutY="411.0" prefHeight="25.0" prefWidth="337.0" spacing="10.0" />
-            <TableView fx:id="uitdager" layoutX="33.0" layoutY="151.0" prefHeight="464.0" prefWidth="1215.0">
+            <TableView fx:id="uitdager" layoutX="20.0" layoutY="165.0" prefHeight="441.0" prefWidth="1241.0">
               <columns>
                 <TableColumn fx:id="playerName" prefWidth="978.0" text="Speler" />
                 <TableColumn fx:id="gameId" prefWidth="236.0" text="Spelid" />
               </columns>
             </TableView>
-            <JFXButton fx:id="accept" layoutX="33.0" layoutY="654.0" onMouseClicked="#Accept" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #39b218;" text="Accepteren" textFill="WHITE">
+            <JFXButton fx:id="btnAccept" layoutX="20.0" layoutY="654.0" prefHeight="37.0" prefWidth="145.0" style="-fx-background-color: #39b218;" text="Accepteren" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold" size="13.0" />
+                  <Font name="Arial Bold" size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="decline" layoutX="209.0" layoutY="654.0" onMouseClicked="#Decline" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: RED;" text="Afwijzen" textFill="WHITE">
+            <JFXButton fx:id="btnDecline" layoutX="196.0" layoutY="654.0" prefHeight="37.0" prefWidth="145.0" style="-fx-background-color: RED;" text="Afwijzen" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold" size="13.0" />
+                  <Font name="Arial Bold" size="14.0" />
                </font>
             </JFXButton>
          </children>
