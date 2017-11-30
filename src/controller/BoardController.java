@@ -15,7 +15,7 @@ import view.*;
 
 public class BoardController extends Application {
 
-	Player[] players;
+	PlayerModel[] players;
 
 	String spelId;
 	Integer usrPlayer; // 0..3
@@ -26,15 +26,15 @@ public class BoardController extends Application {
 	EventHandler<MouseEvent> buyEvent;
 
 	public BoardController() {
-		players = new Player[4];
+		players = new PlayerModel[4];
 
 		usrPlayer = 1;
 
 
-		players[0] = new Player(PlayerType.WIT, "bart");
-		players[1] = new Player(PlayerType.ORANJE, "rik");
-		players[2] = new Player(PlayerType.BLAUW, "lesley");
-		players[3] = new Player(PlayerType.ROOD, "ger");
+		players[0] = new PlayerModel(PlayerType.WIT, "bart");
+		players[1] = new PlayerModel(PlayerType.ORANJE, "rik");
+		players[2] = new PlayerModel(PlayerType.BLAUW, "lesley");
+		players[3] = new PlayerModel(PlayerType.ROOD, "ger");
 
 		board = new Board();
 
@@ -152,7 +152,7 @@ public class BoardController extends Application {
 			for (Tile t : board.getAllHexes(spelId)) {
 				playboardview.addHex(t);
 			}
-			for (Player player : players) {
+			for (PlayerModel player : players) {
 				// places all streets for player
 				for (Street street : board.getStreetsPlayer(player, spelId)) {
 					playboardview.addStreet(street);

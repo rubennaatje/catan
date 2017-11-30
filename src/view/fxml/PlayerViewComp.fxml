@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" prefHeight="720" prefWidth="1280">
+         <children>
+            <BorderPane layoutY="420.0" prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: YELLOW;" />
+            <Text fx:id="road" layoutX="60.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="knight" layoutX="60.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="score" layoutX="60.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="devcards" layoutX="60.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="524.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Knights.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Cards.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="90.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@PlayerIcon.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="cards" layoutX="60.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Devcard.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Score.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="555.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Road.png" />
+               </image>
+            </ImageView>
+         </children>
+</fx:root>

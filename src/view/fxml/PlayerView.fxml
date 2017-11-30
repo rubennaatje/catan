@@ -55,11 +55,13 @@
             <Image url="@../images/Road.png" />
          </image>
       </ImageView>
-      <Text layoutX="60.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      
+      <Text fx:id= "Cards_1" layoutX="60.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Devcards_1" layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Knights_1" layoutX="60.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Score_1" layoutX="60.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Road_1" layoutX="60.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      
       <Text layoutX="60.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text layoutX="60.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text layoutX="60.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
