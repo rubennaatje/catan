@@ -33,7 +33,13 @@ public abstract class PaneTemplate extends Pane {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Should only be used for quick testing off separate functions. Not, controller
+	 * functionality. All viewComponents extended on PaneTemplate should be managed
+	 * in one scene, not created in its object.
+	 * 
+	 */
+	@Deprecated
 	public void show() {
 		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
