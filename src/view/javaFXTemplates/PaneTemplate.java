@@ -34,7 +34,7 @@ public abstract class PaneTemplate extends Pane {
 		}
 	}
 	/**
-	 * Should only be used for quick testing off separate functions. Not, controller
+	 * Should only be used for quick testing of separate functions. Not, controller
 	 * functionality. All viewComponents extended on PaneTemplate should be managed
 	 * in one scene, not created in its object.
 	 * 
