@@ -13,7 +13,7 @@ import view.*;
 
 public class GameController extends Application {
 
-	Player[] players;
+	PlayerModel[] players;
 
 	String spelId;
 	Integer usrPlayer; // 0..3
@@ -25,17 +25,17 @@ public class GameController extends Application {
 
 	private EventHandler<MouseEvent> endTurn;
 
-	public GameController(String spelId, Player[] players, int usrPlayer) {
-		this.players = new Player[4];
+	public GameController(String spelId, PlayerModel[] players, int usrPlayer) throws Exception {
+		this.players = new PlayerModel[4];
 
 		this.usrPlayer = 2;
 
 		board = new Board();
 
-		this.players[0] = new Player(PlayerType.WIT, "bart");
-		this.players[1] = new Player(PlayerType.ORANJE, "rik");
-		this.players[2] = new Player(PlayerType.BLAUW, "lesley");
-		this.players[3] = new Player(PlayerType.ROOD, "ger");
+		this.players[0] = new PlayerModel(PlayerType.WIT, "bart", spelId);
+		this.players[1] = new PlayerModel(PlayerType.ORANJE, "rik", spelId);
+		this.players[2] = new PlayerModel(PlayerType.BLAUW, "lesley", spelId);
+		this.players[3] = new PlayerModel(PlayerType.ROOD, "ger", spelId);
 
 		this.spelId = "770";
 
@@ -110,7 +110,7 @@ public class GameController extends Application {
 	public void showTownPlacable() {
 		ArrayList<Piece> listOfPiece;
 		try {
-			listOfPiece = board.getPlacableTownPos(players[usrPlayer], spelId);
+			listOfPiece = board.getPlacebleTownPos(players[usrPlayer], spelId);
 			for (Piece piece : listOfPiece) {
 				playboardview.addPiece(piece, pieceEvent);
 			}
@@ -154,7 +154,7 @@ public class GameController extends Application {
 			for (Tile t : board.getAllHexes(spelId)) {
 				playboardview.addHex(t);
 			}
-			for (Player player : players) {
+			for (PlayerModel player : players) {
 				// places all streets for player
 				for (Street street : board.getStreetsPlayer(player, spelId)) {
 					playboardview.addStreet(street);

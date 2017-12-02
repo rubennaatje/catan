@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Board;
 import model.LocationGenerator;
-import model.Player;
+import model.PlayerModel;
 import model.PlayerType;
 import model.Street;
 import model.Tile;
@@ -34,10 +34,10 @@ public class TestPlayBoard extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Player white = new Player(PlayerType.WIT, "bart");
-		Player orange = new Player(PlayerType.ORANJE, "rik");
-		Player blue = new Player(PlayerType.BLAUW, "lesley");
-		Player red = new Player(PlayerType.ROOD, "ger");
+		PlayerModel white = new PlayerModel(PlayerType.WIT, "bart", null);
+		PlayerModel orange = new PlayerModel(PlayerType.ORANJE, "rik", null);
+		PlayerModel blue = new PlayerModel(PlayerType.BLAUW, "lesley", null);
+		PlayerModel red = new PlayerModel(PlayerType.ROOD, "ger", null);
 		
 		Board board = new Board();
 		

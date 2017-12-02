@@ -4,15 +4,15 @@ package model;
 public class Piece {
 	private GridLocation pos;
 	private PieceType type;
-	private Player player;
+	private PlayerModel player;
 	
-	public Piece(GridLocation pos, PieceType type, Player player) {
+	public Piece(GridLocation pos, PieceType type, PlayerModel player) {
 		this.pos = pos;
 		this.type = type;
 		this.player = player;
 	}
 	
-	public Player getPlayer() {
+	public PlayerModel getPlayer() {
 		return player;
 	}
 	public GridLocation getPos() {
