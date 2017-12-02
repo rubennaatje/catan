@@ -102,8 +102,6 @@ public class GameController extends Application {
 		mergeView.show();
 
 		refresh();
-		
-		board.giveResources(spelId,6);
 
 	}
 
