@@ -22,7 +22,7 @@ public class TestStartController extends Application {
 		
 		Catan catan = new Catan();
 		//catan.initGame();
-		Catan.setGameId(770);
+		Catan.setGameId("770");
 		
 		//catan.addResourceCards();
 		launch(args);

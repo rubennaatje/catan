@@ -9,7 +9,7 @@ import controller.DatabaseManager;
 
 public class Catan {
 
-	private static int gameId;
+	private static String gameId;
 
 	public boolean login(String username, String password) {
 		try {
@@ -38,11 +38,11 @@ public class Catan {
 		return false;
 	}
 
-	public static void setGameId(int gameId2) {
+	public static void setGameId(String gameId2) {
 		gameId = gameId2;
 	}
 
-	public static int getGameId() {
+	public static String getGameId() {
 		return gameId;
 	}
 	/**
@@ -54,7 +54,7 @@ public class Catan {
 		//get the highest id from the table.
 		ResultSet test = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
 		test.next();
-		int gameId = (test.getInt("idspel") + 1);
+		String gameId = (test.getString("idspel") + 1);
 		test.close();
 		
 		setGameId(gameId);
@@ -136,14 +136,14 @@ public class Catan {
 	private void addPlayers() throws Exception {
 
 		// TODO: fix up when we get further.
-		Player[] players = new Player[4];
-		players[0] = new Player(PlayerType.WIT, "bart");
-		players[1] = new Player(PlayerType.ORANJE, "rik");
-		players[2] = new Player(PlayerType.BLAUW, "lesley");
-		players[3] = new Player(PlayerType.ROOD, "ger");
+		PlayerModel[] players = new PlayerModel[4];
+		players[0] = new PlayerModel(PlayerType.WIT, "bart", Catan.getGameId());
+		players[1] = new PlayerModel(PlayerType.ORANJE, "rik", Catan.getGameId());
+		players[2] = new PlayerModel(PlayerType.BLAUW, "lesley", Catan.getGameId());
+		players[3] = new PlayerModel(PlayerType.ROOD, "ger", Catan.getGameId());
 
 		int index = 0;
-		for (Player p : players) {
+		for (PlayerModel p : players) {
 			String playStatus = "uitgedaagde";
 
 			if (index == 0)

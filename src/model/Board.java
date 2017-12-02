@@ -482,7 +482,7 @@ public class Board {
 		ArrayList<Piece> returnPiece = new ArrayList<>();
 		while (results.next()) {
 			//System.out.println(results.getInt("x_van") + " " + results.getInt("y_van") + " " + results.getString("username") + " " + results.getString("stuksoort"));
-			returnPiece.add(new Piece(new GridLocation(results.getInt("x_van"), results.getInt("Y_van")), PieceType.valueOf(results.getString("stuksoort").toUpperCase()), new Player(PlayerType.BLAUW, results.getString("username"))));
+			returnPiece.add(new Piece(new GridLocation(results.getInt("x_van"), results.getInt("Y_van")), PieceType.valueOf(results.getString("stuksoort").toUpperCase()), new PlayerModel(PlayerType.BLAUW, results.getString("username"), spelId)));
 		}
 		results.close();
 		return returnPiece;
