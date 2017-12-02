@@ -52,3 +52,17 @@
 	-fx-fill: white;
 	-fx-stroke: black;	
 }
+
+/* player Tile stuff */
+#playerRed {
+	-fx-fill: red;
+}
+#playerBlue{
+	-fx-fill: blue;
+}
+#playerOrange{
+	-fx-fill: orange;
+}
+#playerWhite{
+	-fx-fill: white;
+}
