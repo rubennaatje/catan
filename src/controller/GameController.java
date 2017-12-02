@@ -32,12 +32,6 @@ public class GameController extends Application {
 
 		board = new Board();
 
-		this.players[0] = new PlayerModel(PlayerType.WIT, "bart", spelId);
-		this.players[1] = new PlayerModel(PlayerType.ORANJE, "rik", spelId);
-		this.players[2] = new PlayerModel(PlayerType.BLAUW, "lesley", spelId);
-		this.players[3] = new PlayerModel(PlayerType.ROOD, "ger", spelId);
-
-		this.spelId = "770";
 
 		buyEvent = new EventHandler<MouseEvent>() {
 			@Override

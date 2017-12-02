@@ -19,12 +19,10 @@ public class PlayerModel extends Observable {
 	private String spelId;
 	private int playerNumber;
 
-	public PlayerModel(PlayerType type, String username, String spelId) throws Exception {
-		this.type = type;
+	public PlayerModel(String username, String spelId) throws Exception {
 		this.username = username;
 		refresh(spelId);
 		this.spelId = spelId;
-
 	}
 
 	public void refresh(String spelId) throws Exception {
