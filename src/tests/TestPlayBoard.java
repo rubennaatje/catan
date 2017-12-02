@@ -34,10 +34,10 @@ public class TestPlayBoard extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		PlayerModel white = new PlayerModel(PlayerType.WIT, "bart");
-		PlayerModel orange = new PlayerModel(PlayerType.ORANJE, "rik");
-		PlayerModel blue = new PlayerModel(PlayerType.BLAUW, "lesley");
-		PlayerModel red = new PlayerModel(PlayerType.ROOD, "ger");
+		PlayerModel white = new PlayerModel(PlayerType.WIT, "bart", null);
+		PlayerModel orange = new PlayerModel(PlayerType.ORANJE, "rik", null);
+		PlayerModel blue = new PlayerModel(PlayerType.BLAUW, "lesley", null);
+		PlayerModel red = new PlayerModel(PlayerType.ROOD, "ger", null);
 		
 		Board board = new Board();
 		

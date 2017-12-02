@@ -3,9 +3,9 @@ package model;
 
 public class PlayerUser extends PlayerModel {
 
-	public PlayerUser(PlayerType type, String username) {
-		super(type, username);
-		// TODO Auto-generated constructor stub
+	public PlayerUser(PlayerType type, String username) throws Exception {
+		super(type, username, username);
+		// TODO Auto-genserated constructor stub
 	}
 
 }

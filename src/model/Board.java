@@ -280,7 +280,7 @@ public class Board {
 		return returnStreet;
 	}
 
-	public ArrayList<Piece> getPlacebleVillagePos(PlayerModel user, String spelId) throws Exception {
+	public ArrayList<Piece> getPlacebleTownPos(PlayerModel user, String spelId) throws Exception {
 
 		ResultSet userStreetPos = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
