@@ -103,7 +103,7 @@ public class GameController extends Application {
 
 		refresh();
 		
-		board.giveResources(6);
+		board.giveResources(spelId,6);
 
 	}
 

@@ -574,10 +574,7 @@ public class Board {
 
 	}
 	
-	public void giveResources(int nThrow) throws Exception {
-		System.out.println("test");
-		
-		
+	public void giveResources(String spelId, int nThrow) throws Exception {
 		HashMap <String ,ArrayList<Piece>> resourceKindPieces = new HashMap<String ,ArrayList<Piece>>();
 		
 		
@@ -585,9 +582,9 @@ public class Board {
 			resourceKindPieces.put(type.toString(), new ArrayList<Piece>());
 		}
 		
-		for(Tile t : getAllHexes("770")) {
+		for(Tile t : getAllHexes(spelId)) {
 			if(t.getValue() == nThrow) {
-				resourceKindPieces.get(t.getTileType().toString()).addAll(getSurroundingPieces(t.getLocation().x, t.getLocation().y));
+				resourceKindPieces.get(t.getTileType().toString()).addAll(getSurroundingPieces(spelId, t.getLocation().x, t.getLocation().y));
 				
 			}
 		}
@@ -604,11 +601,10 @@ public class Board {
 		
 	}
 	
-	public ArrayList<Piece>  getSurroundingPieces(int x, int y) throws Exception {
+	public ArrayList<Piece>  getSurroundingPieces(String spelId,int x, int y) throws Exception {
 		
-		System.out.println(x + " " + y);
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
-				"SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = 770 AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - "+ x +") <= 1 AND (s.x_van - " + x + ") >= - 1) AND ((s.y_van - " + y + ") <= 1 AND (s.y_van - " + y + ") >= - 1);  ");
+				"SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = '" + spelId + "' AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - "+ x +") <= 1 AND (s.x_van - " + x + ") >= - 1) AND ((s.y_van - " + y + ") <= 1 AND (s.y_van - " + y + ") >= - 1);  ");
 		ArrayList<Piece> returnPiece = new ArrayList<>();
 		while (results.next()) {
 			//System.out.println(results.getInt("x_van") + " " + results.getInt("y_van") + " " + results.getString("username") + " " + results.getString("stuksoort"));
