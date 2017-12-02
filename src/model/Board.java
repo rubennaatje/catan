@@ -10,6 +10,9 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import controller.DatabaseManager;
 
@@ -569,5 +572,49 @@ public class Board {
 		results.close();
 		return returnPiece;
 
+	}
+	
+	public void giveResources(int nThrow) throws Exception {
+		System.out.println("test");
+		
+		
+		HashMap <String ,ArrayList<Piece>> resourceKindPieces = new HashMap<String ,ArrayList<Piece>>();
+		
+		
+		for(TileType type: TileType.values()) {
+			resourceKindPieces.put(type.toString(), new ArrayList<Piece>());
+		}
+		
+		for(Tile t : getAllHexes("770")) {
+			if(t.getValue() == nThrow) {
+				resourceKindPieces.get(t.getTileType().toString()).addAll(getSurroundingPieces(t.getLocation().x, t.getLocation().y));
+				
+			}
+		}
+		
+		for (Entry<String, ArrayList<Piece>> entry : resourceKindPieces.entrySet()) {
+		    String key = entry.getKey();
+		    ArrayList<Piece> value = entry.getValue();
+		    
+		    for(Piece p : value) {
+		    	p.getPlayer().addResource(key, p);
+		    }
+		}
+		
+		
+	}
+	
+	public ArrayList<Piece>  getSurroundingPieces(int x, int y) throws Exception {
+		
+		System.out.println(x + " " + y);
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
+				"SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = 770 AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - "+ x +") <= 1 AND (s.x_van - " + x + ") >= - 1) AND ((s.y_van - " + y + ") <= 1 AND (s.y_van - " + y + ") >= - 1);  ");
+		ArrayList<Piece> returnPiece = new ArrayList<>();
+		while (results.next()) {
+			//System.out.println(results.getInt("x_van") + " " + results.getInt("y_van") + " " + results.getString("username") + " " + results.getString("stuksoort"));
+			returnPiece.add(new Piece(new GridLocation(results.getInt("x_van"), results.getInt("Y_van")), PieceType.valueOf(results.getString("stuksoort").toUpperCase()), new Player(PlayerType.BLAUW, results.getString("username"))));
+		}
+		results.close();
+		return returnPiece;
 	}
 }

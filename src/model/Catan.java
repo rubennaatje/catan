@@ -108,7 +108,7 @@ public class Catan {
 	 * initializes all of the resource cards with the current gameid
 	 * @throws Exception
 	 */
-	private void addResourceCards() throws Exception {
+	public void addResourceCards() throws Exception {
 		String[] resourceCards = { "h", "w", "e", "b", "g" };
 
 		String query = "INSERT INTO spelergrondstofkaart (idspel, idgrondstofkaart, username) VALUES ";
@@ -130,7 +130,7 @@ public class Catan {
 
 	/**
 	 * adds all of the players for now until the challenge system works.
-	 * 
+	 * TODO: fix this.
 	 * @throws Exception
 	 */
 	private void addPlayers() throws Exception {

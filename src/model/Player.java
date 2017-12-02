@@ -50,4 +50,17 @@ public class Player extends Observable {
 	public String getUsername() {
 		return username;
 	}
+	public void addResource(String tileType, Piece piece) throws Exception {
+		ResultSet results = DatabaseManager.createStatement().executeQuery(
+				"select g.idgrondstofkaart, g.idgrondstofsoort, username from grondstofkaart as g inner join spelergrondstofkaart as s ON s.idgrondstofkaart = g.idgrondstofkaart WHERE idspel = '" + Catan.getGameId() + "' AND username IS NULL AND g.idgrondstofsoort = '" + tileType + "' ORDER BY s.idgrondstofkaart LIMIT 2;");
+		
+		while (results.next()) {
+			DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username + "' WHERE idspel='" + Catan.getGameId() + "' AND idgrondstofkaart = '" + results.getString("idgrondstofkaart") + "';");
+			if(piece.getType().toString().equals("dorp"))
+				break;
+		}
+		
+		results.close();
+		
+	}
 }

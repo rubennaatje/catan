@@ -57,6 +57,8 @@ public class GameController extends Application {
 				}
 			}
 		};
+		
+
 
 		/*
 		 * EventHandler<MouseEvent> streetEvent = new EventHandler<MouseEvent>() {
@@ -100,6 +102,8 @@ public class GameController extends Application {
 		mergeView.show();
 
 		refresh();
+		
+		board.giveResources(6);
 
 	}
 
