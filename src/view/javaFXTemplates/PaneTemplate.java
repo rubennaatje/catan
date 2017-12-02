@@ -33,9 +33,14 @@ public abstract class PaneTemplate extends Pane {
 			e.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
 
 	/**
 	 * Should only be used for quick testing off separate functions. Not, controller
+=======
+	/**
+	 * Should only be used for quick testing of separate functions. Not, controller
+>>>>>>> 9b34aa087c68b5747dc066a9cdb41de52866390e
 	 * functionality. All viewComponents extended on PaneTemplate should be managed
 	 * in one scene, not created in its object.
 	 * 

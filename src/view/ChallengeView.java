@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.ObservableList;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -15,9 +16,9 @@ import javafx.scene.control.TableView;
 
 public class ChallengeView extends PaneTemplate {
 		
-	@FXML Button accept; 
-	@FXML Button decline;
-	@FXML Button back;
+	@FXML private Button btnAccept; 
+	@FXML private Button btnDecline;
+	@FXML private Button btnBack;
 	
 	@FXML private TableView<Challenges> uitdager;
 	@FXML private TableColumn<Challenges, String> playerName;
@@ -27,18 +28,14 @@ public class ChallengeView extends PaneTemplate {
 	
 	public ChallengeView(Stage stage) {
 		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
-	}
-	
-	public void Accept(MouseEvent event) {
-		System.out.println("You clicked accept"); 
-	}
-	
-	public void Decline(MouseEvent event) {
-		System.out.println("You clicked decline"); 
-	}
-
-	public void Back(MouseEvent event) {
-		System.out.println("You clicked back"); 
+		
+		btnBack.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				new MenuView(stage).show();
+			}
+		});
 	}
 
 

@@ -1,13 +1,13 @@
 package tests;
 
-import controller.BoardController;
+import controller.GameController;
 import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class TestBoardController extends Application{
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		DatabaseManager.connect();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -19,9 +19,8 @@ public class TestBoardController extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		System.out.println("rub");
-		
-		BoardController boardController = new BoardController();
+
+		GameController boardController = new GameController(null, null, 0);
 		
 		boardController.start(primaryStage);
 		

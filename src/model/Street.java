@@ -1,33 +1,48 @@
 package model;
 
-import java.awt.Point;
-
 //will be used as container/packet for street information
 public class Street {
-	private Point startPos;
-	private Point endPos;
+	private GridLocation startPos;
+	private GridLocation endPos;
 	private Player player;
-	
-	public Street(Point startPos, Point endPos, Player player) {
+
+	public Street(GridLocation startPos, GridLocation endPos, Player player) {
 		this.startPos = startPos;
 		this.endPos = endPos;
 		this.player = player;
 	}
-	public Street(Point startPos, Point endPos) {
+
+	public Street(GridLocation startPos, GridLocation endPos) {
 		this.startPos = startPos;
 		this.endPos = endPos;
 	}
-	public Point getEndPos() {
+
+	public GridLocation getEndPos() {
 		return endPos;
 	}
-	public Point getStartPos() {
+
+	public GridLocation getStartPos() {
 		return startPos;
 	}
+
 	public Player getPlayer() {
 		return player;
 	}
+
 	public void setPlayer(Player user) {
 		player = user;
 	}
+
+	public boolean equals(Street obj) {
+		if (obj.getEndPos().equals(this.getEndPos()) && obj.getStartPos().equals(this.getStartPos())) {
+			return true;
+		}
+		return false;
+	}
 	
+	@Override
+	public String toString() {
+		return "Start: " + startPos.toString() + "|| End : " + endPos.toString();
+	}
+
 }
