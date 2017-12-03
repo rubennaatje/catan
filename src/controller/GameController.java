@@ -39,7 +39,10 @@ public class GameController {
 		this.players = new PlayerModel[4];
 		this.stage = stage;
 		this.usrPlayer = usrPlayer;
-
+		this.spelId = spelId;
+		
+		
+		
 		buyEvent = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -96,6 +99,7 @@ public class GameController {
 			public void handle(MouseEvent arg0) {
 				piecePlacement(arg0);
 				refresh();
+				showFrstRndStreet();				
 			}
 		};
 		// event handler for first round street placement
@@ -104,20 +108,20 @@ public class GameController {
 			public void handle(MouseEvent arg0) {
 				piecePlacement(arg0);
 				refresh();
-				showFrstRndStreet();
 				ResultSet result;
 				try {
 					result = DatabaseManager.createStatement().executeQuery(
-							"select eersteronde, beurt_username, (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
+							"select (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
 									+ players[usrPlayer].getUsername()
 									+ "' and x_van is not null) from spel where idspel =" + spelId);
 					result.next();
-					if (result.getInt(3) == 2 && players[usrPlayer].getPlayerNumber() == 4) {
+					if (result.getInt(1) == 2 && players[usrPlayer].getPlayerNumber() == 4) {
 						frstRnd();
-					} else if (result.getInt(3) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
+					} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 						DatabaseManager.createStatement()
 								.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
-					} else if (result.getInt(3) > 2) {
+						buttons.setEnabled();
+					} else if (result.getInt(1) > 2) {
 						BoardHelper.nextTurnBackward(spelId);
 					} else {
 						BoardHelper.nextTurnForward(spelId);
@@ -128,7 +132,7 @@ public class GameController {
 				}
 			}
 		};
-
+		
 	}
 
 	/**
@@ -255,7 +259,7 @@ public class GameController {
 		try {
 			listOfTowns = BoardHelper.getValidFirstRoundStreetPos(players[usrPlayer], spelId);
 			for (Street piece : listOfTowns) {
-				playboardview.addStreet(piece, firstRndPiece);
+				playboardview.addStreet(piece, firstRndStreet);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
