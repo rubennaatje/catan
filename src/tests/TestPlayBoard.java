@@ -34,14 +34,12 @@ public class TestPlayBoard extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		PlayerModel white = new PlayerModel(PlayerType.WIT, "bart", null);
-		PlayerModel orange = new PlayerModel(PlayerType.ORANJE, "rik", null);
-		PlayerModel blue = new PlayerModel(PlayerType.BLAUW, "lesley", null);
-		PlayerModel red = new PlayerModel(PlayerType.ROOD, "ger", null);
+        PlayerModel white = new PlayerModel("bart", null);
+        PlayerModel orange = new PlayerModel("rik", null);
+        PlayerModel blue = new PlayerModel("lesley", null);
+        PlayerModel red = new PlayerModel("ger", null);
 		
-		BoardHelper board = new BoardHelper();
-		
-		board.getLongestRoad(orange, "770");
+		BoardHelper.getLongestRoad(orange, "770");
 		
 	}
 

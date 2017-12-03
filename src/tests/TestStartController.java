@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import model.Catan;
 import model.PlayerModel;
 import model.PlayerType;
+import model.PlayerUser;
 
 public class TestStartController extends Application {
 
@@ -32,20 +33,23 @@ public class TestStartController extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		PlayerModel[] players = new PlayerModel[4];
 		String spelId = "770";
 
-		players[0] = new PlayerModel("bart", spelId);
-		players[1] = new PlayerModel("rik", spelId);
-		players[2] = new PlayerModel("lesley", spelId);
-		players[3] = new PlayerModel("ger", spelId);
+        Catan catan = new Catan();
+        //catan.initGame();
+        Catan.setGameId("770");
+        
+        PlayerUser player = new PlayerUser("ger", Catan.getGameId());
+        catan.setPlayer(player);
+        
+        PlayerModel[] players = catan.getCurrentPlayers();
 
 		
 		
-		GameController gameController = new GameController(null, null, 0);
+		GameController gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
 
 		
-		gameController.start(primaryStage);
+		gameController.start();
 
 	}
 

@@ -10,6 +10,8 @@ import controller.DatabaseManager;
 public class Catan {
 
 	private static String gameId;
+	
+	private PlayerUser player;
 
 	public boolean login(String username, String password) {
 		try {
@@ -45,6 +47,16 @@ public class Catan {
 	public static String getGameId() {
 		return gameId;
 	}
+	
+    public PlayerUser getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(PlayerUser player) {
+        this.player = player;
+    }
+
+	
 	/**
 	 * initializes a new game in the database, with all of it's standard values ( generates cards and playeres for now)
 	 * @throws Exception
@@ -137,10 +149,10 @@ public class Catan {
 
 		// TODO: fix up when we get further.
 		PlayerModel[] players = new PlayerModel[4];
-		players[0] = new PlayerModel(PlayerType.WIT, "bart", Catan.getGameId());
-		players[1] = new PlayerModel(PlayerType.ORANJE, "rik", Catan.getGameId());
-		players[2] = new PlayerModel(PlayerType.BLAUW, "lesley", Catan.getGameId());
-		players[3] = new PlayerModel(PlayerType.ROOD, "ger", Catan.getGameId());
+        players[0] = new PlayerModel("bart", Catan.getGameId());
+        players[1] = new PlayerModel("rik", Catan.getGameId());
+        players[2] = new PlayerModel("lesley", Catan.getGameId());
+        players[3] = new PlayerModel("ger", Catan.getGameId());
 
 		int index = 0;
 		for (PlayerModel p : players) {
@@ -156,5 +168,34 @@ public class Catan {
 			index++;
 		}
 	}
+	
+    public PlayerModel[] getCurrentPlayers() throws Exception {
+
+        PlayerModel[] players = new PlayerModel[4];
+
+        ResultSet results = DatabaseManager.createStatement()
+                .executeQuery("SELECT * FROM speler WHERE idspel = '" + Catan.getGameId() + "' ORDER BY volgnr ASC;");
+        
+        while (results.next()) {
+            
+            if(results.getString("username").equals(player.getUsername())) {
+                PlayerModel competitor = new PlayerModel(results.getString("username"), Catan.getGameId());
+                competitor.setPlayerNumber(results.getInt("volgnr"));
+                players[results.getInt("volgnr") - 1] = competitor;
+            } else {
+                player.setPlayerNumber(results.getInt("volgnr"));
+                players[results.getInt("volgnr") - 1] = player;
+            }
+        }
+        
+        results.close();
+
+        return players;
+    }
+    
+    public void invitePlayers() throws Exception {
+        DatabaseManager.createStatement().executeUpdate(" ");
+    }
+
 
 }

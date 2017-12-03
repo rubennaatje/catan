@@ -8,7 +8,6 @@ import model.BoardHelper;
 
 public class PlayerModel extends Observable {
 
-	private BoardHelper board = new BoardHelper();
 	private PlayerType type;
 	private String username;
 	private String cards;
@@ -43,7 +42,7 @@ public class PlayerModel extends Observable {
 				this.knights = list.getString(4);
 				this.playerNumber = list.getInt(5);
 			}
-			this.road = Integer.toString(board.getLongestRoad(this, spelId));
+			this.road = Integer.toString(BoardHelper.getLongestRoad(this, spelId));
 		} catch (SQLException e) {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
@@ -101,4 +100,10 @@ public class PlayerModel extends Observable {
 	public int getPlayerNumber() {
 		return playerNumber;
 	}
+	
+    public void setPlayerNumber(int playerNumber) {
+        if(playerNumber <= 4 && playerNumber >=1)
+            this.playerNumber = playerNumber;
+    }
+
 }
