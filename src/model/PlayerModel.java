@@ -4,11 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Observable;
 import controller.DatabaseManager;
-import model.Board;
+import model.BoardHelper;
 
 public class PlayerModel extends Observable {
 
-	private Board board = new Board();
+	private BoardHelper board = new BoardHelper();
 	private PlayerType type;
 	private String username;
 	private String cards;

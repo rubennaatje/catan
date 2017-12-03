@@ -20,7 +20,7 @@ public class Dice {
 		diceThrow[1] = random.nextInt(6) + 1;
 		totalThrow = diceThrow[0] + diceThrow[1];
 		try {
-			DatabaseManager.getStatement().executeUpdate("UPDATE SPEL SET LAATSTE_WORP = "+ totalThrow + ", gedobbeld = 1 WHERE idspel = "+spelid+";");
+			DatabaseManager.createStatement().executeUpdate("UPDATE SPEL SET LAATSTE_WORP = "+ totalThrow + ", gedobbeld = 1 WHERE idspel = "+spelid+";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -13,7 +13,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Board;
+import model.BoardHelper;
 import model.LocationGenerator;
 import model.PlayerModel;
 import model.PlayerType;
@@ -39,7 +39,7 @@ public class TestPlayBoard extends Application {
 		PlayerModel blue = new PlayerModel(PlayerType.BLAUW, "lesley", null);
 		PlayerModel red = new PlayerModel(PlayerType.ROOD, "ger", null);
 		
-		Board board = new Board();
+		BoardHelper board = new BoardHelper();
 		
 		board.getLongestRoad(orange, "770");
 		

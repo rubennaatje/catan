@@ -14,9 +14,8 @@ public class DiceView extends PaneTemplate {
 	@FXML private ImageView dice1;
 	@FXML private ImageView dice2;
 	
-	public DiceView(Stage stage) {
-		super(DiceView.class.getResource("fxml/Dice.fxml"), stage);
-		
+	public DiceView() {
+		super(DiceView.class.getResource("fxml/Dice.fxml"));
 	}
 	
 	public void showDice(int dicethrows[]) { //shows two dices

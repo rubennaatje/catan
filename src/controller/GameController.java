@@ -1,37 +1,44 @@
 package controller;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
 
-public class GameController extends Application {
+public class GameController {
 
 	PlayerModel[] players;
 
 	String spelId;
 	Integer usrPlayer; // 0..3
+	Integer currentTurn;
+
+	// views
 	PlayBoardView playboardview;
 	GameControlerView buttons;
-	Board board;
+	DiceView dice;
+
+	Stage stage;
 	EventHandler<? super MouseEvent> pieceEvent;
+	EventHandler<? super MouseEvent> firstRndStreet;
 	EventHandler<MouseEvent> buyEvent;
 
 	private EventHandler<MouseEvent> endTurn;
 
-	public GameController(String spelId, PlayerModel[] players, int usrPlayer) throws Exception {
+	private EventHandler<MouseEvent> firstRndPiece;
+
+	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) throws Exception {
 		this.players = new PlayerModel[4];
-
-		this.usrPlayer = 2;
-
-		board = new Board();
-
+		this.stage = stage;
+		this.usrPlayer = usrPlayer;
 
 		buyEvent = new EventHandler<MouseEvent>() {
 			@Override
@@ -51,8 +58,6 @@ public class GameController extends Application {
 				}
 			}
 		};
-		
-
 
 		/*
 		 * EventHandler<MouseEvent> streetEvent = new EventHandler<MouseEvent>() {
@@ -64,6 +69,19 @@ public class GameController extends Application {
 		 * @Override public void handle(MouseEvent arg0) { showStreetPlacable(); } };
 		 */
 
+		buttons = new GameControlerView(buyEvent);
+		playboardview = new PlayBoardView();
+		dice = new DiceView();
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons);
+		refresh();
+
+		this.endTurn = new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				usrTurn();
+			}
+		};
+		
 		this.pieceEvent = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -72,37 +90,131 @@ public class GameController extends Application {
 			}
 		};
 
+		// event handler for first round piece placement
+		this.firstRndPiece = new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				piecePlacement(arg0);
+				refresh();
+			}
+		};
+		// event handler for first round street placement
+		this.firstRndStreet = new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				piecePlacement(arg0);
+				refresh();
+				showFrstRndStreet();
+				ResultSet result;
+				try {
+					result = DatabaseManager.createStatement().executeQuery(
+							"select eersteronde, beurt_username, (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
+									+ players[usrPlayer].getUsername()
+									+ "' and x_van is not null) from spel where idspel =" + spelId);
+					result.next();
+					if (result.getInt(3) == 2 && players[usrPlayer].getPlayerNumber() == 4) {
+						frstRnd();
+					} else if (result.getInt(3) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
+						DatabaseManager.createStatement()
+								.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
+					} else if (result.getInt(3) > 2) {
+						BoardHelper.nextTurnBackward(spelId);
+					} else {
+						BoardHelper.nextTurnForward(spelId);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+
+	}
+
+	/**
+	 * Starts the gamecontroller
+	 * 
+	 */
+	public void start() {
+		
+		try {
+			ResultSet result = DatabaseManager.createStatement().executeQuery(
+					"select eersteronde from spel where idspel =" + spelId);
+			result.next();
+			if (result.getInt(1) == 1) {
+				frstRnd();
+			} else {
+				usrTurn();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void frstRnd() {
+		await();
+		showFrstRndPieces();
+	}
+
+	private void usrTurn() {
+		await();
+		buttons.setEnabled();
+	}
+
+	/**
+	 * Awaits a "shouldrefresh" flag up for playerUser
+	 * 
+	 */
+	private void await() {
+		boolean check = false;
+		while (!check) {
+			try {
+				ResultSet result = DatabaseManager.createStatement()
+						.executeQuery("select shouldrefresh from speler where username = '"
+								+ players[usrPlayer].getUsername() + "' AND idspel = " + spelId);
+				result.next();
+				check = result.getInt(1) == 1;
+				if (!check)
+					Thread.sleep(1000);
+				result.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			refresh();
+			DatabaseManager.createStatement().executeUpdate("UPDATE spelers SET shouldrefresh=0 where username = "
+					+ players[usrPlayer].getUsername() + "' AND idspel = " + spelId);
+			ResultSet result = DatabaseManager.createStatement()
+					.executeQuery("SELECT beurt_username, eersteronde FROM spel WHERE idspel = " + spelId);
+			result.next();
+			if (!result.getString(1).equals(players[usrPlayer].getUsername()))
+				await();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void piecePlacement(MouseEvent event) {
 		try {
 			if (event.getSource() instanceof PieceView) {
 				PieceView caller = (PieceView) event.getSource();
-				board.registerPlacement(caller.getPieceModel(), spelId);
+				BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
-				board.registerPlacement(caller.getStreetModel(), spelId);
+				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	};
 
-	@Override
-	public void start(Stage stage) throws Exception {
-		buttons = new GameControlerView(stage, buyEvent);
-		playboardview = new PlayBoardView(stage);
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage);
-		mergeView.show();
-
-		refresh();
-
-	}
-
 	public void showTownPlacable() {
 		ArrayList<Piece> listOfPiece;
 		try {
-			listOfPiece = board.getPlacebleTownPos(players[usrPlayer], spelId);
+			listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
 			for (Piece piece : listOfPiece) {
 				playboardview.addPiece(piece, pieceEvent);
 			}
@@ -115,7 +227,7 @@ public class GameController extends Application {
 	public void showStreetPlacable() {
 		ArrayList<Street> listOfStreet;
 		try {
-			listOfStreet = board.getPlacableStreePos(players[usrPlayer], spelId);
+			listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
 			for (Street piece : listOfStreet) {
 				playboardview.addStreet(piece, pieceEvent);
 			}
@@ -125,15 +237,39 @@ public class GameController extends Application {
 		}
 	}
 
+	private void showFrstRndPieces() {
+		ArrayList<Piece> listOfTowns;
+		try {
+			listOfTowns = BoardHelper.getValidFirstRoundTownPos(players[usrPlayer], spelId);
+			for (Piece piece : listOfTowns) {
+				playboardview.addPiece(piece, firstRndPiece);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void showFrstRndStreet() {
+		ArrayList<Street> listOfTowns;
+		try {
+			listOfTowns = BoardHelper.getValidFirstRoundStreetPos(players[usrPlayer], spelId);
+			for (Street piece : listOfTowns) {
+				playboardview.addStreet(piece, firstRndPiece);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void showCityPlacable() {
 		ArrayList<Piece> listOfTowns;
 		try {
-			listOfTowns = board.getPlacableCity(players[usrPlayer], spelId);
+			listOfTowns = BoardHelper.getPlacableCity(players[usrPlayer], spelId);
 			for (Piece piece : listOfTowns) {
 				playboardview.addPiece(piece, pieceEvent);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -143,20 +279,20 @@ public class GameController extends Application {
 		playboardview.getChildren().clear();
 		// updates all hexes and attached values
 		try {
-			for (Tile t : board.getAllHexes(spelId)) {
+			for (Tile t : BoardHelper.getAllHexes(spelId)) {
 				playboardview.addHex(t);
 			}
 			for (PlayerModel player : players) {
 				// places all streets for player
-				for (Street street : board.getStreetsPlayer(player, spelId)) {
+				for (Street street : BoardHelper.getStreetsPlayer(player, spelId)) {
 					playboardview.addStreet(street);
 				}
 				// places all cities and towns for player
-				for (Piece street : board.getPiecesPlayer(player, spelId)) {
+				for (Piece street : BoardHelper.getPiecesPlayer(player, spelId)) {
 					playboardview.addPiece(street);
 				}
 			}
-			buttons.setLongestRoad(board.getLongestRoad(players[usrPlayer], spelId));
+			buttons.setLongestRoad(BoardHelper.getLongestRoad(players[usrPlayer], spelId));
 		} catch (Exception e) {
 			// TODO show error to user??? //
 			e.printStackTrace();

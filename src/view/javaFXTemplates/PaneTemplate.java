@@ -15,14 +15,22 @@ import javafx.stage.Stage;
 public abstract class PaneTemplate extends Pane {
 
 	private @FXML Pane extension;
+	
+	@Deprecated
 	protected Stage stage;
 
+	@Deprecated
 	public PaneTemplate(URL url, Stage stage) {
 		super();
 		this.stage = stage;
 		loadFxml(url, this);
 	}
 
+	public PaneTemplate(URL url) {
+		super();
+		loadFxml(url, this);
+	}
+	
 	private void loadFxml(URL url, Object rootController) {
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(rootController);
