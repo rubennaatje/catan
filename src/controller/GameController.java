@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -26,10 +27,9 @@ public class GameController {
 	GameControlerView buttons;
 	DiceView dice;
 
-	Stage stage;
-	EventHandler<? super MouseEvent> pieceEvent;
-	EventHandler<? super MouseEvent> firstRndStreet;
-	EventHandler<MouseEvent> buyEvent;
+	private EventHandler<? super MouseEvent> pieceEvent;
+	private EventHandler<? super MouseEvent> firstRndStreet;
+	private EventHandler<MouseEvent> buyEvent;
 
 	private EventHandler<MouseEvent> endTurn;
 
@@ -37,12 +37,10 @@ public class GameController {
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) throws Exception {
 		this.players = new PlayerModel[4];
-		this.stage = stage;
-		this.usrPlayer = usrPlayer -1;
+		this.usrPlayer = usrPlayer - 1;
 		this.spelId = spelId;
 		this.players = players;
-		
-		
+
 		buyEvent = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -62,29 +60,21 @@ public class GameController {
 			}
 		};
 
-		/*
-		 * EventHandler<MouseEvent> streetEvent = new EventHandler<MouseEvent>() {
-		 * 
-		 * @Override public void handle(MouseEvent arg0) { showStreetPlacable(); } };
-		 * 
-		 * EventHandler<MouseEvent> cityEvent = new EventHandler<MouseEvent>() {
-		 * 
-		 * @Override public void handle(MouseEvent arg0) { showStreetPlacable(); } };
-		 */
-
-		buttons = new GameControlerView(buyEvent);
-		playboardview = new PlayBoardView();
-		dice = new DiceView();
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage);
-		refresh();
-
 		this.endTurn = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				usrTurn();
+				try {
+					BoardHelper.nextTurnForward(spelId);
+					disableButtons();
+					usrTurn();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 		};
-		
+
 		this.pieceEvent = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -99,7 +89,7 @@ public class GameController {
 			public void handle(MouseEvent arg0) {
 				piecePlacement(arg0);
 				refresh();
-				showFrstRndStreet();				
+				showFrstRndStreet();
 			}
 		};
 		// event handler for first round street placement
@@ -107,7 +97,7 @@ public class GameController {
 			@Override
 			public void handle(MouseEvent arg0) {
 				piecePlacement(arg0);
-				refresh();
+
 				ResultSet result;
 				try {
 					result = DatabaseManager.createStatement().executeQuery(
@@ -120,7 +110,7 @@ public class GameController {
 					} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 						DatabaseManager.createStatement()
 								.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
-						buttons.setEnabled();
+						enableButtons();
 					} else if (result.getInt(1) > 2) {
 						BoardHelper.nextTurnBackward(spelId);
 					} else {
@@ -132,7 +122,13 @@ public class GameController {
 				}
 			}
 		};
+
+		buttons = new GameControlerView(buyEvent, endTurn);
+		playboardview = new PlayBoardView();
+		dice = new DiceView();
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage);
 		refresh();
+
 		mergeView.show();
 	}
 
@@ -141,10 +137,10 @@ public class GameController {
 	 * 
 	 */
 	public void start() {
-		
+		refresh();
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery(
-					"select eersteronde from spel where idspel =" + spelId);
+			ResultSet result = DatabaseManager.createStatement()
+					.executeQuery("select eersteronde from spel where idspel =" + spelId);
 			result.next();
 			if (result.getInt(1) == 1) {
 				frstRnd();
@@ -157,13 +153,23 @@ public class GameController {
 	}
 
 	private void frstRnd() {
-		await();
-		showFrstRndPieces();
+		new Thread() {
+			@Override
+			public void run() {
+				await();
+				showFrstRndPieces();
+			}
+		}.start();
 	}
 
 	private void usrTurn() {
-		await();
-		buttons.setEnabled();
+		new Thread() {
+			@Override
+			public void run() {
+				await();
+				enableButtons();
+			}
+		}.start();
 	}
 
 	/**
@@ -181,7 +187,7 @@ public class GameController {
 				check = result.getInt(1) == 1;
 				if (!check)
 					System.out.println("waiting");
-					Thread.sleep(1000);
+				Thread.sleep(2000);
 				result.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -204,105 +210,133 @@ public class GameController {
 	}
 
 	private void piecePlacement(MouseEvent event) {
-		try {
-			if (event.getSource() instanceof PieceView) {
-				PieceView caller = (PieceView) event.getSource();
-				BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
-			} else if (event.getSource() instanceof StreetView) {
-				StreetView caller = (StreetView) event.getSource();
-				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
+		Platform.runLater(() -> {
+			try {
+				if (event.getSource() instanceof PieceView) {
+					PieceView caller = (PieceView) event.getSource();
+					BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
+				} else if (event.getSource() instanceof StreetView) {
+					StreetView caller = (StreetView) event.getSource();
+					BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		});
 	};
 
 	public void showTownPlacable() {
-		ArrayList<Piece> listOfPiece;
-		try {
-			listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
-			for (Piece piece : listOfPiece) {
-				playboardview.addPiece(piece, pieceEvent);
+		Platform.runLater(() -> {
+			ArrayList<Piece> listOfPiece;
+			try {
+				listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
+				for (Piece piece : listOfPiece) {
+					playboardview.addPiece(piece, pieceEvent);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		});
 	}
 
 	public void showStreetPlacable() {
-		ArrayList<Street> listOfStreet;
-		try {
-			listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
-			for (Street piece : listOfStreet) {
-				playboardview.addStreet(piece, pieceEvent);
+		Platform.runLater(() -> {
+			ArrayList<Street> listOfStreet;
+			try {
+				listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
+				for (Street piece : listOfStreet) {
+					playboardview.addStreet(piece, pieceEvent);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		});
 	}
 
 	private void showFrstRndPieces() {
-		ArrayList<Piece> listOfTowns;
-		try {
-			listOfTowns = BoardHelper.getValidFirstRoundTownPos(players[usrPlayer], spelId);
-			for (Piece piece : listOfTowns) {
-				playboardview.addPiece(piece, firstRndPiece);
+		Platform.runLater(() -> {
+			ArrayList<Piece> listOfTowns;
+			try {
+				listOfTowns = BoardHelper.getValidFirstRoundTownPos(players[usrPlayer], spelId);
+				for (Piece piece : listOfTowns) {
+					playboardview.addPiece(piece, firstRndPiece);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		});
 	}
 
 	private void showFrstRndStreet() {
-		ArrayList<Street> listOfTowns;
-		try {
-			listOfTowns = BoardHelper.getValidFirstRoundStreetPos(players[usrPlayer], spelId);
-			for (Street piece : listOfTowns) {
-				playboardview.addStreet(piece, firstRndStreet);
+		Platform.runLater(() -> {
+			ArrayList<Street> listOfTowns;
+			try {
+				listOfTowns = BoardHelper.getValidFirstRoundStreetPos(players[usrPlayer], spelId);
+				for (Street piece : listOfTowns) {
+					playboardview.addStreet(piece, firstRndStreet);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		});
 	}
 
 	public void showCityPlacable() {
-		ArrayList<Piece> listOfTowns;
-		try {
-			listOfTowns = BoardHelper.getPlacableCity(players[usrPlayer], spelId);
-			for (Piece piece : listOfTowns) {
-				playboardview.addPiece(piece, pieceEvent);
+		Platform.runLater(() -> {
+			ArrayList<Piece> listOfTowns;
+			try {
+				listOfTowns = BoardHelper.getPlacableCity(players[usrPlayer], spelId);
+				for (Piece piece : listOfTowns) {
+					playboardview.addPiece(piece, pieceEvent);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		});
+	}
+
+	private void enableButtons() {
+		Platform.runLater(() -> {
+			buttons.setEnabled();
+		});
+	}
+
+	private void disableButtons() {
+		Platform.runLater(() -> {
+			buttons.setDisabled();
+		});
 	}
 
 	// update ing field
 	public void refresh() {
-		playboardview.getChildren().clear();
-		// updates all hexes and attached values
-		try {
-			for (Tile t : BoardHelper.getAllHexes(spelId)) {
-				playboardview.addHex(t);
-			}
-			for (PlayerModel player : players) {
-				// places all streets for player
-				for (Street street : BoardHelper.getStreetsPlayer(player, spelId)) {
-					playboardview.addStreet(street);
+		System.out.println("board is refreshing");
+
+		Platform.runLater(() -> {
+			playboardview.getChildren().clear();
+			// updates all hexes and attached values
+			try {
+				for (Tile t : BoardHelper.getAllHexes(spelId)) {
+					playboardview.addHex(t);
 				}
-				// places all cities and towns for player
-				for (Piece street : BoardHelper.getPiecesPlayer(player, spelId)) {
-					playboardview.addPiece(street);
+				for (PlayerModel player : players) {
+					// places all streets for player
+					for (Street street : BoardHelper.getStreetsPlayer(player, spelId)) {
+						playboardview.addStreet(street);
+					}
+					// places all cities and towns for player
+					for (Piece street : BoardHelper.getPiecesPlayer(player, spelId)) {
+						playboardview.addPiece(street);
+					}
 				}
+				buttons.setLongestRoad(BoardHelper.getLongestRoad(players[usrPlayer], spelId));
+			} catch (Exception e) {
+				// TODO show error to user??? //
+				e.printStackTrace();
 			}
-			buttons.setLongestRoad(BoardHelper.getLongestRoad(players[usrPlayer], spelId));
-		} catch (Exception e) {
-			// TODO show error to user??? //
-			e.printStackTrace();
-		}
+		});
 	}
 
 }

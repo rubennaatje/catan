@@ -1,14 +1,11 @@
 package tests;
 
-import java.sql.SQLException;
-
 import controller.DatabaseManager;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Catan;
 import model.PlayerModel;
-import model.PlayerType;
 import model.PlayerUser;
 
 public class TestStartController extends Application {
@@ -44,10 +41,10 @@ public class TestStartController extends Application {
         
         PlayerUser player = new PlayerUser("ger", Catan.getGameId());
         catan.setPlayer(player);
-        
         PlayerModel[] players = catan.getCurrentPlayers();
+        gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
+        
         Runnable boob = new Runnable () {
-
 			@Override
 			public void run() {
 				gameController.start();
@@ -55,7 +52,6 @@ public class TestStartController extends Application {
         };
 		
 		
-		gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
 		
 		new Thread(boob).start();
 

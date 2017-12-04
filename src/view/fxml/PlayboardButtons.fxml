@@ -13,7 +13,7 @@
       <Button fx:id="townBtn" layoutX="163.0" layoutY="14.0" mnemonicParsing="false" text="Town +" />
       <Button fx:id="streetBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Street +" />
       <Button fx:id="cityBtn" layoutX="97.0" layoutY="14.0" mnemonicParsing="false" text="City +" />
-      <Button fx:id="endTurnBtn" layoutX="200.0" layoutY="14.0" mnemonicParsing="false" text="end Turn" />
+      <Button fx:id="endTurnBtn" layoutX="280.0" layoutY="14.0" mnemonicParsing="false" text="end Turn" />
       <Label layoutX="14.0" layoutY="59.0" text="Longest Road:" />
       <Label fx:id="road" layoutX="122.0" layoutY="59.0" text="Label" />
    </children>
