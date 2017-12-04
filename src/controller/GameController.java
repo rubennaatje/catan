@@ -40,7 +40,7 @@ public class GameController {
 		this.stage = stage;
 		this.usrPlayer = usrPlayer;
 		this.spelId = spelId;
-		
+		this.players = players;
 		
 		
 		buyEvent = new EventHandler<MouseEvent>() {
