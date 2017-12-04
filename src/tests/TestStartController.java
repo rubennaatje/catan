@@ -13,6 +13,8 @@ import model.PlayerUser;
 
 public class TestStartController extends Application {
 
+	
+	static GameController gameController;
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -26,9 +28,10 @@ public class TestStartController extends Application {
 		Catan catan = new Catan();
 		//catan.initGame();
 		Catan.setGameId("770");
-		
 		//catan.addResourceCards();
 		launch(args);
+		
+		
 	}
 	
 	@Override
@@ -43,13 +46,20 @@ public class TestStartController extends Application {
         catan.setPlayer(player);
         
         PlayerModel[] players = catan.getCurrentPlayers();
+        Runnable boob = new Runnable () {
+
+			@Override
+			public void run() {
+				gameController.start();
+			}
+        };
+		
+		
+		gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
+		
+		new Thread(boob).start();
 
 		
-		
-		GameController gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
-
-		
-		gameController.start();
 
 	}
 

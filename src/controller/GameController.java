@@ -38,7 +38,7 @@ public class GameController {
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) throws Exception {
 		this.players = new PlayerModel[4];
 		this.stage = stage;
-		this.usrPlayer = usrPlayer;
+		this.usrPlayer = usrPlayer -1;
 		this.spelId = spelId;
 		this.players = players;
 		
@@ -75,7 +75,7 @@ public class GameController {
 		buttons = new GameControlerView(buyEvent);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons);
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage);
 		refresh();
 
 		this.endTurn = new EventHandler<MouseEvent>() {
@@ -132,7 +132,8 @@ public class GameController {
 				}
 			}
 		};
-		
+		refresh();
+		mergeView.show();
 	}
 
 	/**
@@ -179,6 +180,7 @@ public class GameController {
 				result.next();
 				check = result.getInt(1) == 1;
 				if (!check)
+					System.out.println("waiting");
 					Thread.sleep(1000);
 				result.close();
 			} catch (SQLException e) {
@@ -192,7 +194,7 @@ public class GameController {
 			DatabaseManager.createStatement().executeUpdate("UPDATE speler SET shouldrefresh=0 where username = '"
 					+ players[usrPlayer].getUsername() + "' AND idspel = " + spelId);
 			ResultSet result = DatabaseManager.createStatement()
-					.executeQuery("SELECT beurt_username, eersteronde FROM spel WHERE idspel = " + spelId);
+					.executeQuery("SELECT beurt_username FROM spel WHERE idspel = " + spelId);
 			result.next();
 			if (!result.getString(1).equals(players[usrPlayer].getUsername()))
 				await();
