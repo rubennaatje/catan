@@ -2,6 +2,7 @@ package view;
 
 import java.sql.SQLException;
 
+import controller.ChatController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -15,12 +16,18 @@ import view.javaFXTemplates.PaneTemplate;
 public class ChatView extends PaneTemplate {
 	@FXML TextField tfMessage;
 	@FXML ListView<String> listView;
-	
 	@FXML Button sendButton;
 	
-	public ChatView(EventHandler<MouseEvent> sendEvent, ObservableList<?> list) throws SQLException {
+	ChatController controller;
+	
+	public ChatView(ObservableList<?> list, ChatController controller) throws SQLException {
 		super(ChatView.class.getResource("fxml/ChatView.fxml"));
-		sendButton.setOnMouseClicked(sendEvent);
+		this.controller = controller;
+	}
+	
+	private void sendMessage(MouseEvent arg) {
+		controller.sendMessage(tfMessage.getText());
+		tfMessage.clear();
 	}
 	 
 }

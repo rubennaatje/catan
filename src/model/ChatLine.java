@@ -7,13 +7,15 @@ import java.sql.Timestamp;
 public class ChatLine {
 	String username;
 	String message;
-	String timeStamp;
+	Timestamp timeStamp;
 	
-	public ChatLine(String username, String message) {
+	public ChatLine(String username, String message, Timestamp time) {
 		this.username = username;
 		this.message = message;
 	}
 	
+
+
 	public String getUsername() {
 		return username;
 	}
