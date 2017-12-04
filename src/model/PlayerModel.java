@@ -18,13 +18,13 @@ public class PlayerModel extends Observable {
 	private String spelId;
 	private int playerNumber;
 
-	public PlayerModel(String username, String spelId) throws Exception {
+	public PlayerModel(String username, String spelId)  {
 		this.username = username;
 		refresh(spelId);
 		this.spelId = spelId;
 	}
 
-	public void refresh(String spelId) throws Exception {
+	public void refresh(String spelId)  {
 		try {
 			ResultSet list = null;
 			DatabaseManager.connect();

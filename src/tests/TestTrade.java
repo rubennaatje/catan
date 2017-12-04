@@ -1,6 +1,7 @@
 package tests;
 
 import controller.DatabaseManager;
+import controller.TradeController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.BoardHelper;
@@ -20,11 +21,9 @@ public class TestTrade extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-        PlayerModel white = new PlayerModel("bart", null);
-        PlayerModel orange = new PlayerModel("rik", null);
-        PlayerModel blue = new PlayerModel("lesley", null);
-        PlayerModel red = new PlayerModel("ger", null);
+
 		
+        TradeController some = new TradeController(primaryStage);
 		
 		
 	}

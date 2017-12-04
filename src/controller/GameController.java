@@ -210,92 +210,94 @@ public class GameController {
 	}
 
 	private void piecePlacement(MouseEvent event) {
-		Platform.runLater(() -> {
-			try {
-				if (event.getSource() instanceof PieceView) {
-					PieceView caller = (PieceView) event.getSource();
-					BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
-				} else if (event.getSource() instanceof StreetView) {
-					StreetView caller = (StreetView) event.getSource();
-					BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+		try {
+			if (event.getSource() instanceof PieceView) {
+				PieceView caller = (PieceView) event.getSource();
+				BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
+			} else if (event.getSource() instanceof StreetView) {
+				StreetView caller = (StreetView) event.getSource();
+				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
 			}
-		});
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	};
 
 	public void showTownPlacable() {
-		Platform.runLater(() -> {
-			ArrayList<Piece> listOfPiece;
-			try {
-				listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
+
+		ArrayList<Piece> listOfPiece;
+		try {
+			listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
 				for (Piece piece : listOfPiece) {
 					playboardview.addPiece(piece, pieceEvent);
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+			});
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void showStreetPlacable() {
-		Platform.runLater(() -> {
-			ArrayList<Street> listOfStreet;
-			try {
-				listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
+		ArrayList<Street> listOfStreet;
+		try {
+			listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
 				for (Street piece : listOfStreet) {
 					playboardview.addStreet(piece, pieceEvent);
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+			});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void showFrstRndPieces() {
-		Platform.runLater(() -> {
-			ArrayList<Piece> listOfTowns;
-			try {
-				listOfTowns = BoardHelper.getValidFirstRoundTownPos(players[usrPlayer], spelId);
+		ArrayList<Piece> listOfTowns;
+		try {
+			listOfTowns = BoardHelper.getValidFirstRoundTownPos(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
 				for (Piece piece : listOfTowns) {
 					playboardview.addPiece(piece, firstRndPiece);
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+			});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void showFrstRndStreet() {
-		Platform.runLater(() -> {
-			ArrayList<Street> listOfTowns;
-			try {
-				listOfTowns = BoardHelper.getValidFirstRoundStreetPos(players[usrPlayer], spelId);
+		ArrayList<Street> listOfTowns;
+		try {
+			listOfTowns = BoardHelper.getValidFirstRoundStreetPos(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
 				for (Street piece : listOfTowns) {
 					playboardview.addStreet(piece, firstRndStreet);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+			});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void showCityPlacable() {
-		Platform.runLater(() -> {
-			ArrayList<Piece> listOfTowns;
-			try {
-				listOfTowns = BoardHelper.getPlacableCity(players[usrPlayer], spelId);
+		ArrayList<Piece> listOfTowns;
+		try {
+			listOfTowns = BoardHelper.getPlacableCity(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
 				for (Piece piece : listOfTowns) {
 					playboardview.addPiece(piece, pieceEvent);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+			});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private void enableButtons() {
