@@ -189,7 +189,7 @@ public class GameController {
 		}
 		try {
 			refresh();
-			DatabaseManager.createStatement().executeUpdate("UPDATE spelers SET shouldrefresh=0 where username = "
+			DatabaseManager.createStatement().executeUpdate("UPDATE speler SET shouldrefresh=0 where username = '"
 					+ players[usrPlayer].getUsername() + "' AND idspel = " + spelId);
 			ResultSet result = DatabaseManager.createStatement()
 					.executeQuery("SELECT beurt_username, eersteronde FROM spel WHERE idspel = " + spelId);

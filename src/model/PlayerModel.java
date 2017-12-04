@@ -106,4 +106,8 @@ public class PlayerModel extends Observable {
             this.playerNumber = playerNumber;
     }
 
+	public void setType(PlayerType type) {
+		this.type = type;
+	}
+
 }
