@@ -9,11 +9,11 @@ public class DevelopmentCard {
 	
 	private int spelid;
 	private String kaartid;
-	private Player player;
+	private PlayerUser player;
 	private ResultSet kaarttypes = null;
 	private String kaarttype;
 	
-	public DevelopmentCard(int spelid, String kaartid, Player player) {
+	public DevelopmentCard(int spelid, String kaartid, PlayerUser player) {
 		this.spelid = spelid;
 		this.kaartid = kaartid;
 		this.player = player;

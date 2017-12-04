@@ -31,4 +31,18 @@ public enum PlayerType {
 	    	return 0;
 		}
 	}
+	public String getColorString() {
+		switch(this) {
+			case ROOD:
+		        return "rood";
+		    case WIT:
+		        return "wit";
+		    case BLAUW:
+		        return "blauw";
+		    case ORANJE:
+		        return "oranje";
+		    default:
+		    	return "";
+		}
+	}
 }

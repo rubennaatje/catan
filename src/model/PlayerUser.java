@@ -1,11 +1,10 @@
 package model;
 //extended storage of users data, stores, cards, specific resources;
 
-public class PlayerUser extends Player {
+public class PlayerUser extends PlayerModel {
 
-	public PlayerUser(PlayerType type, String username) {
-		super(type, username);
-		// TODO Auto-generated constructor stub
+    public PlayerUser(String username, String idspel) throws Exception {
+        super(username, idspel);
 	}
 
 }

@@ -4,9 +4,9 @@ package model;
 public class Street {
 	private GridLocation startPos;
 	private GridLocation endPos;
-	private Player player;
+	private PlayerModel player;
 
-	public Street(GridLocation startPos, GridLocation endPos, Player player) {
+	public Street(GridLocation startPos, GridLocation endPos, PlayerModel player) {
 		this.startPos = startPos;
 		this.endPos = endPos;
 		this.player = player;
@@ -25,11 +25,11 @@ public class Street {
 		return startPos;
 	}
 
-	public Player getPlayer() {
+	public PlayerModel getPlayer() {
 		return player;
 	}
 
-	public void setPlayer(Player user) {
+	public void setPlayer(PlayerModel user) {
 		player = user;
 	}
 

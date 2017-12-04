@@ -13,11 +13,11 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Board;
 import model.DevelopmentCard;
 import model.Dice;
+import model.BoardHelper;
 import model.LocationGenerator;
-import model.Player;
+import model.PlayerModel;
 import model.PlayerType;
 import model.Street;
 import model.Tile;
@@ -36,20 +36,18 @@ public class TestPlayBoard extends Application {
 		Dice dice = new Dice(771);
 		dice.throwDice();
 		DevelopmentCard test = new DevelopmentCard();
-		System.out.println(test.getType());
+		//System.out.println(test.getType());
 		System.out.println("testsetseet");
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Player white = new Player(PlayerType.WIT, "bart");
-		Player orange = new Player(PlayerType.ORANJE, "rik");
-		Player blue = new Player(PlayerType.BLAUW, "lesley");
-		Player red = new Player(PlayerType.ROOD, "ger");
+        PlayerModel white = new PlayerModel("bart", null);
+        PlayerModel orange = new PlayerModel("rik", null);
+        PlayerModel blue = new PlayerModel("lesley", null);
+        PlayerModel red = new PlayerModel("ger", null);
 		
-		Board board = new Board();
-		
-		board.getLongestRoad(orange, "770");
+		BoardHelper.getLongestRoad(orange, "770");
 		
 	}
 

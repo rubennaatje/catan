@@ -1,6 +1,6 @@
 package tests;
 
-import controller.BoardController;
+import controller.GameController;
 import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -21,11 +21,10 @@ public class TestBoardController extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		System.out.println("rub");
+
+		GameController boardController = new GameController(null, null, 0,primaryStage);
 		
-		BoardController boardController = new BoardController();
-		
-		boardController.start(primaryStage);
+		boardController.start();
 		
 
 	}

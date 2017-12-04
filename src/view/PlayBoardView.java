@@ -20,17 +20,14 @@ import view.javaFXTemplates.PaneTemplate;
 public class PlayBoardView extends PaneTemplate {
 	LocationGenerator locs;
 
-	public PlayBoardView(Stage stageIn) {
-		super(PlayBoardView.class.getResource("fxml/playboard.fxml"), stageIn);
+	public PlayBoardView() {
+		super(PlayBoardView.class.getResource("fxml/playboard.fxml"));
 		
 		locs = new LocationGenerator(getPrefHeight(),getPrefWidth());
 		
 		getStyleClass().add("playboard_background");
 	}
 
-	private void updateLocations() {
-		locs = new LocationGenerator(getPrefHeight(),getPrefWidth());
-	}
 
 	@Deprecated
 	public void addHex(Point[] pointsIn, Point location, int value, String cssSel) {
