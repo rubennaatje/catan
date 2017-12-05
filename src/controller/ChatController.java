@@ -19,6 +19,8 @@ public class ChatController implements Runnable {
 		view = new ChatView(model.getChatLines(), this);
 		this.player = player;
 		this.spelID = spelID;
+		
+		model.registerWordWrap(view.getListWidth());
 		// for testing purpouses only
 		Scene scene = new Scene(view);
 		primaryStage.setScene(scene);

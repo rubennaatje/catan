@@ -389,10 +389,10 @@ public class BoardHelper {
 		return outResult;
 	}
 
-	public static ArrayList<Tile> getAllHexes(String gameId) throws SQLException  {
+	public static ArrayList<Tile> getAllHexes(String spelId) throws SQLException  {
 
 		ResultSet rs = DatabaseManager.createStatement()
-				.executeQuery("SELECT * FROM `tegels` where `idspel` =" + gameId);
+				.executeQuery("SELECT * FROM `tegels` where `idspel` =" + spelId);
 
 		ArrayList<Tile> tiles = new ArrayList<Tile>();
 

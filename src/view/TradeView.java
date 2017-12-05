@@ -1,5 +1,9 @@
 package view;
 
+import java.util.HashMap;
+
+import controller.TradeController;
+import javafx.event.EventDispatchChain;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -13,43 +17,48 @@ public class TradeView extends PaneTemplate {
 
 	// labels for trade ratios to bank
 	@FXML
-	Label houtBnkLbl;
+	private Label houtBnkLbl;
 	@FXML
-	Label wolBnkLbl;
+	private Label wolBnkLbl;
 	@FXML
-	Label graanBnkLbl;
+	private Label graanBnkLbl;
 	@FXML
-	Label baksteenBnkLbl;
+	private Label baksteenBnkLbl;
 	@FXML
-	Label ertsBnkLbl;
+	private Label ertsBnkLbl;
 
 	@FXML
-	TextField houtVraLbl;
+	private TextField houtVraLbl;
 	@FXML
-	TextField wolVraLbl;
+	private TextField wolVraLbl;
 	@FXML
-	TextField graanVraLbl;
+	private TextField graanVraLbl;
 	@FXML
-	TextField baksteenVraLbl;
+	private TextField baksteenVraLbl;
 	@FXML
-	TextField ertsVraLbl;
+	private TextField ertsVraLbl;
 
 	@FXML
-	TextField houtAanLbl;
+	private TextField houtAanLbl;
 	@FXML
-	TextField wolAanLbl;
+	private TextField wolAanLbl;
 	@FXML
-	TextField graanAanLbl;
+	private TextField graanAanLbl;
 	@FXML
-	TextField baksteenAanLbl;
+	private TextField baksteenAanLbl;
 	@FXML
-	TextField ertsAanLbl;
+	private TextField ertsAanLbl;
 
 	@FXML
-	Button biedBtn;
+	private Button biedBtn;
 
-	public TradeView(Stage primaryStage) {
+	private TradeController controller;
+
+	
+	public TradeView(Stage primaryStage, TradeController controller) {
 		super(TradeView.class.getResource("fxml/trade.fxml"), primaryStage);
+		
+		this.controller = controller;
 	}
 
 	public TradeView() {
@@ -148,7 +157,50 @@ public class TradeView extends PaneTemplate {
 		}
 	}
 
-	public void offerBtnClick() {
 
+	@SuppressWarnings("unchecked")
+	public void offerBtnClick(MouseEvent e) {
+		HashMap<String, Integer> offer = new HashMap<>();
+		HashMap<String, Integer> request = new HashMap<>();
+		
+		
+		offer.put("Baksteen", Integer.parseInt(baksteenAanLbl.getText()));
+		offer.put("Erts", Integer.parseInt(ertsAanLbl.getText()));
+		offer.put("Graan", Integer.parseInt(graanAanLbl.getText()));
+		offer.put("Hout", Integer.parseInt(houtAanLbl.getText()));
+		offer.put("Wol", Integer.parseInt(wolAanLbl.getText()));
+		
+		request.put("Baksteen", Integer.parseInt(baksteenVraLbl.getText()));
+		request.put("Erts", Integer.parseInt(ertsVraLbl.getText()));
+		request.put("Graan", Integer.parseInt(graanVraLbl.getText()));
+		request.put("Hout", Integer.parseInt(houtVraLbl.getText()));
+		request.put("Wol", Integer.parseInt(wolVraLbl.getText()));
+		
+		
+		
+		
+		clearTradeFld();
+		
+		@SuppressWarnings("rawtypes")
+		HashMap[] bloob = {request, offer};
+		controller.submitTrade(bloob);
+	}
+	
+	
+	private void clearTradeFld() {
+		baksteenAanLbl.setText("0");
+		 baksteenVraLbl.setText("0");
+		 
+		 ertsAanLbl.setText("0");
+		 ertsVraLbl.setText("0");
+		 
+		 graanAanLbl.setText("0");
+		 graanVraLbl.setText("0");
+		 
+		 houtAanLbl.setText("0");
+		 houtVraLbl.setText("0");
+		 
+		 wolAanLbl.setText("0");
+		 wolVraLbl.setText("0");
 	}
 }

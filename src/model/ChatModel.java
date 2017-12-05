@@ -8,16 +8,27 @@ import java.util.Date;
 
 import controller.DatabaseManager;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 public class ChatModel {
 
 	private Timestamp lastLine = new Timestamp(0);
-	private ObservableList<String> chatLines = FXCollections.observableArrayList();
-
+	private ObservableList<Text> chatLines = FXCollections.observableArrayList();
+	private ObservableValue<Number> wordWrap;
+	
 	public ChatModel() {
-		chatLines = FXCollections.observableArrayList();
+		chatLines = FXCollections.observableArrayList();		
+	}
+	
+	public void registerWordWrap(final ObservableValue<Number> wordWrap) {
+		 this.wordWrap = wordWrap;
 	}
 
 	public void sendMessage(String message, PlayerModel player, String spelID) throws SQLException {
@@ -26,11 +37,11 @@ public class ChatModel {
 		updateChatbox(spelID);
 	}
 
-	/** retrieves all lines of the chat for the game since the last timestamp
+	/**retrieves all lines of the chat for the game since the last timestamp
 	 * @param spelID
 	 */
 	public void updateChatbox(String spelID) {
-
+				
 		Platform.runLater(() -> {
 			try {
 				ResultSet rs = DatabaseManager.createStatement()
@@ -45,7 +56,12 @@ public class ChatModel {
 					Date date = new Date(lastLine.getTime());
 					SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 					
-					chatLines.add(sUsername + " at " + sdf.format(date) + ": " + sChatline);
+					Text text = new Text(sUsername + " at " + sdf.format(date) + ": " + sChatline);
+					text.wrappingWidthProperty().bind(wordWrap);
+					
+					chatLines.add(text);
+					
+
 				}
 				rs.close();
 			} catch (SQLException e) {
@@ -55,7 +71,7 @@ public class ChatModel {
 		});
 	}
 
-	public ObservableList<String> getChatLines() {
+	public ObservableList<Text> getChatLines() {
 		return chatLines;
 	}
 }

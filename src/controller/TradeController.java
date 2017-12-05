@@ -1,16 +1,25 @@
 package controller;
 
+import java.util.HashMap;
+
 import javafx.stage.Stage;
-import model.TradeModel;
+import model.PlayerModel;
+import model.TradeHelper;
 import view.TradeView;
 
 public class TradeController {
 	TradeView view;
-	TradeModel model;
+	String spelId;
+	PlayerModel player;
+	
 	
 	public TradeController(Stage primaryStage) {
-		view = new TradeView(primaryStage);
-		model = new TradeModel();
+		view = new TradeView(primaryStage, this);
 		view.show();
+	}
+	
+	public void submitTrade(HashMap<String, Integer>[] tradeSuggestion) {
+		TradeHelper.registerTrade(spelId, player, tradeSuggestion);
+		
 	}
 }

@@ -23,35 +23,35 @@
       </Label>
       <Group layoutX="74.0" layoutY="241.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="placeholder" />
+            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="bnkTradeButton" />
             <Label layoutX="-18.0" layoutY="-62.0" prefHeight="23.0" prefWidth="36.0" text="Hout" />
             <Label fx:id="houtBnkLbl" layoutX="-10.0" layoutY="-10.0" text="4:1" />
          </children>
       </Group>
       <Group layoutX="184.0" layoutY="241.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="placeholder" />
+            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="bnkTradeButton" />
             <Label layoutX="-14.0" layoutY="-65.0" prefHeight="23.0" prefWidth="28.0" text="Wol" />
             <Label fx:id="wolBnkLbl" layoutX="-10.0" layoutY="-10.0" text="2:1" />
          </children>
       </Group>
       <Group layoutX="300.0" layoutY="241.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="placeholder" />
+            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="bnkTradeButton" />
             <Label fx:id="graanBnkLbl" layoutX="-10.0" layoutY="-10.0" text="4:1" />
             <Label layoutX="-21.0" layoutY="-67.0" prefHeight="23.0" prefWidth="43.0" text="Graan" />
          </children>
       </Group>
       <Group layoutX="415.0" layoutY="241.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="placeholder" />
+            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="bnkTradeButton" />
             <Label layoutX="-31.0" layoutY="-67.0" prefHeight="23.0" prefWidth="62.0" text="Baksteen" />
             <Label fx:id="baksteenBnkLbl" layoutX="-10.0" layoutY="-10.0" text="4:1" />
          </children>
       </Group>
       <Group layoutX="520.0" layoutY="241.0">
          <children>
-            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="placeholder" />
+            <Circle fill="DODGERBLUE" radius="34.0" stroke="BLACK" strokeType="INSIDE" styleClass="bnkTradeButton" />
             <Label layoutX="-14.0" layoutY="-65.0" prefHeight="23.0" prefWidth="28.0" text="Erts" />
             <Label fx:id="ertsBnkLbl" layoutX="-10.0" layoutY="-10.0" text="2:1" />
          </children>

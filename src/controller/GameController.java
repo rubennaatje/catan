@@ -27,8 +27,8 @@ public class GameController {
 	GameControlerView buttons;
 	DiceView dice;
 
-	private EventHandler<? super MouseEvent> pieceEvent;
-	private EventHandler<? super MouseEvent> firstRndStreet;
+	private EventHandler<MouseEvent> pieceEvent;
+	private EventHandler<MouseEvent> firstRndStreet;
 	private EventHandler<MouseEvent> buyEvent;
 
 	private EventHandler<MouseEvent> endTurn;
@@ -41,87 +41,70 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 
-		buyEvent = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				refresh();
-				Node caller = (Node) arg0.getSource();
-				switch (caller.getId()) {
-				case "townBtn":
-					showTownPlacable();
-					break;
-				case "streetBtn":
-					showStreetPlacable();
-					break;
-				case "cityBtn":
-					showCityPlacable();
-					break;
-				}
+		buyEvent = ((e) -> {
+			refresh();
+			Node caller = (Node) e.getSource();
+			switch (caller.getId()) {
+			case "townBtn":
+				showTownPlacable();
+				break;
+			case "streetBtn":
+				showStreetPlacable();
+				break;
+			case "cityBtn":
+				showCityPlacable();
+				break;
 			}
-		};
+		});
 
-		this.endTurn = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				try {
-					BoardHelper.nextTurnForward(spelId);
-					disableButtons();
-					usrTurn();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+		endTurn = ((e) -> {
+			try {
+				BoardHelper.nextTurnForward(spelId);
+				disableButtons();
+				usrTurn();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
 			}
-		};
 
-		this.pieceEvent = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				piecePlacement(arg0);
-				refresh();
-			}
-		};
+		});
+
+		pieceEvent = ((e) -> {
+			piecePlacement(e);
+			refresh();
+		});
 
 		// event handler for first round piece placement
-		this.firstRndPiece = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				piecePlacement(arg0);
-				refresh();
-				showFrstRndStreet();
-			}
-		};
+		firstRndPiece = ((e) -> {
+			piecePlacement(e);
+			refresh();
+			showFrstRndStreet();
+		});
 		// event handler for first round street placement
-		this.firstRndStreet = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				piecePlacement(arg0);
-
-				ResultSet result;
-				try {
-					result = DatabaseManager.createStatement().executeQuery(
-							"select (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
-									+ players[usrPlayer].getUsername()
-									+ "' and x_van is not null) from spel where idspel =" + spelId);
-					result.next();
-					if (result.getInt(1) == 2 && players[usrPlayer].getPlayerNumber() == 4) {
-						frstRnd();
-					} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
-						DatabaseManager.createStatement()
-								.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
-						enableButtons();
-					} else if (result.getInt(1) > 2) {
-						BoardHelper.nextTurnBackward(spelId);
-					} else {
-						BoardHelper.nextTurnForward(spelId);
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		firstRndStreet = ((e) -> {
+			piecePlacement(e);
+			ResultSet result;
+			try {
+				result = DatabaseManager.createStatement().executeQuery(
+						"select (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
+								+ players[usrPlayer].getUsername() + "' and x_van is not null) from spel where idspel ="
+								+ spelId);
+				result.next();
+				if (result.getInt(1) == 2 && players[usrPlayer].getPlayerNumber() == 4) {
+					frstRnd();
+				} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
+					DatabaseManager.createStatement()
+							.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
+					enableButtons();
+				} else if (result.getInt(1) > 2) {
+					BoardHelper.nextTurnBackward(spelId);
+				} else {
+					BoardHelper.nextTurnForward(spelId);
 				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
-		};
+		});
 
 		buttons = new GameControlerView(buyEvent, endTurn);
 		playboardview = new PlayBoardView();
@@ -314,31 +297,41 @@ public class GameController {
 
 	// update ing field
 	public void refresh() {
+		// fetching all data in seperate thread
 		System.out.println("board is refreshing");
-
-		Platform.runLater(() -> {
-			playboardview.getChildren().clear();
-			// updates all hexes and attached values
-			try {
-				for (Tile t : BoardHelper.getAllHexes(spelId)) {
+		try {
+			ArrayList<Tile> hexes = BoardHelper.getAllHexes(spelId);
+			ArrayList<ArrayList<Street>> allStreets = new ArrayList<>();
+			ArrayList<ArrayList<Piece>> allPieces = new ArrayList<>();
+			for (PlayerModel player : players) {
+				allStreets.add(BoardHelper.getStreetsPlayer(player, spelId));
+				allPieces.add(BoardHelper.getPiecesPlayer(player, spelId));
+			}
+			int longestRoad;
+			longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
+				playboardview.getChildren().clear();
+				for (Tile t : hexes) {
 					playboardview.addHex(t);
 				}
-				for (PlayerModel player : players) {
+				for (ArrayList<Street> streets : allStreets) {
 					// places all streets for player
-					for (Street street : BoardHelper.getStreetsPlayer(player, spelId)) {
+					for (Street street : streets) {
 						playboardview.addStreet(street);
 					}
+				}
+				for (ArrayList<Piece> pieces : allPieces) {
 					// places all cities and towns for player
-					for (Piece street : BoardHelper.getPiecesPlayer(player, spelId)) {
+					for (Piece street : pieces) {
 						playboardview.addPiece(street);
 					}
 				}
-				buttons.setLongestRoad(BoardHelper.getLongestRoad(players[usrPlayer], spelId));
-			} catch (Exception e) {
-				// TODO show error to user??? //
-				e.printStackTrace();
-			}
-		});
+				buttons.setLongestRoad(longestRoad);
+			});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

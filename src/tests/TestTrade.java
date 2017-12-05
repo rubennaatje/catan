@@ -21,11 +21,7 @@ public class TestTrade extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
-		
         TradeController some = new TradeController(primaryStage);
-		
-		
 	}
 
 }
