@@ -88,11 +88,8 @@ public class BoardHelper {
 		return array;
 	}
 
-	
-	
-	
 	// retrieves count for longest road for player and game
-	public static int getLongestRoad(PlayerModel player, String spelId) throws SQLException  {
+	public static int getLongestRoad(PlayerModel player, String spelId) throws SQLException {
 
 		ArrayList<GridLocation> enemyPieces = getEnemyPieceLocation(player, spelId);
 		ArrayList<GridLocation> endStreets = getDeadEndGridlocation(player, spelId);
@@ -109,12 +106,13 @@ public class BoardHelper {
 	public static ArrayList<GridLocation> getTileLocations() {
 		ArrayList<GridLocation> positions = new ArrayList<>();
 		for (int i = 0; i < conf.length; i++) {
-			positions.add(new GridLocation(conf[i][1], conf[i][2])); 
+			positions.add(new GridLocation(conf[i][1], conf[i][2]));
 		}
 		return positions;
 	}
-	
-	private static ArrayList<GridLocation> getEnemyPieceLocation(PlayerModel player, String spelId) throws SQLException  {
+
+	private static ArrayList<GridLocation> getEnemyPieceLocation(PlayerModel player, String spelId)
+			throws SQLException {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
 						+ spelId + " and not username = '" + player.getUsername() + "' and x_van is not null;");
@@ -158,7 +156,8 @@ public class BoardHelper {
 	}
 
 	// returns all streets on a deadEnd for a player
-	public static ArrayList<GridLocation> getDeadEndGridlocation(PlayerModel player, String spelId) throws SQLException  {
+	public static ArrayList<GridLocation> getDeadEndGridlocation(PlayerModel player, String spelId)
+			throws SQLException {
 		ArrayList<Street> playerStreet = getStreetsPlayer(player, spelId);
 		ArrayList<GridLocation> endLocations = new ArrayList<>();
 		for (Street street : playerStreet) {
@@ -187,7 +186,7 @@ public class BoardHelper {
 	}
 
 	// returns all streets for a specific user in Street format
-	public static ArrayList<Street> getStreetsPlayer(PlayerModel player, String spelId) throws SQLException  {
+	public static ArrayList<Street> getStreetsPlayer(PlayerModel player, String spelId) throws SQLException {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
 						+ spelId + " AND username = '" + player.getUsername() + "';");
@@ -200,7 +199,7 @@ public class BoardHelper {
 		return returnStreet;
 	}
 
-	public static ArrayList<Piece> getPiecesPlayer(PlayerModel player, String spelId) throws SQLException  {
+	public static ArrayList<Piece> getPiecesPlayer(PlayerModel player, String spelId) throws SQLException {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
 						+ spelId + " and username= '" + player.getUsername() + "' and x_van is not null;");
@@ -219,7 +218,7 @@ public class BoardHelper {
 	}
 
 	// returns a list of all empty street positions
-	public static ArrayList<Street> getAvailableStreetPositions(PlayerModel user, String spelId) throws SQLException{
+	public static ArrayList<Street> getAvailableStreetPositions(PlayerModel user, String spelId) throws SQLException {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND idspel = "
 						+ spelId + ";");
@@ -241,7 +240,7 @@ public class BoardHelper {
 	}
 
 	// returns only streetPositions where available and adjacent to users streets
-	public static ArrayList<Street> getPlacableStreePos(PlayerModel user, String spelId) throws SQLException{
+	public static ArrayList<Street> getPlacableStreePos(PlayerModel user, String spelId) throws SQLException {
 		ResultSet playersStrt = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
 						+ spelId + " AND username = '" + user.getUsername() + "';");
@@ -264,7 +263,7 @@ public class BoardHelper {
 	}
 
 	// returns all possible location for villages on the map during first round
-	public static ArrayList<Piece> getValidFirstRoundTownPos(PlayerModel user, String spelId) throws SQLException{
+	public static ArrayList<Piece> getValidFirstRoundTownPos(PlayerModel user, String spelId) throws SQLException {
 		ArrayList<GridLocation> returnPos = getEmptyPiecePos(spelId);
 		ArrayList<GridLocation> temp = checkDistanceRule(returnPos, spelId);
 		ArrayList<Piece> returnPiece = new ArrayList<>();
@@ -295,7 +294,7 @@ public class BoardHelper {
 		return returnStreet;
 	}
 
-	public static ArrayList<Piece> getPlacebleTownPos(PlayerModel user, String spelId) throws SQLException  {
+	public static ArrayList<Piece> getPlacebleTownPos(PlayerModel user, String spelId) throws SQLException {
 
 		ResultSet userStreetPos = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van, x_naar, y_naar FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'straat') AND x_van IS NOT NULL AND idspel = "
@@ -324,8 +323,8 @@ public class BoardHelper {
 
 	// removes all positions from a arraylist that are within 2 steps of a city or
 	// village
-	private static ArrayList<GridLocation> checkDistanceRule(ArrayList<GridLocation> posToCheck, String spelId) throws SQLException
-			 {
+	private static ArrayList<GridLocation> checkDistanceRule(ArrayList<GridLocation> posToCheck, String spelId)
+			throws SQLException {
 		// logic for distance rule| removing all that don't follow
 		ResultSet placedPiece = DatabaseManager.createStatement().executeQuery(
 				"SELECT x_van, y_van FROM spelerstuk WHERE idstuk IN (SELECT idstuk FROM stuk WHERE stuksoort = 'stad' or stuksoort = 'dorp') AND x_van is not null AND idspel = "
@@ -368,7 +367,7 @@ public class BoardHelper {
 	}
 
 	// creates a GridLocation[] arraylist with all possible street locations
-	public static ArrayList<Street> populateStreetXYPairs(PlayerModel user)  {
+	public static ArrayList<Street> populateStreetXYPairs(PlayerModel user) {
 		ArrayList<Street> xyPair = new ArrayList<>();
 		for (int j = 0; j < conf1.length; j++) {
 			GridLocation current = new GridLocation(conf1[j][0], conf1[j][1]);
@@ -400,7 +399,7 @@ public class BoardHelper {
 		return outResult;
 	}
 
-	public static ArrayList<Tile> getAllHexes(String spelId) throws SQLException  {
+	public static ArrayList<Tile> getAllHexes(String spelId) throws SQLException {
 
 		ResultSet rs = DatabaseManager.createStatement()
 				.executeQuery("SELECT * FROM `tegels` where `idspel` =" + spelId);
@@ -484,7 +483,7 @@ public class BoardHelper {
 
 	}
 
-	public static ArrayList<Piece> getSurroundingPieces(String spelId, int x, int y) throws SQLException  {
+	public static ArrayList<Piece> getSurroundingPieces(String spelId, int x, int y) throws SQLException {
 
 		ResultSet results = DatabaseManager.createStatement()
 				.executeQuery("SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = '"
@@ -509,15 +508,17 @@ public class BoardHelper {
 						+ spelId);
 		results.next();
 		int volgnr = results.getInt(1);
-		
-		
+
 		if (volgnr == 4) {
 			volgnr = 1;
 		} else {
 			volgnr++;
 		}
-		DatabaseManager.createStatement().executeUpdate("update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = " + volgnr + ") where spel.idspel = " + spelId);
-		DatabaseManager.createStatement().executeUpdate("UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
+		DatabaseManager.createStatement().executeUpdate(
+				"update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = "
+						+ volgnr + ") where spel.idspel = " + spelId);
+		DatabaseManager.createStatement().executeUpdate(
+				"UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
 	}
 
 	public static void nextTurnBackward(String spelId) throws SQLException {
@@ -531,11 +532,26 @@ public class BoardHelper {
 		} else {
 			volgnr--;
 		}
-		DatabaseManager.createStatement().executeUpdate("update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = " + volgnr + ") where spel.idspel = " + spelId);
-		DatabaseManager.createStatement().executeUpdate("UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
+		DatabaseManager.createStatement().executeUpdate(
+				"update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = "
+						+ volgnr + ") where spel.idspel = " + spelId);
+		DatabaseManager.createStatement().executeUpdate(
+				"UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
 	}
-	
-	public void placeRobber(String spelId, GridLocation loc) throws SQLException {		
-		DatabaseManager.createStatement().executeUpdate("UPDATE struikrover SET idtegel = (SELECT idtegel from tegel where x = " + loc.x + " and y= " + loc.y + " and idspel = struikrover.idspel) where idspel = " + spelId);
+
+	public void placeRobber(String spelId, GridLocation loc) throws SQLException {
+		DatabaseManager.createStatement()
+				.executeUpdate("UPDATE struikrover SET idtegel = (SELECT idtegel from tegel where x = " + loc.x
+						+ " and y= " + loc.y + " and idspel = struikrover.idspel) where idspel = " + spelId);
+	}
+
+	public static GridLocation getRobberPos(String spelId) throws SQLException {
+		ResultSet results = DatabaseManager.createStatement()
+				.executeQuery("select x, y from tegel where idtegel = (SELECT idtegel from struikrover where idspel = "
+						+ spelId + ") limit 1");
+		if (results.next()) {
+			return new GridLocation(results.getInt(1), results.getInt(2));
+		}
+		return null;
 	}
 }

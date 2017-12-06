@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import controller.CatanController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,14 +18,21 @@ public class LoginView extends PaneTemplate {
 	@FXML private JFXButton btnLogin;
 	@FXML private JFXButton btnRegister;
 	
-	public LoginView(Stage stage) {
+	private CatanController controller;
+	
+	public LoginView(Stage stage, CatanController controller) {
 		super(LoginView.class.getResource("fxml/LoginView.fxml"), stage);
+		this.controller = controller;
 		
 		btnLogin.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				new MenuView(stage).show();
+				if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
+					controller.openMenuScreen();
+				} else {
+					txtPassword.setText("");
+				}
 			}
 		});
 		
@@ -32,7 +40,7 @@ public class LoginView extends PaneTemplate {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				new RegisterView(stage).show();
+				controller.openRegisterScreen();
 			}
 		});
 	}

@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.SQLException;
+
+import controller.DatabaseManager;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Challenges {
@@ -30,5 +33,23 @@ public class Challenges {
 	{
 		return gameId.get();
 	}
+    
+    public void accept() {
+    	try {
+			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='accepteerd' where idspel = " + getGameId() + ";");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void decline() {
+		try {
+			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='gewijgerd' where idspel = " + getGameId() + ";");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }

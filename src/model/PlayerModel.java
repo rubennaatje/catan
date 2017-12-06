@@ -67,9 +67,7 @@ public class PlayerModel extends Observable {
 			if (piece.getType() == PieceType.DORP )
 				break;
 		}
-
 		results.close();
-
 	}
 	public void removeResource(TileType t) 
 	{
