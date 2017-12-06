@@ -1,5 +1,9 @@
 package view;
 
+import java.util.HashMap;
+
+import controller.TradeController;
+import javafx.event.EventDispatchChain;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -7,55 +11,60 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.TileType;
 import view.javaFXTemplates.PaneTemplate;
 
 public class TradeView extends PaneTemplate {
 
 	// labels for trade ratios to bank
 	@FXML
-	Label houtBnkLbl;
+	private Label houtBnkLbl;
 	@FXML
-	Label wolBnkLbl;
+	private Label wolBnkLbl;
 	@FXML
-	Label graanBnkLbl;
+	private Label graanBnkLbl;
 	@FXML
-	Label baksteenBnkLbl;
+	private Label baksteenBnkLbl;
 	@FXML
-	Label ertsBnkLbl;
+	private Label ertsBnkLbl;
 
 	@FXML
-	TextField houtVraLbl;
+	private TextField houtVraLbl;
 	@FXML
-	TextField wolVraLbl;
+	private TextField wolVraLbl;
 	@FXML
-	TextField graanVraLbl;
+	private TextField graanVraLbl;
 	@FXML
-	TextField baksteenVraLbl;
+	private TextField baksteenVraLbl;
 	@FXML
-	TextField ertsVraLbl;
+	private TextField ertsVraLbl;
 
 	@FXML
-	TextField houtAanLbl;
+	private TextField houtAanLbl;
 	@FXML
-	TextField wolAanLbl;
+	private TextField wolAanLbl;
 	@FXML
-	TextField graanAanLbl;
+	private TextField graanAanLbl;
 	@FXML
-	TextField baksteenAanLbl;
+	private TextField baksteenAanLbl;
 	@FXML
-	TextField ertsAanLbl;
+	private TextField ertsAanLbl;
 
 	@FXML
-	Button biedBtn;
+	private Button biedBtn;
 
-	public TradeView(Stage primaryStage) {
+	private TradeController controller;
+
+	public TradeView(Stage primaryStage, TradeController controller) {
 		super(TradeView.class.getResource("fxml/trade.fxml"), primaryStage);
+
+		this.controller = controller;
 	}
 
 	public TradeView() {
 		super(TradeView.class.getResource("fxml/trade.fxml"));
 	}
-	
+
 	public void addBtnClick(MouseEvent e) {
 		Node source = (Node) e.getSource();
 		switch (source.getParent().getId()) {
@@ -82,22 +91,37 @@ public class TradeView extends PaneTemplate {
 		case "houtAanbGrp":
 			if (Integer.parseInt(houtAanLbl.getText()) < 9)
 				houtAanLbl.setText(((Integer) (Integer.parseInt(houtAanLbl.getText()) + 1)).toString());
+			if (!controller.checkSufficient(TileType.H, (Integer.parseInt(houtAanLbl.getText())))
+					&& !houtAanLbl.getStyleClass().contains("warning"))
+				houtAanLbl.getStyleClass().add("warning");
 			break;
 		case "wolAanbGrp":
 			if (Integer.parseInt(wolAanLbl.getText()) < 9)
 				wolAanLbl.setText(((Integer) (Integer.parseInt(wolAanLbl.getText()) + 1)).toString());
+			if (!controller.checkSufficient(TileType.W, (Integer.parseInt(wolAanLbl.getText())))
+					&& !wolAanLbl.getStyleClass().contains("warning"))
+				wolAanLbl.getStyleClass().add("warning");
 			break;
 		case "graanAanbGrp":
 			if (Integer.parseInt(graanAanLbl.getText()) < 9)
 				graanAanLbl.setText(((Integer) (Integer.parseInt(graanAanLbl.getText()) + 1)).toString());
+			if (!controller.checkSufficient(TileType.G, (Integer.parseInt(graanAanLbl.getText())))
+					&& !graanAanLbl.getStyleClass().contains("warning"))
+				graanAanLbl.getStyleClass().add("warning");
 			break;
 		case "baksteenAanbGrp":
 			if (Integer.parseInt(baksteenAanLbl.getText()) < 9)
 				baksteenAanLbl.setText(((Integer) (Integer.parseInt(baksteenAanLbl.getText()) + 1)).toString());
+			if (!controller.checkSufficient(TileType.B, (Integer.parseInt(baksteenAanLbl.getText())))
+					&& !baksteenAanLbl.getStyleClass().contains("warning"))
+				baksteenAanLbl.getStyleClass().add("warning");
 			break;
 		case "ertsAanbGrp":
 			if (Integer.parseInt(ertsAanLbl.getText()) < 9)
 				ertsAanLbl.setText(((Integer) (Integer.parseInt(ertsAanLbl.getText()) + 1)).toString());
+			if (!controller.checkSufficient(TileType.E, (Integer.parseInt(ertsAanLbl.getText())))
+					&& !ertsAanLbl.getStyleClass().contains("warning"))
+				ertsAanLbl.getStyleClass().add("warning");
 			break;
 		}
 	}
@@ -107,48 +131,95 @@ public class TradeView extends PaneTemplate {
 		switch (source.getParent().getId()) {
 		case "houtVraGrp":
 			if (Integer.parseInt(houtVraLbl.getText()) > 0)
-			houtVraLbl.setText(((Integer) (Integer.parseInt(houtVraLbl.getText()) - 1)).toString());
+				houtVraLbl.setText(((Integer) (Integer.parseInt(houtVraLbl.getText()) - 1)).toString());
 			break;
 		case "wolVraGrp":
 			if (Integer.parseInt(wolVraLbl.getText()) > 0)
-			wolVraLbl.setText(((Integer) (Integer.parseInt(wolVraLbl.getText()) - 1)).toString());
+				wolVraLbl.setText(((Integer) (Integer.parseInt(wolVraLbl.getText()) - 1)).toString());
 			break;
 		case "graanVraGrp":
 			if (Integer.parseInt(graanVraLbl.getText()) > 0)
-			graanVraLbl.setText(((Integer) (Integer.parseInt(graanVraLbl.getText()) - 1)).toString());
+				graanVraLbl.setText(((Integer) (Integer.parseInt(graanVraLbl.getText()) - 1)).toString());
 			break;
 		case "baksteenVraGrp":
 			if (Integer.parseInt(baksteenVraLbl.getText()) > 0)
-			baksteenVraLbl.setText(((Integer) (Integer.parseInt(baksteenVraLbl.getText()) - 1)).toString());
+				baksteenVraLbl.setText(((Integer) (Integer.parseInt(baksteenVraLbl.getText()) - 1)).toString());
 			break;
 		case "ertsVraGrp":
 			if (Integer.parseInt(ertsVraLbl.getText()) > 0)
-			ertsVraLbl.setText(((Integer) (Integer.parseInt(ertsVraLbl.getText()) - 1)).toString());
+				ertsVraLbl.setText(((Integer) (Integer.parseInt(ertsVraLbl.getText()) - 1)).toString());
 			break;
 		case "houtAanbGrp":
 			if (Integer.parseInt(houtAanLbl.getText()) > 0)
-			houtAanLbl.setText(((Integer) (Integer.parseInt(houtAanLbl.getText()) - 1)).toString());
+				houtAanLbl.setText(((Integer) (Integer.parseInt(houtAanLbl.getText()) - 1)).toString());
+			if (controller.checkSufficient(TileType.H, (Integer.parseInt(houtAanLbl.getText()))))
+				houtAanLbl.getStyleClass().remove("warning");
 			break;
 		case "wolAanbGrp":
 			if (Integer.parseInt(wolAanLbl.getText()) > 0)
-			wolAanLbl.setText(((Integer) (Integer.parseInt(wolAanLbl.getText()) - 1)).toString());
+				wolAanLbl.setText(((Integer) (Integer.parseInt(wolAanLbl.getText()) - 1)).toString());
+			if (controller.checkSufficient(TileType.W, (Integer.parseInt(wolAanLbl.getText()))))
+				wolAanLbl.getStyleClass().remove("warning");
 			break;
 		case "graanAanbGrp":
 			if (Integer.parseInt(graanAanLbl.getText()) > 0)
-			graanAanLbl.setText(((Integer) (Integer.parseInt(graanAanLbl.getText()) - 1)).toString());
+				graanAanLbl.setText(((Integer) (Integer.parseInt(graanAanLbl.getText()) - 1)).toString());
+			if (controller.checkSufficient(TileType.G, (Integer.parseInt(graanAanLbl.getText()))))
+				graanAanLbl.getStyleClass().remove("warning");
 			break;
 		case "baksteenAanbGrp":
 			if (Integer.parseInt(baksteenAanLbl.getText()) > 0)
-			baksteenAanLbl.setText(((Integer) (Integer.parseInt(baksteenAanLbl.getText()) - 1)).toString());
+				baksteenAanLbl.setText(((Integer) (Integer.parseInt(baksteenAanLbl.getText()) - 1)).toString());
+			if (controller.checkSufficient(TileType.B, (Integer.parseInt(baksteenAanLbl.getText()))))
+				baksteenAanLbl.getStyleClass().remove("warning");
 			break;
 		case "ertsAanbGrp":
 			if (Integer.parseInt(ertsAanLbl.getText()) > 0)
-			ertsAanLbl.setText(((Integer) (Integer.parseInt(ertsAanLbl.getText()) - 1)).toString());
+				ertsAanLbl.setText(((Integer) (Integer.parseInt(ertsAanLbl.getText()) - 1)).toString());
+			if (controller.checkSufficient(TileType.E, (Integer.parseInt(ertsAanLbl.getText()))))
+				ertsAanLbl.getStyleClass().remove("warning");
 			break;
 		}
 	}
 
-	public void offerBtnClick() {
+	@SuppressWarnings("unchecked")
+	public void offerBtnClick(MouseEvent e) {
+		HashMap<TileType, Integer> offer = new HashMap<>();
+		HashMap<TileType, Integer> request = new HashMap<>();
 
+		offer.put(TileType.B, Integer.parseInt(baksteenAanLbl.getText()));
+		offer.put(TileType.E, Integer.parseInt(ertsAanLbl.getText()));
+		offer.put(TileType.G, Integer.parseInt(graanAanLbl.getText()));
+		offer.put(TileType.H, Integer.parseInt(houtAanLbl.getText()));
+		offer.put(TileType.W, Integer.parseInt(wolAanLbl.getText()));
+
+		request.put(TileType.B, Integer.parseInt(baksteenVraLbl.getText()));
+		request.put(TileType.E, Integer.parseInt(ertsVraLbl.getText()));
+		request.put(TileType.G, Integer.parseInt(graanVraLbl.getText()));
+		request.put(TileType.H, Integer.parseInt(houtVraLbl.getText()));
+		request.put(TileType.W, Integer.parseInt(wolVraLbl.getText()));
+
+		clearTradeFld();
+
+		@SuppressWarnings("rawtypes")
+		HashMap[] bloob = { request, offer };
+		controller.submitTrade(bloob);
+	}
+
+	private void clearTradeFld() {
+		baksteenAanLbl.setText("0");
+		baksteenVraLbl.setText("0");
+
+		ertsAanLbl.setText("0");
+		ertsVraLbl.setText("0");
+
+		graanAanLbl.setText("0");
+		graanVraLbl.setText("0");
+
+		houtAanLbl.setText("0");
+		houtVraLbl.setText("0");
+
+		wolAanLbl.setText("0");
+		wolVraLbl.setText("0");
 	}
 }

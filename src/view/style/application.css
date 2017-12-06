@@ -66,3 +66,12 @@
 #playerWhite{
 	-fx-fill: white;
 }
+/*trade window stuff */
+.warning {
+	-fx-background-color: rgb(255,197,204);
+}
+
+.bnkTradeButton:hover {
+	-fx-cursor: hand;
+	-fx-fill: rgb(102,77,179);
+}
