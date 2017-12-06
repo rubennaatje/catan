@@ -32,6 +32,7 @@ public class GameController {
 	private EventHandler<MouseEvent> buyEvent;
 	private EventHandler<MouseEvent> endTurn;
 	private EventHandler<MouseEvent> firstRndPiece;
+	private EventHandler<MouseEvent> doubleStreetEvent;
 	private DevelopCardController devCon;
 	private EventHandler<MouseEvent> robber;
 
@@ -75,8 +76,17 @@ public class GameController {
 			refresh();
 		});
 
-		robber = ((e) -> {
-			
+		
+		
+
+		doubleStreetEvent = ((e) -> {
+			piecePlacement(e);
+			refresh();
+			showStreetPlacable();
+		});
+		
+		
+		robber = ((e) -> {	
 			refresh();
 		});
 		// event handler for first round piece placement
@@ -115,7 +125,7 @@ public class GameController {
 		buttons = new GameControlerView(buyEvent, endTurn);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage);
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, null);
 		refresh();
 
 		mergeView.show();
@@ -125,6 +135,9 @@ public class GameController {
 	 * Starts the gamecontroller
 	 * 
 	 */
+	
+	
+	
 	public void start() {
 		refresh();
 		try {
