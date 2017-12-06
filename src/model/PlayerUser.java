@@ -3,6 +3,7 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import controller.DatabaseManager;
@@ -62,5 +63,10 @@ public class PlayerUser extends PlayerModel {
 	
 	public void setType(PlayerType type) {
 		this.type = type;
+	}
+	
+	public HashMap<TileType, Integer> getResources()
+	{
+		return resources;
 	}
 }

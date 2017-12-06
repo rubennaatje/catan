@@ -10,6 +10,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.*?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -19,50 +20,50 @@
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
-                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Erts.png" />
+                        <Image url="Erts.png" />
                      </image>
                   </ImageView>
-                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                  <TextField fx:id = "erts" prefHeight="8.0" prefWidth="15.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
                   </TextField>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
-                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Hooi.png" />
+                        <Image url="Hooi.png" />
                      </image>
                   </ImageView>
-                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                  <TextField fx:id = "hooi" prefHeight="8.0" prefWidth="15.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
                   </TextField>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
-                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Schaap.png" />
+                        <Image url="Schaap.png" />
                      </image>
                   </ImageView>
-                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                  <TextField fx:id = "schaap" prefHeight="8.0" prefWidth="15.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
                   </TextField>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
-                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Hout.png" />
+                        <Image url="Hout.png" />
                      </image>
                   </ImageView>
-                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                  <TextField fx:id = "hout" prefHeight="8.0" prefWidth="15.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
                   </TextField>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
-                        <Image url="@../../../Google%20Drive/Informatica/Blok%202/ProjectSoftware/Ontwerp/Grondstoffen/Steen.png" />
+                        <Image url="Steen.png" />
                      </image>
                   </ImageView>
-                  <TextField prefHeight="8.0" prefWidth="15.0" text="0">
+                  <TextField fx:id = "steen" prefHeight="8.0" prefWidth="15.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>

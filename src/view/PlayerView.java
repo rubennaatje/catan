@@ -5,7 +5,6 @@ import java.util.Observer;
 
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import model.PlayerModel;
 import view.javaFXTemplates.PaneTemplate;
 
@@ -18,9 +17,8 @@ public class PlayerView extends PaneTemplate implements Observer {
 	    @FXML private Text road;
 		
 
-	public PlayerView(Stage stage) {
-		super(PlayerView.class.getResource("fxml/PlayerViewComp.fxml"), stage);
-		
+	public PlayerView() {
+		super(PlayerView.class.getResource("fxml/PlayerViewComp.fxml"));
 	}
 
 	@Override

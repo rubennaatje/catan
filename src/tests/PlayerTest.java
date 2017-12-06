@@ -31,7 +31,7 @@ public class PlayerTest extends Application{
 		
 		for (int i = 0; i < playerModels.length; i++)
 		{
-			playerViews[i] = new PlayerView(primaryStage);
+			playerViews[i] = new PlayerView();
 			playerModels[i].addObserver(playerViews[i]);
 		}
 	}
