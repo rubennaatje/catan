@@ -26,21 +26,23 @@ public class GameController {
 	PlayBoardView playboardview;
 	GameControlerView buttons;
 	DiceView dice;
-
+	Dice diceO;
 	private EventHandler<MouseEvent> pieceEvent;
 	private EventHandler<MouseEvent> firstRndStreet;
 	private EventHandler<MouseEvent> buyEvent;
-
 	private EventHandler<MouseEvent> endTurn;
-
 	private EventHandler<MouseEvent> firstRndPiece;
+	private DevelopCardController devCon;
+	private EventHandler<MouseEvent> robber;
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) throws Exception {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer - 1;
 		this.spelId = spelId;
 		this.players = players;
-
+		this.diceO = new Dice(spelId);
+		this.devCon  = new DevelopCardController(players[usrPlayer].getSpelId());
+		
 		buyEvent = ((e) -> {
 			refresh();
 			Node caller = (Node) e.getSource();
@@ -73,6 +75,10 @@ public class GameController {
 			refresh();
 		});
 
+		robber = ((e) -> {
+			
+			refresh();
+		});
 		// event handler for first round piece placement
 		firstRndPiece = ((e) -> {
 			piecePlacement(e);
@@ -151,6 +157,17 @@ public class GameController {
 			public void run() {
 				await();
 				enableButtons();
+				int nThrow;
+				try {
+					boolean newThrow = diceO.throwDiceIfNotThrown();
+					nThrow = diceO.getTotalthrow();
+					System.out.println("dice: " + nThrow + " " + newThrow);
+					if(newThrow)
+						BoardHelper.giveResources(Catan.getGameId(), nThrow);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
 		}.start();
 	}
@@ -193,9 +210,9 @@ public class GameController {
 	}
 
 	public void robberPlacement() {
-		
+
 	}
-	
+
 	private void piecePlacement(MouseEvent event) {
 		try {
 			if (event.getSource() instanceof PieceView) {
@@ -210,19 +227,28 @@ public class GameController {
 		}
 	};
 
-	public void showTownPlacable() {
+	public void showRobberPlacable() {
+		ArrayList<GridLocation> locations;
+		locations = BoardHelper.getTileLocations();
+		Platform.runLater(() -> {
+			for (GridLocation location : locations) {
+				playboardview.addRobber(location, robber);
+			}
+		});
+	}
+	
 
-		ArrayList<Piece> listOfPiece;
+	
+	public void showTownPlacable() {
 		try {
-			listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
+			ArrayList<Piece> listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
 			Platform.runLater(() -> {
 				for (Piece piece : listOfPiece) {
 					playboardview.addPiece(piece, pieceEvent);
 				}
 			});
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -298,6 +324,17 @@ public class GameController {
 			buttons.setDisabled();
 		});
 	}
+	public void checkEnoughForDevCard()
+	{
+		PlayerUser player = (PlayerUser)players[usrPlayer];
+		if(player.hasResource(TileType.W, 1) && player.hasResource(TileType.E, 1) && player.hasResource(TileType.G, 1))
+		{
+			player.removeResource(TileType.W);
+			player.removeResource(TileType.E);
+			player.removeResource(TileType.G);
+			devCon.givePlayerCard(player.getUsername());
+		}
+	}
 
 	// update ing field
 	public void refresh() {
@@ -311,8 +348,8 @@ public class GameController {
 				allStreets.add(BoardHelper.getStreetsPlayer(player, spelId));
 				allPieces.add(BoardHelper.getPiecesPlayer(player, spelId));
 			}
-			int longestRoad;
-			longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
+			GridLocation robberPos = BoardHelper.getRobberPos(spelId);
+			int longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
 			Platform.runLater(() -> {
 				playboardview.getChildren().clear();
 				for (Tile t : hexes) {
@@ -331,6 +368,7 @@ public class GameController {
 					}
 				}
 				buttons.setLongestRoad(longestRoad);
+				playboardview.addRobber(robberPos);
 			});
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

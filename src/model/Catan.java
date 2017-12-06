@@ -11,20 +11,20 @@ public class Catan {
 
 	private static String gameId;
 	
+	
 	private PlayerUser player;
 
 	public boolean login(String username, String password) {
 		try {
-			ResultSet result = DatabaseManager.createStatement()
-					.executeQuery(String.format(DatabaseManager.sLogin, username));
+			ResultSet result = DatabaseManager.createStatement().executeQuery(String.format("SELECT wachtwoord FROM account WHERE username = '%s'", username));
 			if (result != null && result.next()) {
-				if (result.getString("password") == password) {
+				if (result.getString("wachtwoord").equals(password)) {
 					return true;
 				}
 			}
 
 		} catch (SQLException e) {
-
+			e.printStackTrace();
 		}
 
 		return false;
@@ -32,7 +32,7 @@ public class Catan {
 
 	public boolean register(String username, String password) {
 		try {
-			return DatabaseManager.createStatement().execute(String.format(DatabaseManager.sLogin, username, password));
+			return DatabaseManager.createStatement().execute(String.format("INSERT INTO account VALUES ('%s', '%s')", username, password));
 		} catch (SQLException e) {
 
 		}

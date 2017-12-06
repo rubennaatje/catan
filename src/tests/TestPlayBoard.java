@@ -13,6 +13,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.DevelopmentCard;
+import model.Dice;
 import model.BoardHelper;
 import model.LocationGenerator;
 import model.PlayerModel;
@@ -30,6 +32,12 @@ public class TestPlayBoard extends Application {
 			System.out.println("databasemanager shut down");
 		}));
 		launch(args);
+		
+		Dice dice = new Dice(771);
+		dice.throwDice();
+		//DevelopmentCard test = new DevelopmentCard();
+		//System.out.println(test.getType());
+		System.out.println("testsetseet");
 	}
 
 	@Override

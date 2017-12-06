@@ -7,6 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import controller.CatanController;
 import controller.DatabaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,8 @@ import javafx.scene.control.TableView;
 
 public class ChallengeView extends PaneTemplate {
 		
+	private CatanController controller;
+	
 	@FXML private Button btnAccept; 
 	@FXML private Button btnDecline;
 	@FXML private Button btnBack;
@@ -30,23 +33,18 @@ public class ChallengeView extends PaneTemplate {
 	@FXML private TableColumn<Challenges, String> playerName;
 	@FXML private TableColumn<Challenges, String> gameId;
 	
-	public ChallengeView(Stage stage) {
+	public ChallengeView(Stage stage, CatanController controller) {
 		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
+		this.controller = controller;
 		
-		addBoard();
+		addBoard(controller.fillChallenges());
 		
 		btnAccept.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
 				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
-				try {
-					DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='accepteerd' where idspel = " + challenge.getGameId() + ";");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+				challenge.accept();
 			}
 		});
 		
@@ -55,12 +53,7 @@ public class ChallengeView extends PaneTemplate {
 			@Override
 			public void handle(ActionEvent event) {
 				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
-				try {
-					DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='gewijgerd' where idspel = " + challenge.getGameId() + ";");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				challenge.decline();
 			}
 		});
 
@@ -68,32 +61,12 @@ public class ChallengeView extends PaneTemplate {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				new MenuView(stage).show();
+				controller.openMenuScreen();
 			}
 		});
 	}
-
-
-	public void listView(MouseEvent event) {
-		System.out.println("You clicked listview"); 
-		//hier spelers id laten zien
-		//hier game id laten zien 
-	}
 	
-	public void addBoard() {
-		ObservableList<Challenges> data = null;
-		
-		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = 'ger' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
-			data = FXCollections.observableArrayList();
-			
-			while (result.next()) {
-				data.add(new Challenges(result.getString(1), result.getString(2)));
-			}
-		} catch (SQLException e) {
-			
-		}
-		
+	public void addBoard(ObservableList<Challenges> data) {
 		playerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("playerName"));
 		gameId.setCellValueFactory(new PropertyValueFactory<Challenges, String>("gameId")); 
 		uitdager.setItems(data);
