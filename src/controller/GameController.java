@@ -87,6 +87,7 @@ public class GameController {
 		
 		
 		robber = ((e) -> {	
+			robberPlacement(e);
 			refresh();
 		});
 		// event handler for first round piece placement
@@ -125,9 +126,9 @@ public class GameController {
 		buttons = new GameControlerView(buyEvent, endTurn);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, null);
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage);
 		refresh();
-
+		
 		mergeView.show();
 	}
 
@@ -222,8 +223,14 @@ public class GameController {
 		}
 	}
 
-	public void robberPlacement() {
-
+	public void robberPlacement(MouseEvent event) {
+		try {
+			RobberView view = (RobberView)event.getSource();
+			BoardHelper.placeRobber(spelId, view.getLoc());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void piecePlacement(MouseEvent event) {
@@ -242,7 +249,7 @@ public class GameController {
 
 	public void showRobberPlacable() {
 		ArrayList<GridLocation> locations;
-		locations = BoardHelper.getTileLocations();
+		locations = BoardHelper.getValidRobberLocations(spelId);
 		Platform.runLater(() -> {
 			for (GridLocation location : locations) {
 				playboardview.addRobber(location, robber);
