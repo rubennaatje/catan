@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import controller.ChatController;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,16 +29,8 @@ public class ChatView extends PaneTemplate {
 		super(ChatView.class.getResource("fxml/ChatView.fxml"));
 		this.controller = controller;
 		listView.setItems(observableList);
-		
-		
-		listView.getItems().addListener(new ListChangeListener<Text>(){
-			@Override
-			public void onChanged(Change<? extends Text> arg0) {
-				// TODO Auto-generated method stub
-				listView.scrollTo(arg0.getList().size()-1);
-			}
 
-	    });
+		listView.getItems().addListener((Change<? extends Text> arg0) -> listView.scrollTo(arg0.getList().size() - 1));
 	}
 
 	public void sendMessage(MouseEvent arg) {
@@ -46,6 +39,7 @@ public class ChatView extends PaneTemplate {
 			tfMessage.clear();
 		}
 	}
+
 	public ObservableValue<Number> getListWidth() {
 		return listView.widthProperty().subtract(30);
 	}

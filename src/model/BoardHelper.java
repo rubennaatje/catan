@@ -88,6 +88,9 @@ public class BoardHelper {
 		return array;
 	}
 
+	
+	
+	
 	// retrieves count for longest road for player and game
 	public static int getLongestRoad(PlayerModel player, String spelId) throws SQLException  {
 
@@ -103,6 +106,14 @@ public class BoardHelper {
 		return returnVal;
 	}
 
+	public static ArrayList<GridLocation> getTileLocations() {
+		ArrayList<GridLocation> positions = new ArrayList<>();
+		for (int i = 0; i < conf.length; i++) {
+			positions.add(new GridLocation(conf[i][1], conf[i][2])); 
+		}
+		return positions;
+	}
+	
 	private static ArrayList<GridLocation> getEnemyPieceLocation(PlayerModel player, String spelId) throws SQLException  {
 		ResultSet results = DatabaseManager.createStatement().executeQuery(
 				"SELECT s.x_van, s.y_van, s2.stuksoort FROM spelerstuk s inner join stuk s2 on s.idstuk = s2.idstuk where s2.stuksoort in ('stad','dorp') and s.idspel = "
@@ -522,5 +533,9 @@ public class BoardHelper {
 		}
 		DatabaseManager.createStatement().executeUpdate("update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = " + volgnr + ") where spel.idspel = " + spelId);
 		DatabaseManager.createStatement().executeUpdate("UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
+	}
+	
+	public void placeRobber(String spelId, GridLocation loc) throws SQLException {		
+		DatabaseManager.createStatement().executeUpdate("UPDATE struikrover SET idtegel = (SELECT idtegel from tegel where x = " + loc.x + " and y= " + loc.y + " and idspel = struikrover.idspel) where idspel = " + spelId);
 	}
 }

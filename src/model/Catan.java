@@ -178,9 +178,8 @@ public class Catan {
         while (results.next()) {
             
             if(!results.getString("username").equals(player.getUsername())) {
-                PlayerModel competitor = new PlayerModel(results.getString("username"), Catan.getGameId());
+                PlayerModel competitor = new PlayerModel(results.getString("username"), Catan.getGameId(), PlayerType.valueOf(results.getString("kleur").toUpperCase()));
                 competitor.setPlayerNumber(results.getInt("volgnr"));
-                competitor.setType(PlayerType.valueOf(results.getString("kleur").toUpperCase()));
                 
                 players[results.getInt("volgnr") - 1] = competitor;
             } else {
