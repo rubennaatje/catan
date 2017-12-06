@@ -15,7 +15,6 @@ public class ScoreBoard
 		ResultSet scores = null;
 		try
 		{
-			DatabaseManager.connect();
 			scores = DatabaseManager.createStatement().executeQuery(
 					"SELECT username, aantal_spellen_gewonnen FROM speelresultaat ORDER BY som_behaalde_punten DESC");
 			Integer index = 0;
