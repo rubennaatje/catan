@@ -1,8 +1,8 @@
 package tests;
 
+import controller.CatanController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.ChallengeView;
 
 public class TestChallangeView extends Application {
 
@@ -12,12 +12,9 @@ public class TestChallangeView extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		System.out.println("geordiiiii");
-		
-		ChallengeView demo = new ChallengeView(primaryStage);
-		
-		demo.show();
+	public void start(Stage stage) throws Exception {
+		CatanController controller = new CatanController(stage);
+		controller.openChallengeScreen();
 	}
 
 }

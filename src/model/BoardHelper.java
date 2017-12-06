@@ -516,7 +516,7 @@ public class BoardHelper {
 		} else {
 			volgnr++;
 		}
-		DatabaseManager.createStatement().executeUpdate("update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = " + volgnr + ") where spel.idspel = " + spelId);
+		DatabaseManager.createStatement().executeUpdate("update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = " + volgnr + "), gedobbeld = 0 where spel.idspel = " + spelId);
 		DatabaseManager.createStatement().executeUpdate("UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
 	}
 

@@ -2,6 +2,7 @@ package view;
 
 import com.jfoenix.controls.JFXButton;
 
+import controller.CatanController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +16,8 @@ import view.javaFXTemplates.PaneTemplate;
 
 public class LeaderBoardView extends PaneTemplate {
 	
+	private CatanController controller;
+	
 	@FXML private JFXButton btnBack;
 	
     @FXML private TableView<PlayerRank> TableView;
@@ -23,15 +26,14 @@ public class LeaderBoardView extends PaneTemplate {
     @FXML private TableColumn<PlayerRank, String> AmountOfWins;
 	
 	
-	public LeaderBoardView(Stage stage)
-	{
+	public LeaderBoardView(Stage stage, CatanController controller) {
 		super(LeaderBoardView.class.getResource("fxml/LeaderBoardView.fxml"), stage);
-		
+		this.controller = controller;
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				new MenuView(stage).show();
+				controller.openLoginScreen();
 			}
 		});
 	}

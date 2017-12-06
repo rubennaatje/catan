@@ -4,6 +4,7 @@ import view.*;
 
 import com.sun.javafx.geom.Shape;
 
+import controller.CatanController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -26,10 +27,10 @@ public class TestMainLogin extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage stage) throws Exception {
 		
-		LoginView demo = new LoginView(primaryStage);
-		demo.show();
+		CatanController controller = new CatanController(stage);
+		controller.openLoginScreen();
 	}
 
 }
