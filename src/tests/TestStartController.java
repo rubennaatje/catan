@@ -27,6 +27,7 @@ public class TestStartController extends Application {
 		Catan.setGameId("770");
 		//catan.addResourceCards();
 		launch(args);
+		System.exit(0);
 	}
 	
 	@Override
@@ -37,7 +38,7 @@ public class TestStartController extends Application {
         //catan.initGame();
         Catan.setGameId("770");
         
-        PlayerUser player = new PlayerUser("ger", Catan.getGameId());
+        PlayerUser player = new PlayerUser("rik", Catan.getGameId());
         catan.setPlayer(player);
         PlayerModel[] players = catan.getCurrentPlayers();
         gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);

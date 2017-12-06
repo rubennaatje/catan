@@ -12,9 +12,6 @@ public final class DatabaseManager {
     private static Connection connection;
     private static Statement statement;
     
-    public final static String sLogin = "SELECT password FROM account WHERE username = '%s'";
-    public final static String sSendChat = "";
-    
     public static void connect() {
     	try {
 			Class.forName(sDriverName);

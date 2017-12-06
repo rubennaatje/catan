@@ -30,9 +30,8 @@ public class LoginView extends PaneTemplate {
 			public void handle(ActionEvent event) {
 				if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
 					controller.openMenuScreen();
-					
 				} else {
-					// niet ingelogd
+					txtPassword.setText("");
 				}
 			}
 		});

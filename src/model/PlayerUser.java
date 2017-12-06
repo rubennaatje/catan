@@ -46,6 +46,12 @@ public class PlayerUser extends PlayerModel {
 		}
 	}
 
+	/**Returns True if 
+	 * 
+	 * @param t
+	 * @param v
+	 * @return
+	 */
 	public boolean hasResource(TileType t, Integer v) {
 		Integer compare = resources.get(t);
 		if (compare >= v) {

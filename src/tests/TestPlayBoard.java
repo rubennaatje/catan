@@ -35,7 +35,7 @@ public class TestPlayBoard extends Application {
 		
 		Dice dice = new Dice(771);
 		dice.throwDice();
-		DevelopmentCard test = new DevelopmentCard();
+		//DevelopmentCard test = new DevelopmentCard();
 		//System.out.println(test.getType());
 		System.out.println("testsetseet");
 	}
