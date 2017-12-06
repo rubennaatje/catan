@@ -37,6 +37,8 @@ public class ChallengeView extends PaneTemplate {
 		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
 		this.controller = controller;
 		
+		addBoard(controller.fillChallenges());
+		
 		btnAccept.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
