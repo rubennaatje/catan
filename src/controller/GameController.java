@@ -26,7 +26,7 @@ public class GameController {
 	PlayBoardView playboardview;
 	GameControlerView buttons;
 	DiceView dice;
-
+	Dice diceO;
 	private EventHandler<MouseEvent> pieceEvent;
 	private EventHandler<MouseEvent> firstRndStreet;
 	private EventHandler<MouseEvent> buyEvent;
@@ -40,6 +40,7 @@ public class GameController {
 		this.usrPlayer = usrPlayer - 1;
 		this.spelId = spelId;
 		this.players = players;
+		this.diceO = new Dice(spelId);
 		this.devCon  = new DevelopCardController(players[usrPlayer].getSpelId());
 		
 		buyEvent = ((e) -> {
@@ -156,6 +157,17 @@ public class GameController {
 			public void run() {
 				await();
 				enableButtons();
+				int nThrow;
+				try {
+					boolean newThrow = diceO.throwDiceIfNotThrown();
+					nThrow = diceO.getTotalthrow();
+					System.out.println("dice: " + nThrow + " " + newThrow);
+					if(newThrow)
+						BoardHelper.giveResources(Catan.getGameId(), nThrow);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
 		}.start();
 	}
