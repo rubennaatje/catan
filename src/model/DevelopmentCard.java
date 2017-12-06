@@ -7,41 +7,22 @@ import controller.DatabaseManager;
 
 public class DevelopmentCard {
 	
-	private int spelid;
+	private String spelid;
 	private String kaartid;
-	private PlayerUser player;
-	private ResultSet kaarttypes = null;
+	private String username;
 	private String kaarttype;
 	
-	public DevelopmentCard(int spelid, String kaartid, PlayerUser player) {
+	public DevelopmentCard(String spelid, String kaartid, String username, String kaarttype) {
 		this.spelid = spelid;
 		this.kaartid = kaartid;
-		this.player = player;
+		this.username = username;
 		try {
-			DatabaseManager.getStatement().executeUpdate("UPDATE spelerontwikkelingskaart SET username = '" + player.getUsername()+ "'WHERE spelid = " + spelid + "AND idontwikkelingskaart = '" + kaartid +"';");
+			DatabaseManager.createStatement().executeUpdate("UPDATE spelerontwikkelingskaart SET username = '" + this.username + "' WHERE idspel = '" + spelid + "'AND idontwikkelingskaart = '" + kaartid +"';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public DevelopmentCard() { //testcontstructor
-		spelid = 770;
-		kaartid = "o08";
-	}
-	
-//	public String getType() {
-//		try {
-//		kaarttypes = DatabaseManager.getStatement().executeQuery("SELECT naam FROM `ontwikkelingskaart` WHERE `idontwikkelingskaart` ='"+ kaartid + "';");
-//			kaarttypes = DatabaseManager.getStatement().executeQuery("SELECT naam FROM `ontwikkelingskaart` WHERE `idontwikkelingskaart` = 'o01'");
-//			if(kaarttypes.first()) {
-//			kaarttype = kaarttypes.getString(kaartid);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return kaarttype;
-//	}
-	
+		
 	public String getDescription(String type) {
 		return kaartid;
 		
