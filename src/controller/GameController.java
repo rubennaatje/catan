@@ -34,13 +34,15 @@ public class GameController {
 	private EventHandler<MouseEvent> endTurn;
 
 	private EventHandler<MouseEvent> firstRndPiece;
+	private DevelopCardController devCon;
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) throws Exception {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer - 1;
 		this.spelId = spelId;
 		this.players = players;
-
+		this.devCon  = new DevelopCardController(players[usrPlayer].getSpelId());
+		
 		buyEvent = ((e) -> {
 			refresh();
 			Node caller = (Node) e.getSource();
@@ -297,6 +299,17 @@ public class GameController {
 		Platform.runLater(() -> {
 			buttons.setDisabled();
 		});
+	}
+	public void checkEnoughForDevCard()
+	{
+		PlayerUser player = (PlayerUser)players[usrPlayer];
+		if(player.hasResource(TileType.W, 1) && player.hasResource(TileType.E, 1) && player.hasResource(TileType.G, 1))
+		{
+			player.removeResource(TileType.W);
+			player.removeResource(TileType.E);
+			player.removeResource(TileType.G);
+			devCon.givePlayerCard(player.getUsername());
+		}
 	}
 
 	// update ing field

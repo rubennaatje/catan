@@ -71,6 +71,24 @@ public class PlayerModel extends Observable {
 		results.close();
 
 	}
+	public void removeResource(TileType t) 
+	{
+		try
+		{
+		ResultSet results = DatabaseManager.createStatement().executeQuery("SELECT g.idgrondstofkaart FROM grondstofkaart AS g INNER JOIN spelergrondstofkaart AS s ON s.idgrondstofkaart = g.idgrondstofkaart WHERE idspel = '" 
+			+ getSpelId() + "' AND username = '" + getUsername() + "' AND g.idgrondstofsoort = '" + t.toString() + "' ORDER BY s.idgrondstofkaart LIMIT 1;");
+			while(results.next())
+			{
+				DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL WHERE idspel='"
+						+ getSpelId() + "' AND idgrondstofkaart = '" + results.getString(1)
+						+ "';");
+			}
+			results.close();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
 	public PlayerType getType() {
 		return type;
