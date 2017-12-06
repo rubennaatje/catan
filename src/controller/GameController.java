@@ -192,6 +192,10 @@ public class GameController {
 		}
 	}
 
+	public void robberPlacement() {
+		
+	}
+	
 	private void piecePlacement(MouseEvent event) {
 		try {
 			if (event.getSource() instanceof PieceView) {

@@ -74,7 +74,6 @@ public class Catan {
 		DatabaseManager.createStatement().executeUpdate(
 				"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
 						+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
-		System.out.println(gameId);
 		//TODO: remove after implementing Geordi's function. 
 		// Board board = new Board();
 		// board.createBoard(gameId);
@@ -179,9 +178,8 @@ public class Catan {
         while (results.next()) {
             
             if(!results.getString("username").equals(player.getUsername())) {
-                PlayerModel competitor = new PlayerModel(results.getString("username"), Catan.getGameId());
+                PlayerModel competitor = new PlayerModel(results.getString("username"), Catan.getGameId(), PlayerType.valueOf(results.getString("kleur").toUpperCase()));
                 competitor.setPlayerNumber(results.getInt("volgnr"));
-                competitor.setType(PlayerType.valueOf(results.getString("kleur").toUpperCase()));
                 
                 players[results.getInt("volgnr") - 1] = competitor;
             } else {
@@ -191,7 +189,6 @@ public class Catan {
                 players[results.getInt("volgnr") - 1] = player;
             }
             
-            System.out.println(results.getString("username"));
         }
         
         results.close();
