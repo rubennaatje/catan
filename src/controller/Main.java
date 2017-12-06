@@ -19,6 +19,6 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		new SplashScreenView(stage).show();
+		new CatanController(stage);
 	}
 }
