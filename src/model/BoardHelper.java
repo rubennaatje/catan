@@ -88,8 +88,34 @@ public class BoardHelper {
 		return array;
 	}
 
-	
-	
+	/**
+	 * check grootste riddermacht !!!!WERKT NOG NEIT!!!!!!
+	 * @param player
+	 * @param spelId
+	 * @return
+	 * @throws SQLException
+	 */
+	public static String getLargestArmy(PlayerModel player, String spelId) throws SQLException {
+		
+		String sResult = null;
+		
+		ResultSet result = DatabaseManager.createStatement().executeQuery(
+				"SELECT COUNT(o.idontwikkelingskaart) as countKnightCards, s.username FROM spelerontwikkelingskaart s"
+				+ " join ontwikkelingskaart o on o.idontwikkelingskaart = s.idontwikkelingskaart"
+				+ " where o.naam = 'ridder' and s.gespeeld = '1' AND `idspel` = '"+ spelId +"'"
+				+ " GROUP BY s.username"
+				+ " order by countKnightCards DESC LIMIT 1");
+		
+		while(result.next()) {
+			int c = result.getInt("countKnightCards");
+			if(c > 2) {
+				sResult = result.getString("username");
+			}
+		}
+		
+		return spelId;
+		
+	}
 	
 	// retrieves count for longest road for player and game
 	public static int getLongestRoad(PlayerModel player, String spelId) throws SQLException  {
