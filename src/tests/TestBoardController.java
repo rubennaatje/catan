@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.DevelopmentCard;
 
 public class TestBoardController extends Application{
 
@@ -15,6 +16,7 @@ public class TestBoardController extends Application{
 			System.out.println("databasemanager shut down");
 		}));
 		launch(args);
+		
 	}
 
 	@Override
