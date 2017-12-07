@@ -43,19 +43,7 @@ public class TestStartController extends Application {
         PlayerModel[] players = catan.getCurrentPlayers();
         gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
         
-        Runnable boob = new Runnable () {
-			@Override
-			public void run() {
-				gameController.start();
-			}
-        };
-		
-		
-		
-		new Thread(boob).start();
-
-		
-
+		new Thread(() -> gameController.start()).start();
 	}
 
 }

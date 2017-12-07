@@ -16,21 +16,28 @@ public class TradeController {
 	PlayerUser player;
 	
 	
-	public TradeController(Stage primaryStage, PlayerUser player) {
+	public TradeController(Stage primaryStage, PlayerUser player, String spelID) {
 		view = new TradeView(primaryStage, this);
+		this.spelId = spelID;
 		this.player = player;
 		view.show();
 	}
 	
-	public void submitTrade(HashMap<TileType, Integer>[] tradeSuggestion) {
+	public void submitTradeRequest(HashMap<TileType, Integer>[] tradeSuggestion) {
 		try {
-			TradeHelper.registerTrade(spelId, player, tradeSuggestion, null);
+			TradeHelper.registerTrade(spelId, player, tradeSuggestion, "NULL");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	public boolean checkSufficient(TileType type, Integer amount) {
 		return player.hasResource(type, amount);
 	}
+
+	public void submitCounterTradeRequest(HashMap[] bloob) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

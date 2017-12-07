@@ -24,7 +24,7 @@
                         <Image url="@../images/Erts.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id = "erts" prefHeight="11.0" prefWidth="25.0" text="0">
+                  <TextField fx:id = "erts" disable="true" opacity="0.99" prefHeight="11.0" prefWidth="25.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
@@ -34,7 +34,7 @@
                         <Image url="@../images/Hooi.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id = "hooi" prefHeight="11.0" prefWidth="25.0" text="0">
+                  <TextField fx:id = "hooi" disable="true" opacity="0.99" prefHeight="11.0" prefWidth="25.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
@@ -44,7 +44,7 @@
                         <Image url="@../images/Schaap.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id = "schaap" prefHeight="11.0" prefWidth="25.0" text="0">
+                  <TextField fx:id = "schaap" disable="true" opacity="0.99" prefHeight="11.0" prefWidth="25.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Image url="@../images/Hout.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id = "hout" prefHeight="11.0" prefWidth="25.0" text="0">
+                  <TextField fx:id = "hout" disable="true" opacity="0.99" prefHeight="11.0" prefWidth="25.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>
@@ -64,7 +64,7 @@
                         <Image url="@../images/Steen.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id = "steen" prefHeight="11.0" prefWidth="25.0" text="0">
+                  <TextField fx:id = "steen" disable="true" opacity="0.99" prefHeight="11.0" prefWidth="25.0" text="0">
                      <font>
                         <Font size="7.0" />
                      </font>

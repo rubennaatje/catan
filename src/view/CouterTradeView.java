@@ -3,7 +3,6 @@ package view;
 import java.util.HashMap;
 
 import controller.TradeController;
-import javafx.event.EventDispatchChain;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -14,20 +13,37 @@ import javafx.stage.Stage;
 import model.TileType;
 import view.javaFXTemplates.PaneTemplate;
 
-public class TradeView extends PaneTemplate {
+public class CouterTradeView extends PaneTemplate {
 
-	// labels for trade ratios to bank
-	@FXML
-	private Label houtBnkLbl;
-	@FXML
-	private Label wolBnkLbl;
-	@FXML
-	private Label graanBnkLbl;
-	@FXML
-	private Label baksteenBnkLbl;
-	@FXML
-	private Label ertsBnkLbl;
 
+	@FXML
+	private Label sendingPlayer;
+
+	//Opponents offer fields
+	@FXML
+	private TextField houtVraOffer;
+	@FXML
+	private TextField wolVraOffer;
+	@FXML
+	private TextField graanVraOffer;
+	@FXML
+	private TextField baksteenVraOffer;
+	@FXML
+	private TextField ertsVraOffer;
+	
+	@FXML
+	private TextField houtAanOffer;
+	@FXML
+	private TextField wolAanOffer;
+	@FXML
+	private TextField graanAanOffer;
+	@FXML
+	private TextField baksteenAaOffer;
+	@FXML
+	private TextField ertsAanOffer;
+	
+	
+	//player customisable offer fields
 	@FXML
 	private TextField houtVraLbl;
 	@FXML
@@ -55,14 +71,14 @@ public class TradeView extends PaneTemplate {
 
 	private TradeController controller;
 
-	public TradeView(Stage primaryStage, TradeController controller) {
-		super(TradeView.class.getResource("fxml/trade.fxml"), primaryStage);
+	public CouterTradeView(Stage primaryStage, TradeController controller) {
+		super(CouterTradeView.class.getResource("fxml/trade.fxml"), primaryStage);
 
 		this.controller = controller;
 	}
 
-	public TradeView() {
-		super(TradeView.class.getResource("fxml/trade.fxml"));
+	public CouterTradeView() {
+		super(CouterTradeView.class.getResource("fxml/trade.fxml"));
 	}
 
 	public void addBtnClick(MouseEvent e) {
@@ -203,7 +219,7 @@ public class TradeView extends PaneTemplate {
 
 		@SuppressWarnings("rawtypes")
 		HashMap[] bloob = {offer, request};
-		controller.submitTradeRequest(bloob);
+		controller.submitCounterTradeRequest(bloob);
 	}
 
 	private void clearTradeFld() {
