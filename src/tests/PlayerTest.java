@@ -4,11 +4,11 @@ import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.PlayerModel;
-import model.PlayerType;
 import view.GameControlerView;
 import view.GameMergeView;
 import view.PlayBoardView;
 import view.PlayerView;
+import view.ResourceView;
 
 public class PlayerTest extends Application{
 
@@ -39,8 +39,10 @@ public class PlayerTest extends Application{
 		{
 			playerViews[i] = new PlayerView();
 			playerModels[i].addObserver(playerViews[i]);
+			playerModels[i].refresh();
 		}
-		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews);
+		ResourceView resourceView = new ResourceView();
+		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews, resourceView);
 		
 		view.show();
 	}
