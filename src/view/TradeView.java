@@ -202,7 +202,7 @@ public class TradeView extends PaneTemplate {
 		clearTradeFld();
 
 		@SuppressWarnings("rawtypes")
-		HashMap[] bloob = { request, offer };
+		HashMap[] bloob = {offer, request};
 		controller.submitTrade(bloob);
 	}
 

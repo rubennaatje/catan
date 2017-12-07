@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -21,12 +22,12 @@
       </ImageView>
       <Pane layoutX="448.0" layoutY="240.0" prefHeight="412.0" prefWidth="384.0" style="-fx-background-color: white;">
          <children>
-            <Text layoutX="160.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welkom" textAlignment="CENTER">
+            <Text layoutX="160.0" layoutY="42.0" strokeType="OUTSIDE" text="Welkom">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Text>
-            <Text layoutX="115.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Gebruikersnaam&gt;" textAlignment="CENTER">
+            <Text fx:id="txtUsername" layoutX="100.0" layoutY="70.0" strokeType="OUTSIDE" text="">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>

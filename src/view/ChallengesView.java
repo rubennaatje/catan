@@ -21,7 +21,7 @@ import model.Challenges;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ChallengeView extends PaneTemplate {
+public class ChallengesView extends PaneTemplate {
 		
 	private CatanController controller;
 	
@@ -33,11 +33,11 @@ public class ChallengeView extends PaneTemplate {
 	@FXML private TableColumn<Challenges, String> playerName;
 	@FXML private TableColumn<Challenges, String> gameId;
 	
-	public ChallengeView(Stage stage, CatanController controller) {
-		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
+	public ChallengesView(Stage stage, CatanController controller) {
+		super(ChallengesView.class.getResource("fxml/ChallengesView.fxml"), stage);
 		this.controller = controller;
 		
-		addBoard(controller.fillChallenges());
+		addBoard(controller.getChallenges());
 		
 		btnAccept.setOnAction(new EventHandler<ActionEvent>() {
 			
