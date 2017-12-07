@@ -28,6 +28,10 @@ public class PlayerModel extends Observable {
 	public PlayerModel(String username, String idspel) {
 		this(username, idspel, null);
 	}
+	
+	public PlayerModel(String username) {
+		this(username, null, null);
+	}
 
 	public void refresh()  {
 		try {
