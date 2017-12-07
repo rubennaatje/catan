@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="211.0" layoutY="22.0" text="Leaderboard">
+<fx:root prefHeight="720.0" prefWidth="1280.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Catan-Background-zonderlogo.png" />
+         </image>
+      </ImageView>
+		<Label layoutX="560.0" layoutY="71.0" text="RangLijst" textFill="#ffe200">
+			<font>
+				<Font name="Arial Bold" size="35.0" />
+			</font>
+		</Label>
+		<TableView fx:id="TableView" layoutX="20.0" layoutY="165.0" prefHeight="441.0" prefWidth="1241.0">
+			<columns>
+				<TableColumn fx:id="PlayerPosition" prefWidth="70.0" text="Position" />
+				<TableColumn fx:id="PlayerName" minWidth="0.0" prefWidth="213.0" text="Name" />
+				<TableColumn fx:id="AmountOfWins" minWidth="0.0" prefWidth="205.0" text="Wins" />
+			</columns>
+		</TableView>
+      <JFXButton fx:id="btnBack" layoutX="568.0" layoutY="653.0" prefHeight="37.0" prefWidth="145.0" style="-fx-background-color: #ef8200;" text="Terug" textFill="WHITE">
          <font>
-            <Font size="30.0" />
+            <Font name="Arial Bold" size="14.0" />
          </font>
-      </Label>
-      <TableView layoutX="50.0" layoutY="100.0" prefHeight="245.0" prefWidth="489.0">
-        <columns>
-          <TableColumn prefWidth="70.0" text="Position" />
-          <TableColumn minWidth="0.0" prefWidth="213.0" text="Name" />
-            <TableColumn minWidth="0.0" prefWidth="205.0" text="Wins" />
-        </columns>
-      </TableView>
-      <Button layoutX="19.0" layoutY="14.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="48.0" text="Back" />
-   </children>
-</Pane>
+      </JFXButton>
+	</children>
+</fx:root>

@@ -15,40 +15,48 @@ import javafx.stage.Stage;
 public abstract class PaneTemplate extends Pane {
 
 	private @FXML Pane extension;
-	private Pane pane;
-	private Stage stage;
+	
+	@Deprecated
+	protected Stage stage;
 
+	@Deprecated
 	public PaneTemplate(URL url, Stage stage) {
 		super();
-		
 		this.stage = stage;
-		
 		loadFxml(url, this);
 	}
 
+	public PaneTemplate(URL url) {
+		super();
+		loadFxml(url, this);
+	}
+	
 	private void loadFxml(URL url, Object rootController) {
 		FXMLLoader loader = new FXMLLoader(url);
-		
-		if (loader.getRoot() != null) {
-			loader.setController(rootController);
-			loader.setRoot(rootController);
-		}
-		
+		loader.setController(rootController);
+		loader.setRoot(rootController);
 		try {
-			pane = loader.load();
+			loader.load();
 		} catch (IOException e) {
-			
+			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Should only be used for quick testing off separate functions. Not, controller
+	 * functionality. All viewComponents extended on PaneTemplate should be managed
+	 * in one scene, not created in its object.
+	 * 
+	 */
+	@Deprecated
 	public void show() {
-		Scene scene = new Scene(pane);
-	
+		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		stage.setScene(scene);
+		stage.centerOnScreen();
 		stage.show();
 	}
-	
+
 	public ObservableList<Node> getExtension() {
 		return extension.getChildren();
 	}

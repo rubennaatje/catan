@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ListView fx:id="listView" prefHeight="374" prefWidth="600" />
+		<TextField fx:id="tfMessage" layoutY="374.0" prefHeight="25.0"
+			prefWidth="499.0" />
+		<Button onMouseClicked="#sendMessage" layoutX="499.0" layoutY="374.0"
+			mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Send" />
+	</children>
+</fx:root>

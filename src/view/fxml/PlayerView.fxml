@@ -6,9 +6,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <BorderPane layoutY="420.0" prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: YELLOW;" />
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+	      <BorderPane layoutY="420.0" prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: YELLOW;" />
       <BorderPane layoutX="575.0" layoutY="420.0" prefHeight="180.0" prefWidth="225.0" style="-fx-border-color: BLACK; -fx-background-color: GREEN;">
          <left>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
@@ -53,11 +55,13 @@
             <Image url="@../images/Road.png" />
          </image>
       </ImageView>
-      <Text layoutX="60.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="60.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      
+      <Text fx:id= "Cards_1" layoutX="60.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Devcards_1" layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Knights_1" layoutX="60.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Score_1" layoutX="60.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id= "Road_1" layoutX="60.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      
       <Text layoutX="60.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text layoutX="60.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text layoutX="60.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
@@ -158,5 +162,5 @@
             <Image url="@../images/Playericon.png" />
          </image>
       </ImageView>
-   </children>
-</Pane>
+	</children>
+</fx:root>
