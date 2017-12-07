@@ -1,6 +1,9 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.HashMap;
+
+import controller.DatabaseManager;
 
 //handles logic for trade, will be done later
 public class TradeHelper {
@@ -8,14 +11,24 @@ public class TradeHelper {
 
 	}
 
-	public static void registerTrade(String spelId, PlayerModel player, HashMap<TileType, Integer>[] tradeSuggestion) {
+	public static void registerTrade(String spelId, PlayerModel player, HashMap<TileType, Integer>[] tradeSuggestion, Boolean accepted) throws SQLException {
 		// for testing
-		for (HashMap<TileType, Integer> hashMap : tradeSuggestion) {
-			System.out.println(hashMap.get(TileType.H));
-			System.out.println(hashMap.get(TileType.W));
-			System.out.println(hashMap.get(TileType.G));
-			System.out.println(hashMap.get(TileType.B));
-			System.out.println(hashMap.get(TileType.E));
-		}
+
+		DatabaseManager.createStatement().executeUpdate("INSERT INTO ruilaanbod VALUES ("
+				+ "" + spelId + ", " 
+				+ player.getUsername() + ", " 
+				+ tradeSuggestion[0].get(TileType.B) + ", "
+				+ tradeSuggestion[0].get(TileType.W) + ", "
+				+ tradeSuggestion[0].get(TileType.E) + ", "
+				+ tradeSuggestion[0].get(TileType.G) + ", "
+				+ tradeSuggestion[0].get(TileType.H) + ", "
+				+ tradeSuggestion[1].get(TileType.B) + ", "
+				+ tradeSuggestion[1].get(TileType.W) + ", "
+				+ tradeSuggestion[1].get(TileType.E) + ", "
+				+ tradeSuggestion[1].get(TileType.G) + ", "
+				+ tradeSuggestion[1].get(TileType.H) + ", "
+				+ accepted.toString()
+				+")");
+
 	}
 }
