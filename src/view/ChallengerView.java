@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.javaFXTemplates.PaneTemplate;
 import model.Challenges;
+import model.PlayerUser;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -28,8 +29,8 @@ public class ChallengerView extends PaneTemplate {
 	@FXML private Button btnChallenge; 
 	@FXML private Button btnBack;
 	
-	@FXML private TableView<Challenges> uitdager;
-	@FXML private TableColumn<Challenges, String> playerName;
+	@FXML private TableView<PlayerUser> uitdager;
+	@FXML private TableColumn<PlayerUser, String> playerName;
 	
 	public ChallengerView(Stage stage, CatanController controller) {
 		super(ChallengerView.class.getResource("fxml/ChallengerView.fxml"), stage);
@@ -54,8 +55,8 @@ public class ChallengerView extends PaneTemplate {
 		});
 	}
 	
-	public void addBoard(ObservableList<Challenges> data) {
-		playerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("playerName"));
+	public void addBoard(ObservableList<PlayerUser> data) {
+		playerName.setCellValueFactory(new PropertyValueFactory<PlayerUser, String>("username"));
 		uitdager.setItems(data);
 	}	
 }

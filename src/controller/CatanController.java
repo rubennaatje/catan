@@ -70,7 +70,7 @@ public class CatanController {
 		ObservableList<Challenges> data = FXCollections.observableArrayList();
 		
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = '" + player.getUsername() + "' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = '" + "lesley "+ "' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
 			
 			while (result.next()) {
 				data.add(new Challenges(result.getString(1), result.getString(2)));
@@ -82,14 +82,14 @@ public class CatanController {
 		return data; 
 	}
 	
-	public ObservableList<Challenges> getPlayers(){
-		ObservableList<Challenges> data = FXCollections.observableArrayList();
+	public ObservableList<PlayerUser> getPlayers(){
+		ObservableList<PlayerUser> data = FXCollections.observableArrayList();
 		
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler WHERE username != " + player.getUsername() + ";");
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler WHERE username != '" + player.getUsername() + "';");
 			
 			while (result.next()) {
-				data.add(new Challenges(result.getString(1), result.getString(2)));
+				data.add(new PlayerUser(result.getString(1)));
 			}
 		} catch (Exception e) {
 			
