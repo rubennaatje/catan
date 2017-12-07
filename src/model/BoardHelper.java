@@ -131,6 +131,7 @@ public class BoardHelper {
 			}
 			
 			if(iSize == 1 && iAmount > 2) {
+				DatabaseManager.createStatement().executeUpdate("INSERT INTO spel (grootste_rm_username) VALUES	 ('"+sNewLargestArmy+"')");
 				return sNewLargestArmy;
 			}
 		}
