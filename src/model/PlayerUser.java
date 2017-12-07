@@ -16,6 +16,9 @@ public class PlayerUser extends PlayerModel {
 		super(username, idspel);
 
 	}
+	public PlayerUser(String username) {
+		super(username);
+	}
 
 	@Override
 	public void refresh() {

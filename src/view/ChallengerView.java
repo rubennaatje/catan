@@ -21,39 +21,27 @@ import model.Challenges;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ChallengeView extends PaneTemplate {
+public class ChallengerView extends PaneTemplate {
 		
 	private CatanController controller;
 	
-	@FXML private Button btnAccept; 
-	@FXML private Button btnDecline;
+	@FXML private Button btnChallenge; 
 	@FXML private Button btnBack;
 	
 	@FXML private TableView<Challenges> uitdager;
 	@FXML private TableColumn<Challenges, String> playerName;
-	@FXML private TableColumn<Challenges, String> gameId;
 	
-	public ChallengeView(Stage stage, CatanController controller) {
-		super(ChallengeView.class.getResource("fxml/ChallengeView.fxml"), stage);
+	public ChallengerView(Stage stage, CatanController controller) {
+		super(ChallengerView.class.getResource("fxml/ChallengerView.fxml"), stage);
 		this.controller = controller;
 		
-		addBoard(controller.fillChallenges());
+		addBoard(controller.getPlayers());
 		
-		btnAccept.setOnAction(new EventHandler<ActionEvent>() {
+		btnChallenge.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
-				challenge.accept();
-			}
-		});
-		
-		btnDecline.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
-				challenge.decline();
+				 
 			}
 		});
 
@@ -68,7 +56,6 @@ public class ChallengeView extends PaneTemplate {
 	
 	public void addBoard(ObservableList<Challenges> data) {
 		playerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("playerName"));
-		gameId.setCellValueFactory(new PropertyValueFactory<Challenges, String>("gameId")); 
 		uitdager.setItems(data);
 	}	
 }

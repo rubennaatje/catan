@@ -133,11 +133,20 @@ public class BoardHelper {
 		return returnVal;
 	}
 
-	public static ArrayList<GridLocation> getTileLocations() {
+	public static ArrayList<GridLocation> getValidRobberLocations(String spelId) {
 		ArrayList<GridLocation> positions = new ArrayList<>();
-		for (int i = 0; i < conf.length; i++) {
-			positions.add(new GridLocation(conf[i][1], conf[i][2]));
+		GridLocation robberPos;
+		try {
+			robberPos = getRobberPos(spelId);
+			for (int i = 0; i < conf.length; i++) {
+				GridLocation pos = new GridLocation(conf[i][1], conf[i][2]);
+				if (!robberPos.equals(pos))
+					positions.add(pos);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+
 		return positions;
 	}
 
@@ -162,27 +171,22 @@ public class BoardHelper {
 			if (start.equals(gridLocation))
 				return 0;
 		}
+		ArrayList<GridLocation> tocheck = new ArrayList<>();
 		for (int i = streetsIn.size() - 1; i >= 0; i--) {
 			if (streetsIn.get(i).getEndPos().equals(start)) {
-				b = streetsIn.get(i).getStartPos();
+				tocheck.add(streetsIn.get(i).getStartPos());
 				streetsIn.remove(streetsIn.get(i));
 			} else if (streetsIn.get(i).getStartPos().equals(start)) {
-
-				a = streetsIn.get(i).getEndPos();
+				tocheck.add(streetsIn.get(i).getEndPos());
 				streetsIn.remove(streetsIn.get(i));
 			}
 		}
-		if (a != null && b != null) {
-
-			return Math.max(getStreetLength(streetsIn, a, enemyPieces), getStreetLength(streetsIn, b, enemyPieces)) + 1;
-		} else if (a != null) {
-			return getStreetLength(streetsIn, a, enemyPieces) + 1;
-		} else if (b != null) {
-			return getStreetLength(streetsIn, b, enemyPieces) + 1;
-
-		} else {
-			return 0;
+		Integer answer = 0;
+		for (GridLocation gridLocation : tocheck) {
+			Integer ref = getStreetLength(streetsIn, gridLocation, enemyPieces) +1;
+			if(answer < ref) answer = ref;
 		}
+		return answer;
 	}
 
 	// returns all streets on a deadEnd for a player
@@ -569,7 +573,7 @@ public class BoardHelper {
 				"UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
 	}
 
-	public void placeRobber(String spelId, GridLocation loc) throws SQLException {
+	public static void placeRobber(String spelId, GridLocation loc) throws SQLException {
 		DatabaseManager.createStatement()
 				.executeUpdate("UPDATE struikrover SET idtegel = (SELECT idtegel from tegel where x = " + loc.x
 						+ " and y= " + loc.y + " and idspel = struikrover.idspel) where idspel = " + spelId);

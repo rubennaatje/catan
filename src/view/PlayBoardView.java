@@ -111,16 +111,12 @@ public class PlayBoardView extends PaneTemplate {
 		piece.setOnMouseClicked(event);
 	}
 
-	public Ellipse addRobber(GridLocation posIn) {
+	public RobberView addRobber(GridLocation posIn) {
 		Point pos = locs.getCoordinate(posIn);
 		RobberView robber = new RobberView(posIn);
 		robber.setCenterX(pos.getX());
 		robber.setCenterY(pos.getY());
-
-		robber.setRadiusY(60);
-		robber.setRadiusX(20);
-		robber.setFill(Color.BLACK);
-		robber.setStroke(Color.BLACK);
+		
 		getChildren().add(robber);
 		return robber;
 	}
@@ -132,7 +128,8 @@ public class PlayBoardView extends PaneTemplate {
 
 
 	public void addRobber(GridLocation location, EventHandler<MouseEvent> robber) {
-		Ellipse el = addRobber(location);
+		RobberView el = addRobber(location);
+		el.getStyleClass().add("placeholder");
 		el.setOnMouseClicked(robber);
 	}
 }

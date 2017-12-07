@@ -29,6 +29,7 @@ public class LoginView extends PaneTemplate {
 			@Override
 			public void handle(ActionEvent event) {
 				if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
+					controller.setPlayer(txtUsername.getText());
 					controller.openMenuScreen();
 				} else {
 					txtPassword.setText("");

@@ -8,6 +8,11 @@ public class RobberView extends Ellipse {
 	public RobberView(GridLocation loc) {
 		super();
 		this.loc = loc;
+		
+		setRadiusY(60);
+		setRadiusX(20);
+		
+		getStyleClass().add("robber");
 	}
 	public GridLocation getLoc() {
 		return loc;

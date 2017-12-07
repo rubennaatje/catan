@@ -11,7 +11,6 @@ public class GameMergeView extends Pane {
 	GameControlerView buttons;
 	
 	public GameMergeView(PlayBoardView playBoard, GameControlerView buttons, Stage stage, PlayerView[] players, ResourceView resourceView) {
-
 		this.stage = stage;
 		this.playBoard = playBoard;
 		this.buttons = buttons;
@@ -26,6 +25,7 @@ public class GameMergeView extends Pane {
 		resourceView.setLayoutX((playBoard.getPrefWidth() / 2) - (resourceView.getPrefWidth() /2));
 		resourceView.setLayoutY(375);
 		getChildren().add(resourceView);
+
 		
 		setPrefWidth(playBoard.getPrefWidth());
 	}
