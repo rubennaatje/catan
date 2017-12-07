@@ -31,4 +31,23 @@ public class TradeHelper {
 				+")");
 
 	}
+
+	public static void registerReject(String spelId, PlayerUser player) throws SQLException {
+		
+		DatabaseManager.createStatement().executeUpdate("INSERT INTO ruilaanbod VALUES ("
+				+ spelId + ", '" 
+				+ player.getUsername() + "', " 
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "0, "
+				+ "FALSE"
+				+")");
+	}
 }

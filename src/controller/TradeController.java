@@ -34,9 +34,18 @@ public class TradeController {
 		return player.hasResource(type, amount);
 	}
 
-	public void submitCounterTradeRequest(HashMap[] bloob) {
-		// TODO Auto-generated method stub
+	public void submitCounterTradeRequest(HashMap<TileType, Integer>[] bloob) {
 		
+	}
+
+	public void registerReject() {
+		try {
+			TradeHelper.registerReject(spelId, player);
+			//TODO something to remove 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
