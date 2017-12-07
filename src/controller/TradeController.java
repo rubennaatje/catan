@@ -35,8 +35,8 @@ public class TradeController {
 	}
 
 	public void submitCounterTradeRequest(HashMap<TileType, Integer>[] bloob) {
-		
 	}
+
 
 	public void registerReject() {
 		try {

@@ -110,6 +110,7 @@ public class CouterTradeView extends PaneTemplate {
 	public void reject(MouseEvent e) {
 		 controller.registerReject();
 	}
+
 	public void addBtnClick(MouseEvent e) {
 		
 		if(!offerChanged) offerChange();
