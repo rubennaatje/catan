@@ -1,14 +1,15 @@
 package controller;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.Catan;
 import model.Challenges;
+import model.PlayerRank;
 import model.PlayerUser;
+import view.ChallengerView;
 import view.ChallengesView;
 import view.LeaderBoardView;
 import view.LoginView;
@@ -50,17 +51,19 @@ public class CatanController {
 	}
 	
 	public void openChallengeScreen() {
+		new ChallengerView(stage, this).show();
+	}
+	
+	public void openChallengesScreen() {
 		new ChallengesView(stage, this).show();
 	}
 	
 	
 	public ObservableList<Challenges> getChallenges(){
-		
-		ObservableList<Challenges> data = null;
+		ObservableList<Challenges> data = FXCollections.observableArrayList();
 		
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = 'bart' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
-			data = FXCollections.observableArrayList();
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = '" + player.getUsername() + "' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
 			
 			while (result.next()) {
 				data.add(new Challenges(result.getString(1), result.getString(2)));
@@ -73,15 +76,30 @@ public class CatanController {
 	}
 	
 	public ObservableList<Challenges> getPlayers(){
-		
-		ObservableList<Challenges> data = null;
+		ObservableList<Challenges> data = FXCollections.observableArrayList();
 		
 		try {
 			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler WHERE username != " + player.getUsername() + ";");
-			data = FXCollections.observableArrayList();
 			
 			while (result.next()) {
 				data.add(new Challenges(result.getString(1), result.getString(2)));
+			}
+		} catch (Exception e) {
+			
+		}
+		
+		return data; 
+	}
+	
+	public ObservableList<PlayerRank> getLeaderboard(){
+		ObservableList<PlayerRank> data = FXCollections.observableArrayList();
+		
+		try {
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler");
+			int count = 0;
+			while (result.next()) {
+				count++;
+				data.add(new PlayerRank(String.valueOf(count), result.getString(1), result.getString(1)));
 			}
 		} catch (Exception e) {
 			
