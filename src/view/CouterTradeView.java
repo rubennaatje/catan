@@ -69,19 +69,43 @@ public class CouterTradeView extends PaneTemplate {
 	@FXML
 	private Button biedBtn;
 
+	private Boolean offerChanged = false;
+	
 	private TradeController controller;
 
 	public CouterTradeView(Stage primaryStage, TradeController controller) {
-		super(CouterTradeView.class.getResource("fxml/trade.fxml"), primaryStage);
-
+		super(CouterTradeView.class.getResource("fxml/counterTrade.fxml"), primaryStage);
 		this.controller = controller;
 	}
 
-	public CouterTradeView() {
-		super(CouterTradeView.class.getResource("fxml/trade.fxml"));
+	public CouterTradeView(TradeController controller, String playerName, HashMap<TileType, Integer>[] offer) {
+
+		super(CouterTradeView.class.getResource("fxml/counterTrade.fxml"));
+		sendingPlayer.setText(playerName);
+		
+		houtVraLbl.setText(offer[0].get(TileType.B).toString());
+		houtVraLbl.setText(offer[0].get(TileType.E).toString());
+		houtVraLbl.setText(offer[0].get(TileType.G).toString());
+		houtVraLbl.setText(offer[0].get(TileType.H).toString());
+		houtVraLbl.setText(offer[0].get(TileType.W).toString());
+
+		houtVraLbl.setText(offer[1].get(TileType.B).toString());
+		houtVraLbl.setText(offer[1].get(TileType.E).toString());
+		houtVraLbl.setText(offer[1].get(TileType.G).toString());
+		houtVraLbl.setText(offer[1].get(TileType.H).toString());
+		houtVraLbl.setText(offer[1].get(TileType.W).toString());
+
 	}
 
+	private void offerChange() {
+		
+	}
+	
 	public void addBtnClick(MouseEvent e) {
+		
+		if(!offerChanged) offerChange();
+	
+		
 		Node source = (Node) e.getSource();
 		switch (source.getParent().getId()) {
 		case "houtVraGrp":
@@ -198,7 +222,6 @@ public class CouterTradeView extends PaneTemplate {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void offerBtnClick(MouseEvent e) {
 		HashMap<TileType, Integer> offer = new HashMap<>();
 		HashMap<TileType, Integer> request = new HashMap<>();
