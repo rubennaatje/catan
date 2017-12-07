@@ -28,18 +28,21 @@ public class LeaderBoardView extends PaneTemplate {
 	
 	public LeaderBoardView(Stage stage, CatanController controller) {
 		super(LeaderBoardView.class.getResource("fxml/LeaderBoardView.fxml"), stage);
+				
 		this.controller = controller;
+		
+		addBoard(controller.getLeaderboard());
+		
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				controller.openLoginScreen();
+				controller.openMenuScreen();
 			}
 		});
 	}
 
-	public void addBoard(ObservableList<PlayerRank> fillLeaderboard)
-	{
+	public void addBoard(ObservableList<PlayerRank> fillLeaderboard) {
 		PlayerPosition.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("rank"));
 		PlayerName.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("name"));
 		AmountOfWins.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("gamesWon"));
