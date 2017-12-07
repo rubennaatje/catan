@@ -8,8 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.Catan;
 import model.Challenges;
+import model.PlayerUser;
 import model.Waiting;
-import view.ChallengeView;
+import view.ChallengerView;
+import view.ChallengesView;
 import view.LeaderBoardView;
 import view.LoginView;
 import view.MenuView;
@@ -21,16 +23,13 @@ public class CatanController {
 	
 	private Catan catan;
 	private Stage stage;
+	private PlayerUser player;
 	
 	public CatanController(Stage stage) {
 		this.catan = new Catan();
 		this.stage = stage;
 		
 		openSplashScreen();
-	}
-	
-	public Catan getCatan() {
-		return catan;
 	}
 	
 	public void openSplashScreen() {
@@ -54,16 +53,16 @@ public class CatanController {
 	}
 	
 	public void openChallengeScreen() {
-		new ChallengeView(stage, this).show();
-		//System.out.println(challengeView.getId()); 
+		new ChallengesView(stage, this).show();
 	}
 	
+
 	public void openWaitingScreen() {
 		new WaitingView(stage, this).show(); 
 		Waiting waitModel = new Waiting(); 
 	}
 	
-	public ObservableList<Challenges> fillChallenges(){
+	public ObservableList<Challenges> getChallenges(){
 		
 		ObservableList<Challenges> data = null;
 		
@@ -80,4 +79,36 @@ public class CatanController {
 		
 		return data; 
 	}
+	
+	public ObservableList<Challenges> getPlayers(){
+		
+		ObservableList<Challenges> data = null;
+		
+		try {
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler WHERE username != " + player.getUsername() + ";");
+			data = FXCollections.observableArrayList();
+			
+			while (result.next()) {
+				data.add(new Challenges(result.getString(1), result.getString(2)));
+			}
+		} catch (Exception e) {
+			
+		}
+		
+		return data; 
+	}
+	
+	
+	public Catan getCatan() {
+		return catan;
+	}
+	
+	public PlayerUser getPlayer() {
+		return player;
+	}
+	
+	public void setPlayer(String username) {
+		this.player = new PlayerUser(username);
+	}
 }
+

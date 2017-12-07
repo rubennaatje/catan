@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Challenges;
+import model.Waiting;
 import view.javaFXTemplates.PaneTemplate;
 
 import java.awt.TextArea;
@@ -23,6 +25,9 @@ public class WaitingView extends PaneTemplate{
 	@FXML private Button btnBack;
 	
 	public WaitingView(Stage stage, CatanController controller) {
+		
+		
+		
 		super(WaitingView.class.getResource("fxml/WaitingView.fxml"), stage);
 		this.controller = controller;
 

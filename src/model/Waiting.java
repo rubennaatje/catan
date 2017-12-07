@@ -2,7 +2,9 @@ package model;
 
 import java.sql.ResultSet;
 
+import controller.CatanController;
 import controller.DatabaseManager;
+import controller.GameController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,14 +16,17 @@ public class Waiting {
 	private int currentGameId; 
 	private PlayerUser player; 
 	
+	
+	private CatanController controller;
+	
 	public Waiting() {
 		accepted();
 	}
 	
 	public void accepted(){
 		
+	
 		//DatabaseManager.connect();
-		//select count(idspel) from speler where idspel = 770
 		//ObservableList<Challenges> data = null;
 
 		try {
@@ -32,8 +37,10 @@ public class Waiting {
 			     
 			       if(count == 3){
 			    	   System.out.println("count is 3: " + count);
-			    	 //ga naar controller
-					//controller verwijst naar het spel starten. 
+			    	  //hier het spel starten. 
+			    	   
+			    	   //new GameController
+			    	   // start() functie aanroepen
 			       }
 			  }
 

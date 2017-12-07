@@ -18,10 +18,10 @@ public class PlayerView extends PaneTemplate implements Observer {
 	    @FXML private Text road;
 		
 
-	public PlayerView(Stage stage) {
-		super(PlayerView.class.getResource("fxml/PlayerViewComp.fxml"), stage);
-		
+	public PlayerView() {
+		super(PlayerView.class.getResource("fxml/PlayerViewComp.fxml"));
 	}
+
 
 	@Override
 	public void update(Observable arg0, Object arg1)

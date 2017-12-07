@@ -17,8 +17,6 @@ public class Main extends Application {
 			DatabaseManager.disconnect();
 			System.out.println("databasemanager shut down");
 		}));
-		
-		
 	}
 
 	@Override
