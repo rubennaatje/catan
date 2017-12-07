@@ -8,12 +8,14 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.Catan;
 import model.Challenges;
+import model.Waiting;
 import view.ChallengeView;
 import view.LeaderBoardView;
 import view.LoginView;
 import view.MenuView;
 import view.RegisterView;
 import view.SplashScreenView;
+import view.WaitingView;
 
 public class CatanController {
 	
@@ -53,6 +55,12 @@ public class CatanController {
 	
 	public void openChallengeScreen() {
 		new ChallengeView(stage, this).show();
+		//System.out.println(challengeView.getId()); 
+	}
+	
+	public void openWaitingScreen() {
+		new WaitingView(stage, this).show(); 
+		Waiting waitModel = new Waiting(); 
 	}
 	
 	public ObservableList<Challenges> fillChallenges(){
