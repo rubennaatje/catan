@@ -36,7 +36,7 @@ public class Challenges {
     
     public void accept() {
     	try {
-			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='accepteerd' where idspel = " + getGameId() + ";");
+			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='accepteerd' where idspel = " + getGameId() + "and username = " + getPlayerName() + " ;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class Challenges {
     
     public void decline() {
 		try {
-			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='gewijgerd' where idspel = " + getGameId() + ";");
+			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='gewijgerd' where idspel = " + getGameId() + "and username = " + getPlayerName() + " ;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

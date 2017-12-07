@@ -28,7 +28,13 @@ public class RegisterView extends PaneTemplate {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				
+				if (txtPassword.getText().equals(txtRePassword.getText())) {
+					if (controller.getCatan().register(txtUsername.getText(), txtPassword.getText())) {
+						controller.openLoginScreen();
+					}
+				} else {
+					txtRePassword.setText("");
+				}
 			}
 		});
 		

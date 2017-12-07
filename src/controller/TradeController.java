@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import javafx.stage.Stage;
@@ -22,7 +23,12 @@ public class TradeController {
 	}
 	
 	public void submitTrade(HashMap<TileType, Integer>[] tradeSuggestion) {
-		TradeHelper.registerTrade(spelId, player, tradeSuggestion);
+		try {
+			TradeHelper.registerTrade(spelId, player, tradeSuggestion, null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public boolean checkSufficient(TileType type, Integer amount) {
 		return player.hasResource(type, amount);
