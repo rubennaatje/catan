@@ -7,20 +7,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label contentDisplay="CENTER" layoutX="252.0" layoutY="14.0" prefHeight="74.0" prefWidth="97.0" text="Ruilen" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+      <Label contentDisplay="CENTER" layoutX="257.0" layoutY="14.0" prefHeight="74.0" prefWidth="97.0" text="Ruilen" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font size="34.0" />
          </font>
       </Label>
-      <Label layoutX="251.0" layoutY="340.0" text="TegenBod">
+      <Label layoutX="282.0" layoutY="130.0" text="Bod">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label fx:id="sendingPlayer" layoutX="279.0" layoutY="99.0" prefHeight="32.0" prefWidth="43.0" text="Vraag" />
-      <Group id="houtVraGrp" fx:id="houtVraGrp" layoutX="62.0" layoutY="420.0">
+      <Group id="houtVraGrp" fx:id="houtVraGrp" layoutX="63.0" layoutY="190.0">
          <children>
             <TextField fx:id="houtVraLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -32,7 +31,7 @@
             <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Hout" />
          </children>
       </Group>
-      <Group id="wolVraGrp" fx:id="wolVraGrp" layoutX="172.0" layoutY="420.0">
+      <Group id="wolVraGrp" fx:id="wolVraGrp" layoutX="173.0" layoutY="190.0">
          <children>
             <TextField fx:id="wolVraLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -44,7 +43,7 @@
             <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Wol" />
          </children>
       </Group>
-      <Group id="graanVraGrp" fx:id="graanVraGrp" layoutX="289.0" layoutY="420.0">
+      <Group id="graanVraGrp" fx:id="graanVraGrp" layoutX="290.0" layoutY="190.0">
          <children>
             <TextField fx:id="graanVraLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -56,7 +55,7 @@
             <Label layoutX="-7.0" layoutY="-15.0" prefHeight="9.0" prefWidth="42.0" text="Graan" />
          </children>
       </Group>
-      <Group id="baksteenVraGrp" fx:id="baksteenVraGrp" layoutX="403.0" layoutY="420.0">
+      <Group id="baksteenVraGrp" fx:id="baksteenVraGrp" layoutX="404.0" layoutY="190.0">
          <children>
             <TextField fx:id="baksteenVraLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -68,7 +67,7 @@
             <Label layoutX="-16.0" layoutY="-13.0" prefHeight="23.0" prefWidth="60.0" text="Baksteen" />
          </children>
       </Group>
-      <Group id="ertsVraGrp" fx:id="ertsVraGrp" layoutX="508.0" layoutY="420.0">
+      <Group id="ertsVraGrp" fx:id="ertsVraGrp" layoutX="509.0" layoutY="190.0">
          <children>
             <TextField fx:id="ertsVraLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -80,7 +79,7 @@
             <Label layoutY="-14.0" prefHeight="21.0" prefWidth="29.0" text="Erts" />
          </children>
       </Group>
-      <Group id="ertsAanbGrp" fx:id="ertsAanbGrp" layoutX="509.0" layoutY="524.0">
+      <Group id="ertsAanbGrp" fx:id="ertsAanbGrp" layoutX="510.0" layoutY="294.0">
          <children>
             <TextField fx:id="ertsAanLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -92,7 +91,7 @@
             <Label layoutY="-14.0" prefHeight="21.0" prefWidth="29.0" text="Erts" />
          </children>
       </Group>
-      <Group id="baksteenAanbGrp" fx:id="baksteenAanbGrp" layoutX="404.0" layoutY="524.0">
+      <Group id="baksteenAanbGrp" fx:id="baksteenAanbGrp" layoutX="405.0" layoutY="294.0">
          <children>
             <TextField fx:id="baksteenAanLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -104,7 +103,7 @@
             <Label layoutX="-16.0" layoutY="-13.0" prefHeight="23.0" prefWidth="60.0" text="Baksteen" />
          </children>
       </Group>
-      <Group id="graanAanbGrp" fx:id="graanAanbGrp" layoutX="290.0" layoutY="524.0">
+      <Group id="graanAanbGrp" fx:id="graanAanbGrp" layoutX="291.0" layoutY="294.0">
          <children>
             <TextField fx:id="graanAanLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -116,7 +115,7 @@
             <Label layoutX="-7.0" layoutY="-15.0" prefHeight="9.0" prefWidth="42.0" text="Graan" />
          </children>
       </Group>
-      <Group id="wolAanbGrp" fx:id="wolAanbGrp" layoutX="173.0" layoutY="524.0">
+      <Group id="wolAanbGrp" fx:id="wolAanbGrp" layoutX="174.0" layoutY="294.0">
          <children>
             <TextField fx:id="wolAanLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -128,7 +127,7 @@
             <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Wol" />
          </children>
       </Group>
-      <Group id="houtAanbGrp" fx:id="houtAanbGrp" layoutX="63.0" layoutY="524.0">
+      <Group id="houtAanbGrp" fx:id="houtAanbGrp" layoutX="64.0" layoutY="294.0">
          <children>
             <TextField fx:id="houtAanLbl" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
             <Button ellipsisString="" layoutX="28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#addBtnClick" prefHeight="31.0" prefWidth="28.0" text="+">
@@ -140,70 +139,10 @@
             <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Hout" />
          </children>
       </Group>
-      <Label layoutX="276.0" layoutY="476.0" prefHeight="32.0" prefWidth="60.0" text="Aanbod" />
-      <Button fx:id="biedBtn" layoutX="280.0" layoutY="589.0" mnemonicParsing="false" onMouseClicked="#offerBtnClick" text="Bied" />
-      <Label layoutX="200.0" layoutY="78.0" text="Voorstel door:" />
-      <Label fx:id="sendingPlayer" layoutX="317.0" layoutY="78.0" prefHeight="21.0" prefWidth="28.0" />
-      <Group id="houtAanbGrp" fx:id="houtAanbGrp1" layoutX="59.0" layoutY="249.0">
-         <children>
-            <TextField fx:id="houtAanOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Hout" />
-         </children>
-      </Group>
-      <Group id="wolAanbGrp" fx:id="wolAanbGrp1" layoutX="169.0" layoutY="249.0">
-         <children>
-            <TextField fx:id="wolAanOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Wol" />
-         </children>
-      </Group>
-      <Group id="graanAanbGrp" fx:id="graanAanbGrp1" layoutX="286.0" layoutY="249.0">
-         <children>
-            <TextField fx:id="graanAanOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-7.0" layoutY="-15.0" prefHeight="9.0" prefWidth="42.0" text="Graan" />
-         </children>
-      </Group>
-      <Group id="baksteenAanbGrp" fx:id="baksteenAanbGrp1" layoutX="400.0" layoutY="249.0">
-         <children>
-            <TextField fx:id="baksteenAaOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-16.0" layoutY="-13.0" prefHeight="23.0" prefWidth="60.0" text="Baksteen" />
-         </children>
-      </Group>
-      <Group id="ertsAanbGrp" fx:id="ertsAanbGrp1" layoutX="505.0" layoutY="249.0">
-         <children>
-            <TextField fx:id="ertsAanOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutY="-14.0" prefHeight="21.0" prefWidth="29.0" text="Erts" />
-         </children>
-      </Group>
-      <Group id="ertsVraGrp" fx:id="ertsVraGrp1" layoutX="504.0" layoutY="145.0">
-         <children>
-            <TextField fx:id="ertsVraOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutY="-14.0" prefHeight="21.0" prefWidth="29.0" text="Erts" />
-         </children>
-      </Group>
-      <Group id="baksteenVraGrp" fx:id="baksteenVraGrp1" layoutX="399.0" layoutY="145.0">
-         <children>
-            <TextField fx:id="baksteenVraOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-16.0" layoutY="-13.0" prefHeight="23.0" prefWidth="60.0" text="Baksteen" />
-         </children>
-      </Group>
-      <Group id="graanVraGrp" fx:id="graanVraGrp1" layoutX="285.0" layoutY="145.0">
-         <children>
-            <TextField fx:id="graanVraOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-7.0" layoutY="-15.0" prefHeight="9.0" prefWidth="42.0" text="Graan" />
-         </children>
-      </Group>
-      <Group id="wolVraGrp" fx:id="wolVraGrp1" layoutX="168.0" layoutY="145.0">
-         <children>
-            <TextField fx:id="wolVraOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Wol" />
-         </children>
-      </Group>
-      <Group id="houtVraGrp" fx:id="houtVraGrp1" layoutX="58.0" layoutY="145.0">
-         <children>
-            <TextField fx:id="houtVraOffer" disable="true" layoutY="13.0" opacity="0.99" prefHeight="31.0" prefWidth="28.0" text="0" />
-            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Hout" />
-         </children>
-      </Group>
-      <Label layoutX="271.0" layoutY="201.0" prefHeight="32.0" prefWidth="60.0" text="Aanbod" />
+      <Label layoutX="277.0" layoutY="246.0" prefHeight="32.0" prefWidth="60.0" text="Aanbod" />
+      <Button fx:id="biedBtn" alignment="CENTER" layoutX="320.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#offerBtnClick" text="Accepteer" textAlignment="CENTER" />
+      <Label layoutX="205.0" layoutY="89.0" text="Voorstel door:" />
+      <Label fx:id="sendingPlayer" layoutX="320.0" layoutY="89.0" prefHeight="21.0" prefWidth="28.0" />
+      <Button fx:id="reject" alignment="CENTER" layoutX="214.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#reject" text="Afwijzen" textAlignment="CENTER" />
    </children>
 </Pane>
