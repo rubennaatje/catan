@@ -135,7 +135,7 @@ public class BoardHelper {
 				return sNewLargestArmy;
 			}
 		}
-		return null;
+		return sCurrentLargestArmy;
 	}
 
 	// retrieves count for longest road for player and game
