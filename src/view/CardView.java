@@ -26,17 +26,17 @@ public class CardView extends PaneTemplate
 	public Label amount, selected;
 
 	
-	private Image notfound = new Image("/cards/notfound.png");
-	private Image nocards = new Image("/cards/nocards.png");
+	private Image notfound = new Image("/images/notfound.png");
+	private Image nocards = new Image("/images/nocards.png");
 	
-	private Image ridder = new Image("/cards/Ridderkaart.png");
-	private Image bibliotheek = new Image("/cards/BibliotheekKaart.png");
-	private Image kathedraal = new Image("/cards/KathedraalKaart.png");
-	private Image markt = new Image("/cards/Marktkaart.png");
-	private Image monopolie = new Image("/cards/MonopolieKaart.png");
-	private Image stratenbouw = new Image("/cards/StratenbouwKaart.png");
-	private Image uitvinding = new Image("/cards/Uitvindingkaart.png");
-	private Image universiteit = new Image("/cards/UniversiteitKaart.png");
+	private Image ridder = new Image("/images/Ridderkaart.png");
+	private Image bibliotheek = new Image("/images/BibliotheekKaart.png");
+	private Image kathedraal = new Image("/images/KathedraalKaart.png");
+	private Image markt = new Image("/images/Marktkaart.png");
+	private Image monopolie = new Image("/images/MonopolieKaart.png");
+	private Image stratenbouw = new Image("/images/StratenbouwKaart.png");
+	private Image uitvinding = new Image("/images/Uitvindingkaart.png");
+	private Image universiteit = new Image("/images/UniversiteitKaart.png");
 	
 	public CardView()
 	{
