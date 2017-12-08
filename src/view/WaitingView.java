@@ -23,6 +23,7 @@ public class WaitingView extends PaneTemplate{
 	private CatanController controller;
 	
 	@FXML private Button btnBack;
+	@FXML private JFXTextField notAccepted ;
 	
 	public WaitingView(Stage stage, CatanController controller) {
 		
@@ -30,15 +31,18 @@ public class WaitingView extends PaneTemplate{
 		
 		super(WaitingView.class.getResource("fxml/WaitingView.fxml"), stage);
 		this.controller = controller;
-
+		
+		//notAccepted.setText("hoi");
+		//@override
+		notAccepted.setEditable(false); 
+		
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				controller.openChallengeScreen();
+				controller.openChallengesScreen();
 			}
 		});
-		
-		//notAccepted.setEditable(false); 
+
 	}
 	
 }

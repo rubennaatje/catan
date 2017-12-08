@@ -97,25 +97,45 @@ public class BoardHelper {
 	 * @throws SQLException
 	 */
 	public static String getLargestArmy(PlayerModel player, String spelId) throws SQLException {
+
+		String sNewLargestArmy = null;
+		String sCurrentLargestArmy = null;
+		String sCurrentPlayer = player.getUsername();
+		int iSize = 0;
+		int iAmount = 0;
 		
-		String sResult = null;
+		ResultSet resultCurrent = DatabaseManager.createStatement().executeQuery("SELECT grootste_rm_username FROM spel where idspel = '"+ spelId+"'");
 		
-		ResultSet result = DatabaseManager.createStatement().executeQuery(
-				"SELECT COUNT(o.idontwikkelingskaart) as countKnightCards, s.username FROM spelerontwikkelingskaart s"
-				+ " join ontwikkelingskaart o on o.idontwikkelingskaart = s.idontwikkelingskaart"
-				+ " where o.naam = 'ridder' and s.gespeeld = '1' AND `idspel` = '"+ spelId +"'"
-				+ " GROUP BY s.username"
-				+ " order by countKnightCards DESC LIMIT 1");
+		while(resultCurrent.next()) {
+			sCurrentLargestArmy = resultCurrent.getString("grootste_rm_username");
+		}	
 		
-		while(result.next()) {
-			int c = result.getInt("countKnightCards");
-			if(c > 2) {
-				sResult = result.getString("username");
+		if(sCurrentLargestArmy != sCurrentPlayer) {
+			ResultSet resultNew = DatabaseManager.createStatement().executeQuery
+					("SELECT COUNT(o.idontwikkelingskaart), s.username FROM spelerontwikkelingskaart s"
+					+ " join ontwikkelingskaart o on o.idontwikkelingskaart = s.idontwikkelingskaart"
+					+ " where o.naam = 'ridder' and s.gespeeld = '1' AND `idspel` = '"+spelId+"'"
+					+ " GROUP BY s.username"
+					+ " HAVING COUNT(o.idontwikkelingskaart) = ("
+					+ " SELECT COUNT(o.idontwikkelingskaart) as c"
+					+ " FROM spelerontwikkelingskaart s"
+					+ " join ontwikkelingskaart o on o.idontwikkelingskaart = s.idontwikkelingskaart"
+					+ " where o.naam = 'ridder' and s.gespeeld = '1' AND `idspel` = '"+spelId+"' GROUP BY s.username"
+					+ " ORDER BY c DESC LIMIT 1)");
+					
+
+			while(resultNew.next()) {
+				iAmount = resultNew.getInt(1);
+				sNewLargestArmy = resultNew.getString("username");
+				iSize++;
+			}
+			
+			if(iSize == 1 && iAmount > 2) {
+				DatabaseManager.createStatement().executeUpdate("UPDATE spel SET grootste_rm_username = '"+sNewLargestArmy+"' where idspel='"+spelId+"'");
+				return sNewLargestArmy;
 			}
 		}
-		
-		return spelId;
-		
+		return sCurrentLargestArmy;
 	}
 
 	// retrieves count for longest road for player and game

@@ -99,11 +99,7 @@ public class CouterTradeView extends PaneTemplate {
 
 	private void offerChange() {
 		offerChanged =true;
-		getChildren().remove(biedBtn);
-		
-		Button counterBtn = new Button("Tegenbod");
-		
-		
+		biedBtn.setText("tegenbod");
 	}
 	
 	

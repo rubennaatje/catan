@@ -34,7 +34,13 @@ public class TradeController {
 		return player.hasResource(type, amount);
 	}
 
-	public void submitCounterTradeRequest(HashMap<TileType, Integer>[] bloob) {
+	public void submitCounterTradeRequest(HashMap<TileType, Integer>[] bloob) {		
+		try {
+			TradeHelper.registerTrade(spelId, player, bloob, "TRUE");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
