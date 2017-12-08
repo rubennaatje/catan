@@ -15,32 +15,27 @@ public class Waiting {
 	private boolean enoughPlayers; 
 	private int currentGameId; 
 	private PlayerUser player; 
-	
-	
+
 	private CatanController controller;
+
 	
-	public Waiting() {
+	public Waiting(CatanController controller) {
+		this.controller = controller;
 		accepted();
 	}
 	
 	public void accepted(){
-		
-	
-		//DatabaseManager.connect();
-		//ObservableList<Challenges> data = null;
 
 		try {
-			ResultSet acceptedPlayers = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = 781 and speelstatus = 'geaccepteerd'");
+			ResultSet acceptedPlayers = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = 770 and speelstatus = 'geaccepteerd'");
 			
 			  while(acceptedPlayers.next()) {
 			       int count = acceptedPlayers.getInt(1);
-			     
+			      
 			       if(count == 3){
 			    	   System.out.println("count is 3: " + count);
-			    	  //hier het spel starten. 
-			    	   
-			    	   //new GameController
-			    	   // start() functie aanroepen
+			    	   controller.startGame(); 
+			    	   //hier spel starten
 			       }
 			  }
 

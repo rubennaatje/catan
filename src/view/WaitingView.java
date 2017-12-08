@@ -1,6 +1,7 @@
 package view;
 
 import javafx.event.ActionEvent;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,9 +10,6 @@ import javafx.stage.Stage;
 import model.Challenges;
 import model.Waiting;
 import view.javaFXTemplates.PaneTemplate;
-
-import java.awt.TextArea;
-import java.awt.TextField;
 
 import com.jfoenix.controls.JFXTextField;
 

@@ -9,10 +9,13 @@ public class Challenges {
 	 
 	private final SimpleStringProperty playerName;
     private final SimpleStringProperty gameId;
+    private final PlayerUser user;
     
-    public Challenges(String name, String id) {
+    
+    public Challenges(String name, String id, PlayerUser user) {
     	this.playerName = new SimpleStringProperty(name);
-    	this.gameId = new SimpleStringProperty(id); 	
+    	this.gameId = new SimpleStringProperty(id);
+    	this.user = user;
     }
     
     public void setName(String name)
@@ -36,7 +39,8 @@ public class Challenges {
     
     public void accept() {
     	try {
-			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='accepteerd' where idspel = " + getGameId() + "and username = " + getPlayerName() + " ;");
+    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + getPlayerName() + "' ;");
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,7 +49,7 @@ public class Challenges {
     
     public void decline() {
 		try {
-			DatabaseManager.createStatement().executeUpdate("Update speelstatus SET speelstatus='gewijgerd' where idspel = " + getGameId() + "and username = " + getPlayerName() + " ;");
+			DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='gewijgerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "';");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
