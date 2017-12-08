@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 6121dda09112b9f75045c17d50a316839b4767bc
 package tests;
 
 import view.*;
@@ -27,5 +31,9 @@ public class TestMainLogin extends Application {
 		demo.show();
 	}
 
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> 6121dda09112b9f75045c17d50a316839b4767bc

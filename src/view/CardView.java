@@ -26,21 +26,21 @@ public class CardView extends PaneTemplate
 	public Label amount, selected;
 
 	
-	private Image notfound = new Image("/images/notfound.png");
-	private Image nocards = new Image("/images/nocards.png");
+	private Image notfound = new Image("/view/images/notfound.png");
+	private Image nocards = new Image("/view/images/nocards.png");
 	
-	private Image ridder = new Image("/images/Ridderkaart.png");
-	private Image bibliotheek = new Image("/images/BibliotheekKaart.png");
-	private Image kathedraal = new Image("/images/KathedraalKaart.png");
-	private Image markt = new Image("/images/Marktkaart.png");
-	private Image monopolie = new Image("/images/MonopolieKaart.png");
-	private Image stratenbouw = new Image("/images/StratenbouwKaart.png");
-	private Image uitvinding = new Image("/images/Uitvindingkaart.png");
-	private Image universiteit = new Image("/images/UniversiteitKaart.png");
+	private Image ridder = new Image("/view/images/Ridderkaart.png");
+	private Image bibliotheek = new Image("/view/images/BibliotheekKaart.png");
+	private Image kathedraal = new Image("/view/images/KathedraalKaart.png");
+	private Image markt = new Image("/view/images/Marktkaart.png");
+	private Image monopolie = new Image("/view/images/MonopolieKaart.png");
+	private Image stratenbouw = new Image("/view/images/StratenbouwKaart.png");
+	private Image uitvinding = new Image("/view/images/Uitvindingkaart.png");
+	private Image universiteit = new Image("/view/images/UniversiteitKaart.png");
 	
 	public CardView()
 	{
-		super(CardView.class.getResource("CardView.fxml"));
+		super(CardView.class.getResource("fxml/CardView.fxml"));
 		loadWindow();
 		
 	}
