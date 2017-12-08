@@ -1,3 +1,4 @@
+
 package tests;
 
 import view.*;
@@ -32,7 +33,12 @@ public class TestPlayBoard extends Application {
 			System.out.println("databasemanager shut down");
 		}));
 		launch(args);
-	
+		
+		Dice dice = new Dice(771);
+		dice.throwDice();
+		//DevelopmentCard test = new DevelopmentCard();
+		//System.out.println(test.getType());
+		System.out.println("testsetseet");
 	}
 
 	@Override
@@ -47,3 +53,4 @@ public class TestPlayBoard extends Application {
 	}
 
 }
+

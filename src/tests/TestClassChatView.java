@@ -1,9 +1,11 @@
 package tests;
 
-import view.*;
+import controller.ChatController;
 import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Catan;
+import model.PlayerUser;
 
 public class TestClassChatView extends Application{
 
@@ -15,19 +17,16 @@ public class TestClassChatView extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		ChatView chatView = new ChatView(primaryStage);
+		
+		
+		PlayerUser player = new PlayerUser("ger", Catan.getGameId());
+		DatabaseManager.connect();
 		
 
-		DatabaseManager.connect();
-		chatView.show();
-//		new ChallengeView(primaryStage).show();
-//		new PlayerView(primaryStage).show();
-//		new SplashScreenView(primaryStage).show();
-//		
-//		Board board = new Board();
-//		DatabaseManager.connect();
-//		board.createBoard(40);
-//		DatabaseManager.disconnect();
+		Runnable chat = new ChatController(player, primaryStage, "770");
+		
+		Thread p = new Thread(chat);
+		p.start();
 	}
 
 }

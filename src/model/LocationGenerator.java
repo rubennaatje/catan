@@ -30,16 +30,16 @@ public class LocationGenerator {
 		}
 	}
 	
-	public Point getCoordinate(GridLocation p) throws Exception {
-		if(p.x<0 || p.x>coordinates.length || p.y<0 || p.y>coordinates[0].length) throw new Exception("Parameter x" + p.toString() + " not valid");
+	public Point getCoordinate(GridLocation p){
+		if(p.x<0 || p.x>coordinates.length || p.y<0 || p.y>coordinates[0].length) throw new IndexOutOfBoundsException("Parameter x" + p.toString() + " not valid");
 		return coordinates[p.x][p.y];
 	}
 	public Point[][] getCoordinates() {
 		return coordinates;
 	}
 	
-	public Point[] getHexEdges(GridLocation p) throws Exception  {
-		if(p.x<0 || p.x>coordinates.length || p.y<0 || p.y>coordinates[0].length) throw new Exception("Parameter x" + p.toString() + " not valid");
+	public Point[] getHexEdges(GridLocation p){
+		if(p.x<0 || p.x>coordinates.length || p.y<0 || p.y>coordinates[0].length) throw new IndexOutOfBoundsException("Parameter x" + p.toString() + " not valid");
 		Point[] outPoint = new Point[6];
 		
 		outPoint[0] = coordinates[p.x-1][p.y-1];

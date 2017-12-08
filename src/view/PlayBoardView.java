@@ -47,13 +47,13 @@ public class PlayBoardView extends PaneTemplate {
 		}
 	}
 
-	public void addStreet(Street streetData, EventHandler<? super MouseEvent> event) throws Exception {
+	public void addStreet(Street streetData, EventHandler<? super MouseEvent> event)  {
 		StreetView street = addStreet(streetData);
 		street.getStyleClass().add("placeholder");
 		street.setOnMouseClicked(event);
 	}
 
-	public StreetView addStreet(Street streetData) throws Exception {
+	public StreetView addStreet(Street streetData)  {
 		StreetView street = new StreetView(streetData);
 		Point endPoint = null;
 		Point startPoint = null;
@@ -91,7 +91,7 @@ public class PlayBoardView extends PaneTemplate {
 		return street;
 	}
 
-	public PieceView addPiece(Piece pieceData) throws Exception {
+	public PieceView addPiece(Piece pieceData){
 		PieceView piece = new PieceView(pieceData);
 		if(pieceData.getType() == PieceType.DORP) {				
 			piece.setHeight(20);
@@ -105,27 +105,31 @@ public class PlayBoardView extends PaneTemplate {
 		getChildren().add(piece);
 		return piece;
 	}
-	public void addPiece(Piece pieceData, EventHandler<? super MouseEvent> event) throws Exception {
+	public void addPiece(Piece pieceData, EventHandler<? super MouseEvent> event) {
 		PieceView piece = addPiece(pieceData);
 		piece.getStyleClass().add("placeholder");
 		piece.setOnMouseClicked(event);
 	}
 
-	public void addRobber(GridLocation posIn) throws Exception {
+	public RobberView addRobber(GridLocation posIn) {
 		Point pos = locs.getCoordinate(posIn);
-		Ellipse robber = new Ellipse();
+		RobberView robber = new RobberView(posIn);
 		robber.setCenterX(pos.getX());
 		robber.setCenterY(pos.getY());
-
-		robber.setRadiusY(60);
-		robber.setRadiusX(20);
-		robber.setFill(Color.BLACK);
-		robber.setStroke(Color.BLACK);
+		
 		getChildren().add(robber);
+		return robber;
 	}
 
 	@Override
 	public void show() {
 		super.show();
+	}
+
+
+	public void addRobber(GridLocation location, EventHandler<MouseEvent> robber) {
+		RobberView el = addRobber(location);
+		el.getStyleClass().add("placeholder");
+		el.setOnMouseClicked(robber);
 	}
 }

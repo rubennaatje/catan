@@ -1,37 +1,47 @@
 package view;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.DatabaseManager;
+import controller.ChatController;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import view.javaFXTemplates.PaneTemplate;
 
 public class ChatView extends PaneTemplate {
+	@FXML
+	TextField tfMessage;
+	@FXML
+	ListView<Text> listView;
+	@FXML
+	Button sendButton;
 
-	@FXML TextField tfMessage;
-	
-	public ChatView(Stage stage) throws SQLException {
+	ChatController controller;
 
-		super(ChatView.class.getResource("fxml/ChatView.fxml"), stage);
-		updateChatbox();
+	public ChatView(ObservableList<Text> observableList, ChatController controller) throws SQLException {
+		super(ChatView.class.getResource("fxml/ChatView.fxml"));
+		this.controller = controller;
+		listView.setItems(observableList);
+
+		listView.getItems().addListener((Change<? extends Text> arg0) -> listView.scrollTo(arg0.getList().size() - 1));
 	}
-	
-	public void sendMessage(MouseEvent e) throws SQLException {
-		String sMessage = tfMessage.getText();
-		System.out.println(sMessage);
-		DatabaseManager.getStatement().executeUpdate("insert into chatregel values ('20', 'test_G', CURRENT_TIMESTAMP, '"+ sMessage +"' )");
-		tfMessage.clear();
-	}
-	
-	public void updateChatbox() throws SQLException {
-		;
-		ResultSet rs = DatabaseManager.getStatement().executeQuery("SELECT * FROM chatregel");
-		while(rs.next()) {
-			tfMessage.appendText(rs.getString("bericht"));
+
+	public void sendMessage(MouseEvent arg) {
+		if (!tfMessage.getText().equals("")) {
+			controller.sendMessage(tfMessage.getText());
+			tfMessage.clear();
 		}
 	}
+
+	public ObservableValue<Number> getListWidth() {
+		return listView.widthProperty().subtract(30);
+	}
+
 }

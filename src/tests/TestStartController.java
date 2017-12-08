@@ -1,18 +1,18 @@
 package tests;
 
-import java.sql.SQLException;
-
 import controller.DatabaseManager;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.BoardHelper;
 import model.Catan;
 import model.PlayerModel;
-import model.PlayerType;
 import model.PlayerUser;
 
 public class TestStartController extends Application {
 
+	
+	static GameController gameController;
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -26,9 +26,9 @@ public class TestStartController extends Application {
 		Catan catan = new Catan();
 		//catan.initGame();
 		Catan.setGameId("770");
-		
 		//catan.addResourceCards();
 		launch(args);
+		System.exit(0);
 	}
 	
 	@Override
@@ -39,18 +39,12 @@ public class TestStartController extends Application {
         //catan.initGame();
         Catan.setGameId("770");
         
-        PlayerUser player = new PlayerUser("ger", Catan.getGameId());
+        PlayerUser player = new PlayerUser("rik", Catan.getGameId());
         catan.setPlayer(player);
-        
         PlayerModel[] players = catan.getCurrentPlayers();
-
-		
-		
-		GameController gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
-
-		
-		gameController.start();
-
+        gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
+        
+		new Thread(() -> gameController.start()).start();
 	}
 
 }

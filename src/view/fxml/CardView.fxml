@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root type="Pane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: darkgreen;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/cardsBackground.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="520.0" layoutY="152.0" prefHeight="370.0" prefWidth="250.0" style="-fx-background-color: white;">
+         <children>
+            <ImageView fx:id="imageview" fitHeight="370.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <JFXButton fx:id="nextbutton" layoutX="860.0" layoutY="316.0" onAction="#nextCard" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: white;" text="Volgende kaart" />
+      <Label layoutX="561.0" layoutY="586.0" text="Kaart" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="selected" layoutX="626.0" layoutY="586.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="646.0" layoutY="586.0" text="van" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="amount" layoutX="692.0" layoutY="586.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="21.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="previousbutton" layoutX="320.0" layoutY="316.0" onAction="#previousCard" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: white;" text="Vorige kaart" />
+   </children>
+</fx:root>
