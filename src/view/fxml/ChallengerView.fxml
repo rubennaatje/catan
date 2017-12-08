@@ -22,7 +22,7 @@
                   <Image url="@../images/Catan-Background-zonderlogo.png" />
                </image>
             </ImageView>
-      		<Label layoutX="553.0" layoutY="75.0" text="Uitdagingen" textFill="#ffe200">
+      		<Label layoutX="563.0" layoutY="75.0" text="Uitdagen" textFill="#ffe200">
       			<font>
       				<Font name="Arial Bold" size="30.0" />
       			</font>

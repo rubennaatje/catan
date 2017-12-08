@@ -16,14 +16,29 @@ public class GameMergeView extends Pane {
 		this.buttons = buttons;
 		
 		getChildren().add(playBoard);
+		
+		buttons.setLayoutX(225.0);
 		getChildren().add(buttons);
+
+		players[0].setLayoutX(0);
+		players[0].setLayoutY(0);
+
+		players[1].setLayoutX(0);
+		players[1].setLayoutY(playBoard.getPrefHeight() - 180.0);
+		
+
+		players[2].setLayoutX(playBoard.getPrefWidth() - 225.0);
+		players[2].setLayoutY(0);
+		
+
+		players[3].setLayoutX(playBoard.getPrefWidth() - 225.0);
+		players[3].setLayoutY(playBoard.getPrefHeight() - 180.0);
+		
 		for (int i = 0; i < players.length; i++) {
-			players[i].setLayoutX(300 * i);
-			players[i].setLayoutY(100);
 			getChildren().add(players[i]);
 		}
 		resourceView.setLayoutX((playBoard.getPrefWidth() / 2) - (resourceView.getPrefWidth() /2));
-		resourceView.setLayoutY(375);
+		resourceView.setLayoutY(playBoard.getPrefHeight() - resourceView.getPrefHeight());
 		getChildren().add(resourceView);
 
 		

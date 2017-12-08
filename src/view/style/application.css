@@ -62,17 +62,21 @@
 
 
 /* player Tile stuff */
-#playerRed {
-	-fx-fill: red;
+.playerRed {
+	-fx-background-color: RED;
+	-fx-border-color: BLACK;
 }
-#playerBlue{
-	-fx-fill: blue;
+.playerBlue{
+	-fx-background-color: BLUE;
+	-fx-border-color: BLACK;
 }
-#playerOrange{
-	-fx-fill: orange;
+.playerOrange{
+	-fx-background-color: ORANGE;
+	-fx-border-color: BLACK;
 }
-#playerWhite{
-	-fx-fill: white;
+.playerWhite{
+	-fx-background-color: WHITE;
+	-fx-border-color: BLACK;
 }
 /*trade window stuff */
 .warning {

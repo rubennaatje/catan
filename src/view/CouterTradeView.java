@@ -3,7 +3,6 @@ package view;
 import java.util.HashMap;
 
 import controller.TradeController;
-import javafx.event.EventDispatchChain;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -14,20 +13,37 @@ import javafx.stage.Stage;
 import model.TileType;
 import view.javaFXTemplates.PaneTemplate;
 
-public class TradeView extends PaneTemplate {
+public class CouterTradeView extends PaneTemplate {
 
-	// labels for trade ratios to bank
-	@FXML
-	private Label houtBnkLbl;
-	@FXML
-	private Label wolBnkLbl;
-	@FXML
-	private Label graanBnkLbl;
-	@FXML
-	private Label baksteenBnkLbl;
-	@FXML
-	private Label ertsBnkLbl;
 
+	@FXML
+	private Label sendingPlayer;
+
+	//Opponents offer fields
+	@FXML
+	private TextField houtVraOffer;
+	@FXML
+	private TextField wolVraOffer;
+	@FXML
+	private TextField graanVraOffer;
+	@FXML
+	private TextField baksteenVraOffer;
+	@FXML
+	private TextField ertsVraOffer;
+	
+	@FXML
+	private TextField houtAanOffer;
+	@FXML
+	private TextField wolAanOffer;
+	@FXML
+	private TextField graanAanOffer;
+	@FXML
+	private TextField baksteenAaOffer;
+	@FXML
+	private TextField ertsAanOffer;
+	
+	
+	//player customisable offer fields
 	@FXML
 	private TextField houtVraLbl;
 	@FXML
@@ -53,19 +69,49 @@ public class TradeView extends PaneTemplate {
 	@FXML
 	private Button biedBtn;
 
+	private Boolean offerChanged = false;
+	
 	private TradeController controller;
 
-	public TradeView(Stage primaryStage, TradeController controller) {
-		super(TradeView.class.getResource("fxml/trade.fxml"), primaryStage);
-
+	public CouterTradeView(Stage primaryStage, TradeController controller) {
+		super(CouterTradeView.class.getResource("fxml/counterTrade.fxml"), primaryStage);
 		this.controller = controller;
 	}
 
-	public TradeView() {
-		super(TradeView.class.getResource("fxml/trade.fxml"));
+	public CouterTradeView(TradeController controller, String playerName, HashMap<TileType, Integer>[] offer) {
+
+		super(CouterTradeView.class.getResource("fxml/counterTrade.fxml"));
+		sendingPlayer.setText(playerName);
+		
+		houtVraLbl.setText(offer[0].get(TileType.B).toString());
+		houtVraLbl.setText(offer[0].get(TileType.E).toString());
+		houtVraLbl.setText(offer[0].get(TileType.G).toString());
+		houtVraLbl.setText(offer[0].get(TileType.H).toString());
+		houtVraLbl.setText(offer[0].get(TileType.W).toString());
+
+		houtVraLbl.setText(offer[1].get(TileType.B).toString());
+		houtVraLbl.setText(offer[1].get(TileType.E).toString());
+		houtVraLbl.setText(offer[1].get(TileType.G).toString());
+		houtVraLbl.setText(offer[1].get(TileType.H).toString());
+		houtVraLbl.setText(offer[1].get(TileType.W).toString());
+
+	}
+
+	private void offerChange() {
+		offerChanged =true;
+		biedBtn.setText("tegenbod");
+	}
+	
+	
+	public void reject(MouseEvent e) {
+		 controller.registerReject();
 	}
 
 	public void addBtnClick(MouseEvent e) {
+		
+		if(!offerChanged) offerChange();
+	
+		
 		Node source = (Node) e.getSource();
 		switch (source.getParent().getId()) {
 		case "houtVraGrp":
@@ -182,7 +228,6 @@ public class TradeView extends PaneTemplate {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void offerBtnClick(MouseEvent e) {
 		HashMap<TileType, Integer> offer = new HashMap<>();
 		HashMap<TileType, Integer> request = new HashMap<>();
@@ -203,7 +248,7 @@ public class TradeView extends PaneTemplate {
 
 		@SuppressWarnings("rawtypes")
 		HashMap[] bloob = {offer, request};
-		controller.submitTradeRequest(bloob);
+		controller.submitCounterTradeRequest(bloob);
 	}
 
 	private void clearTradeFld() {

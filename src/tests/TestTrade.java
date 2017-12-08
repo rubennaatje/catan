@@ -25,7 +25,7 @@ public class TestTrade extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		PlayerUser player = new PlayerUser("lesley", "770");
-        TradeController some = new TradeController(primaryStage,player);
+        TradeController some = new TradeController(primaryStage,player, "770");
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 	}
 }
