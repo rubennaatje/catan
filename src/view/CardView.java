@@ -98,6 +98,7 @@ public class CardView extends PaneTemplate
 	public void addCards()
 	{
 		cards.add(""); //kaart nummer 0
+		
 		for(int x = 0; x < control.getPlayerCards().size(); x++) {
 			cards.add(control.getPlayerCards().get(x).getCardname());
 		}
