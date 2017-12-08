@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.HashMap;
+
 import controller.DatabaseManager;
 import controller.DevelopCardController;
 import model.DevelopmentCard;
@@ -22,7 +24,20 @@ public class Testdevelopmentcard {
 		
 		PlayerUser player = new PlayerUser("bart", "770");
 		DevelopCardController control = new DevelopCardController("770");
-		control.givePlayerCard("rik");
+		//control.givePlayerCard("lesley");
+		control.refreshDevCards("bart");
+		//System.out.println(control.getPlayerCards());
+//		for (HashMap.Entry entry : control.getPlayerCards().entrySet())
+//		{
+//		     System.out.println(control.getPlayerCards().get(entry.getKey()).getCardname());
+//			System.out.println("hoi");
+//		}
+		for(int x = 0; x < control.getPlayerCards().size(); x++) {
+			System.out.println(control.getPlayerCards().get(x).getCardname());
+			System.out.println(control.getPlayerCards().get(x).getCardId());
+			
+		}
+		
 	
 	}
 
