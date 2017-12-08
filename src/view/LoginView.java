@@ -4,10 +4,12 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import controller.AlertManager;
 import controller.CatanController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import view.javaFXTemplates.PaneTemplate;
 
@@ -32,6 +34,7 @@ public class LoginView extends PaneTemplate {
 					controller.setPlayer(txtUsername.getText());
 					controller.openMenuScreen();
 				} else {
+					new AlertManager(AlertType.ERROR, "Login error!", "username and/or password are incorrect");
 					txtPassword.setText("");
 				}
 			}
