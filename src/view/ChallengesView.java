@@ -44,6 +44,7 @@ public class ChallengesView extends PaneTemplate {
 			@Override
 			public void handle(ActionEvent event) {
 				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
+				controller.openWaitingScreen();
 				challenge.accept();
 			}
 		});
