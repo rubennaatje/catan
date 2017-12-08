@@ -20,6 +20,13 @@
 	-fx-fill: orange;
 }
 
+
+/* Robber */
+
+.robber, .robber:hover {
+	-fx-fill:black ;
+}
+
 .placeholder {
 	-fx-cursor: hand;
 	-fx-fill: rgba(255,255,255,0.21176470816135406);
@@ -53,16 +60,30 @@
 	-fx-stroke: black;	
 }
 
+
 /* player Tile stuff */
-#playerRed {
-	-fx-fill: red;
+.playerRed {
+	-fx-background-color: RED;
+	-fx-border-color: BLACK;
 }
-#playerBlue{
-	-fx-fill: blue;
+.playerBlue{
+	-fx-background-color: BLUE;
+	-fx-border-color: BLACK;
 }
-#playerOrange{
-	-fx-fill: orange;
+.playerOrange{
+	-fx-background-color: ORANGE;
+	-fx-border-color: BLACK;
 }
-#playerWhite{
-	-fx-fill: white;
+.playerWhite{
+	-fx-background-color: WHITE;
+	-fx-border-color: BLACK;
+}
+/*trade window stuff */
+.warning {
+	-fx-background-color: rgb(255,197,204);
+}
+
+.bnkTradeButton:hover {
+	-fx-cursor: hand;
+	-fx-fill: rgb(102,77,179);
 }

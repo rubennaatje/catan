@@ -17,15 +17,10 @@ public class Main extends Application {
 			DatabaseManager.disconnect();
 			System.out.println("databasemanager shut down");
 		}));
-		
-		
 	}
 
 	@Override
 	public void start(Stage stage) {
-		new SplashScreenView(stage).show();
+		new CatanController(stage);
 	}
-	
-	
-	
 }

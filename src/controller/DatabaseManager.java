@@ -7,13 +7,10 @@ import java.sql.Statement;
 
 public final class DatabaseManager {
 	
-	private final static String sUrl = "jdbc:mysql://databases.aii.avans.nl/";    
+	private final static String sUrl = "jdbc:mysql://projcatan.westeurope.cloudapp.azure.com/";    
     private final static String sDriverName = "com.mysql.jdbc.Driver";
     private static Connection connection;
     private static Statement statement;
-    
-    public final static String sLogin = "SELECT password FROM account WHERE username = '%s'";
-    public final static String sSendChat = "";
     
     public static void connect() {
     	try {
@@ -23,11 +20,16 @@ public final class DatabaseManager {
 		}
     	
     	try {
-    		connection = DriverManager.getConnection(sUrl + "tajlinde_db", "tajlinde", "Vtb1avans");
+    		connection = DriverManager.getConnection(sUrl + "catan", "tajlinde", "Vtb1avans");
     		statement = connection.createStatement();
 		} catch (SQLException e) {
 			System.out.println("Could not open connection");
 		}
+    	
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			disconnect();
+			System.out.println("databasemanager shut down");
+		}));
     }
     
     public static void disconnect() {

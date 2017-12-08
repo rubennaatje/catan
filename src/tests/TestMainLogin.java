@@ -1,3 +1,4 @@
+
 package tests;
 
 import view.*;
@@ -27,3 +28,4 @@ public class TestMainLogin extends Application {
 	}
 
 }
+

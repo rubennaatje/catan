@@ -17,11 +17,12 @@ public class GameControlerView extends PaneTemplate {
 	
 	
 	
-	public GameControlerView(EventHandler<? super MouseEvent> clickHandler) {
+	public GameControlerView(EventHandler<? super MouseEvent> clickHandler, EventHandler<MouseEvent> endTurnEvent) {
 		super(GameControlerView.class.getResource("fxml/PlayboardButtons.fxml"));
 		townBtn.setOnMouseClicked(clickHandler);
 		streetBtn.setOnMouseClicked(clickHandler);
 		cityBtn.setOnMouseClicked(clickHandler);
+		endTurnBtn.setOnMouseClicked(endTurnEvent);
 		setDisabled();
 	}
 	
