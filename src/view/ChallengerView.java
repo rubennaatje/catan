@@ -42,7 +42,11 @@ public class ChallengerView extends PaneTemplate {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				 
+				 if (uitdager.getSelectionModel().getSelectedItems().size() == 3) {
+					 controller.openWaitingScreen();
+				 } else {
+					 
+				 }
 			}
 		});
 
