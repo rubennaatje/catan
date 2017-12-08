@@ -28,8 +28,6 @@ public class CatanController {
 	public CatanController(Stage stage) {
 		this.catan = new Catan();
 		this.stage = stage;
-		
-		openSplashScreen();
 	}
 	
 	public void openSplashScreen() {
