@@ -37,6 +37,7 @@ public class CardView extends PaneTemplate
 	private Image stratenbouw = new Image("/view/images/StratenbouwKaart.png");
 	private Image uitvinding = new Image("/view/images/Uitvindingkaart.png");
 	private Image universiteit = new Image("/view/images/UniversiteitKaart.png");
+	private Image parlement = new Image("/view/images/ParlementKaart.png");
 	
 	public CardView()
 	{
@@ -90,6 +91,7 @@ public class CardView extends PaneTemplate
 		cards.add("stratenbouw");
 		cards.add("uitvinding");
 		cards.add("universiteit");
+		cards.add("parlement");
 	}
 
 	public void nextCard()
@@ -156,6 +158,10 @@ public class CardView extends PaneTemplate
 		} else if (cards.get(selectedCard) == "universiteit")
 		{
 			imageview.setImage(universiteit);
+		}
+		else if (cards.get(selectedCard) == "parlement")
+		{
+			imageview.setImage(parlement);
 		} else
 		{
 			imageview.setImage(notfound);
