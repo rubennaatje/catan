@@ -27,6 +27,7 @@ public class GameController {
 	GameControlerView buttons;
 	DiceView dice;
 	Dice diceO;
+	ResourceView resourceView; 
 	private EventHandler<MouseEvent> pieceEvent;
 	private EventHandler<MouseEvent> firstRndStreet;
 	private EventHandler<MouseEvent> buyEvent;
@@ -126,7 +127,21 @@ public class GameController {
 		buttons = new GameControlerView(buyEvent, endTurn);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage);
+		PlayerView [] playerViews = new PlayerView[4];
+		
+		for (int i = 0; i < players.length; i++)
+		{
+			playerViews[i] = new PlayerView();
+			players[i].addObserver(playerViews[i]);
+			players[i].refresh();
+		}
+		
+		resourceView = new ResourceView();
+		players[this.usrPlayer].addObserver(resourceView);
+		
+		resourceView.update(players[this.usrPlayer], null);
+		
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage,playerViews, resourceView );
 		refresh();
 		
 		mergeView.show();
@@ -390,6 +405,8 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 			});
+			
+			resourceView.update(players[this.usrPlayer], null);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
