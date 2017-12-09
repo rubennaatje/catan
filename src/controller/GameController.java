@@ -216,7 +216,7 @@ public class GameController {
 				check = result.getInt(1) == 1;
 				if (!check)
 					System.out.println("waiting");
-				Thread.sleep(2000);
+				Thread.sleep(CatanController.refreshTime);
 				result.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

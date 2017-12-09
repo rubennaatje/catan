@@ -24,6 +24,8 @@ public class CatanController {
 	private Catan catan;
 	private Stage stage;
 	private PlayerUser player;
+	public final static int refreshTime = 1000;
+	
 	
 	public CatanController(Stage stage) {
 		this.catan = new Catan();
