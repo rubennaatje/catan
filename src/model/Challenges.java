@@ -39,7 +39,7 @@ public class Challenges {
     
     public void accept() {
     	try {
-    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + getPlayerName() + "' ;");
+    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "' ;");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

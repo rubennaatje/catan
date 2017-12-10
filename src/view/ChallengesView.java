@@ -32,19 +32,22 @@ public class ChallengesView extends PaneTemplate {
 		addBoard(controller.getChallenges());
 		
 		btnAccept.setOnAction((ActionEvent e) -> {
-			if(uitdager.getSelectionModel().getSelectedItem() != null) {
+			//if(uitdager.getSelectionModel().getSelectedItem() != null) {
 				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
-				controller.openWaitingScreen();
-				challenge.accept();				
-			} 
+				controller.openWaitingScreen(uitdager.getSelectionModel().getSelectedItem());
+				challenge.accept();		
+			
+			//} 
 		});
 		
 		btnDecline.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
+				if(uitdager.getSelectionModel().getSelectedItem() != null) {
 				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
 				challenge.decline();
+				}
 			}
 		});
 

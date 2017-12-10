@@ -29,10 +29,9 @@ public class WaitingView extends PaneTemplate{
 		
 		super(WaitingView.class.getResource("fxml/WaitingView.fxml"), stage);
 		this.controller = controller;
-		
-		//notAccepted.setText("hoi");
-		//@override
+	
 		notAccepted.setEditable(false); 
+		notAccepted.setText(Integer.toString(controller.waitingOn()));
 		
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

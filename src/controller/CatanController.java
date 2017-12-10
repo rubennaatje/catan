@@ -9,6 +9,7 @@ import model.Catan;
 import model.Challenges;
 import model.PlayerRank;
 import model.PlayerUser;
+import model.PlayerModel;
 import model.Waiting;
 import view.ChallengerView;
 import view.ChallengesView;
@@ -26,6 +27,7 @@ public class CatanController {
 	private PlayerUser player;
 	public final static int refreshTime = 1000;
 	
+	private int WaitingOn; 
 	
 	public CatanController(Stage stage) {
 		this.catan = new Catan();
@@ -61,9 +63,14 @@ public class CatanController {
 	}
 	
 
-	public void openWaitingScreen() {
+	public void openWaitingScreen(Challenges selected) {
+		Waiting waitModel = new Waiting(this, selected);  
+		WaitingOn = waitModel.waitForPlayers(); 
 		new WaitingView(stage, this).show(); 
-		Waiting waitModel = new Waiting(this);  
+	}
+
+	public int waitingOn() {
+		 return WaitingOn; 
 	}
 	
 	public void startGame() {
@@ -85,7 +92,7 @@ public class CatanController {
 		
 		return data; 
 	}
-	
+	 
 	public ObservableList<PlayerUser> getPlayers(){
 		ObservableList<PlayerUser> data = FXCollections.observableArrayList();
 		
