@@ -9,7 +9,6 @@ import controller.CatanController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import view.javaFXTemplates.PaneTemplate;

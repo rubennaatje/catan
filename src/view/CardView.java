@@ -3,11 +3,14 @@ package view;
 import java.util.ArrayList;
 import com.jfoenix.controls.JFXButton;
 
+import controller.DatabaseManager;
+import controller.DevelopCardController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.PlayerUser;
 import view.javaFXTemplates.PaneTemplate;
 
 public class CardView extends PaneTemplate
@@ -39,18 +42,30 @@ public class CardView extends PaneTemplate
 	private Image universiteit = new Image("/view/images/UniversiteitKaart.png");
 	private Image parlement = new Image("/view/images/ParlementKaart.png");
 	
-	public CardView()
-	{
-		super(CardView.class.getResource("fxml/CardView.fxml"));
-		loadWindow();
-		
-	}
+	private DevelopCardController control;
+	
+	
 	
 
 	
-	public CardView(Stage primaryStage)
+	public CardView(Stage primaryStage) throws Exception
 	{
 		super(CardView.class.getResource("fxml/CardView.fxml"), primaryStage);
+		
+		DatabaseManager.connect();
+		
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			DatabaseManager.disconnect();
+			System.out.println("databasemanager shut down");
+		}));
+		
+		PlayerUser player = new PlayerUser("bart", "770");
+		control = new DevelopCardController("770");
+		
+		control.refreshDevCards("bart");
+	
+		
+		
 		loadWindow();
 	}
 
@@ -82,16 +97,11 @@ public class CardView extends PaneTemplate
 	
 	public void addCards()
 	{
-		cards.add("");
-		cards.add("ridder");
-		cards.add("bibliotheek");
-		cards.add("kathedraal");
-		cards.add("markt");
-		cards.add("monopolie");
-		cards.add("stratenbouw");
-		cards.add("uitvinding");
-		cards.add("universiteit");
-		cards.add("parlement");
+		cards.add(""); //kaart nummer 0
+		
+		for(int x = 0; x < control.getPlayerCards().size(); x++) {
+			cards.add(control.getPlayerCards().get(x).getCardname());
+		}
 	}
 
 	public void nextCard()
@@ -133,33 +143,33 @@ public class CardView extends PaneTemplate
 
 	private void showCard()
 	{
-		if (cards.get(selectedCard) == "ridder")
+		if (cards.get(selectedCard).equals("ridder"))
 		{
 			imageview.setImage(ridder);
-		} else if (cards.get(selectedCard) == "bibliotheek")
+		} else if (cards.get(selectedCard).equals("bibliotheek"))
 		{
 			imageview.setImage(bibliotheek);
 		
-		} else if (cards.get(selectedCard) == "kathedraal")
+		} else if (cards.get(selectedCard).equals("kathedraal"))
 		{
 			imageview.setImage(kathedraal);
-		} else if (cards.get(selectedCard) == "markt")
+		} else if (cards.get(selectedCard).equals("markt"))
 		{
 			imageview.setImage(markt);
-		} else if (cards.get(selectedCard) == "monopolie")
+		} else if (cards.get(selectedCard).equals("monopolie"))
 		{
 			imageview.setImage(monopolie);
-		} else if (cards.get(selectedCard) == "stratenbouw")
+		} else if (cards.get(selectedCard).equals("stratenbouw"))
 		{
 			imageview.setImage(stratenbouw);
-		} else if (cards.get(selectedCard) == "uitvinding")
+		} else if (cards.get(selectedCard).equals("uitvinding"))
 		{
 			imageview.setImage(uitvinding);
-		} else if (cards.get(selectedCard) == "universiteit")
+		} else if (cards.get(selectedCard).equals("universiteit"))
 		{
 			imageview.setImage(universiteit);
 		}
-		else if (cards.get(selectedCard) == "parlement")
+		else if (cards.get(selectedCard).equals("parlement"))
 		{
 			imageview.setImage(parlement);
 		} else

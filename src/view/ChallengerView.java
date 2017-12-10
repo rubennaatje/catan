@@ -1,26 +1,20 @@
 package view;
 
-import javafx.fxml.FXML;
-
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import controller.CatanController;
 import controller.DatabaseManager;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import view.javaFXTemplates.PaneTemplate;
-import model.Challenges;
-import model.PlayerUser;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import model.PlayerUser;
+import view.javaFXTemplates.PaneTemplate;
 
 public class ChallengerView extends PaneTemplate {
 		
@@ -43,7 +37,17 @@ public class ChallengerView extends PaneTemplate {
 			@Override
 			public void handle(ActionEvent event) {
 				 if (uitdager.getSelectionModel().getSelectedItems().size() == 3) {
-					 controller.openWaitingScreen();
+					try {
+						for (PlayerUser player : uitdager.getSelectionModel().getSelectedItems()) {
+							DatabaseManager.createStatement().executeQuery("INSERT INTO spel VALUES()");
+						}
+						 
+						controller.openWaitingScreen();
+					}
+					catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				 } else {
 					 
 				 }
