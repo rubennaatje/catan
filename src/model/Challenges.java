@@ -49,7 +49,7 @@ public class Challenges {
     
     public void decline() {
 		try {
-			DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='gewijgerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "';");
+			DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geweigerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "';");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

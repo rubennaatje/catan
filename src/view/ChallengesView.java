@@ -44,7 +44,7 @@ public class ChallengesView extends PaneTemplate {
 				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
 				controller.openWaitingScreen();
 				challenge.accept();				
-			}
+			} 
 		});
 		
 		btnDecline.setOnAction(new EventHandler<ActionEvent>() {
