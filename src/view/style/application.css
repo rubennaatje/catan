@@ -64,18 +64,21 @@
 /* player Tile stuff */
 .playerRed {
 	-fx-background-color: RED;
-	-fx-border-color: BLACK;
 }
 .playerBlue{
 	-fx-background-color: BLUE;
-	-fx-border-color: BLACK;
 }
 .playerOrange{
 	-fx-background-color: ORANGE;
-	-fx-border-color: BLACK;
 }
 .playerWhite{
 	-fx-background-color: WHITE;
+}
+
+.playerOnTurn{
+	-fx-border-color: GOLD;
+}
+.playerNotOnTurn{
 	-fx-border-color: BLACK;
 }
 /*trade window stuff */

@@ -43,7 +43,14 @@ public class PlayerView extends PaneTemplate implements Observer {
 			break;
 		case 4:getStyleClass().add("playerWhite");
 			break;
-		
+		}
+		if(playerData.getPlayerTurn())
+		{
+			getStyleClass().add("playerOnTurn");
+		}
+		else
+		{
+			getStyleClass().add("playerNotOnTurn");
 		}
 	}	
 	
