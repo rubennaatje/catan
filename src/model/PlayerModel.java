@@ -17,6 +17,7 @@ public class PlayerModel extends Observable {
 	private String road = null;
 	private String spelId = null;
 	private int playerNumber;
+	private boolean hasTurn=false;
 
 	public PlayerModel(String username, String spelId, PlayerType type) {
 		this.username = username;
@@ -53,6 +54,7 @@ public class PlayerModel extends Observable {
 		} catch (SQLException e) {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
+		this.hasTurn = hasTurn();
 		setChanged();
 		notifyObservers();
 	}
@@ -88,6 +90,25 @@ public class PlayerModel extends Observable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean hasTurn()
+	{
+		try
+		{
+			ResultSet results = DatabaseManager.createStatement().executeQuery("SELECT beurt_username FROM spel WHERE beurt_username ='"+ this.username + "' AND idspel =" + this.spelId);
+		while(results.next())
+		{
+			if(results.getString(1).equals(this.username))
+			{
+				return true;
+			}
+		}
+		}catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public void addResource(TileType t, Integer amount) throws SQLException {
@@ -140,4 +161,8 @@ public class PlayerModel extends Observable {
 		return spelId;
 	}
 
+	public boolean getPlayerTurn()
+	{
+		return hasTurn;
+	}
 }
