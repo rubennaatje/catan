@@ -146,7 +146,8 @@ public class TradeController {
 
 	public void acceptOffer(String offerPlayer) {
 		try {
-			TradeHelper.acceptOffer(spelId, offerPlayer, players, player);
+			
+			TradeHelper.acceptOffer(spelId, offerPlayer, , player);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
