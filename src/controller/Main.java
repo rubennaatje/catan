@@ -10,10 +10,6 @@ public class Main extends Application {
 		
 		launch(args);
 		
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			DatabaseManager.disconnect();
-			System.out.println("databasemanager shut down");
-		}));
 	}
 
 	@Override

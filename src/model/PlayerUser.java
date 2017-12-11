@@ -29,7 +29,8 @@ public class PlayerUser extends PlayerModel {
 					+ " SUM(if(idgrondstofsoort = \"H\", 1, 0)) as H,"
 					+ " SUM(if(idgrondstofsoort = \"W\", 1, 0)) as W,"
 					+ " SUM(if(idgrondstofsoort = \"G\", 1, 0)) AS G,"
-					+ " SUM(if(idgrondstofsoort = \"B\", 1, 0)) AS B," + " SUM(if(idgrondstofsoort = \"E\", 1, 0)) AS E"
+					+ " SUM(if(idgrondstofsoort = \"B\", 1, 0)) AS B," 
+					+ " SUM(if(idgrondstofsoort = \"E\", 1, 0)) AS E"
 					+ " from spelergrondstofkaart s inner join grondstofkaart g on s.idgrondstofkaart = g.idgrondstofkaart where idspel = "
 					+ getSpelId() + " and username = '" + getUsername() + "' LIMIT 1");
 
