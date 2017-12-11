@@ -9,6 +9,7 @@ import model.Catan;
 import model.Challenges;
 import model.PlayerRank;
 import model.PlayerUser;
+import model.PlayerModel;
 import model.Waiting;
 import view.ChallengerView;
 import view.ChallengesView;
@@ -26,6 +27,7 @@ public class CatanController {
 	private PlayerUser player;
 	public final static int refreshTime = 1000;
 	
+	private int WaitingOn; 
 	
 	public CatanController(Stage stage) {
 		this.catan = new Catan();
@@ -61,19 +63,28 @@ public class CatanController {
 	}
 	
 
-	public void openWaitingScreen() {
+	public void openWaitingScreen(Challenges selected) {
+		Waiting waitModel = new Waiting(this, selected);  
+		WaitingOn = waitModel.waitForPlayers(); 
 		new WaitingView(stage, this).show(); 
-		Waiting waitModel = new Waiting(); 
 	}
+
+	public int waitingOn() {
+		 return WaitingOn; 
+	}
+	
+	public void startGame() {
+		System.out.println("komt in startgame");
+	}
+	
 	
 	public ObservableList<Challenges> getChallenges(){
 		ObservableList<Challenges> data = FXCollections.observableArrayList();
 		
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = '" + "lesley "+ "' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
-			
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = '" + player.getUsername() + "' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
 			while (result.next()) {
-				data.add(new Challenges(result.getString(1), result.getString(2)));
+				data.add(new Challenges(result.getString(1), result.getString(2), player));
 			}
 		} catch (Exception e) {
 			
@@ -81,7 +92,7 @@ public class CatanController {
 		
 		return data; 
 	}
-	
+	 
 	public ObservableList<PlayerUser> getPlayers(){
 		ObservableList<PlayerUser> data = FXCollections.observableArrayList();
 		
@@ -102,7 +113,7 @@ public class CatanController {
 		ObservableList<PlayerRank> data = FXCollections.observableArrayList();
 		
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler");
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler WHERE username != '" + player.getUsername() + "';");
 			int count = 0;
 			while (result.next()) {
 				count++;
