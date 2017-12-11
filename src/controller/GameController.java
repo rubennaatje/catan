@@ -127,6 +127,8 @@ public class GameController {
 		buttons = new GameControlerView(buyEvent, endTurn);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
+		dice.showDice(diceO.getDBThrow());
+		
 		PlayerView [] playerViews = new PlayerView[4];
 		
 		for (int i = 0; i < players.length; i++)
@@ -141,7 +143,7 @@ public class GameController {
 		
 		resourceView.update(players[this.usrPlayer], null);
 		
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage,playerViews, resourceView );
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage,playerViews, resourceView, dice );
 		refresh();
 		
 		mergeView.show();
@@ -191,8 +193,11 @@ public class GameController {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
 					nThrow = diceO.getTotalthrow();
 					System.out.println("dice: " + nThrow + " " + newThrow);
-					if(newThrow)
+					if(newThrow)  
 						BoardHelper.giveResources(Catan.getGameId(), nThrow);
+					dice.showDice(diceO.getTotalthrow());
+					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -404,6 +409,7 @@ public class GameController {
 				}
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
+				dice.showDice(diceO.getTotalthrow());
 			});
 			
 			resourceView.update(players[this.usrPlayer], null);

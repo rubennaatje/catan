@@ -40,6 +40,13 @@ public class Dice {
             return false;
         }
     }
+    
+    public int getDBThrow() throws Exception {
+    	ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT  laatste_worp FROM spel WHERE idspel = '" + Catan.getGameId() + "';");
+    	r.next();
+    	this.totalThrow = r.getInt(1);
+    	return r.getInt(1);
+    }
 	
 	public int[] getThrows() {
 		return diceThrow;

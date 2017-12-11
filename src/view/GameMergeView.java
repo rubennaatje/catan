@@ -10,7 +10,7 @@ public class GameMergeView extends Pane {
 
 	GameControlerView buttons;
 	
-	public GameMergeView(PlayBoardView playBoard, GameControlerView buttons, Stage stage, PlayerView[] players, ResourceView resourceView) {
+	public GameMergeView(PlayBoardView playBoard, GameControlerView buttons, Stage stage, PlayerView[] players, ResourceView resourceView, DiceView dice) {
 		this.stage = stage;
 		this.playBoard = playBoard;
 		this.buttons = buttons;
@@ -43,6 +43,10 @@ public class GameMergeView extends Pane {
 
 		
 		setPrefWidth(playBoard.getPrefWidth());
+		dice.setLayoutX(10);
+		dice.setLayoutY((playBoard.getPrefHeight() / 2) - (dice.getPrefHeight() / 2) );
+		getChildren().add(dice);
+		
 	}
 	
 	@Deprecated
