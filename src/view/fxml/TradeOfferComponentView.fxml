@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.layout.Pane" prefHeight="263.0" prefWidth="277.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="playerName" alignment="CENTER" layoutX="79.0" layoutY="14.0" text="SpelerPlaceHolder" textAlignment="CENTER" />
+      <Label layoutX="23.0" layoutY="62.0" text="Hout" />
+      <Label layoutX="230.0" layoutY="62.0" text="Erts" />
+      <Label layoutX="166.0" layoutY="62.0" text="Baksteen" />
+      <Label layoutX="121.0" layoutY="62.0" text="Graan" />
+      <Label layoutX="78.0" layoutY="62.0" text="Wol" />
+      <Label layoutX="113.0" layoutY="41.0" text="Aanbod" />
+      <Label layoutX="119.0" layoutY="128.0" text="Vraag" />
+      <TextField fx:id="houtVraLbl" disable="true" layoutX="29.0" layoutY="184.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="wolVraLbl" disable="true" layoutX="78.0" layoutY="184.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="graanVraLbl" disable="true" layoutX="127.0" layoutY="184.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="baksteenVraLbl" disable="true" layoutX="179.0" layoutY="184.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="ertsVraLbl" disable="true" layoutX="227.0" layoutY="184.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="ertsAanLbl" disable="true" layoutX="226.0" layoutY="90.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="baksteenAanLbl" disable="true" layoutX="178.0" layoutY="90.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="graanAanLbl" disable="true" layoutX="126.0" layoutY="90.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="wolAanLbl" disable="true" layoutX="77.0" layoutY="90.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <TextField fx:id="houtAanLbl" disable="true" layoutX="28.0" layoutY="90.0" opacity="0.99" prefHeight="31.0" prefWidth="27.0" text="0" />
+      <Label layoutX="81.0" layoutY="156.0" text="Wol" />
+      <Label layoutX="119.0" layoutY="156.0" text="Graan" />
+      <Label layoutX="166.0" layoutY="156.0" text="Baksteen" />
+      <Label layoutX="230.0" layoutY="156.0" text="Erts" />
+      <Label layoutX="26.0" layoutY="156.0" text="Hout" />
+      <Button layoutX="97.0" layoutY="224.0" mnemonicParsing="false" onMouseClicked="#acceptOffer" text="Accepteer" />
+   </children>
+</fx:root>

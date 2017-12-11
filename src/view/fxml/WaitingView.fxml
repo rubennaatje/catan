@@ -7,6 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 
 <fx:root type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -19,7 +20,7 @@
             </ImageView>
             <HBox alignment="CENTER" layoutX="431.0" layoutY="270.0" prefHeight="30.0" prefWidth="415.0">
                <children>
-                  <JFXTextField fx:id="notAccepted" alignment="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #ffc100; -fx-text-fill: white;"> <JFXTextField/>
+                  <JFXTextField fx:id="notAccepted" alignment="CENTER" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #ffc100; -fx-text-fill: white;"> </JFXTextField>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="spelers moeten nog accepteren" textAlignment="CENTER" wrappingWidth="381.0">
                      <font>
                         <Font name="Arial" size="25.0" />

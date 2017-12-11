@@ -18,7 +18,6 @@ public final class DatabaseManager {
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver not found");
 		}
-    	
     	try {
     		connection = DriverManager.getConnection(sUrl + "catan", "tajlinde", "Vtb1avans");
     		statement = connection.createStatement();

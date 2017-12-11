@@ -11,9 +11,14 @@ public class TradeHelper {
 
 	}
 
+	/** registers trade in the database
+	 * @param spelId
+	 * @param player
+	 * @param tradeSuggestion
+	 * @param accepted
+	 * @throws SQLException
+	 */
 	public static void registerTrade(String spelId, PlayerModel player, HashMap<TileType, Integer>[] tradeSuggestion, String accepted) throws SQLException {
-		// for testing
-
 		DatabaseManager.createStatement().executeUpdate("INSERT INTO ruilaanbod VALUES ("
 				+ spelId + ", '" 
 				+ player.getUsername() + "', " 
@@ -29,11 +34,14 @@ public class TradeHelper {
 				+ tradeSuggestion[1].get(TileType.H) + ", "
 				+ accepted
 				+")");
-
 	}
 
+	/**
+	 * @param spelId
+	 * @param player
+	 * @throws SQLException
+	 */
 	public static void registerReject(String spelId, PlayerUser player) throws SQLException {
-		
 		DatabaseManager.createStatement().executeUpdate("INSERT INTO ruilaanbod VALUES ("
 				+ spelId + ", '" 
 				+ player.getUsername() + "', " 
@@ -49,5 +57,11 @@ public class TradeHelper {
 				+ "0, "
 				+ "FALSE"
 				+")");
+	}
+
+	public static void acceptOffer(String spelId) {
+		
+		
+		
 	}
 }

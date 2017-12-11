@@ -14,18 +14,13 @@ public class TestTrade extends Application {
 
 	public static void main(String[] args) throws Exception {
 		DatabaseManager.connect();
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			DatabaseManager.disconnect();
-			System.out.println("databasemanager shut down");
-		}));
 		launch(args);
-		
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		PlayerUser player = new PlayerUser("lesley", "770");
-        TradeController some = new TradeController(primaryStage,player, "770");
+        TradeController some = new TradeController(player, "770");
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 	}
 }
