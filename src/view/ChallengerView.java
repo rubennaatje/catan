@@ -41,8 +41,6 @@ public class ChallengerView extends PaneTemplate {
 						for (PlayerUser player : uitdager.getSelectionModel().getSelectedItems()) {
 							DatabaseManager.createStatement().executeQuery("INSERT INTO spel VALUES()");
 						}
-						 
-						controller.openWaitingScreen();
 					}
 					catch (SQLException e) {
 						// TODO Auto-generated catch block

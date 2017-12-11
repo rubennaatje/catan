@@ -14,7 +14,6 @@ public class Waiting {
 	private CatanController controller;
 	private Challenges selected; 
 
-	
 	public Waiting(CatanController controller, Challenges selected) {
 		this.controller = controller;
 		this.selected = selected; 
@@ -32,9 +31,8 @@ public class Waiting {
 					
 					  while(acceptedPlayers.next()) {
 					       int count = acceptedPlayers.getInt(1);
-							
 		
-					       if(count == 3){
+					       while(count < 4){
 					    	   System.out.println("count is 3: " + count);
 					    	   controller.startGame(); 
 					    	   //hier spel starten
@@ -43,7 +41,6 @@ public class Waiting {
 				} catch (Exception e) {
 					e.printStackTrace(); 
 				}
-			
 			}).start();
 		}
 	
