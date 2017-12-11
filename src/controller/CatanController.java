@@ -96,7 +96,7 @@ public class CatanController {
 		ObservableList<PlayerUser> data = FXCollections.observableArrayList();
 		
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler WHERE username != '" + player.getUsername() + "';");
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM account WHERE username != '" + player.getUsername() + "';");
 			
 			while (result.next()) {
 				data.add(new PlayerUser(result.getString(1)));
