@@ -2,11 +2,13 @@ package controller;
 
 import java.sql.ResultSet;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.Catan;
 import model.Challenge;
+import model.PlayerModel;
 import model.PlayerRank;
 import model.PlayerUser;
 import model.Waiting;
@@ -76,13 +78,23 @@ public class CatanController {
 		 this.WaitingOn = WaitingOn; 
 	}
 	
-	public void startGame(String gameid) {
-		try {
-			catan.initGame(gameid);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void startGame(String gameid, boolean creation) {
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+				try {
+					catan.initGame(gameid, creation);
+					catan.setPlayer(player);
+			        PlayerModel[] players = catan.getCurrentPlayers();
+			        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() , stage);
+			        
+					new Thread(() -> gameController.start()).start();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		});
 	}
 	
 	
