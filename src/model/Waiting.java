@@ -1,20 +1,17 @@
 package model;
 
 import java.sql.ResultSet;
-
 import controller.CatanController;
 import controller.DatabaseManager;
-import controller.GameController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Waiting {
 
 	private int waitingFor; 
 	private CatanController controller;
-	private Challenges selected; 
+	private Challenge selected; 
 
-	public Waiting(CatanController controller, Challenges selected) {
+
+	public Waiting(CatanController controller, Challenge selected) {
 		this.controller = controller;
 		this.selected = selected; 
 		accepted();
@@ -22,7 +19,6 @@ public class Waiting {
 	}
 	
 	public void accepted(){
-	
 		new Thread(() -> {
 			System.out.println("waiting for change in database"); 
 				try {
@@ -45,17 +41,19 @@ public class Waiting {
 		}
 	
 	public int waitForPlayers() {
-	
-		try {
-			  ResultSet haveToAccept = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = " + selected.getGameId() + "and speelstatus = 'uitgedaagde'");
+		new Thread(() -> {
+			try {
+				Thread.sleep(controller.refreshTime);
+				  ResultSet haveToAccept = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = " + selected.getGameId() + "and speelstatus = 'uitgedaagde'");
 
-			  while(haveToAccept.next()) {
-				  waitingFor = haveToAccept.getInt(1);
-			  }
-			  
-		} catch (Exception e) {
-			e.printStackTrace(); 
-		}
+				  while(haveToAccept.next()) {
+					  waitingFor = haveToAccept.getInt(1);
+				  }
+			} catch (Exception e) {
+				e.printStackTrace(); 
+			}
+		}).start();
 		return waitingFor; 
 	}
+	
 }

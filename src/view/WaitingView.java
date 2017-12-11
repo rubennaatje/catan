@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Challenges;
+import model.Challenge;
 import model.Waiting;
 import view.javaFXTemplates.PaneTemplate;
 

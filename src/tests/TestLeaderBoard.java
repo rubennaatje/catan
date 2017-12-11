@@ -1,10 +1,8 @@
 package tests;
 
-import view.*;
 import controller.CatanController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.ScoreBoard;
 
 public class TestLeaderBoard extends Application{
 

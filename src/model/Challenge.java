@@ -5,17 +5,16 @@ import java.sql.SQLException;
 import controller.DatabaseManager;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Challenges {
+public class Challenge {
 	 
 	private final SimpleStringProperty playerName;
     private final SimpleStringProperty gameId;
-    private final PlayerUser user;
+    private PlayerUser player; 
     
-    
-    public Challenges(String name, String id, PlayerUser user) {
+    public Challenge(String name, String id, PlayerUser player) {
     	this.playerName = new SimpleStringProperty(name);
     	this.gameId = new SimpleStringProperty(id);
-    	this.user = user;
+    	this.player = player; 
     }
     
     public void setName(String name)
@@ -39,7 +38,7 @@ public class Challenges {
     
     public void accept() {
     	try {
-    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "' ;");
+    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + player.getUsername() + "' ;");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -49,7 +48,7 @@ public class Challenges {
     
     public void decline() {
 		try {
-			DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geweigerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "';");
+			DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geweigerd' where idspel = " + gameId.get() + " and username = '" + player.getUsername() + "';");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

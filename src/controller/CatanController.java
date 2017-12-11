@@ -6,10 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.Catan;
-import model.Challenges;
+import model.Challenge;
 import model.PlayerRank;
 import model.PlayerUser;
-import model.PlayerModel;
 import model.Waiting;
 import view.ChallengerView;
 import view.ChallengesView;
@@ -63,7 +62,7 @@ public class CatanController {
 	}
 	
 
-	public void openWaitingScreen(Challenges selected) {
+	public void openWaitingScreen(Challenge selected) {
 		Waiting waitModel = new Waiting(this, selected);  
 		WaitingOn = waitModel.waitForPlayers(); 
 		new WaitingView(stage, this).show(); 
@@ -78,13 +77,13 @@ public class CatanController {
 	}
 	
 	
-	public ObservableList<Challenges> getChallenges(){
-		ObservableList<Challenges> data = FXCollections.observableArrayList();
+	public ObservableList<Challenge> getChallenges(){
+		ObservableList<Challenge> data = FXCollections.observableArrayList();
 		
 		try {
 			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, idspel FROM speler WHERE idspel IN (SELECT idspel from speler where username = '" + player.getUsername() + "' AND speelstatus = 'uitgedaagde') AND speelstatus = 'uitdager';");
 			while (result.next()) {
-				data.add(new Challenges(result.getString(1), result.getString(2), player));
+				data.add(new Challenge(result.getString(1), result.getString(2), player));
 			}
 		} catch (Exception e) {
 			
@@ -113,11 +112,11 @@ public class CatanController {
 		ObservableList<PlayerRank> data = FXCollections.observableArrayList();
 		
 		try {
-			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM speler WHERE username != '" + player.getUsername() + "';");
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, aantal_spellen_gewonnen FROM speelresultaat ORDER BY som_behaalde_punten DESC");
 			int count = 0;
 			while (result.next()) {
 				count++;
-				data.add(new PlayerRank(String.valueOf(count), result.getString(1), result.getString(1)));
+				data.add(new PlayerRank(String.valueOf(count), result.getString(1), result.getString(2)));
 			}
 		} catch (Exception e) {
 			
