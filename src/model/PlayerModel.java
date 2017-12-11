@@ -18,6 +18,7 @@ public class PlayerModel extends Observable {
 	private String spelId = null;
 	private int playerNumber;
 	private boolean hasTurn=false;
+	private boolean hasWon=false;
 
 	public PlayerModel(String username, String spelId, PlayerType type) {
 		this.username = username;
@@ -55,6 +56,10 @@ public class PlayerModel extends Observable {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
 		this.hasTurn = hasTurn();
+		if(Integer.parseInt(this.score) >= 10)
+		{
+			hasWon = true;
+		}
 		setChanged();
 		notifyObservers();
 	}
@@ -164,5 +169,9 @@ public class PlayerModel extends Observable {
 	public boolean getPlayerTurn()
 	{
 		return hasTurn;
+	}
+	public boolean getPlayerWon()
+	{
+		return hasWon;
 	}
 }

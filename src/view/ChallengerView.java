@@ -61,44 +61,7 @@ public class ChallengerView extends PaneTemplate {
 			@Override
 			public void handle(ActionEvent event) {
 				 if (uitdager.getSelectionModel().getSelectedItems().size() == 3) {
-					try {
-						ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
-						result.next();
-						String gameId = String.valueOf(Integer.parseInt(result.getString("idspel")) + 1);
-						result.close();
-						
-						DatabaseManager.createStatement().executeUpdate(
-								"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
-										+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
-						
-						ArrayList<String> kleuren = new ArrayList<>();
-						ResultSet kleurenResult = DatabaseManager.createStatement().executeQuery("SELECT kleur FROM speelkleur");
-						
-						while (kleurenResult.next()) {
-							kleuren.add(kleurenResult.getString(1));
-						}
-						
-						kleurenResult.close();
-						
-						int count = 1;
-						String kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
-						kleuren.remove(kleur);
-						
-						DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + controller.getPlayer().getUsername() + "', '" + kleur + "', 'uitdager', 0, " + count + ", 0)");
-						
-						for (PlayerUser player : uitdager.getSelectionModel().getSelectedItems()) {
-							count++;
-							kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
-							kleuren.remove(kleur);
-							DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleur + "', 'uitgedaagde', 0, " + count + ", 0)");
-						}
-						 
-						controller.openWaitingScreen(new Challenge(controller.getPlayer().getUsername(), gameId, controller.getPlayer()));
-					}
-					catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					controller.createGame(uitdager.getSelectionModel().getSelectedItems());
 				 } else {
 					 new AlertManager(AlertType.ERROR, "Challenge error!", "Please challenge 3 players");
 				 }

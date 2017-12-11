@@ -37,16 +37,7 @@ public class LoginView extends PaneTemplate {
 				if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
 					controller.setPlayer(txtUsername.getText());
 					
-					String gameid = null;
-					
-					try {
-						ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT DISTINCT(idspel), username FROM speler WHERE idspel NOT IN (SELECT idspel FROM speler WHERE speelstatus = 'uitgespeeld' OR speelstatus = 'afgebroken' OR speelstatus = 'geweigerd' OR speelstatus = 'uitgedaagde') AND username = '" + controller.getPlayer().getUsername() + "'");
-						result.next();
-						gameid = result.getString(1);
-						result.close();
-					} catch(SQLException e) {
-						
-					}
+					String gameid = controller.isInGame();
 					
 					if (gameid != null) {
 						controller.startGame(gameid, false);
