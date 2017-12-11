@@ -61,9 +61,15 @@ public class Catan {
 	 * initializes a new game in the database, with all of it's standard values ( generates cards and playeres for now)
 	 * @throws Exception
 	 */
-	public void initGame(int gameId) throws Exception {
+	public void initGame() throws Exception {
+
+		//get the highest id from the table.
+		ResultSet test = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
+		test.next();
+		String gameId = (test.getString("idspel") + 1);
+		test.close();
 		
-		setGameId(String.valueOf(gameId));
+		setGameId(gameId);
 
 		//TODO: remove after implementing Geordi's function. 
 		// Board board = new Board();

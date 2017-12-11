@@ -1,12 +1,8 @@
 package model;
 
 import java.sql.ResultSet;
-
 import controller.CatanController;
 import controller.DatabaseManager;
-import controller.GameController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Waiting {
 
@@ -14,7 +10,7 @@ public class Waiting {
 	private CatanController controller;
 	private Challenge selected; 
 
-	
+
 	public Waiting(CatanController controller, Challenge selected) {
 		this.controller = controller;
 		this.selected = selected; 
@@ -23,7 +19,6 @@ public class Waiting {
 	}
 	
 	public void accepted(){
-	
 		new Thread(() -> {
 			System.out.println("waiting for change in database"); 
 				try {
@@ -32,9 +27,8 @@ public class Waiting {
 					
 					  while(acceptedPlayers.next()) {
 					       int count = acceptedPlayers.getInt(1);
-							
 		
-					       if(count == 3){
+					       while(count < 4){
 					    	   System.out.println("count is 3: " + count);
 					    	   controller.startGame(); 
 					    	   //hier spel starten
@@ -43,22 +37,23 @@ public class Waiting {
 				} catch (Exception e) {
 					e.printStackTrace(); 
 				}
-			
 			}).start();
 		}
 	
 	public int waitForPlayers() {
-	
-		try {
-			  ResultSet haveToAccept = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = " + selected.getGameId() + "and speelstatus = 'uitgedaagde'");
+		new Thread(() -> {
+			try {
+				Thread.sleep(controller.refreshTime);
+				  ResultSet haveToAccept = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = " + selected.getGameId() + "and speelstatus = 'uitgedaagde'");
 
-			  while(haveToAccept.next()) {
-				  waitingFor = haveToAccept.getInt(1);
-			  }
-			  
-		} catch (Exception e) {
-			e.printStackTrace(); 
-		}
+				  while(haveToAccept.next()) {
+					  waitingFor = haveToAccept.getInt(1);
+				  }
+			} catch (Exception e) {
+				e.printStackTrace(); 
+			}
+		}).start();
 		return waitingFor; 
 	}
+	
 }

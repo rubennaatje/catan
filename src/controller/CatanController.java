@@ -138,4 +138,3 @@ public class CatanController {
 		this.player = new PlayerUser(username);
 	}
 }
-
