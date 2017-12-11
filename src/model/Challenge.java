@@ -7,23 +7,23 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Challenge {
 	 
-	private final SimpleStringProperty playerName;
+	private final SimpleStringProperty uitdager;
     private final SimpleStringProperty gameId;
-    private PlayerUser player; 
+    private final PlayerUser user;
     
-    public Challenge(String name, String id, PlayerUser player) {
-    	this.playerName = new SimpleStringProperty(name);
+    public Challenge(String name, String id, PlayerUser user) {
+    	this.uitdager = new SimpleStringProperty(name);
     	this.gameId = new SimpleStringProperty(id);
-    	this.player = player; 
+    	this.user = user;
     }
     
-    public void setName(String name)
+    public void setUitdager(String name)
 	{
-		this.playerName.set(name);
+		this.uitdager.set(name);
 	}
 
-    public String getPlayerName() {
-		return playerName.get();
+    public String getUitdager() {
+		return uitdager.get();
 	}
     
     public void setGameID(String id)
@@ -38,7 +38,7 @@ public class Challenge {
     
     public void accept() {
     	try {
-    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + player.getUsername() + "' ;");
+    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "';");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -48,7 +48,7 @@ public class Challenge {
     
     public void decline() {
 		try {
-			DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geweigerd' where idspel = " + gameId.get() + " and username = '" + player.getUsername() + "';");
+			DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geweigerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "';");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

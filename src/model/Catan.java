@@ -3,8 +3,6 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Statement;
-
 import controller.DatabaseManager;
 
 public class Catan {
@@ -61,14 +59,7 @@ public class Catan {
 	 * initializes a new game in the database, with all of it's standard values ( generates cards and playeres for now)
 	 * @throws Exception
 	 */
-	public void initGame() throws Exception {
-
-		//get the highest id from the table.
-		ResultSet test = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
-		test.next();
-		String gameId = (test.getString("idspel") + 1);
-		test.close();
-		
+	public void initGame(String gameId) throws Exception {		
 		setGameId(gameId);
 
 		//TODO: remove after implementing Geordi's function. 

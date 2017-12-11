@@ -63,7 +63,7 @@ public class ChallengesView extends PaneTemplate {
 	}
 	
 	public void addBoard(ObservableList<Challenge> data) {
-		playerName.setCellValueFactory(new PropertyValueFactory<Challenge, String>("playerName"));
+		playerName.setCellValueFactory(new PropertyValueFactory<Challenge, String>("uitdager"));
 		gameId.setCellValueFactory(new PropertyValueFactory<Challenge, String>("gameId")); 
 		uitdager.setItems(data);
 	}	

@@ -93,7 +93,7 @@ public class ChallengerView extends PaneTemplate {
 							DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleur + "', 'uitgedaagde', 0, " + count + ", 0)");
 						}
 						 
-						controller.openWaitingScreen(new Challenge(gameId, controller.getPlayer().getUsername()));
+						controller.openWaitingScreen(new Challenge(controller.getPlayer().getUsername(), gameId, controller.getPlayer()));
 					}
 					catch (SQLException e) {
 						// TODO Auto-generated catch block

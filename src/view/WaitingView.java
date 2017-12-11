@@ -5,11 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Challenge;
-import model.Waiting;
 import view.javaFXTemplates.PaneTemplate;
+
 
 import com.jfoenix.controls.JFXTextField;
 
@@ -24,14 +22,25 @@ public class WaitingView extends PaneTemplate{
 	@FXML private JFXTextField notAccepted ;
 	
 	public WaitingView(Stage stage, CatanController controller) {
-		
-		
-		
 		super(WaitingView.class.getResource("fxml/WaitingView.fxml"), stage);
 		this.controller = controller;
 	
 		notAccepted.setEditable(false); 
-		notAccepted.setText(Integer.toString(controller.waitingOn()));
+		
+		new Thread(() -> {
+			while (controller.getWaitingOn() > 0) {
+				notAccepted.setText(Integer.toString(controller.getWaitingOn()));
+				
+				try {
+					Thread.sleep(CatanController.refreshTime);
+				} catch (Exception e) {
+					e.printStackTrace(); 
+				}
+			}
+			
+			notAccepted.setText(Integer.toString(controller.getWaitingOn()));
+			
+		}).start();
 		
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
