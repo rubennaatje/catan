@@ -30,9 +30,10 @@ public class Catan {
 
 	public boolean register(String username, String password) {
 		try {
-			return DatabaseManager.createStatement().execute(String.format("INSERT INTO account VALUES ('%s', '%s')", username, password));
+			return DatabaseManager.createStatement().executeUpdate(String.format("INSERT INTO account VALUES ('%s', '%s')", username, password)) == 1 ? true : false;
+			
 		} catch (SQLException e) {
-
+			System.out.println(e.getMessage());
 		}
 
 		return false;
