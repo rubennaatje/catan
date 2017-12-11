@@ -71,9 +71,6 @@ public class Catan {
 		
 		setGameId(gameId);
 
-		DatabaseManager.createStatement().executeUpdate(
-				"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
-						+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
 		//TODO: remove after implementing Geordi's function. 
 		// Board board = new Board();
 		// board.createBoard(gameId);

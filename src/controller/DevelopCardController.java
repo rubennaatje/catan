@@ -8,6 +8,7 @@ import java.util.Random;
 
 import model.DevelopmentCard;
 import model.KnightCard;
+import model.PlayerUser;
 import model.ProgressCard;
 import model.VictoryPointCard;
 
@@ -91,6 +92,25 @@ public class DevelopCardController {
 					break;
 				}
 				
+	}
+	
+	
+	public DevelopCardController getCardControl() throws Exception {
+		
+		DatabaseManager.connect();
+		
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			DatabaseManager.disconnect();
+			System.out.println("databasemanager shut down");
+		}));
+		
+		PlayerUser player = new PlayerUser("bart", "770");	
+		DevelopCardController control = new DevelopCardController("770");
+		
+		control.refreshDevCards("bart");
+	
+		return control;
+		
 	}
 
 }
