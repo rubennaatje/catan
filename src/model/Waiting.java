@@ -20,9 +20,7 @@ public class Waiting {
 	
 	public void accepted(){
 	
-		new Thread(() -> {
-			System.out.println("waiting for change in database"); 
-			
+		new Thread(() -> {			
 			int count = waitForPlayers();
 			
 			while (count > 0) {
@@ -50,7 +48,7 @@ public class Waiting {
 			}
 			
 			if (accepted) {
-				controller.startGame(selected.getGameId()); 
+				controller.startGame(selected.getGameId(), true); 
 			} else {
 				controller.openMenuScreen();
 			}

@@ -1,12 +1,17 @@
 package controller;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.Catan;
 import model.Challenge;
+import model.PlayerModel;
 import model.PlayerRank;
 import model.PlayerUser;
 import model.Waiting;
@@ -76,13 +81,23 @@ public class CatanController {
 		 this.WaitingOn = WaitingOn; 
 	}
 	
-	public void startGame(String gameid) {
-		try {
-			catan.initGame(gameid);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void startGame(String gameid, boolean creation) {
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+				try {
+					catan.initGame(gameid, creation);
+					catan.setPlayer(player);
+			        PlayerModel[] players = catan.getCurrentPlayers();
+			        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() , stage);
+			        
+					new Thread(() -> gameController.start()).start();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		});
 	}
 	
 	
@@ -145,5 +160,61 @@ public class CatanController {
 	
 	public void setPlayer(String username) {
 		this.player = new PlayerUser(username);
+	}
+	
+	public void createGame(ObservableList<PlayerUser> items) {
+		try {
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
+			result.next();
+			String gameId = String.valueOf(Integer.parseInt(result.getString("idspel")) + 1);
+			result.close();
+			
+			DatabaseManager.createStatement().executeUpdate(
+					"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
+							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
+			
+			ArrayList<String> kleuren = new ArrayList<>();
+			ResultSet kleurenResult = DatabaseManager.createStatement().executeQuery("SELECT kleur FROM speelkleur");
+			
+			while (kleurenResult.next()) {
+				kleuren.add(kleurenResult.getString(1));
+			}
+			
+			kleurenResult.close();
+			
+			int count = 1;
+			String kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
+			kleuren.remove(kleur);
+			
+			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleur + "', 'uitdager', 0, " + count + ", 0)");
+			
+			for (PlayerUser player : items) {
+				count++;
+				kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
+				kleuren.remove(kleur);
+				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleur + "', 'uitgedaagde', 0, " + count + ", 0)");
+			}
+			 
+			openWaitingScreen(new Challenge(getPlayer().getUsername(), gameId, getPlayer()));
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String isInGame() {
+		String gameid = null;
+		
+		try {
+			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT DISTINCT(idspel), username FROM speler WHERE idspel NOT IN (SELECT idspel FROM speler WHERE speelstatus = 'uitgespeeld' OR speelstatus = 'afgebroken' OR speelstatus = 'geweigerd' OR speelstatus = 'uitgedaagde') AND username = '" + getPlayer().getUsername() + "'");
+			result.next();
+			gameid = result.getString(1);
+			result.close();
+		} catch(SQLException e) {
+			
+		}
+		
+		return gameid;
 	}
 }

@@ -28,14 +28,22 @@ public class TradeView extends TradeViewTemplate {
 	@FXML
 	private Button biedBtn;
 	
-	private final int[][] positions = new int[3][2];
+	//data for creating counteroffer boxes 
+	private int boxAmount = 0;
+	private final int[][] positions = {{162, 183}, {0, 457}, {323, 457}};
 	
 	public TradeView(TradeController controller) {
 		super(TradeView.class.getResource("fxml/trade.fxml"), controller);
 	}
 
-	public void addOfferBox(HashMap<TileType, Integer>[] offer, String username) {
-		
+	public void addPlayerOffer(HashMap<TileType, Integer>[] offer, String username) {
+		if(boxAmount <3) {
+			TradeOfferComponentView comView = new TradeOfferComponentView(controller, username, offer);
+			comView.setLayoutX(positions[boxAmount][0]);
+			comView.setLayoutY(positions[boxAmount][1]);
+			getChildren().add(comView);
+			boxAmount++;
+		}
 	}
 
 	public void offerBtnClick(MouseEvent e) {
@@ -45,7 +53,4 @@ public class TradeView extends TradeViewTemplate {
 		
 	}
 
-	public void addPlayerOffer(String playerName, HashMap<TileType, Integer>[] offerData) {
-		getChildren().add(new TradeOfferComponentView(controller, playerName, offerData));
-	}
 }

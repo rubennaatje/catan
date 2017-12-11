@@ -185,17 +185,17 @@ public abstract class TradeViewTemplate  extends PaneTemplate{
 	}
 	
 	protected void fillLabels(HashMap<TileType, Integer>[] offerData) {
-		houtVraLbl.setText(offerData[0].get(TileType.B).toString());
+		houtVraLbl.setText(offerData[0].get(TileType.H).toString());
 		wolVraLbl.setText(offerData[0].get(TileType.W).toString());
-		graanVraLbl.setText(offerData[0].get(TileType.E).toString());
-		baksteenVraLbl.setText(offerData[0].get(TileType.G).toString());
-		ertsVraLbl.setText(offerData[0].get(TileType.H).toString());
+		graanVraLbl.setText(offerData[0].get(TileType.G).toString());
+		baksteenVraLbl.setText(offerData[0].get(TileType.B).toString());
+		ertsVraLbl.setText(offerData[0].get(TileType.E).toString());
 
-		houtAanLbl.setText(offerData[1].get(TileType.B).toString());
+		houtAanLbl.setText(offerData[1].get(TileType.H).toString());
 		wolAanLbl.setText(offerData[1].get(TileType.W).toString());
-		graanAanLbl.setText(offerData[1].get(TileType.E).toString());
-		baksteenAanLbl.setText(offerData[1].get(TileType.G).toString());
-		ertsAanLbl.setText(offerData[1].get(TileType.H).toString());
+		graanAanLbl.setText(offerData[1].get(TileType.G).toString());
+		baksteenAanLbl.setText(offerData[1].get(TileType.B).toString());
+		ertsAanLbl.setText(offerData[1].get(TileType.E).toString());
 	}
 	
 	protected void clearTradeFld() {

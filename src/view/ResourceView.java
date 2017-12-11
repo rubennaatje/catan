@@ -20,7 +20,7 @@ public class ResourceView extends PaneTemplate implements Observer
 	
 	public ResourceView()
 	{
-		super(ResourceView.class.getResource("fxml/resources.fxml"));
+		super(ResourceView.class.getResource("fxml/Resources.fxml"));
 	}
 	//grondstoffenview
 	@Override
