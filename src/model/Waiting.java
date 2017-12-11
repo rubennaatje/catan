@@ -12,10 +12,10 @@ public class Waiting {
 
 	private int waitingFor; 
 	private CatanController controller;
-	private Challenges selected; 
+	private Challenge selected; 
 
 	
-	public Waiting(CatanController controller, Challenges selected) {
+	public Waiting(CatanController controller, Challenge selected) {
 		this.controller = controller;
 		this.selected = selected; 
 		accepted();

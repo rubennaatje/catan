@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Challenges;
+import model.Challenge;
 import view.javaFXTemplates.PaneTemplate;
 
 public class ChallengesView extends PaneTemplate {
@@ -21,9 +21,9 @@ public class ChallengesView extends PaneTemplate {
 	@FXML private Button btnDecline;
 	@FXML private Button btnBack;
 	
-	@FXML private TableView<Challenges> uitdager;
-	@FXML private TableColumn<Challenges, String> playerName;
-	@FXML private TableColumn<Challenges, String> gameId;
+	@FXML private TableView<Challenge> uitdager;
+	@FXML private TableColumn<Challenge, String> playerName;
+	@FXML private TableColumn<Challenge, String> gameId;
 	
 	public ChallengesView(Stage stage, CatanController controller) {
 		super(ChallengesView.class.getResource("fxml/ChallengesView.fxml"), stage);
@@ -33,7 +33,7 @@ public class ChallengesView extends PaneTemplate {
 		
 		btnAccept.setOnAction((ActionEvent e) -> {
 			//if(uitdager.getSelectionModel().getSelectedItem() != null) {
-				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
+				Challenge challenge = uitdager.getSelectionModel().getSelectedItem();
 				controller.openWaitingScreen(uitdager.getSelectionModel().getSelectedItem());
 				challenge.accept();		
 			
@@ -45,7 +45,7 @@ public class ChallengesView extends PaneTemplate {
 			@Override
 			public void handle(ActionEvent event) {
 				if(uitdager.getSelectionModel().getSelectedItem() != null) {
-				Challenges challenge = uitdager.getSelectionModel().getSelectedItem();
+				Challenge challenge = uitdager.getSelectionModel().getSelectedItem();
 				challenge.decline();
 				}
 			}
@@ -60,9 +60,9 @@ public class ChallengesView extends PaneTemplate {
 		});
 	}
 	
-	public void addBoard(ObservableList<Challenges> data) {
-		playerName.setCellValueFactory(new PropertyValueFactory<Challenges, String>("playerName"));
-		gameId.setCellValueFactory(new PropertyValueFactory<Challenges, String>("gameId")); 
+	public void addBoard(ObservableList<Challenge> data) {
+		playerName.setCellValueFactory(new PropertyValueFactory<Challenge, String>("playerName"));
+		gameId.setCellValueFactory(new PropertyValueFactory<Challenge, String>("gameId")); 
 		uitdager.setItems(data);
 	}	
 }

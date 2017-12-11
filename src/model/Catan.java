@@ -61,15 +61,9 @@ public class Catan {
 	 * initializes a new game in the database, with all of it's standard values ( generates cards and playeres for now)
 	 * @throws Exception
 	 */
-	public void initGame() throws Exception {
-
-		//get the highest id from the table.
-		ResultSet test = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
-		test.next();
-		String gameId = (test.getString("idspel") + 1);
-		test.close();
+	public void initGame(int gameId) throws Exception {
 		
-		setGameId(gameId);
+		setGameId(String.valueOf(gameId));
 
 		DatabaseManager.createStatement().executeUpdate(
 				"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
