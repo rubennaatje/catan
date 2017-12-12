@@ -14,7 +14,7 @@ public class ChatController implements Runnable {
 	private PlayerModel player;
 	private String spelID;
 
-	public ChatController(PlayerModel player, Stage primaryStage, String spelID) {
+	public ChatController(PlayerModel player, String spelID) {
 		model = new ChatModel();
 		try {
 			view = new ChatView(model.getChatLines(), this);
@@ -26,11 +26,6 @@ public class ChatController implements Runnable {
 		this.spelID = spelID;
 
 		model.registerWordWrap(view.getListWidth());
-		// for testing purpouses only
-		Scene scene = new Scene(view);
-		primaryStage.setScene(scene);
-		primaryStage.centerOnScreen();
-		primaryStage.show();
 	}
 
 	public void sendMessage(String message) {

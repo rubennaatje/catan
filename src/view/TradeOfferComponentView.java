@@ -27,6 +27,9 @@ public class TradeOfferComponentView extends TradeViewTemplate {
 	}
 
 	public void acceptOffer(MouseEvent e) {
-		controller.acceptOffer(offerPlayer);
+		if(controller.acceptOffer(offerPlayer)) {
+			controller.close();
+		}
+		
 	}
 }

@@ -28,7 +28,7 @@ public class TestStartController extends Application {
 		Catan.setGameId("770");
 		//catan.addResourceCards();
 		launch(args);
-		System.exit(0);
+
 	}
 	
 	@Override

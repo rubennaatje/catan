@@ -34,10 +34,12 @@ public class GameController {
 	private EventHandler<MouseEvent> endTurn;
 	private EventHandler<MouseEvent> firstRndPiece;
 	private EventHandler<MouseEvent> doubleStreetEvent;
-	private DevelopCardController devCon;
+	private EventHandler<MouseEvent> trade;
 	private EventHandler<MouseEvent> robber;
-
+	private DevelopCardController devCon;
+	private TradeController tradeController;
 	private ChatController chatController;
+
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -74,6 +76,13 @@ public class GameController {
 
 		});
 
+		trade = ((e) -> {
+			refresh();
+			buttons.setDisabled();
+			TradeController tradeController = new TradeController(spelId, players, usrPlayer, this);
+		});
+		
+		
 		pieceEvent = ((e) -> {
 			piecePlacement(e);
 			refresh();
@@ -134,8 +143,6 @@ public class GameController {
 			players[i].refresh();
 		}
 
-	
-		
 		try {
 			dice.showDice(diceO.getDBThrow());
 		} catch (SQLException e1) {
@@ -144,9 +151,10 @@ public class GameController {
 		}
 		resourceView = new ResourceView();
 		players[this.usrPlayer].addObserver(resourceView);
-		ChatController chat = new ChatController(players[this.usrPlayer], stage, spelId);
 		
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice, chat.getView());
+		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
+				chat.getView());
 
 		refresh();
 		new Thread(chat).start();
@@ -371,7 +379,7 @@ public class GameController {
 			player.removeResource(TileType.W);
 			player.removeResource(TileType.E);
 			player.removeResource(TileType.G);
-			devCon.givePlayerCard(player.getUsername());
+			devCon.givePlayerCard();
 		}
 	}
 
@@ -413,9 +421,13 @@ public class GameController {
 
 			resourceView.update(players[this.usrPlayer], null);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void closeTrade() {
+		buttons.setEnabled();
+		tradeController = null;
 	}
 
 }

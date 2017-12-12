@@ -1,10 +1,13 @@
 package tests;
 
+import controller.ChatController;
 import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.PlayerModel;
 import model.PlayerUser;
+import view.ChatView;
+import view.DiceView;
 import view.GameControlerView;
 import view.GameMergeView;
 import view.PlayBoardView;
@@ -16,10 +19,6 @@ public class PlayerTest extends Application{
 	public static void main(String[] args) {
 		DatabaseManager.connect();
 		
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			DatabaseManager.disconnect();
-			System.out.println("databasemanager shut down");
-		}));
 		launch(args);
 	}
 
@@ -44,7 +43,10 @@ public class PlayerTest extends Application{
 		}
 		ResourceView resourceView = new ResourceView();
 		playerModels[0].addObserver(resourceView);
-		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews, resourceView, null);
+		ChatController chat = new ChatController(playerModels[1], "770");
+		
+		DiceView dice = new DiceView();
+		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews, resourceView, dice, chat.getView());
 		
 		view.show();
 	}

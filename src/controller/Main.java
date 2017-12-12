@@ -9,7 +9,7 @@ public class Main extends Application {
 		DatabaseManager.connect();
 		
 		launch(args);
-		
+		System.exit(0);
 	}
 
 	@Override

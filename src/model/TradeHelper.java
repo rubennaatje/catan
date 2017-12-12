@@ -60,13 +60,36 @@ public class TradeHelper {
 				+")");
 	}
 
-	public static void acceptOffer(String spelId, PlayerModel counterer, PlayerUser user) throws SQLException {
+	public static void acceptOffer(String spelId, PlayerModel counterer, PlayerModel user) throws SQLException {
 		ResultSet r = DatabaseManager.createStatement().executeQuery(
 				"SELECT geeft_baksteen, geeft_wol, geeft_erts, geeft_graan , geeft_hout, "
 				+ "vraagt_baksteen, vraagt_wol, vraagt_erts, vraagt_graan, vraagt_hout, geaccepteerd FROM catan.ruilaanbod "
 						+ "WHERE idspel = " + spelId + " AND username = '" + counterer.getUsername() + "';");
 		if(r.next()) {
 			
+			counterer.removeResource(TileType.B, r.getInt("geeft_baksteen"));
+			counterer.removeResource(TileType.E, r.getInt("geeft_erts"));
+			counterer.removeResource(TileType.G, r.getInt("geeft_graan"));
+			counterer.removeResource(TileType.H, r.getInt("geeft_hout"));
+			counterer.removeResource(TileType.W, r.getInt("geeft_wol"));
+
+			user.addResource(TileType.B, r.getInt("geeft_baksteen"));  
+			user.addResource(TileType.E, r.getInt("geeft_erts"));      
+			user.addResource(TileType.G, r.getInt("geeft_graan"));     
+			user.addResource(TileType.H, r.getInt("geeft_hout"));      
+			user.addResource(TileType.W, r.getInt("geeft_wol"));       
+			
+			user.removeResource(TileType.B, r.getInt("vraagt_baksteen"));
+			user.removeResource(TileType.E, r.getInt("vraagt_erts"));
+			user.removeResource(TileType.G, r.getInt("vraagt_graan"));
+			user.removeResource(TileType.H, r.getInt("vraagt_hout"));
+			user.removeResource(TileType.W, r.getInt("vraagt_wol"));
+			
+			counterer.addResource(TileType.B, r.getInt("vraagt_baksteen"));  
+			counterer.addResource(TileType.E, r.getInt("vraagt_erts"));      
+			counterer.addResource(TileType.G, r.getInt("vraagt_graan"));     
+			counterer.addResource(TileType.H, r.getInt("vraagt_hout"));      
+			counterer.addResource(TileType.W, r.getInt("vraagt_wol"));       
 		}
 	}
 }

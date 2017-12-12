@@ -16,7 +16,7 @@ public class TestTrade extends Application {
 		DatabaseManager.connect();
 		launch(args);
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		PlayerUser player = new PlayerUser("lesley", "770");

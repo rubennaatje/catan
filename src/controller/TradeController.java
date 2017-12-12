@@ -23,21 +23,24 @@ public class TradeController {
 	HashMap<TileType, Integer>[][] allOffers;
 	String tradeRequester = null;
 	private PlayerModel[] players;
-
+	Integer usrPlayer; // 0..3
+	GameController superController;
+	
+	
 	/** Shows trade request screen
 	 * @param player
 	 * @param spelID
 	 */
 	@SuppressWarnings("unchecked")
-	public TradeController(PlayerUser player, String spelID, PlayerModel[] players) {
+	public TradeController(String spelID, PlayerModel[] players, Integer usrPlayer, GameController superController) {
 		view = new TradeView(this);
 		this.spelId = spelID;
-		this.player = player;
-		allOffers = new HashMap[2][3];
+		this.allOffers = new HashMap[2][3];
 		this.players = players;
+		this.usrPlayer = usrPlayer;
+		this.superController = superController;
 		
 		popUp = new Stage();
-		
 		Scene scene = new Scene(view);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		popUp.setScene(scene);
@@ -123,7 +126,6 @@ public class TradeController {
 	}
 	
 	public boolean checkAllSufficient(HashMap<TileType, Integer>[] bloob) {
-		//TODO check all values in hashmap for ok
 		return false;
 	}
 
@@ -138,20 +140,30 @@ public class TradeController {
 	public void registerReject() {
 		try {
 			TradeHelper.registerReject(spelId, player);
-			// TODO something to remove
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void acceptOffer(String offerPlayer) {
-		try {
-			
-			TradeHelper.acceptOffer(spelId, offerPlayer, , player);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public boolean acceptOffer(String offerPlayer) {
+		for (int i = 0; i < players.length; i++) {
+			if(players[i].getUsername().equals(offerPlayer)) {
+				PlayerModel offerer = players[i];				
+				try {
+					TradeHelper.acceptOffer(spelId, offerer, players[usrPlayer]);
+					return true;
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
 		}
+		return false;
+	}
+
+	public void close() {
+		popUp.close();
+		superController.closeTrade();
 	}
 
 }
