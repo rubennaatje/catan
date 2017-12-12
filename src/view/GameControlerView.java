@@ -43,5 +43,11 @@ public class GameControlerView extends PaneTemplate {
 	public void setLongestRoad(Integer i) {
 		road.setText(i.toString());
 	}
+	public void setButtons(boolean town,boolean city, boolean street, boolean endTurn) {
+		townBtn.setDisable(!town);
+		cityBtn.setDisable(!city);
+		streetBtn.setDisable(!street);
+		endTurnBtn.setDisable(!endTurn);
+	}
 
 }

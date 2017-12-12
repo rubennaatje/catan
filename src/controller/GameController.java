@@ -3,6 +3,7 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -197,7 +198,7 @@ public class GameController {
 			@Override
 			public void run() {
 				await();
-				enableButtons();
+				refreshButtons();
 				int nThrow;
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
@@ -371,6 +372,23 @@ public class GameController {
 			buttons.setDisabled();
 		});
 	}
+	
+	private void refreshButtons() {
+		Platform.runLater(() -> {
+			try {
+				if(players[usrPlayer].getPlayerTurn()) {
+					PlayerUser p = (PlayerUser) players[usrPlayer];
+					HashMap<String, Boolean> buyable = p.getBuyableThings();
+					buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"),true);
+				} else {
+					buttons.setButtons(false, false, false,false);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
 
 	public void checkEnoughForDevCard() {
 		PlayerUser player = (PlayerUser) players[usrPlayer];
@@ -418,8 +436,9 @@ public class GameController {
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
 			});
-
-			resourceView.update(players[this.usrPlayer], null);
+			players[this.usrPlayer].refresh();
+			refreshButtons();
+			//resourceView.update(players[this.usrPlayer], null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
