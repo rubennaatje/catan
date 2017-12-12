@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 6121dda09112b9f75045c17d50a316839b4767bc
 package tests;
 
 import view.*;
@@ -53,4 +57,7 @@ public class TestPlayBoard extends Application {
 	}
 
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6121dda09112b9f75045c17d50a316839b4767bc

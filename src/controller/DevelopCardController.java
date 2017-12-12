@@ -21,19 +21,20 @@ public class DevelopCardController {
 	private int index = 1;
 	private String spelId;
 	private String uitleg;
+	private String username;
 	private ArrayList<DevelopmentCard> list = new ArrayList<>();
 	
-	public DevelopCardController(String spelId) {
+	public DevelopCardController(String spelId, String username) {
 		this.spelId = spelId;
+		this.username = username;
 	}
 	
-	public void givePlayerCard(String username) {
+	public void givePlayerCard() {
 			ArrayList<String> cardsUnUsed = new ArrayList<>();
 			try { // create list of unused cards
 				ResultSet cardsNotUsed = DatabaseManager.createStatement().executeQuery("SELECT idontwikkelingskaart FROM spelerontwikkelingskaart WHERE username IS NULL AND idspel = "+ spelId +";");
 				while(cardsNotUsed.next()) {
 					cardsUnUsed.add(cardsNotUsed.getString("idontwikkelingskaart"));
-					System.out.println(cardsNotUsed.getString("idontwikkelingskaart"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -42,19 +43,23 @@ public class DevelopCardController {
 			cardId = cardsUnUsed.get(cardint);
 			cardsUnUsed.remove(cardint);
 			index = 1;
-			assignCard(cardId, username);
+			assignCard(cardId);
 	}
 	
 //	public void playCard(String cardId) {
 //		
 //	}
 	
-	public void refreshDevCards(String username) { // creates devcards objects for player
+	public void refreshDevCards() { // creates devcards objects for player
+		int listsize = list.size();
+		for(int x = 0; x < listsize; x++) {
+			list.remove(0);
+		}
 		try {
-			ResultSet cardsUsed = DatabaseManager.createStatement().executeQuery("SELECT idontwikkelingskaart FROM spelerontwikkelingskaart WHERE username = '"+username+"' AND idspel = "+ spelId +" AND gespeeld = 0;");
+			ResultSet cardsUsed = DatabaseManager.createStatement().executeQuery("SELECT idontwikkelingskaart FROM spelerontwikkelingskaart WHERE username = '"+username+"'"
+					+ " AND idspel = "+ spelId +" AND gespeeld = 0;");
 			while(cardsUsed.next()) {
-				assignCard(cardsUsed.getString("idontwikkelingskaart"), username);
-				System.out.println(cardsUsed.getString("idontwikkelingskaart"));
+				assignCard(cardsUsed.getString("idontwikkelingskaart"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,16 +70,17 @@ public class DevelopCardController {
 		return list;
 	}
 	
-	private void assignCard(String cardId, String username) { //method to assign devcards to player
+	private void assignCard(String cardId) { //method to assign devcards to player
 		try {
-			ResultSet kaarttypes = DatabaseManager.createStatement().executeQuery("SELECT o.naam, k.type, k.uitleg FROM ontwikkelingskaart o JOIN kaarttype k ON o.naam = k.naam WHERE o.idontwikkelingskaart = '"+ cardId+ "';");
+			ResultSet kaarttypes = DatabaseManager.createStatement().executeQuery("SELECT o.naam, k.type, k.uitleg FROM ontwikkelingskaart o "
+					+ "JOIN kaarttype k ON o.naam = k.naam WHERE o.idontwikkelingskaart = '"+ cardId+ "';");
 				if(kaarttypes.first()) {
 				kaartnaam = kaarttypes.getString(1);
 				kaarttype = kaarttypes.getString(2);
 				uitleg = kaarttypes.getString(3);
 				System.out.println(kaartnaam);
-				System.out.println(kaarttype);
-				System.out.println(uitleg);
+//				System.out.println(kaarttype);
+//				System.out.println(uitleg);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -94,23 +100,23 @@ public class DevelopCardController {
 				
 	}
 	
-	
-	public DevelopCardController getCardControl() throws Exception {
+  
+	public void playCard(int index) {
 		
-		DatabaseManager.connect();
-		
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			DatabaseManager.disconnect();
-			System.out.println("databasemanager shut down");
-		}));
-		
-		PlayerUser player = new PlayerUser("bart", "770");	
-		DevelopCardController control = new DevelopCardController("770");
-		
-		control.refreshDevCards("bart");
-	
-		return control;
-		
+		if(list.get(index) instanceof ProgressCard) {
+			System.out.println("progresscard");
+			((ProgressCard) list.get(index)).playCard();
+		} else if(list.get(index) instanceof KnightCard) {
+			System.out.println("knightcard");
+			((KnightCard) list.get(index)).playCard();
+		} else if(list.get(4) instanceof VictoryPointCard) {
+			System.out.println("VictoryPointCard");
+			((VictoryPointCard) list.get(index)).playCard();
+		}
+		System.out.println("kaart verwijderd");
+		list.remove(index);
+		refreshDevCards();
+
 	}
 
 }

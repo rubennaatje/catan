@@ -7,11 +7,11 @@ import controller.DatabaseManager;
 
 public class DevelopmentCard {
 	
-	private String spelid;
-	private String cardId;
-	private String username;
-	private String kaarttype;
-	private String kaartnaam;
+	protected String spelid;
+	protected String cardId;
+	protected String username;
+	protected String kaarttype;
+	protected String kaartnaam;
 	
 	public DevelopmentCard(String spelid, String cardId, String username, String kaarttype, String kaartnaam) {
 		this.spelid = spelid;
@@ -20,7 +20,8 @@ public class DevelopmentCard {
 		this.kaarttype = kaarttype;
 		this.kaartnaam = kaartnaam;
 		try {
-			DatabaseManager.createStatement().executeUpdate("UPDATE spelerontwikkelingskaart SET username = '" + this.username + "' WHERE idspel = '" + spelid + "'AND idontwikkelingskaart = '" + cardId +"';");
+			DatabaseManager.createStatement().executeUpdate("UPDATE spelerontwikkelingskaart SET username = '" + this.username + 
+					"' WHERE idspel = '" + spelid + "'AND idontwikkelingskaart = '" + cardId +"';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -31,8 +32,22 @@ public class DevelopmentCard {
 		
 	}
 	
+	protected void updateDatabase() {
+		try {
+		DatabaseManager.createStatement().executeUpdate("UPDATE `spelerontwikkelingskaart` SET gespeeld = 1 "
+				+ "WHERE idontwikkelingskaart = '"+this.cardId+"' AND `idspel` ='"+this.spelid+"' AND username = '"+this.username+"';");
+		System.out.println("query");
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	}
+	
 	public String getCardId() {
 		return cardId;
 	}
-
+	
+//	public void playCard()
+//	{
+//		System.out.println("hohhiohoh");
+//	}
 }
