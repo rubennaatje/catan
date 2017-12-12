@@ -8,6 +8,7 @@ import java.util.Random;
 
 import model.DevelopmentCard;
 import model.KnightCard;
+import model.PlayerUser;
 import model.ProgressCard;
 import model.VictoryPointCard;
 
@@ -45,9 +46,6 @@ public class DevelopCardController {
 			assignCard(cardId);
 	}
 	
-//	public void playCard(String cardId) {
-//		
-//	}
 	
 	public void refreshDevCards() { // creates devcards objects for player
 		int listsize = list.size();
@@ -99,6 +97,7 @@ public class DevelopCardController {
 				
 	}
 	
+
 	public void playCard(int index) {
 		
 		if(list.get(index) instanceof ProgressCard) {
@@ -107,13 +106,14 @@ public class DevelopCardController {
 		} else if(list.get(index) instanceof KnightCard) {
 			System.out.println("knightcard");
 			((KnightCard) list.get(index)).playCard();
-		} else if(list.get(4) instanceof VictoryPointCard) {
+		} else if(list.get(index) instanceof VictoryPointCard) {
 			System.out.println("VictoryPointCard");
 			((VictoryPointCard) list.get(index)).playCard();
 		}
 		System.out.println("kaart verwijderd");
 		list.remove(index);
 		refreshDevCards();
+
 	}
 
 }
