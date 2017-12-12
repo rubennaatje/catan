@@ -45,7 +45,7 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon = new DevelopCardController(players[usrPlayer].getSpelId());
+		this.devCon = new DevelopCardController(players[this.usrPlayer].getUsername(), spelId);
 
 		buyEvent = ((e) -> {
 			refresh();
@@ -371,7 +371,7 @@ public class GameController {
 			player.removeResource(TileType.W);
 			player.removeResource(TileType.E);
 			player.removeResource(TileType.G);
-			devCon.givePlayerCard(player.getUsername());
+			devCon.givePlayerCard();
 		}
 	}
 
