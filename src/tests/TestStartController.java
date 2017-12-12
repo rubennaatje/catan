@@ -17,17 +17,13 @@ public class TestStartController extends Application {
 		// TODO Auto-generated method stub
 		
 		DatabaseManager.connect();
-
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			DatabaseManager.disconnect();
-			System.out.println("databasemanager shut down");
-		}));
 		
 		Catan catan = new Catan();
 		//catan.initGame();
 		Catan.setGameId("770");
 		//catan.addResourceCards();
 		launch(args);
+		System.exit(0);
 
 	}
 	

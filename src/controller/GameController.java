@@ -3,6 +3,7 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -37,7 +38,6 @@ public class GameController {
 	private DevelopCardController devCon;
 	private TradeController tradeController;
 	private ChatController chatController;
-
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -79,8 +79,7 @@ public class GameController {
 			buttons.setDisabled();
 			TradeController tradeController = new TradeController(spelId, players, usrPlayer, this);
 		});
-		
-		
+
 		pieceEvent = ((e) -> {
 			piecePlacement(e);
 			refresh();
@@ -149,7 +148,7 @@ public class GameController {
 		}
 		resourceView = new ResourceView();
 		players[this.usrPlayer].addObserver(resourceView);
-		
+
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
 				chat.getView());
@@ -195,7 +194,7 @@ public class GameController {
 			@Override
 			public void run() {
 				await();
-				enableButtons();
+				refreshButtons();
 				int nThrow;
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
@@ -369,16 +368,33 @@ public class GameController {
 			buttons.setDisabled();
 		});
 	}
+	
+	private void refreshButtons() {
+		Platform.runLater(() -> {
+			try {
+				if(players[usrPlayer].getPlayerTurn()) {
+					PlayerUser p = (PlayerUser) players[usrPlayer];
+					HashMap<String, Boolean> buyable = p.getBuyableThings();
+					buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"),true);
+				} else {
+					buttons.setButtons(false, false, false,false);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
 
 	public void checkEnoughForDevCard() {
-		PlayerUser player = (PlayerUser) players[usrPlayer];
-		if (player.hasResource(TileType.W, 1) && player.hasResource(TileType.E, 1)
-				&& player.hasResource(TileType.G, 1)) {
-			player.removeResource(TileType.W);
-			player.removeResource(TileType.E);
-			player.removeResource(TileType.G);
-			devCon.givePlayerCard();
+		try {
+			players[usrPlayer].removeResource(TileType.W, 1);
+			players[usrPlayer].removeResource(TileType.E, 1);
+			players[usrPlayer].removeResource(TileType.G, 1);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		devCon.givePlayerCard();
 	}
 
 	// update ing field
@@ -416,8 +432,9 @@ public class GameController {
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
 			});
-
-			resourceView.update(players[this.usrPlayer], null);
+			players[this.usrPlayer].refresh();
+			refreshButtons();
+			//resourceView.update(players[this.usrPlayer], null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
