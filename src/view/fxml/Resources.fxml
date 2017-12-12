@@ -36,7 +36,7 @@
 					<Image url="@../images/Hooi.png" />
 				</image>
 			</ImageView>
-			<TextField fx:id="hooi" disable="true" opacity="0.99"
+			<TextField fx:id="graan" disable="true" opacity="0.99"
 				prefHeight="11.0" prefWidth="15.0" text="0">
 				<font>
 					<Font size="7.0" />
