@@ -5,11 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
@@ -40,7 +38,6 @@ public class GameController {
 	private DevelopCardController devCon;
 	private TradeController tradeController;
 	private ChatController chatController;
-
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -82,8 +79,7 @@ public class GameController {
 			buttons.setDisabled();
 			TradeController tradeController = new TradeController(spelId, players, usrPlayer, this);
 		});
-		
-		
+
 		pieceEvent = ((e) -> {
 			piecePlacement(e);
 			refresh();
@@ -152,7 +148,7 @@ public class GameController {
 		}
 		resourceView = new ResourceView();
 		players[this.usrPlayer].addObserver(resourceView);
-		
+
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
 				chat.getView());
@@ -391,14 +387,14 @@ public class GameController {
 	}
 
 	public void checkEnoughForDevCard() {
-		PlayerUser player = (PlayerUser) players[usrPlayer];
-		if (player.hasResource(TileType.W, 1) && player.hasResource(TileType.E, 1)
-				&& player.hasResource(TileType.G, 1)) {
-			player.removeResource(TileType.W);
-			player.removeResource(TileType.E);
-			player.removeResource(TileType.G);
-			devCon.givePlayerCard();
+		try {
+			players[usrPlayer].removeResource(TileType.W, 1);
+			players[usrPlayer].removeResource(TileType.E, 1);
+			players[usrPlayer].removeResource(TileType.G, 1);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		devCon.givePlayerCard();
 	}
 
 	// update ing field
@@ -448,5 +444,4 @@ public class GameController {
 		buttons.setEnabled();
 		tradeController = null;
 	}
-
 }

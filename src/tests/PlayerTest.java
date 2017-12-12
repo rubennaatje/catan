@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.PlayerModel;
 import model.PlayerUser;
-import view.ChatView;
 import view.DiceView;
 import view.GameControlerView;
 import view.GameMergeView;
