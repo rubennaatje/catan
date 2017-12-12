@@ -82,22 +82,18 @@ public class CatanController {
 	}
 	
 	public void startGame(String gameid, boolean creation) {
-		Platform.runLater(new Runnable() {
-		    @Override
-		    public void run() {
-				try {
-					catan.initGame(gameid, creation);
-					catan.setPlayer(player);
-			        PlayerModel[] players = catan.getCurrentPlayers();
-			        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() , stage);
-			        
-					new Thread(() -> gameController.start()).start();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    }
-		});
+
+		try {
+			catan.initGame(gameid, creation);
+			catan.setPlayer(player);
+	        PlayerModel[] players = catan.getCurrentPlayers();
+	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() , stage);
+	        
+			new Thread(() -> gameController.start()).start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

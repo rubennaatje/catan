@@ -1,9 +1,11 @@
 package model;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import controller.CatanController;
 import controller.DatabaseManager;
+import javafx.application.Platform;
 
 public class Waiting {
 
@@ -48,25 +50,54 @@ public class Waiting {
 			}
 			
 			if (accepted) {
-				controller.startGame(selected.getGameId(), true); 
+				Platform.runLater(new Runnable() {
+				    @Override
+				    public void run() {
+						if (controller.getPlayer().getUsername().equals(selected.getUitdager())) {
+							controller.startGame(selected.getGameId(), true);
+						}
+						
+						controller.startGame(selected.getGameId(), false);
+				    }
+				});
 			} else {
-				controller.openMenuScreen();
+				Platform.runLater(new Runnable() {
+				    @Override
+				    public void run() {
+						controller.openMenuScreen();
+						try {
+							DatabaseManager.createStatement().executeQuery("UPDATE speler SET speelstatus = 'afgebroken' WHERE idspel = " + selected.getGameId());
+						} catch (SQLException e) {
+							
+						}
+				    }
+				});
 			}
 		}).start();
 	}
 	
 	public int waitForPlayers() {
-	
 		try {
-			  ResultSet haveToAccept = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = " + selected.getGameId() + " and speelstatus = 'uitgedaagde'");
-
-			  while(haveToAccept.next()) {
-				  waitingFor = haveToAccept.getInt(1);
-			  }
-			  
-		} catch (Exception e) {
-			e.printStackTrace(); 
+			ResultSet declined = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = " + selected.getGameId() + " and speelstatus = 'geweigerd'");
+			declined.next();
+			if (declined.getInt(1) <= 0) {
+				try {
+					  ResultSet result = DatabaseManager.createStatement().executeQuery("select count(speelstatus) from speler where idspel = " + selected.getGameId() + " and speelstatus = 'uitgedaagde'");
+		
+					  result.next();
+					  waitingFor = result.getInt(1);
+					  result.close();
+					  
+				} catch (Exception e) {
+					e.printStackTrace(); 
+				}
+				
+				return waitingFor; 
+			}
+		} catch (SQLException e1) {
+			
 		}
-		return waitingFor; 
+		
+		return -1;
 	}
 }
