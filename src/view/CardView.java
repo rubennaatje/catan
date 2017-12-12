@@ -48,24 +48,11 @@ public class CardView extends PaneTemplate
 	
 
 	
-	public CardView(Stage primaryStage) throws Exception
+	public CardView(Stage primaryStage, DevelopCardController control) throws Exception
 	{
 		super(CardView.class.getResource("fxml/CardView.fxml"), primaryStage);
-		
-		DatabaseManager.connect();
-		
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			DatabaseManager.disconnect();
-			System.out.println("databasemanager shut down");
-		}));
-		
-		PlayerUser player = new PlayerUser("bart", "770");
-		control = new DevelopCardController("770");
-		
-		control.refreshDevCards("bart");
-	
-		
-		
+
+		this.control = control;
 		loadWindow();
 	}
 

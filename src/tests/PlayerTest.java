@@ -44,7 +44,7 @@ public class PlayerTest extends Application{
 		}
 		ResourceView resourceView = new ResourceView();
 		playerModels[0].addObserver(resourceView);
-		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews, resourceView);
+		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews, resourceView, null);
 		
 		view.show();
 	}

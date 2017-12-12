@@ -8,6 +8,7 @@ import java.util.Random;
 
 import model.DevelopmentCard;
 import model.KnightCard;
+import model.PlayerUser;
 import model.ProgressCard;
 import model.VictoryPointCard;
 
@@ -99,6 +100,7 @@ public class DevelopCardController {
 				
 	}
 	
+  
 	public void playCard(int index) {
 		
 		if(list.get(index) instanceof ProgressCard) {
@@ -114,6 +116,7 @@ public class DevelopCardController {
 		System.out.println("kaart verwijderd");
 		list.remove(index);
 		refreshDevCards();
+
 	}
 
 }

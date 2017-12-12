@@ -1,5 +1,6 @@
 package tests;
 
+import controller.DevelopCardController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.CardView;
@@ -14,8 +15,11 @@ public class TestCard extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
+		DevelopCardController controller = new DevelopCardController("1");  //example spelid
+		DevelopCardController control = controller.getCardControl(); //run method which get a card controller within the developcardcontroller.
+		
 		// Load Cardview
-		CardView cv = new CardView(primaryStage);
+		CardView cv = new CardView(primaryStage, control);
 		cv.show();
 	}
 }

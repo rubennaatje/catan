@@ -5,26 +5,25 @@ import java.sql.SQLException;
 import controller.DatabaseManager;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Challenges {
+public class Challenge {
 	 
-	private final SimpleStringProperty playerName;
+	private final SimpleStringProperty uitdager;
     private final SimpleStringProperty gameId;
     private final PlayerUser user;
     
-    
-    public Challenges(String name, String id, PlayerUser user) {
-    	this.playerName = new SimpleStringProperty(name);
+    public Challenge(String name, String id, PlayerUser user) {
+    	this.uitdager = new SimpleStringProperty(name);
     	this.gameId = new SimpleStringProperty(id);
     	this.user = user;
     }
     
-    public void setName(String name)
+    public void setUitdager(String name)
 	{
-		this.playerName.set(name);
+		this.uitdager.set(name);
 	}
 
-    public String getPlayerName() {
-		return playerName.get();
+    public String getUitdager() {
+		return uitdager.get();
 	}
     
     public void setGameID(String id)
@@ -39,7 +38,7 @@ public class Challenges {
     
     public void accept() {
     	try {
-    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "' ;");
+    		DatabaseManager.createStatement().executeUpdate("Update speler SET speelstatus='geaccepteerd' where idspel = " + gameId.get() + " and username = '" + user.getUsername() + "';");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

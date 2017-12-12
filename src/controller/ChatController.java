@@ -14,12 +14,17 @@ public class ChatController implements Runnable {
 	private PlayerModel player;
 	private String spelID;
 
-	public ChatController(PlayerModel player, Stage primaryStage, String spelID) throws SQLException {
+	public ChatController(PlayerModel player, Stage primaryStage, String spelID) {
 		model = new ChatModel();
-		view = new ChatView(model.getChatLines(), this);
+		try {
+			view = new ChatView(model.getChatLines(), this);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.player = player;
 		this.spelID = spelID;
-		
+
 		model.registerWordWrap(view.getListWidth());
 		// for testing purpouses only
 		Scene scene = new Scene(view);
@@ -41,7 +46,7 @@ public class ChatController implements Runnable {
 		while (true) {
 			try {
 				model.updateChatbox(spelID);
-				//updates chatbox every second
+				// updates chatbox every second
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -50,4 +55,7 @@ public class ChatController implements Runnable {
 		}
 	}
 
+	public ChatView getView() {
+		return view;
+	}
 }

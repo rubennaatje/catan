@@ -27,7 +27,7 @@ public class GameController {
 	GameControlerView buttons;
 	DiceView dice;
 	Dice diceO;
-	ResourceView resourceView; 
+	ResourceView resourceView;
 	private EventHandler<MouseEvent> pieceEvent;
 	private EventHandler<MouseEvent> firstRndStreet;
 	private EventHandler<MouseEvent> buyEvent;
@@ -37,14 +37,16 @@ public class GameController {
 	private DevelopCardController devCon;
 	private EventHandler<MouseEvent> robber;
 
-	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) throws Exception {
+	private ChatController chatController;
+
+	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer - 1;
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon  = new DevelopCardController(players[usrPlayer].getSpelId());
-		
+		this.devCon = new DevelopCardController(players[usrPlayer].getSpelId());
+
 		buyEvent = ((e) -> {
 			refresh();
 			Node caller = (Node) e.getSource();
@@ -77,17 +79,13 @@ public class GameController {
 			refresh();
 		});
 
-		
-		
-
 		doubleStreetEvent = ((e) -> {
 			piecePlacement(e);
 			refresh();
 			showStreetPlacable();
 		});
-		
-		
-		robber = ((e) -> {	
+
+		robber = ((e) -> {
 			robberPlacement(e);
 			refresh();
 		});
@@ -127,23 +125,31 @@ public class GameController {
 		buttons = new GameControlerView(buyEvent, endTurn);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
-		PlayerView [] playerViews = new PlayerView[4];
-		
-		for (int i = 0; i < players.length; i++)
-		{
+
+		PlayerView[] playerViews = new PlayerView[4];
+
+		for (int i = 0; i < players.length; i++) {
 			playerViews[i] = new PlayerView();
 			players[i].addObserver(playerViews[i]);
 			players[i].refresh();
 		}
+
+	
 		
+		try {
+			dice.showDice(diceO.getDBThrow());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		resourceView = new ResourceView();
 		players[this.usrPlayer].addObserver(resourceView);
+		ChatController chat = new ChatController(players[this.usrPlayer], stage, spelId);
 		
-		resourceView.update(players[this.usrPlayer], null);
-		
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage,playerViews, resourceView );
+		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice, chat.getView());
+
 		refresh();
-		
+		new Thread(chat).start();
 		mergeView.show();
 	}
 
@@ -151,9 +157,7 @@ public class GameController {
 	 * Starts the gamecontroller
 	 * 
 	 */
-	
-	
-	
+
 	public void start() {
 		refresh();
 		try {
@@ -191,12 +195,14 @@ public class GameController {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
 					nThrow = diceO.getTotalthrow();
 					System.out.println("dice: " + nThrow + " " + newThrow);
-					if(newThrow)
+					if (newThrow)
 						BoardHelper.giveResources(Catan.getGameId(), nThrow);
+					dice.showDice(diceO.getTotalthrow());
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		}.start();
 	}
@@ -240,7 +246,7 @@ public class GameController {
 
 	public void robberPlacement(MouseEvent event) {
 		try {
-			RobberView view = (RobberView)event.getSource();
+			RobberView view = (RobberView) event.getSource();
 			BoardHelper.placeRobber(spelId, view.getLoc());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -271,9 +277,7 @@ public class GameController {
 			}
 		});
 	}
-	
 
-	
 	public void showTownPlacable() {
 		try {
 			ArrayList<Piece> listOfPiece = BoardHelper.getPlacebleTownPos(players[usrPlayer], spelId);
@@ -359,11 +363,11 @@ public class GameController {
 			buttons.setDisabled();
 		});
 	}
-	public void checkEnoughForDevCard()
-	{
-		PlayerUser player = (PlayerUser)players[usrPlayer];
-		if(player.hasResource(TileType.W, 1) && player.hasResource(TileType.E, 1) && player.hasResource(TileType.G, 1))
-		{
+
+	public void checkEnoughForDevCard() {
+		PlayerUser player = (PlayerUser) players[usrPlayer];
+		if (player.hasResource(TileType.W, 1) && player.hasResource(TileType.E, 1)
+				&& player.hasResource(TileType.G, 1)) {
 			player.removeResource(TileType.W);
 			player.removeResource(TileType.E);
 			player.removeResource(TileType.G);
@@ -404,8 +408,9 @@ public class GameController {
 				}
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
+				dice.showDice(diceO.getTotalthrow());
 			});
-			
+
 			resourceView.update(players[this.usrPlayer], null);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
