@@ -103,8 +103,8 @@ public class PlayerModel extends Observable {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
 					+ "' WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
-					+ "(SELECT idgrondstofsoort FROM catan.spelergrondstofkaart natural join grondstofkaart where username = " + username + " and idgrondstofsoort = '"
-					+ t.toString() + "' and idspel = " + spelId + " order by idgrondstofsoort asc limit 1)';");
+					+ "(SELECT idgrondstofsoort FROM spelergrondstofkaart natural join grondstofkaart where username = " + username + " and idgrondstofsoort = '"
+					+ t.toString() + "' and idspel = " + spelId + " order by idgrondstofsoort asc limit 1);");
 			if(rowsEffected == 0) {
 				throw new SQLException("No resource to remove");
 			}
@@ -135,8 +135,8 @@ public class PlayerModel extends Observable {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected =DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
 					+ "' WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
-					+ "(SELECT idgrondstofsoort FROM catan.spelergrondstofkaart natural join grondstofkaart where username is null and idgrondstofsoort = '"
-					+ t.toString() + "' and idspel = " + spelId + " order by idgrondstofsoort asc limit 1)';");
+					+ "(SELECT idgrondstofsoort FROM spelergrondstofkaart natural join grondstofkaart where username is null and idgrondstofsoort = '"
+					+ t.toString() + "' and idspel = " + spelId + " order by idgrondstofsoort asc limit 1);");
 			if(rowsEffected == 0) {
 				throw new SQLException("No resourceCard to add");
 			}

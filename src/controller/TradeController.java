@@ -49,24 +49,6 @@ public class TradeController {
 		popUp.show();
 	}
 	
-	/** Shows the counter offer screen 
-	 * @param player
-	 * @param spelID
-	 * @param tradeRequester
-	 */
-	@SuppressWarnings("unchecked")
-	public TradeController(PlayerUser player, String spelID, String tradeRequester) {
-		view = new TradeView(this);
-		this.spelId = spelID;
-		this.player = player;
-		this.tradeRequester = tradeRequester;
-		allOffers = new HashMap[2][3];
-		popUp = new Stage();
-		popUp.setScene(new Scene(view));
-		popUp.show();
-	}
-	
-
 	@SuppressWarnings("unchecked")
 	public void submitTradeRequest(HashMap<TileType, Integer>[] tradeSuggestion) {
 		try {

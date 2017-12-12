@@ -2,8 +2,6 @@ package controller;
 
 import java.sql.SQLException;
 
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import model.ChatModel;
 import model.PlayerModel;
 import view.ChatView;
