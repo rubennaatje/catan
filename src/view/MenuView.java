@@ -28,11 +28,21 @@ public class MenuView extends PaneTemplate {
 		txtUsername.setText(controller.getPlayer().getUsername());
 		txtUsername.setTextAlignment(TextAlignment.CENTER);
 		
+		String gameid = controller.isInGame();
+		
+		if (gameid != null) {
+			btnCreate.setText("Hervat " + gameid);
+		} 
+		
 		btnCreate.setOnAction(new EventHandler<ActionEvent>() {
 				
 			@Override
 			public void handle(ActionEvent event) {
-				controller.openChallengeScreen();
+				if (gameid != null) {
+					controller.startGame(gameid, false);
+				} else {
+					controller.openChallengeScreen();
+				}
 			}
 		});
 

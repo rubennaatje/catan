@@ -65,11 +65,6 @@ public class Waiting {
 				    @Override
 				    public void run() {
 						controller.openMenuScreen();
-						try {
-							DatabaseManager.createStatement().executeQuery("UPDATE speler SET speelstatus = 'afgebroken' WHERE idspel = " + selected.getGameId());
-						} catch (SQLException e) {
-							
-						}
 				    }
 				});
 			}
@@ -99,5 +94,9 @@ public class Waiting {
 		}
 		
 		return -1;
+	}
+	
+	public Challenge getChallenge() {
+		return selected;
 	}
 }
