@@ -12,7 +12,7 @@ public class PlayerUser extends PlayerModel {
 
 	HashMap<TileType, Integer> resources;
 
-	public PlayerUser(String username, String idspel) throws Exception {
+	public PlayerUser(String username, String idspel){
 		super(username, idspel);
 
 	}
@@ -23,6 +23,7 @@ public class PlayerUser extends PlayerModel {
 	@Override
 	public void refresh() {
 		resources = new HashMap<>();
+		super.refresh();
 		try {
 			ResultSet resourcesVal = DatabaseManager.createStatement().executeQuery("SELECT"
 					+ " SUM(if(idgrondstofsoort = \"H\", 1, 0)) as H,"
@@ -41,37 +42,15 @@ public class PlayerUser extends PlayerModel {
 				resources.put(TileType.B, resourcesVal.getInt(4));
 				resources.put(TileType.E, resourcesVal.getInt(5));
 
+				setChanged();
+				notifyObservers();
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		super.refresh();
 	}
-	public HashMap<String, Boolean> getBuyableThings() throws Exception{
-		
-		
-		HashMap<String, Boolean> res = new HashMap<String, Boolean>();
-		res.put("street", false);
-		res.put("city", false);
-		res.put("town", false);
 
-		if(hasResource(TileType.B,1) && hasResource(TileType.H,1)) {
-			res.put("street", true);
-		}
-		
-		if(hasResource(TileType.B,1)&& hasResource(TileType.H,1) && hasResource(TileType.G,1) && hasResource(TileType.W,1)) {
-			res.put("town", true);
-		}
-		
-		if(hasResource(TileType.G,2) && hasResource(TileType.E,3)) {
-			res.put("city", true);
-		}
-		
-		return res;
-	}
-	
 	/**Returns True if 
 	 * 
 	 * @param t
