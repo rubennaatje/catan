@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -168,16 +169,14 @@ public class CatanController {
 					"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
 							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
 			
-			ArrayList<String> kleuren = (ArrayList<String>) Arrays.asList("wit", "rood", "blauw", "oranje");
+			List<String> kleuren = Arrays.asList("wit", "rood", "blauw", "oranje");
 			
 			int count = 1;
-			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleuren.get(0) + "', 'uitdager', 0, " + count + ", 0)");
-			kleuren.remove(0);
+			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitdager', 0, " + count + ", 0)");
 			
 			for (PlayerUser player : items) {
 				count++;
-				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(0) + "', 'uitgedaagde', 0, " + count + ", 0)");
-				kleuren.remove(0);
+				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
 			}
 			 
 			openWaitingScreen(new Challenge(getPlayer().getUsername(), gameId, getPlayer()));
