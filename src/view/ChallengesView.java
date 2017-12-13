@@ -57,6 +57,8 @@ public class ChallengesView extends PaneTemplate {
 					if(uitdager.getSelectionModel().getSelectedItem() != null) {
 						Challenge challenge = uitdager.getSelectionModel().getSelectedItem();
 						challenge.decline();
+						addBoard(controller.getChallenges());
+						
 					} else {
 						new AlertManager(AlertType.ERROR, "Challenge error!", "selecteer een challenge om hem te weigeren");
 					}
@@ -76,6 +78,7 @@ public class ChallengesView extends PaneTemplate {
 	}
 	
 	public void addBoard(ObservableList<Challenge> data) {
+		uitdager.getItems().clear();
 		playerName.setCellValueFactory(new PropertyValueFactory<Challenge, String>("uitdager"));
 		gameId.setCellValueFactory(new PropertyValueFactory<Challenge, String>("gameId")); 
 		uitdager.setItems(data);
