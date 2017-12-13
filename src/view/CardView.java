@@ -117,7 +117,7 @@ public class CardView extends PaneTemplate
 	public void selectCard()
 	{
 
-		System.out.println("index of card is: " + selectedCard);
+		System.out.println("Geselecteerde kaart is " + cards.get(selectedCard));
 
 	}
 
