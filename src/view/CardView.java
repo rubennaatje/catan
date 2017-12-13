@@ -23,7 +23,7 @@ public class CardView extends PaneTemplate
 	public ImageView imageview;
 
 	@FXML
-	public JFXButton nextbutton, previousbutton;
+	public JFXButton nextbutton, previousbutton, selectbutton;
 	
 	@FXML
 	public Label amount, selected;
@@ -48,11 +48,11 @@ public class CardView extends PaneTemplate
 	
 
 	
-	public CardView(Stage primaryStage, DevelopCardController control) throws Exception
+	public CardView(Stage primaryStage) throws Exception
 	{
 		super(CardView.class.getResource("fxml/CardView.fxml"), primaryStage);
 
-		this.control = control;
+		//this.control = control;
 		loadWindow();
 	}
 
@@ -85,10 +85,14 @@ public class CardView extends PaneTemplate
 	public void addCards()
 	{
 		cards.add(""); //kaart nummer 0
+		cards.add("ridder"); //kaart nummer 0
+		cards.add("markt"); //kaart nummer 0
+		cards.add("bibliotheek"); //kaart nummer 0
 		
-		for(int x = 0; x < control.getPlayerCards().size(); x++) {
+		
+/*		for(int x = 0; x < control.getPlayerCards().size(); x++) {
 			cards.add(control.getPlayerCards().get(x).getCardname());
-		}
+		}*/
 	}
 
 	public void nextCard()
@@ -107,6 +111,13 @@ public class CardView extends PaneTemplate
 		}
 
 		showCard();
+
+	}
+	
+	public void selectCard()
+	{
+
+		System.out.println("index of card is: " + selectedCard);
 
 	}
 

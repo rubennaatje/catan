@@ -15,11 +15,11 @@ public class TestCard extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		DevelopCardController controller = new DevelopCardController("1");  //example spelid
+		/*DevelopCardController controller = new DevelopCardController("1");  //example spelid
 		DevelopCardController control = controller.getCardControl(); //run method which get a card controller within the developcardcontroller.
-		
+*/		
 		// Load Cardview
-		CardView cv = new CardView(primaryStage, control);
+		CardView cv = new CardView(primaryStage);
 		cv.show();
 	}
 }
