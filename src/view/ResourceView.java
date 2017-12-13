@@ -13,7 +13,7 @@ import view.javaFXTemplates.PaneTemplate;
 public class ResourceView extends PaneTemplate implements Observer
 {
 	@FXML private TextField erts;
-	@FXML private TextField hooi;
+	@FXML private TextField graan;
 	@FXML private TextField schaap;
 	@FXML private TextField hout;
 	@FXML private TextField steen;
@@ -29,7 +29,7 @@ public class ResourceView extends PaneTemplate implements Observer
 		PlayerUser playerData = (PlayerUser)arg0;
 		HashMap<TileType, Integer> data = playerData.getResources();
 		erts.setText(data.get(TileType.E).toString());
-		hooi.setText(data.get(TileType.G).toString());
+		graan.setText(data.get(TileType.G).toString());
 		schaap.setText(data.get(TileType.W).toString());
 		hout.setText(data.get(TileType.H).toString());
 		steen.setText(data.get(TileType.B).toString());

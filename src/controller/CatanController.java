@@ -3,9 +3,9 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Arrays;
+import java.util.List;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
@@ -70,7 +70,7 @@ public class CatanController {
 	public void openWaitingScreen(Challenge selected) {
 		Waiting waitModel = new Waiting(this, selected);
 		setWaitingOn(waitModel.waitForPlayers());
-		new WaitingView(stage, this).show(); 
+		new WaitingView(stage, this, waitModel).show(); 
 	}
 
 	public int getWaitingOn() {
@@ -82,22 +82,18 @@ public class CatanController {
 	}
 	
 	public void startGame(String gameid, boolean creation) {
-		Platform.runLater(new Runnable() {
-		    @Override
-		    public void run() {
-				try {
-					catan.initGame(gameid, creation);
-					catan.setPlayer(player);
-			        PlayerModel[] players = catan.getCurrentPlayers();
-			        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() , stage);
-			        
-					new Thread(() -> gameController.start()).start();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    }
-		});
+
+		try {
+			catan.initGame(gameid, creation);
+			catan.setPlayer(player);
+	        PlayerModel[] players = catan.getCurrentPlayers();
+	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
+	        
+			new Thread(() -> gameController.start()).start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -173,33 +169,20 @@ public class CatanController {
 					"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
 							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
 			
-			ArrayList<String> kleuren = new ArrayList<>();
-			ResultSet kleurenResult = DatabaseManager.createStatement().executeQuery("SELECT kleur FROM speelkleur");
-			
-			while (kleurenResult.next()) {
-				kleuren.add(kleurenResult.getString(1));
-			}
-			
-			kleurenResult.close();
+			List<String> kleuren = Arrays.asList("wit", "rood", "blauw", "oranje");
 			
 			int count = 1;
-			String kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
-			kleuren.remove(kleur);
-			
-			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleur + "', 'uitdager', 0, " + count + ", 0)");
+			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitdager', 0, " + count + ", 0)");
 			
 			for (PlayerUser player : items) {
 				count++;
-				kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
-				kleuren.remove(kleur);
-				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleur + "', 'uitgedaagde', 0, " + count + ", 0)");
+				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
 			}
 			 
 			openWaitingScreen(new Challenge(getPlayer().getUsername(), gameId, getPlayer()));
 		}
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 	}
 	

@@ -9,20 +9,20 @@ import view.javaFXTemplates.PaneTemplate;
 
 public class GameControlerView extends PaneTemplate {
 
-	@FXML Button townBtn; 
-	@FXML Button streetBtn; 
-	@FXML Button cityBtn; 
-	@FXML Button endTurnBtn; 
-	@FXML Label road; 
+	private @FXML Button townBtn; 
+	private @FXML Button streetBtn; 
+	private @FXML Button cityBtn; 
+	private @FXML Button endTurnBtn; 
+	private @FXML Button tradeButton;
+	private @FXML Label road; 
 	
-	
-	
-	public GameControlerView(EventHandler<? super MouseEvent> clickHandler, EventHandler<MouseEvent> endTurnEvent) {
+	public GameControlerView(EventHandler<? super MouseEvent> clickHandler, EventHandler<MouseEvent> endTurnEvent, EventHandler<MouseEvent> tradeEvent) {
 		super(GameControlerView.class.getResource("fxml/PlayboardButtons.fxml"));
 		townBtn.setOnMouseClicked(clickHandler);
 		streetBtn.setOnMouseClicked(clickHandler);
 		cityBtn.setOnMouseClicked(clickHandler);
 		endTurnBtn.setOnMouseClicked(endTurnEvent);
+		tradeButton.setOnMouseClicked(tradeEvent);
 		setDisabled();
 	}
 	
@@ -31,6 +31,7 @@ public class GameControlerView extends PaneTemplate {
 		streetBtn.setDisable(true);
 		cityBtn.setDisable(true);
 		endTurnBtn.setDisable(true);
+		tradeButton.setDisable(true);
 	}
 	
 	public void setEnabled() {
@@ -42,6 +43,13 @@ public class GameControlerView extends PaneTemplate {
 	
 	public void setLongestRoad(Integer i) {
 		road.setText(i.toString());
+	}
+	public void setButtons(boolean town,boolean city, boolean street, boolean endTurn, boolean trade) {
+		townBtn.setDisable(!town);
+		cityBtn.setDisable(!city);
+		streetBtn.setDisable(!street);
+		endTurnBtn.setDisable(!endTurn);
+		tradeButton.setDisable(!trade);
 	}
 
 }

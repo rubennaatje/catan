@@ -56,7 +56,7 @@ public class PlayerModel extends Observable {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
 		this.hasTurn = hasTurn();
-		if(Integer.parseInt(this.score) >= 10)
+		if(this.score != null && Integer.parseInt(this.score) >= 10)
 		{
 			hasWon = true;
 		}
@@ -80,20 +80,16 @@ public class PlayerModel extends Observable {
 		results.close();
 	}
 
-	public void removeResource(TileType t) {
-		try {
-			ResultSet results = DatabaseManager.createStatement().executeQuery(
-					"SELECT g.idgrondstofkaart FROM grondstofkaart AS g INNER JOIN spelergrondstofkaart AS s ON s.idgrondstofkaart = g.idgrondstofkaart WHERE idspel = '"
-							+ getSpelId() + "' AND username = '" + getUsername() + "' AND g.idgrondstofsoort = '"
-							+ t.toString() + "' ORDER BY s.idgrondstofkaart LIMIT 1;");
-			while (results.next()) {
-				DatabaseManager.createStatement()
-						.executeUpdate("UPDATE spelergrondstofkaart SET username = NULL WHERE idspel='" + getSpelId()
-								+ "' AND idgrondstofkaart = '" + results.getString(1) + "';");
+	public void removeResources(TileType t, Integer amount) throws SQLException {
+		for (int i = 0; i < amount; i++) {
+			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
+					+ " WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
+					+ " (SELECT bloo from (SELECT idgrondstofkaart bloo FROM spelergrondstofkaart a natural join grondstofkaart where a.username = '" + username + "' and idgrondstofsoort = '"
+					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofsoort asc limit 1) as da);");
+			
+			if(rowsEffected == 0) {
+				throw new SQLException("No resource to remove");
 			}
-			results.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -118,10 +114,14 @@ public class PlayerModel extends Observable {
 
 	public void addResource(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
-			DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
-					+ "' WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
-					+ "(SELECT idgrondstofsoort FROM catan.spelergrondstofkaart natural join grondstofkaart where username is null and idgrondstofsoort = '"
-					+ t.toString() + "' and idspel = " + spelId + " order by idgrondstofsoort asc limit 1)';");
+			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
+					+ "' WHERE idspel=" + getSpelId() + " AND idgrondstofkaart = "
+					+ " (SELECT idgrondstofkaart from (SELECT idgrondstofkaart FROM spelergrondstofkaart a natural join grondstofkaart where a.username IS NULL and idgrondstofsoort = '"
+					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofkaart asc limit 1) as da);");
+
+			if(rowsEffected == 0) {
+				throw new SQLException("No resourceCard to add");
+			}
 		}
 	}
 

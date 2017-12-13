@@ -17,11 +17,6 @@ public class TestStartController extends Application {
 		// TODO Auto-generated method stub
 		
 		DatabaseManager.connect();
-
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			DatabaseManager.disconnect();
-			System.out.println("databasemanager shut down");
-		}));
 		
 		Catan catan = new Catan();
 		//catan.initGame();
@@ -29,6 +24,7 @@ public class TestStartController extends Application {
 		//catan.addResourceCards();
 		launch(args);
 		System.exit(0);
+
 	}
 	
 	@Override
@@ -42,8 +38,8 @@ public class TestStartController extends Application {
         PlayerUser player = new PlayerUser("rik", Catan.getGameId());
         catan.setPlayer(player);
         PlayerModel[] players = catan.getCurrentPlayers();
-        gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
-        
+        gameController = new GameController(spelId, players, player.getPlayerNumber() -1 ,primaryStage);
+        primaryStage.setTitle(player.getUsername());
 		new Thread(() -> gameController.start()).start();
 	}
 
