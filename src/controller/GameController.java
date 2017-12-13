@@ -44,7 +44,7 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId);
+		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId, this);
 
 		buyEvent = ((e) -> {
 			refresh();
@@ -87,6 +87,7 @@ public class GameController {
 		doubleStreetEvent = ((e) -> {
 			piecePlacement(e);
 			refresh();
+			disableButtons();
 			showStreetPlacable();
 		});
 
@@ -246,6 +247,20 @@ public class GameController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void showDoubleStreetPlacable() {
+		ArrayList<Street> listOfStreet;
+		try {
+			listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
+				for (Street piece : listOfStreet) {
+					playboardview.addStreet(piece, doubleStreetEvent);
+				}
+			});
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void robberPlacement(MouseEvent event) {
 		try {
@@ -361,7 +376,7 @@ public class GameController {
 		});
 	}
 
-	private void disableButtons() {
+	public void disableButtons() {
 		Platform.runLater(() -> {
 			buttons.setDisabled();
 		});

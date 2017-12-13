@@ -101,10 +101,11 @@ public class PlayerModel extends Observable {
 	
 	public void removeResource(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
-			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
-					+ "' WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
-					+ " (SELECT bloo from (SELECT idgrondstofsoort bloo FROM spelergrondstofkaart a natural join grondstofkaart where a.username = '" + username + "' and idgrondstofsoort = '"
+			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
+					+ " WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
+					+ " (SELECT bloo from (SELECT idgrondstofkaart bloo FROM spelergrondstofkaart a natural join grondstofkaart where a.username = '" + username + "' and idgrondstofsoort = '"
 					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofsoort asc limit 1) as da);");
+			
 			if(rowsEffected == 0) {
 				throw new SQLException("No resource to remove");
 			}
@@ -134,9 +135,10 @@ public class PlayerModel extends Observable {
 	public void addResource(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
-					+ "' WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
-					+ " (SELECT bloo from (SELECT idgrondstofsoort bloo FROM spelergrondstofkaart a natural join grondstofkaart where a.username IS NULL and idgrondstofsoort = '"
-					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofsoort asc limit 1) as da);");
+					+ "' WHERE idspel=" + getSpelId() + " AND idgrondstofkaart = "
+					+ " (SELECT idgrondstofkaart from (SELECT idgrondstofkaart FROM spelergrondstofkaart a natural join grondstofkaart where a.username IS NULL and idgrondstofsoort = '"
+					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofkaart asc limit 1) as da);");
+
 			if(rowsEffected == 0) {
 				throw new SQLException("No resourceCard to add");
 			}
