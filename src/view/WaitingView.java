@@ -11,6 +11,7 @@ import view.javaFXTemplates.PaneTemplate;
 
 import java.sql.SQLException;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import controller.CatanController;
@@ -22,13 +23,19 @@ public class WaitingView extends PaneTemplate{
 	private CatanController controller;
 	
 	@FXML private JFXTextField notAccepted;
-	@FXML private JFXTextField btnDecline;
+	@FXML private JFXButton btnDecline;
 	
 	public WaitingView(Stage stage, CatanController controller, Waiting waiting) {
 		super(WaitingView.class.getResource("fxml/WaitingView.fxml"), stage);
 		this.controller = controller;
 	
 		notAccepted.setEditable(false);
+		
+		if (waiting.getChallenge().getUitdager().equals(controller.getPlayer().getUsername())) {
+			btnDecline.setVisible(true);
+		} else {
+			btnDecline.setVisible(false);
+		}
 		
 		btnDecline.setOnAction(new EventHandler<ActionEvent>() {
 			
