@@ -12,7 +12,7 @@ public class PlayerUser extends PlayerModel {
 
 	HashMap<TileType, Integer> resources;
 
-	public PlayerUser(String username, String idspel) throws Exception {
+	public PlayerUser(String username, String idspel){
 		super(username, idspel);
 
 	}
