@@ -1,5 +1,6 @@
 package view;
 
+import controller.AlertManager;
 import controller.CatanController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Challenge;
@@ -33,22 +35,33 @@ public class ChallengesView extends PaneTemplate {
 		
 		btnAccept.setOnAction((ActionEvent e) -> {
 
-			if(uitdager.getSelectionModel().getSelectedItem() != null) {
-				Challenge challenge = uitdager.getSelectionModel().getSelectedItem();
-
-				controller.openWaitingScreen(uitdager.getSelectionModel().getSelectedItem());
-				challenge.accept();		
-			
-			} 
+			if (controller.isInGame() == null) {
+				if(uitdager.getSelectionModel().getSelectedItem() != null ) {
+					Challenge challenge = uitdager.getSelectionModel().getSelectedItem();
+	
+					controller.openWaitingScreen(uitdager.getSelectionModel().getSelectedItem());
+					challenge.accept();		
+				} else {
+					new AlertManager(AlertType.ERROR, "Challenge error!", "selecteer een challenge om hem te accepteren");
+				}
+			} else {
+				new AlertManager(AlertType.ERROR, "Challenge error!", "je zit al in een game");
+			}
 		});
 		
 		btnDecline.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				if(uitdager.getSelectionModel().getSelectedItem() != null) {
-				Challenge challenge = uitdager.getSelectionModel().getSelectedItem();
-				challenge.decline();
+				if (controller.isInGame() == null) {
+					if(uitdager.getSelectionModel().getSelectedItem() != null) {
+						Challenge challenge = uitdager.getSelectionModel().getSelectedItem();
+						challenge.decline();
+					} else {
+						new AlertManager(AlertType.ERROR, "Challenge error!", "selecteer een challenge om hem te weigeren");
+					}
+				} else {
+					new AlertManager(AlertType.ERROR, "Challenge error!", "je zit al in een game");
 				}
 			}
 		});

@@ -1,15 +1,11 @@
 package view;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import controller.AlertManager;
 import controller.CatanController;
-import controller.DatabaseManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,14 +32,7 @@ public class LoginView extends PaneTemplate {
 			public void handle(ActionEvent event) {
 				if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
 					controller.setPlayer(txtUsername.getText());
-					
-					String gameid = controller.isInGame();
-					
-					if (gameid != null) {
-						controller.startGame(gameid, false);
-					} else {
 					controller.openMenuScreen();
-					}
 				} else {
 					new AlertManager(AlertType.ERROR, "Login error!", "username and/or password are incorrect");
 					txtPassword.setText("");
