@@ -21,8 +21,9 @@ public class TradeOfferComponentView extends TradeViewTemplate {
 		super(TradeOfferComponentView.class.getResource("fxml/TradeOfferComponentView.fxml"), controller);
 		this.controller = controller;
 		this.offerPlayer = playerName;
-		
+		offerer.setText(playerName);
 		fillLabels(offerData);
+		offerer.setLayoutX(getPrefWidth()/2);
 	}
 
 	public void acceptOffer(MouseEvent e) {

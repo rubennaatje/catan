@@ -27,7 +27,7 @@ public class Dice {
 		}
 	}
 	
-    public boolean throwDiceIfNotThrown() throws Exception {
+    public boolean throwDiceIfNotThrown() throws SQLException {
         ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT gedobbeld, laatste_worp FROM spel WHERE idspel = '" + Catan.getGameId() + "';");
         
         r.next();
@@ -39,6 +39,13 @@ public class Dice {
             this.totalThrow = r.getInt(2);
             return false;
         }
+    }
+    
+    public int getDBThrow() throws SQLException  {
+    	ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT  laatste_worp FROM spel WHERE idspel = '" + Catan.getGameId() + "';");
+    	r.next();
+    	this.totalThrow = r.getInt(1);
+    	return r.getInt(1);
     }
 	
 	public int[] getThrows() {

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 
-=======
-
->>>>>>> 6121dda09112b9f75045c17d50a316839b4767bc
 package tests;
 
 import controller.CatanController;
@@ -22,9 +18,6 @@ public class TestMainLogin extends Application {
 		controller.openLoginScreen();
 	}
 
-<<<<<<< HEAD
+
 }
 
-=======
-}
->>>>>>> 6121dda09112b9f75045c17d50a316839b4767bc

@@ -6,7 +6,7 @@
 
 <fx:root type="javafx.scene.layout.Pane" prefHeight="263.0" prefWidth="277.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="playerName" alignment="CENTER" layoutX="79.0" layoutY="14.0" text="SpelerPlaceHolder" textAlignment="CENTER" />
+      <Label fx:id="offerer" alignment="CENTER" layoutX="79.0" layoutY="14.0" text="SpelerPlaceHolder" textAlignment="CENTER" />
       <Label layoutX="23.0" layoutY="62.0" text="Hout" />
       <Label layoutX="230.0" layoutY="62.0" text="Erts" />
       <Label layoutX="166.0" layoutY="62.0" text="Baksteen" />

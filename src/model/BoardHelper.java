@@ -512,26 +512,30 @@ public class BoardHelper {
 	}
 
 	public static void giveResources(String spelId, int nThrow) throws Exception {
-		HashMap<String, ArrayList<Piece>> resourceKindPieces = new HashMap<String, ArrayList<Piece>>();
+		HashMap<TileType, ArrayList<Piece>> resourceKindPieces = new HashMap<>();
 
 		for (TileType type : TileType.values()) {
-			resourceKindPieces.put(type.toString(), new ArrayList<Piece>());
+			resourceKindPieces.put(type, new ArrayList<Piece>());
 		}
 
 		for (Tile t : getAllHexes(spelId)) {
 			if (t.getValue() == nThrow) {
-				resourceKindPieces.get(t.getTileType().toString())
+				resourceKindPieces.get(t.getTileType())
 						.addAll(getSurroundingPieces(spelId, t.getLocation().x, t.getLocation().y));
 
 			}
 		}
 
-		for (Entry<String, ArrayList<Piece>> entry : resourceKindPieces.entrySet()) {
-			String key = entry.getKey();
+		for (Entry<TileType, ArrayList<Piece>> entry : resourceKindPieces.entrySet()) {
+			TileType key = entry.getKey();
 			ArrayList<Piece> value = entry.getValue();
-
 			for (Piece p : value) {
-				p.getPlayer().addResource(key, p);
+				if(p.getType() == PieceType.DORP) {
+					p.getPlayer().addResource(key, 1);					
+				} else if (p.getType() == PieceType.STAD) {
+					p.getPlayer().addResource(key, 2);										
+				}
+				
 			}
 		}
 
@@ -546,8 +550,6 @@ public class BoardHelper {
 						+ ") >= - 1);  ");
 		ArrayList<Piece> returnPiece = new ArrayList<>();
 		while (results.next()) {
-			// System.out.println(results.getInt("x_van") + " " + results.getInt("y_van") +
-			// " " + results.getString("username") + " " + results.getString("stuksoort"));
 			returnPiece.add(new Piece(new GridLocation(results.getInt("x_van"), results.getInt("Y_van")),
 					PieceType.valueOf(results.getString("stuksoort").toUpperCase()),
 					new PlayerModel(results.getString("username"), spelId)));

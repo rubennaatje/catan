@@ -3,8 +3,6 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Statement;
-
 import controller.DatabaseManager;
 
 public class Catan {
@@ -32,9 +30,10 @@ public class Catan {
 
 	public boolean register(String username, String password) {
 		try {
-			return DatabaseManager.createStatement().execute(String.format("INSERT INTO account VALUES ('%s', '%s')", username, password));
+			return DatabaseManager.createStatement().executeUpdate(String.format("INSERT INTO account VALUES ('%s', '%s')", username, password)) == 1 ? true : false;
+			
 		} catch (SQLException e) {
-
+			System.out.println(e.getMessage());
 		}
 
 		return false;
@@ -61,19 +60,9 @@ public class Catan {
 	 * initializes a new game in the database, with all of it's standard values ( generates cards and playeres for now)
 	 * @throws Exception
 	 */
-	public void initGame() throws Exception {
-
-		//get the highest id from the table.
-		ResultSet test = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
-		test.next();
-		String gameId = (test.getString("idspel") + 1);
-		test.close();
-		
+	public void initGame(String gameId) throws Exception {		
 		setGameId(gameId);
 
-		DatabaseManager.createStatement().executeUpdate(
-				"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
-						+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
 		//TODO: remove after implementing Geordi's function. 
 		// Board board = new Board();
 		// board.createBoard(gameId);
@@ -93,8 +82,34 @@ public class Catan {
 
 		addDevelopmentCards();
 		addResourceCards();
-		addPlayers();
+	}
+	
+	public void initGame(String gameId, boolean creation) throws Exception {		
+		setGameId(gameId);
+		
+		System.out.println(gameId);
 
+		if (creation) {
+			//TODO: remove after implementing Geordi's function. 
+			// Board board = new Board();
+			// board.createBoard(gameId);
+			DatabaseManager.createStatement()
+					.executeUpdate("INSERT INTO tegel (idspel, idtegel,X,Y,idgrondstofsoort,idgetalfiche) VALUES(	"
+							+ gameId + " , 1  , 2 , 4  , 'H' , 12	)," + "(	" + gameId
+							+ " , 2  , 3 , 6  , 'G' , 18	),(	" + gameId + " , 3  , 4 , 8  , 'E' , 14	)," + "(	"
+							+ gameId + " , 4  , 3 , 3  , 'W' , 10	),(	" + gameId + " , 5  , 4 , 5  , 'H' , 16	),"
+							+ "(	" + gameId + " , 6  , 5 , 7  , 'G' , 8	),(	" + gameId + " , 7  , 6 , 9  , 'E' , 1	),"
+							+ "(	" + gameId + " , 8  , 4 , 2  , 'B' , 6	),(	" + gameId + " , 9  , 5 , 4  , 'W' , 2	),"
+							+ "(	" + gameId + " , 10 , 6 , 6  , 'X' , NULL ),(	" + gameId
+							+ " , 11 , 7 , 8  , 'G' , 4	)," + "(	" + gameId + " , 12 , 8 , 10 , 'E' , 13	),(	" + gameId
+							+ " , 13 , 6 , 3  , 'B' , 9	)," + "(	" + gameId + " , 14 , 7 , 5  , 'W' , 5	),(	" + gameId
+							+ " , 15 , 8 , 7  , 'H' , 3	)," + "(	" + gameId + " , 16 , 9 , 9  , 'G' , 15	),(	" + gameId
+							+ " , 17 , 8 , 4  , 'B' , 17	)," + "(	" + gameId + " , 18 , 9 , 6  , 'W' , 7	),(	"
+							+ gameId + " , 19 , 10, 8  , 'H' , 11	);");
+	
+			addDevelopmentCards();
+			addResourceCards();
+		}
 	}
 	/**
 	 * initializes all of the development cards for the current gameId in the database.
@@ -137,35 +152,6 @@ public class Catan {
 		}
 
 		DatabaseManager.createStatement().executeUpdate(query);
-	}
-
-	/**
-	 * adds all of the players for now until the challenge system works.
-	 * TODO: fix this.
-	 * @throws Exception
-	 */
-	private void addPlayers() throws Exception {
-
-		// TODO: fix up when we get further.
-		PlayerModel[] players = new PlayerModel[4];
-        players[0] = new PlayerModel("bart", Catan.getGameId());
-        players[1] = new PlayerModel("rik", Catan.getGameId());
-        players[2] = new PlayerModel("lesley", Catan.getGameId());
-        players[3] = new PlayerModel("ger", Catan.getGameId());
-
-		int index = 0;
-		for (PlayerModel p : players) {
-			String playStatus = "uitgedaagde";
-
-			if (index == 0)
-				playStatus = "uitdager";
-
-			DatabaseManager.createStatement().executeUpdate(
-					"INSERT INTO speler ( idspel, username, kleur, speelstatus, shouldrefresh, volgnr, behaaldepunten)\r\n"
-							+ "VALUES (" + gameId + ", '" + p.getUsername() + "',    '" + p.getType().getColorString()
-							+ "',  '" + playStatus + "',    0, " + (index + 1) + ", 0)");
-			index++;
-		}
 	}
 	
     public PlayerModel[] getCurrentPlayers() throws Exception {
