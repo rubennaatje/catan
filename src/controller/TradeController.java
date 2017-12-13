@@ -13,38 +13,53 @@ import model.PlayerModel;
 import model.PlayerUser;
 import model.TileType;
 import model.TradeHelper;
+import view.CounterTradeView;
 import view.TradeView;
 
 public class TradeController {
-	private TradeView view;
+	private TradeView viewTrade;
 	private String spelId;
-	private Stage popUp;
+	private Stage popUpTrade;
 	private PlayerModel[] players;
 	private Integer usrPlayer; // 0..3
 	private GameController superController;
+	private CounterTradeView viewCounter;
+	private Stage popUpCounterTrade;
 	
-	
-	/** Shows trade request screen
-	 * @param player
+
+	/**
 	 * @param spelID
+	 * @param players
+	 * @param usrPlayer
+	 * @param superController
 	 */
 	public TradeController(String spelID, PlayerModel[] players, Integer usrPlayer, GameController superController) {
-		view = new TradeView(this);
 		this.spelId = spelID;
 		this.players = players;
 		this.usrPlayer = usrPlayer;
-		this.superController = superController;
+		this.superController = superController;		
 		
-		popUp = new Stage();
-		Scene scene = new Scene(view);
-		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
-		popUp.setScene(scene);
-		popUp.setResizable(false);
+		//preparing counter tradesceen
+		popUpCounterTrade = new Stage();
+		viewCounter = new CounterTradeView(this);
+		Scene sceneCounterTrade = new Scene(viewCounter);
+		sceneCounterTrade.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
+		popUpCounterTrade.setScene(sceneCounterTrade);
+		popUpCounterTrade.setResizable(false);
+//		popUpCounterTrade.setOnHidden((e) -> superController.closeTrade());
+		popUpTrade.initStyle(StageStyle.UNDECORATED);
 		
-		popUp.setOnHidden((e) -> superController.closeTrade());
+		
+		//preparing tradescreen
+		popUpTrade = new Stage();
+		viewTrade = new TradeView(this);
+		Scene sceneTrade = new Scene(viewTrade);
+		sceneTrade.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
+		popUpTrade.setScene(sceneTrade);
+		popUpTrade.setResizable(false);
+		popUpTrade.initStyle(StageStyle.UNDECORATED);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void submitTradeRequest(HashMap<TileType, Integer>[] tradeSuggestion) {
 		try {
 			TradeHelper.registerTrade(spelId, players[usrPlayer], tradeSuggestion, "NULL");
@@ -63,29 +78,13 @@ public class TradeController {
 							"SELECT username, geeft_baksteen, geeft_wol, geeft_erts, geeft_graan , geeft_hout, "
 							+ "vraagt_baksteen, vraagt_wol, vraagt_erts, vraagt_graan, vraagt_hout, geaccepteerd FROM catan.ruilaanbod "
 									+ "WHERE idspel = " + spelId + " AND username != '" + players[usrPlayer].getUsername() + "';");
-					while (r.next() && popUp.isShowing()) {
+					while (r.first() && popUpTrade.isShowing()) {
 						String playerName = r.getString("username");
 						System.out.println(playerName);
 						if (!names.contains(playerName)) {
 							names.add(playerName);
-							HashMap<TileType, Integer> offer = new HashMap<>();
-							HashMap<TileType, Integer> request = new HashMap<>();
-
-							offer.put(TileType.B, r.getInt("geeft_baksteen"));
-							offer.put(TileType.E, r.getInt("geeft_erts"));
-							offer.put(TileType.G, r.getInt("geeft_graan"));
-							offer.put(TileType.H, r.getInt("geeft_hout"));
-							offer.put(TileType.W, r.getInt("geeft_wol"));
-
-							request.put(TileType.B, r.getInt("vraagt_baksteen"));
-							request.put(TileType.E, r.getInt("vraagt_erts"));
-							request.put(TileType.G, r.getInt("vraagt_graan"));
-							request.put(TileType.H, r.getInt("vraagt_hout"));
-							request.put(TileType.W, r.getInt("vraagt_wol"));
-
-							@SuppressWarnings("rawtypes")
-							HashMap[] bloob = {offer, request};
-							Platform.runLater(() -> view.addPlayerOffer(bloob, playerName));
+							HashMap<TileType, Integer>[] offer = TradeHelper.retrieveOffer(r);
+							Platform.runLater(() -> viewTrade.addPlayerOffer(offer, playerName));
 							i++;
 						}
 					}
@@ -138,12 +137,22 @@ public class TradeController {
 		return false;
 	}
 	
-	public void show() {
-		popUp.show();
+	public void showTrade() {
+		popUpTrade.show();
+	}
+	
+	public void showTradeCounter() {
+		try {
+			ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT * FROM ruilaanbod WHERE idspel = " + spelId + " AND geaccepteerd IS NULL");
+			popUpCounterTrade.show();
+			viewCounter.show(TradeHelper.retrieveOffer(r));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	public void close() {
-		popUp.close();
+		popUpTrade.close();
 		superController.closeTrade();
 	}
 

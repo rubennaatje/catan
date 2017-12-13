@@ -66,7 +66,6 @@ public class TradeHelper {
 				+ "vraagt_baksteen, vraagt_wol, vraagt_erts, vraagt_graan, vraagt_hout, geaccepteerd FROM catan.ruilaanbod "
 						+ "WHERE idspel = " + spelId + " AND username = '" + counterer.getUsername() + "';");
 		if(r.next()) {
-			
 			counterer.removeResource(TileType.B, r.getInt("geeft_baksteen"));
 			counterer.removeResource(TileType.E, r.getInt("geeft_erts"));
 			counterer.removeResource(TileType.G, r.getInt("geeft_graan"));
@@ -91,5 +90,27 @@ public class TradeHelper {
 			counterer.addResource(TileType.H, r.getInt("vraagt_hout"));      
 			counterer.addResource(TileType.W, r.getInt("vraagt_wol"));       
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static HashMap<TileType, Integer>[] retrieveOffer(ResultSet r) throws SQLException {
+		HashMap<TileType, Integer> offer = new HashMap<>();
+		HashMap<TileType, Integer> request = new HashMap<>();
+		r.first();
+		offer.put(TileType.B, r.getInt("geeft_baksteen"));
+		offer.put(TileType.E, r.getInt("geeft_erts"));
+		offer.put(TileType.G, r.getInt("geeft_graan"));
+		offer.put(TileType.H, r.getInt("geeft_hout"));
+		offer.put(TileType.W, r.getInt("geeft_wol"));
+
+		request.put(TileType.B, r.getInt("vraagt_baksteen"));
+		request.put(TileType.E, r.getInt("vraagt_erts"));
+		request.put(TileType.G, r.getInt("vraagt_graan"));
+		request.put(TileType.H, r.getInt("vraagt_hout"));
+		request.put(TileType.W, r.getInt("vraagt_wol"));
+
+		@SuppressWarnings("rawtypes")
+		HashMap[] bloob = {offer, request};
+		return bloob;
 	}
 }

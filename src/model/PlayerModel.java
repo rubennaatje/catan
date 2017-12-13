@@ -140,7 +140,7 @@ public class PlayerModel extends Observable {
 					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofkaart asc limit 1) as da);");
 
 			if(rowsEffected == 0) {
-				throw new SQLException("No resourceCard to add");
+				throw new SQLException("No " + t.toString() + " to add");
 			}
 		}
 	}

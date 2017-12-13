@@ -36,7 +36,6 @@ public class GameController {
 	private EventHandler<MouseEvent> robber;
 	private DevelopCardController devCon;
 	private TradeController tradeController;
-	private ChatController chatController;
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -455,6 +454,10 @@ public class GameController {
 		}
 	}
 
+	private void startCounterTrade() {
+		
+	}
+	
 	public void closeTrade() {
 		refresh();
 		refreshButtons();
