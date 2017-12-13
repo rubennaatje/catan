@@ -47,7 +47,7 @@ public class TradeController {
 		popUpCounterTrade.setScene(sceneCounterTrade);
 		popUpCounterTrade.setResizable(false);
 //		popUpCounterTrade.setOnHidden((e) -> superController.closeTrade());
-		popUpTrade.initStyle(StageStyle.UNDECORATED);
+		popUpCounterTrade.initStyle(StageStyle.UNDECORATED);
 		
 		
 		//preparing tradescreen
@@ -66,7 +66,6 @@ public class TradeController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		new Thread(() -> {
 			int i = 0;
 			ArrayList<String> names = new ArrayList<>();

@@ -42,5 +42,4 @@ public class TestStartController extends Application {
         primaryStage.setTitle(player.getUsername());
 		new Thread(() -> gameController.start()).start();
 	}
-
 }

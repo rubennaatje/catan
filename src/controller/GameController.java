@@ -75,7 +75,7 @@ public class GameController {
 		EventHandler<MouseEvent> trade = ((e) -> {
 			refresh();
 			disableButtons();
-			tradeController.show();
+			tradeController.showTrade();
 		});
 
 		pieceEvent = ((e) -> {
@@ -398,9 +398,9 @@ public class GameController {
 
 	public void checkEnoughForDevCard() {
 		try {
-			players[usrPlayer].removeResources(TileType.W, 1);
-			players[usrPlayer].removeResources(TileType.E, 1);
-			players[usrPlayer].removeResources(TileType.G, 1);
+			players[usrPlayer].removeResource(TileType.W, 1);
+			players[usrPlayer].removeResource(TileType.E, 1);
+			players[usrPlayer].removeResource(TileType.G, 1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

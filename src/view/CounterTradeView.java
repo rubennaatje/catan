@@ -26,4 +26,8 @@ public class CounterTradeView extends TradeViewTemplate {
 	public void show(HashMap<TileType, Integer>[] offerData) {
 		fillLabels(offerData);
 	}
+	
+	public void reject(MouseEvent e) {
+		
+	}
 }
