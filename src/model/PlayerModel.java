@@ -56,7 +56,7 @@ public class PlayerModel extends Observable {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
 		this.hasTurn = hasTurn();
-        if(this.score != null && Integer.parseInt(this.score) >= 10)
+		if(this.score != null && Integer.parseInt(this.score) >= 10)
 		{
 			hasWon = true;
 		}
@@ -80,26 +80,7 @@ public class PlayerModel extends Observable {
 		results.close();
 	}
 
-	
-	@Deprecated
-	public void removeResource(TileType t) {
-		try {
-			ResultSet results = DatabaseManager.createStatement().executeQuery(
-					"SELECT g.idgrondstofkaart FROM grondstofkaart AS g INNER JOIN spelergrondstofkaart AS s ON s.idgrondstofkaart = g.idgrondstofkaart WHERE idspel = '"
-							+ getSpelId() + "' AND username = '" + getUsername() + "' AND g.idgrondstofsoort = '"
-							+ t.toString() + "' ORDER BY s.idgrondstofkaart LIMIT 1;");
-			while (results.next()) {
-				DatabaseManager.createStatement()
-						.executeUpdate("UPDATE spelergrondstofkaart SET username = NULL WHERE idspel='" + getSpelId()
-								+ "' AND idgrondstofkaart = '" + results.getString(1) + "';");
-			}
-			results.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void removeResource(TileType t, Integer amount) throws SQLException {
+	public void removeResources(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
 					+ " WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
@@ -113,7 +94,6 @@ public class PlayerModel extends Observable {
 	}
 	
 	private boolean hasTurn()
-
 	{
 		try
 		{
