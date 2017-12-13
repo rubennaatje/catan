@@ -429,6 +429,10 @@ public class GameController {
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
 				refreshButtons();
+				//havens plaatsen
+				playboardview.drawHaven(new GridLocation(3,1), new GridLocation(3,0));
+				playboardview.drawHaven(new GridLocation(4,1), new GridLocation(3,0));
+
 			});
 			players[this.usrPlayer].refresh();
 		} catch (SQLException e) {
