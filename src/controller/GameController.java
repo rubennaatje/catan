@@ -407,6 +407,7 @@ public class GameController {
 			}
 			GridLocation robberPos = BoardHelper.getRobberPos(spelId);
 			int longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
+			diceO.getDBThrow();
 			Platform.runLater(() -> {
 				playboardview.getChildren().clear();
 				for (Tile t : hexes) {

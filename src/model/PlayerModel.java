@@ -135,7 +135,7 @@ public class PlayerModel extends Observable {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
 					+ "' WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
-					+ " (SELECT bloo from (SELECT idgrondstofsoort bloo FROM spelergrondstofkaart a natural join grondstofkaart where a.username IS NULL' and idgrondstofsoort = '"
+					+ " (SELECT bloo from (SELECT idgrondstofsoort bloo FROM spelergrondstofkaart a natural join grondstofkaart where a.username IS NULL and idgrondstofsoort = '"
 					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofsoort asc limit 1) as da);");
 			if(rowsEffected == 0) {
 				throw new SQLException("No resourceCard to add");
