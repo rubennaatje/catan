@@ -33,7 +33,6 @@ public class GameController {
 	private EventHandler<MouseEvent> endTurn;
 	private EventHandler<MouseEvent> firstRndPiece;
 	private EventHandler<MouseEvent> doubleStreetEvent;
-	private EventHandler<MouseEvent> trade;
 	private EventHandler<MouseEvent> robber;
 	private DevelopCardController devCon;
 	private TradeController tradeController;
@@ -41,11 +40,11 @@ public class GameController {
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
-		this.usrPlayer = usrPlayer - 1;
+		this.usrPlayer = usrPlayer;
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon = new DevelopCardController(players[this.usrPlayer].getUsername(), spelId);
+		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId);
 
 		buyEvent = ((e) -> {
 			refresh();
@@ -74,10 +73,10 @@ public class GameController {
 
 		});
 
-		trade = ((e) -> {
+		EventHandler<MouseEvent> trade = ((e) -> {
 			refresh();
-			buttons.setDisabled();
-			TradeController tradeController = new TradeController(spelId, players, usrPlayer, this);
+			disableButtons();
+			tradeController.show();
 		});
 
 		pieceEvent = ((e) -> {
@@ -128,33 +127,33 @@ public class GameController {
 			}
 		});
 
-		buttons = new GameControlerView(buyEvent, endTurn);
-		playboardview = new PlayBoardView();
-		dice = new DiceView();
-
+		// binding and creating playerDataview and model via observer
 		PlayerView[] playerViews = new PlayerView[4];
-
 		for (int i = 0; i < players.length; i++) {
 			playerViews[i] = new PlayerView();
 			players[i].addObserver(playerViews[i]);
 			players[i].refresh();
 		}
 
-		try {
-			dice.showDice(diceO.getDBThrow());
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		// controller for all trade functionality
+		tradeController = new TradeController(spelId, players, this.usrPlayer, this);
+
+		// binding resource view and model via observer
 		resourceView = new ResourceView();
 		players[this.usrPlayer].addObserver(resourceView);
 
+		// functionality for chat
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
+		new Thread(chat).start();
+
+		// merging all individual components into 1 view
+		buttons = new GameControlerView(buyEvent, endTurn, trade);
+		playboardview = new PlayBoardView();
+		dice = new DiceView();
 		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
 				chat.getView());
 
 		refresh();
-		new Thread(chat).start();
 		mergeView.show();
 	}
 
@@ -226,7 +225,6 @@ public class GameController {
 				result.next();
 				check = result.getInt(1) == 1;
 				if (!check)
-					System.out.println("waiting");
 				Thread.sleep(CatanController.refreshTime);
 				result.close();
 			} catch (SQLException e) {
@@ -368,22 +366,20 @@ public class GameController {
 			buttons.setDisabled();
 		});
 	}
-	
+
 	private void refreshButtons() {
-		Platform.runLater(() -> {
-			try {
-				if(players[usrPlayer].getPlayerTurn()) {
-					PlayerUser p = (PlayerUser) players[usrPlayer];
-					HashMap<String, Boolean> buyable = p.getBuyableThings();
-					buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"),true);
-				} else {
-					buttons.setButtons(false, false, false,false);
-				}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			if (players[usrPlayer].getPlayerTurn()) {
+				PlayerUser p = (PlayerUser) players[usrPlayer];
+				HashMap<String, Boolean> buyable = p.getBuyableThings();
+				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true);
+			} else {
+				buttons.setButtons(false, false, false, false, false);
 			}
-		});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void checkEnoughForDevCard() {
@@ -405,12 +401,13 @@ public class GameController {
 			ArrayList<Tile> hexes = BoardHelper.getAllHexes(spelId);
 			ArrayList<ArrayList<Street>> allStreets = new ArrayList<>();
 			ArrayList<ArrayList<Piece>> allPieces = new ArrayList<>();
-			for (PlayerModel player : players) {
-				allStreets.add(BoardHelper.getStreetsPlayer(player, spelId));
-				allPieces.add(BoardHelper.getPiecesPlayer(player, spelId));
+			for (int i = 0; i < players.length; i++) {
+				allStreets.add(BoardHelper.getStreetsPlayer(players[i], spelId));
+				allPieces.add(BoardHelper.getPiecesPlayer(players[i], spelId));
 			}
 			GridLocation robberPos = BoardHelper.getRobberPos(spelId);
 			int longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
+			diceO.getDBThrow();
 			Platform.runLater(() -> {
 				playboardview.getChildren().clear();
 				for (Tile t : hexes) {
@@ -431,17 +428,20 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
+				refreshButtons();
+				//havens plaatsen
+				playboardview.drawHaven(new GridLocation(3,1), new GridLocation(3,0));
+				playboardview.drawHaven(new GridLocation(4,1), new GridLocation(3,0));
+
 			});
 			players[this.usrPlayer].refresh();
-			refreshButtons();
-			//resourceView.update(players[this.usrPlayer], null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void closeTrade() {
-		buttons.setEnabled();
-		tradeController = null;
+		refresh();
+		refreshButtons();
 	}
 }

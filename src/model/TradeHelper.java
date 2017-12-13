@@ -42,7 +42,7 @@ public class TradeHelper {
 	 * @param player
 	 * @throws SQLException
 	 */
-	public static void registerReject(String spelId, PlayerUser player) throws SQLException {
+	public static void registerReject(String spelId, PlayerModel player) throws SQLException {
 		DatabaseManager.createStatement().executeUpdate("INSERT INTO ruilaanbod VALUES ("
 				+ spelId + ", '" 
 				+ player.getUsername() + "', " 

@@ -16,26 +16,21 @@ import model.TradeHelper;
 import view.TradeView;
 
 public class TradeController {
-	TradeView view;
-	String spelId;
-	PlayerUser player;
-	Stage popUp;
-	HashMap<TileType, Integer>[][] allOffers;
-	String tradeRequester = null;
+	private TradeView view;
+	private String spelId;
+	private Stage popUp;
 	private PlayerModel[] players;
-	Integer usrPlayer; // 0..3
-	GameController superController;
+	private Integer usrPlayer; // 0..3
+	private GameController superController;
 	
 	
 	/** Shows trade request screen
 	 * @param player
 	 * @param spelID
 	 */
-	@SuppressWarnings("unchecked")
 	public TradeController(String spelID, PlayerModel[] players, Integer usrPlayer, GameController superController) {
 		view = new TradeView(this);
 		this.spelId = spelID;
-		this.allOffers = new HashMap[2][3];
 		this.players = players;
 		this.usrPlayer = usrPlayer;
 		this.superController = superController;
@@ -45,14 +40,14 @@ public class TradeController {
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
 		popUp.setScene(scene);
 		popUp.setResizable(false);
-		popUp.initStyle(StageStyle.UNDECORATED);
-		popUp.show();
+		
+		popUp.setOnHidden((e) -> superController.closeTrade());
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void submitTradeRequest(HashMap<TileType, Integer>[] tradeSuggestion) {
 		try {
-			TradeHelper.registerTrade(spelId, player, tradeSuggestion, "NULL");
+			TradeHelper.registerTrade(spelId, players[usrPlayer], tradeSuggestion, "NULL");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -60,15 +55,15 @@ public class TradeController {
 		new Thread(() -> {
 			int i = 0;
 			ArrayList<String> names = new ArrayList<>();
-			while (i <= 3) {
+			while (i < 3) {
 				System.out.println("waiting for trade response");
 				try {
 					Thread.sleep(CatanController.refreshTime);
 					ResultSet r = DatabaseManager.createStatement().executeQuery(
 							"SELECT username, geeft_baksteen, geeft_wol, geeft_erts, geeft_graan , geeft_hout, "
 							+ "vraagt_baksteen, vraagt_wol, vraagt_erts, vraagt_graan, vraagt_hout, geaccepteerd FROM catan.ruilaanbod "
-									+ "WHERE idspel = " + spelId + " AND username != '" + player.getUsername() + "';");
-					while (r.next()) {
+									+ "WHERE idspel = " + spelId + " AND username != '" + players[usrPlayer].getUsername() + "';");
+					while (r.next() && popUp.isShowing()) {
 						String playerName = r.getString("username");
 						System.out.println(playerName);
 						if (!names.contains(playerName)) {
@@ -104,7 +99,7 @@ public class TradeController {
 	}
 
 	public boolean checkSufficient(TileType type, Integer amount) {
-		return player.hasResource(type, amount);
+		return ((PlayerUser) players[usrPlayer]).hasResource(type, amount);
 	}
 	
 	public boolean checkAllSufficient(HashMap<TileType, Integer>[] bloob) {
@@ -113,7 +108,7 @@ public class TradeController {
 
 	public void submitCounterTradeRequest(HashMap<TileType, Integer>[] data) {
 		try {
-			TradeHelper.registerTrade(spelId, player, data, "TRUE");
+			TradeHelper.registerTrade(spelId, players[usrPlayer], data, "TRUE");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -121,7 +116,7 @@ public class TradeController {
 
 	public void registerReject() {
 		try {
-			TradeHelper.registerReject(spelId, player);
+			TradeHelper.registerReject(spelId, players[usrPlayer]);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -141,6 +136,10 @@ public class TradeController {
 			}
 		}
 		return false;
+	}
+	
+	public void show() {
+		popUp.show();
 	}
 
 	public void close() {
