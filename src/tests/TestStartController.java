@@ -38,7 +38,7 @@ public class TestStartController extends Application {
         PlayerUser player = new PlayerUser("rik", Catan.getGameId());
         catan.setPlayer(player);
         PlayerModel[] players = catan.getCurrentPlayers();
-        gameController = new GameController(spelId, players, player.getPlayerNumber() ,primaryStage);
+        gameController = new GameController(spelId, players, player.getPlayerNumber() -1 ,primaryStage);
         
 		new Thread(() -> gameController.start()).start();
 	}
