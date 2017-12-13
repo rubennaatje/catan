@@ -97,7 +97,6 @@ public class DevelopCardController {
 				
 	}
 	
-
 	public void playCard(int index) {
 		
 		if(list.get(index) instanceof ProgressCard) {
