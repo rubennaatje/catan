@@ -135,6 +135,7 @@ public class PlayBoardView extends PaneTemplate {
 		});
 		line.setStrokeWidth(1);
 		line.setStroke(Color.BLACK);
+		getChildren().add(line);
 		if(im != null)
 		{
 			circle.setLayoutX(locs.getCoordinate(location2).getX());
@@ -143,7 +144,7 @@ public class PlayBoardView extends PaneTemplate {
 			circle.setFill(new ImagePattern(im));
 			getChildren().add(circle);
 		}
-		getChildren().add(line);
+		
 		
 	}
 

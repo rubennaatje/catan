@@ -92,11 +92,15 @@ public class CatanController {
 	}
 	
 	public void startGame(String gameid, boolean creation) {
-
+		getPlayer().setSpelId(gameid);
+		
 		try {
 			catan.initGame(gameid, creation);
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
+	        if (creation) {
+	        	catan.addPlayerPieces(players);
+	        }
 	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
 	        
 			new Thread(() -> gameController.start()).start();

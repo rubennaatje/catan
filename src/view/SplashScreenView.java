@@ -25,13 +25,9 @@ public class SplashScreenView extends PaneTemplate
 		pause.setOnFinished(e -> {
 			
 			try {
-				//DatabaseManager.createStatement().execute("DELETE FROM spelergrondstofkaart WHERE idspel = 788");
-				//DatabaseManager.createStatement().execute("DELETE FROM chatregel WHERE idspel = 788");
-				//DatabaseManager.createStatement().execute("DELETE FROM spelerontwikkelingskaart WHERE idspel = 788");
-				//DatabaseManager.createStatement().execute("DELETE FROM speler WHERE idspel = 788");
-				//DatabaseManager.createStatement().execute("DELETE FROM spel WHERE idspel = 788");
+				DatabaseManager.createStatement().execute("DELETE FROM spel WHERE idspel = 789");
 			} catch (Exception ex) {
-				
+				ex.printStackTrace();
 			}
 			
 			new LoginView(stage, controller).show();
