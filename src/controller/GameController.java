@@ -44,7 +44,7 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId, this);
+		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
 
 		buyEvent = ((e) -> {
 			refresh();

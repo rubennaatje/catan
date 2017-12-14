@@ -7,31 +7,33 @@ import java.util.Random;
 
 import model.DevelopmentCard;
 import model.KnightCard;
+import model.PlayerUser;
 import model.ProgressCard;
+import model.TileType;
 import model.VictoryPointCard;
 
 public class DevelopCardController {
 	private Random random = new Random();
-	private int cardint;
-	private String cardId;
-	private String spelId;
-	private String username;
 	private ArrayList<DevelopmentCard> list = new ArrayList<>();
 	private GameController superController;
+	private PlayerUser player;
+	private TileType t;
 	
 	
-	public DevelopCardController(String spelId, String username, GameController controller) {
-		this.spelId = spelId;
-		this.username = username;
+	public DevelopCardController(PlayerUser player, GameController controller) {
+		this.player = player;
 		this.superController = controller;
+		
 	}
 
 	public void givePlayerCard() {
+		int cardint;
+		String cardId;
 		ArrayList<String> cardsUnUsed = new ArrayList<>();
 		try { // create list of unused cards
 			ResultSet cardsNotUsed = DatabaseManager.createStatement().executeQuery(
 					"SELECT idontwikkelingskaart FROM spelerontwikkelingskaart WHERE username IS NULL AND idspel = "
-							+ spelId + ";");
+							+ player.getSpelId() + ";");
 			while (cardsNotUsed.next()) {
 				cardsUnUsed.add(cardsNotUsed.getString("idontwikkelingskaart"));
 			}
@@ -49,7 +51,7 @@ public class DevelopCardController {
 		try {
 			ResultSet cardsUsed = DatabaseManager.createStatement()
 					.executeQuery("SELECT idontwikkelingskaart FROM spelerontwikkelingskaart WHERE username = '"
-							+ username + "'" + " AND idspel = " + spelId + " AND gespeeld = 0;");
+							 + player.getUsername() + "'   AND idspel = " + player.getSpelId() + " AND gespeeld = 0;");
 			while (cardsUsed.next()) {
 				assignCard(cardsUsed.getString("idontwikkelingskaart"));
 			}
@@ -74,13 +76,13 @@ public class DevelopCardController {
 
 				switch (kaarttype) { // create card object
 				case "ridder":
-					list.add(new KnightCard(spelId, cardId, username, kaarttype, kaartnaam, this));
-					break;
-				case "gebouw":
-					list.add(new ProgressCard(spelId, cardId, username, kaarttype, kaartnaam, uitleg, this));
+					list.add(new KnightCard(player, cardId, kaarttype, kaartnaam, this));
 					break;
 				case "vooruitgang":
-					list.add(new VictoryPointCard(spelId, cardId, username, kaarttype, kaartnaam));
+					list.add(new ProgressCard(player, cardId, kaarttype, kaartnaam, uitleg, this));
+					break;
+				case "gebouw":
+					list.add(new VictoryPointCard(player, cardId, kaarttype, kaartnaam));
 					break;
 				}
 			}
@@ -89,8 +91,46 @@ public class DevelopCardController {
 		}
 
 	}
-
-	public void playCard(int index) {
+	
+	public boolean checkForResource(int index) { //checks if devcard needs resourcetype
+		if(list.get(index) instanceof ProgressCard) {
+			if(((ProgressCard) list.get(index)).getCardname() != "stratenbouw") {
+				return true;
+			}	
+		}
+		return false;
+	}
+	
+	public void setResourceType(int index, String resource) { // assigns resourcetype to progresscard when needed
+		
+		switch(resource) {
+			case("baksteen"):
+				t = TileType.valueOf("B");
+			((ProgressCard) list.get(index)).setResourceType(t);
+			break;
+			case("hout"):
+				t = TileType.valueOf("H");
+			((ProgressCard) list.get(index)).setResourceType(t);
+			break;
+			case("graan"):
+				t = TileType.valueOf("G");
+			((ProgressCard) list.get(index)).setResourceType(t);
+			break;
+			case("wol"):
+				t = TileType.valueOf("W");
+			((ProgressCard) list.get(index)).setResourceType(t);
+			break;
+			case("erts"):
+				t = TileType.valueOf("E");
+			((ProgressCard) list.get(index)).setResourceType(t);
+			break;
+			
+		}
+		
+		
+	}
+	
+	public void playCard(int index) { //plays card
 
 		if (list.get(index) instanceof ProgressCard) {
 			System.out.println("progresscard");
@@ -98,24 +138,21 @@ public class DevelopCardController {
 		} else if (list.get(index) instanceof KnightCard) {
 			System.out.println("knightcard");
 			((KnightCard) list.get(index)).playCard();
-
 		} else if(list.get(index) instanceof VictoryPointCard) {
-
 			System.out.println("VictoryPointCard");
 			((VictoryPointCard) list.get(index)).playCard();
 		}
-		System.out.println("kaart verwijderd");
 		list.remove(index);
 		refreshDevCards();
 
 	}
 
-	public void place2Streets() {
+	public void place2Streets() {  //plaatst 2 straten
 		superController.disableButtons();
 		superController.showDoubleStreetPlacable();
 	}
 
-	public void moveRobber() {
+	public void moveRobber() { // beweegt robber
 		superController.disableButtons();
 		superController.showRobberPlacable();
 	}
