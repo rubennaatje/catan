@@ -614,6 +614,21 @@ public class BoardHelper {
 		return null;
 	}
 
+	public static ArrayList<ArrayList<String>> getAllHavens() throws SQLException
+	{
+		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		ResultSet results = DatabaseManager.createStatement().executeQuery("SELECT x,y,idgrondstofsoort FROM locatie WHERE haven = 1");
+		while(results.next())
+		{
+			ArrayList<String> tempList = new ArrayList<>();
+			tempList.add(results.getString(1));
+			tempList.add(results.getString(2));
+			tempList.add(results.getString(3));
+			list.add(tempList);
+		}
+		return list;
+	}
+
 	public static void refreshAll(String spelId) throws SQLException {
 		DatabaseManager.createStatement().executeUpdate("UPDATE speler SET shouldrefresh = 1 WHERE idspel = " + spelId + "");
 	}
