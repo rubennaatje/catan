@@ -4,7 +4,6 @@ import controller.DatabaseManager;
 import controller.GameController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.BoardHelper;
 import model.Catan;
 import model.PlayerModel;
 import model.PlayerUser;

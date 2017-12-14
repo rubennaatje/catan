@@ -139,6 +139,7 @@ public class TradeController {
 	public void showTrade() {
 		try {
 			TradeHelper.clearOffer(spelId);
+			viewTrade.reset();
 			popUpTrade.show();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -169,6 +170,15 @@ public class TradeController {
 		popUpTrade.close();
 		popUpCounterTrade.close();
 		superController.closeTrade();
+	}
+
+	public void registerCounterReject() {
+		try {
+			TradeHelper.clearOffer(spelId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
