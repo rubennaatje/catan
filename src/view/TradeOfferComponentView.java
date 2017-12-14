@@ -30,6 +30,5 @@ public class TradeOfferComponentView extends TradeViewTemplate {
 		if(controller.acceptOffer(offerPlayer)) {
 			controller.close();
 		}
-		
 	}
 }

@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -26,6 +27,8 @@ public class PlayBoardView extends PaneTemplate {
 		locs = new LocationGenerator(getPrefHeight(),getPrefWidth());
 		
 		getStyleClass().add("playboard_background");
+		
+		
 	}
 
 
@@ -121,11 +124,15 @@ public class PlayBoardView extends PaneTemplate {
 		return robber;
 	}
 
-	@Override
-	public void show() {
-		super.show();
+	public void drawHaven(GridLocation location, GridLocation location2) {
+		Polyline line = new Polyline();
+		line.getPoints().addAll(new Double[] {
+			locs.getCoordinate(location).getX(), locs.getCoordinate(location).getY(), locs.getCoordinate(location2).getX(), locs.getCoordinate(location2).getY()	
+		});
+		line.setStrokeWidth(0.5);
+		getChildren().add(line);
+		
 	}
-
 
 	public void addRobber(GridLocation location, EventHandler<MouseEvent> robber) {
 		RobberView el = addRobber(location);
