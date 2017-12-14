@@ -166,6 +166,10 @@ public class PlayerModel extends Observable {
 	public String getSpelId() {
 		return spelId;
 	}
+	
+	public void setSpelId(String spelId) {
+		this.spelId = spelId;
+	}
 
 	public boolean getPlayerTurn()
 	{

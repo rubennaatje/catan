@@ -92,7 +92,8 @@ public class CatanController {
 	}
 	
 	public void startGame(String gameid, boolean creation) {
-
+		getPlayer().setSpelId(gameid);
+		
 		try {
 			catan.initGame(gameid, creation);
 			catan.setPlayer(player);
