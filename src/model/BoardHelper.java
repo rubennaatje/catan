@@ -477,13 +477,18 @@ public class BoardHelper {
 
 	// for pieces
 	public static void registerPlacement(Piece pieceModel, String idSpel) throws SQLException {
+		if(pieceModel.getType() == PieceType.STAD) {
+		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = NULL "
+				+ ", y_van = NULL WHERE y_naar IS NULL AND x_naam IS NULL AND username = '" + pieceModel.getPlayer().getUsername() + "' AND x_van = " + pieceModel.getPos().x + " AND y_van=" + pieceModel.getPos().y);
+		}
+		
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + pieceModel.getPos().x
 				+ ", y_van = " + pieceModel.getPos().y
 				+ "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
 				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = '" + pieceModel.getType().toString()
 				+ "' AND username = '" + pieceModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel
 				+ " and username = '" + pieceModel.getPlayer().getUsername() + "'");
-
+		
 	}
 
 	// for street
