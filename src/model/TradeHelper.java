@@ -117,4 +117,8 @@ public class TradeHelper {
 	}
 	
 	
+	public static void clearOffer(String spelId) throws SQLException {
+		DatabaseManager.createStatement().executeUpdate("DELETE FROM ruilaanbod WHERE idspel = " + spelId + "");
+	}
+	
 }

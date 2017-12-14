@@ -177,7 +177,7 @@ public class CatanController {
 			
 			DatabaseManager.createStatement().executeUpdate(
 					"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
-							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
+							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, TRUE);");
 			
 			List<String> kleuren = Arrays.asList("wit", "rood", "blauw", "oranje");
 			
@@ -188,11 +188,13 @@ public class CatanController {
 				count++;
 				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
 			}
+			
+			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET beurt_username = '" + getPlayer().getUsername() + "' WHERE idspel = " + gameId);
 			 
 			openWaitingScreen(new Challenge(getPlayer().getUsername(), gameId, getPlayer()));
 		}
 		catch (SQLException e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
