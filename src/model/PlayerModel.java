@@ -81,6 +81,40 @@ public class PlayerModel extends Observable {
 	}
 
 	
+<<<<<<< HEAD
+	@Deprecated
+	public void removeResource(TileType t) {
+		try {
+			ResultSet results = DatabaseManager.createStatement().executeQuery(
+					"SELECT g.idgrondstofkaart FROM grondstofkaart AS g INNER JOIN spelergrondstofkaart AS s ON s.idgrondstofkaart = g.idgrondstofkaart WHERE idspel = '"
+							+ getSpelId() + "' AND username = '" + getUsername() + "' AND g.idgrondstofsoort = '"
+							+ t.toString() + "' ORDER BY s.idgrondstofkaart LIMIT 1;");
+			while (results.next()) {
+				DatabaseManager.createStatement()
+						.executeUpdate("UPDATE spelergrondstofkaart SET username = NULL WHERE idspel='" + getSpelId()
+								+ "' AND idgrondstofkaart = '" + results.getString(1) + "';");
+			}
+			results.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeResource(TileType t, Integer amount) throws SQLException {
+		for (int i = 0; i < amount; i++) {
+			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
+					+ " WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
+					+ " (SELECT bloo from (SELECT idgrondstofkaart bloo FROM spelergrondstofkaart a natural join grondstofkaart where a.username = '" + username + "' and idgrondstofsoort = '"
+					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofsoort asc limit 1) as da);");
+			
+			if(rowsEffected == 0) {
+				throw new SQLException("No resource to remove");
+			}
+		}
+	}
+	
+=======
+>>>>>>> f1de59ecfa9402b08ee6a4f704f8d37311a9535c
 	private boolean hasTurn()
 	{
 		try
@@ -165,6 +199,10 @@ public class PlayerModel extends Observable {
 
 	public String getSpelId() {
 		return spelId;
+	}
+	
+	public void setSpelId(String spelId) {
+		this.spelId = spelId;
 	}
 
 	public boolean getPlayerTurn()

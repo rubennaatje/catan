@@ -8,7 +8,9 @@ import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
@@ -240,7 +242,7 @@ public class GameController {
 			ResultSet result = DatabaseManager.createStatement()
 					.executeQuery("SELECT beurt_username FROM spel WHERE idspel = " + spelId);
 			result.next();
-			if (!result.getString(1).equals(players[usrPlayer].getUsername()) && !tradeController.isShown())
+			if (!result.getString(1).equals(players[usrPlayer].getUsername()))
 				await();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -410,11 +412,12 @@ public class GameController {
 	// update ing field
 	public void refresh() {
 		// fetching all data in seperate thread
-		System.out.println("board is refreshing");
+				System.out.println("board is refreshing");
 		try {
 			ArrayList<Tile> hexes = BoardHelper.getAllHexes(spelId);
 			ArrayList<ArrayList<Street>> allStreets = new ArrayList<>();
 			ArrayList<ArrayList<Piece>> allPieces = new ArrayList<>();
+			ArrayList<ArrayList<String>> havenList = BoardHelper.getAllHavens();
 			for (int i = 0; i < players.length; i++) {
 				allStreets.add(BoardHelper.getStreetsPlayer(players[i], spelId));
 				allPieces.add(BoardHelper.getPiecesPlayer(players[i], spelId));
@@ -434,6 +437,39 @@ public class GameController {
 						playboardview.addStreet(street);
 					}
 				}
+				//havens plaatsen
+					for(ArrayList<String> haven : havenList )
+					{
+						int x = Integer.parseInt(haven.get(0));
+						int y = Integer.parseInt(haven.get(1));
+						String havenType =  haven.get(2);
+						int xEnd = calcEndPointX(x);
+						int yEnd = calcEndPointY(y);
+						Color color = Color.BLACK;
+						Image im = new Image("view/images/Vraagteken.png");
+						if(havenType != null)
+						{
+							switch(havenType)
+							{
+							case "G":
+								im = new Image("view/images/Hooi.png");
+								break;
+							case "B":
+								im = new Image("view/images/Steen.png");
+								break;
+							case "H":
+								im = new Image("view/images/Hout.png");
+								break;
+							case "E":
+								im = new Image("view/images/Erts.png");
+								break;
+							case "W":
+								im = new Image("view/images/Schaap.png");
+							}
+						}
+						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd),im);
+
+					}	
 				for (ArrayList<Piece> pieces : allPieces) {
 					// places all cities and towns for player
 					for (Piece street : pieces) {
@@ -445,27 +481,7 @@ public class GameController {
 				dice.showDice(diceO.getTotalthrow());
 				refreshButtons();
 				if(trade) startCounterTrade();
-				//havens plaatsen
 				
-				try
-				{
-					ArrayList<ArrayList<String>> havenList = BoardHelper.getAllHavens();
-					for(ArrayList<String> haven : havenList )
-					{
-						int x = Integer.parseInt(haven.get(0));
-						int y = Integer.parseInt(haven.get(1));
-						String havenType =  haven.get(2);
-						System.out.println("x: " + x +" y:"+ y);
-						int xEnd = calcEndPointX(x);
-						int yEnd = calcEndPointY(y);
-						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd));
-					}	
-				}catch (SQLException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 
 			});
 			players[this.usrPlayer].refresh();
@@ -475,8 +491,9 @@ public class GameController {
 	}
 
 	private boolean isTrade() throws SQLException {
-		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) AS a FROM ruilaanbod WHERE idspel = " + spelId +  "");
-		if(r.first() && r.getInt(1) >0) return true;
+		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND geaccepteerd IS NULL");
+		ResultSet r2 = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND username = '" + players[usrPlayer].getUsername() + "'");
+		if(r.first() && r2.first() && r.getInt(1) ==1 && r2.getInt(1)== 0) return true;
 		return false;
 	}
 
