@@ -412,11 +412,12 @@ public class GameController {
 	// update ing field
 	public void refresh() {
 		// fetching all data in seperate thread
-		System.out.println("board is refreshing");
+				System.out.println("board is refreshing");
 		try {
 			ArrayList<Tile> hexes = BoardHelper.getAllHexes(spelId);
 			ArrayList<ArrayList<Street>> allStreets = new ArrayList<>();
 			ArrayList<ArrayList<Piece>> allPieces = new ArrayList<>();
+			ArrayList<ArrayList<String>> havenList = BoardHelper.getAllHavens();
 			for (int i = 0; i < players.length; i++) {
 				allStreets.add(BoardHelper.getStreetsPlayer(players[i], spelId));
 				allPieces.add(BoardHelper.getPiecesPlayer(players[i], spelId));
@@ -436,22 +437,7 @@ public class GameController {
 						playboardview.addStreet(street);
 					}
 				}
-				for (ArrayList<Piece> pieces : allPieces) {
-					// places all cities and towns for player
-					for (Piece street : pieces) {
-						playboardview.addPiece(street);
-					}
-				}
-				buttons.setLongestRoad(longestRoad);
-				playboardview.addRobber(robberPos);
-				dice.showDice(diceO.getTotalthrow());
-				refreshButtons();
-				if(trade) startCounterTrade();
 				//havens plaatsen
-				
-				try
-				{
-					ArrayList<ArrayList<String>> havenList = BoardHelper.getAllHavens();
 					for(ArrayList<String> haven : havenList )
 					{
 						int x = Integer.parseInt(haven.get(0));
@@ -484,11 +470,18 @@ public class GameController {
 						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd),im);
 
 					}	
-				}catch (SQLException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				for (ArrayList<Piece> pieces : allPieces) {
+					// places all cities and towns for player
+					for (Piece street : pieces) {
+						playboardview.addPiece(street);
+					}
 				}
+				buttons.setLongestRoad(longestRoad);
+				playboardview.addRobber(robberPos);
+				dice.showDice(diceO.getTotalthrow());
+				refreshButtons();
+				if(trade) startCounterTrade();
+				
 
 			});
 			players[this.usrPlayer].refresh();
