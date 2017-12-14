@@ -211,7 +211,6 @@ public class Catan {
     		    Integer count =  entry.getValue();
     		    
     		    for(int i = 1; i <= count; i++) {
-    		    	System.out.println(key + " " + i);
     		    	String s = String.format("%02d", i);
     		    	sql = sql + ("('" + Catan.getGameId() + "', '" + p.getUsername() + "', '" + (key + s) + "', NULL, NULL, NULL, NULL)");
     		    	amountOfPieces++;
@@ -226,7 +225,6 @@ public class Catan {
     		}
     		
     	}
-    	System.out.println(sql);
     	DatabaseManager.createStatement().executeUpdate(sql);
     }
 
