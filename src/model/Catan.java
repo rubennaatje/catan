@@ -2,6 +2,9 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import controller.DatabaseManager;
 
@@ -189,6 +192,42 @@ public class Catan {
     
     public void invitePlayers() throws Exception {
         DatabaseManager.createStatement().executeUpdate(" ");
+    }
+    
+    public void addPlayerPieces(PlayerModel[] players) throws SQLException {
+    	String sql = "INSERT INTO `spelerstuk` (`idspel`, `username`, `idstuk`, `x_van`, `y_van`, `x_naar`, `y_naar`) VALUES ";
+    	HashMap<String, Integer> pieceCount = new HashMap<String, Integer>();
+    	
+    	pieceCount.put("r", 13);
+    	pieceCount.put("d", 5);
+    	pieceCount.put("c", 4);
+    	
+    	int amountOfPieces = 0;
+    	
+    	for(PlayerModel p : players) {
+    		
+    		for (Entry<String, Integer> entry : pieceCount.entrySet()) {
+    		    String key = entry.getKey();
+    		    Integer count =  entry.getValue();
+    		    
+    		    for(int i = 1; i <= count; i++) {
+    		    	System.out.println(key + " " + i);
+    		    	String s = String.format("%02d", i);
+    		    	sql = sql + ("('" + Catan.getGameId() + "', '" + p.getUsername() + "', '" + (key + s) + "', NULL, NULL, NULL, NULL)");
+    		    	amountOfPieces++;
+    		    	
+    		    	if(amountOfPieces == 88)
+    		    		sql = sql + ";";
+    		    	else 
+    		    		sql = sql + ",";
+    		    		
+    		    }
+    		    
+    		}
+    		
+    	}
+    	System.out.println(sql);
+    	DatabaseManager.createStatement().executeUpdate(sql);
     }
 
 
