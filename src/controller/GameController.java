@@ -445,8 +445,26 @@ public class GameController {
 				dice.showDice(diceO.getTotalthrow());
 				refreshButtons();
 				//havens plaatsen
-				playboardview.drawHaven(new GridLocation(3,1), new GridLocation(3,0));
-				playboardview.drawHaven(new GridLocation(4,1), new GridLocation(3,0));
+				
+				try
+				{
+					ArrayList<ArrayList<String>> havenList = BoardHelper.getAllHavens();
+					for(ArrayList<String> haven : havenList )
+					{
+						int x = Integer.parseInt(haven.get(0));
+						int y = Integer.parseInt(haven.get(1));
+						String havenType =  haven.get(2);
+						System.out.println("x: " + x +" y:"+ y);
+						int xEnd = calcEndPointX(x);
+						int yEnd = calcEndPointY(y);
+						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd));
+					}	
+				}catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 
 			});
 			players[this.usrPlayer].refresh();
@@ -458,5 +476,29 @@ public class GameController {
 	public void closeTrade() {
 		refresh();
 		refreshButtons();
+	}
+	private int calcEndPointX(int point)
+	{
+		if(point == 1 || point ==  2 || point == 4)
+		{
+			point--;
+		}
+		else if(point == 6 || point == 9 || point == 11)
+		{
+			point++;
+		}
+		return point;
+	}
+	private int calcEndPointY(int point)
+	{
+		if(point == 1 || point ==  3 || point == 4 || point ==  6 || point  == 7)
+		{
+			point--;
+		}
+		else if(point == 8 || point == 10)
+		{
+			point++;
+		}
+		return point;
 	}
 }
