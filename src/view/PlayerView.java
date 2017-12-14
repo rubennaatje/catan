@@ -16,6 +16,7 @@ public class PlayerView extends PaneTemplate implements Observer {
 	    @FXML private Text knight;
 	    @FXML private Text score;
 	    @FXML private Text road;
+	    @FXML private Text naam;
 		
 
 	public PlayerView() {
@@ -32,6 +33,7 @@ public class PlayerView extends PaneTemplate implements Observer {
 		knight.setText(playerData.getKnights());
 		score.setText(playerData.getScore());
 		road.setText(playerData.getRoad());
+		naam.setText(playerData.getUsername());
 		
 		switch(playerData.getPlayerNumber())
 		{

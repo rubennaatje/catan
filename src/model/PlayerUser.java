@@ -12,7 +12,11 @@ public class PlayerUser extends PlayerModel {
 
 	HashMap<TileType, Integer> resources;
 
+<<<<<<< HEAD
+	public PlayerUser(String username, String idspel){
+=======
 	public PlayerUser(String username, String idspel) {
+>>>>>>> f1de59ecfa9402b08ee6a4f704f8d37311a9535c
 		super(username, idspel);
 
 	}
