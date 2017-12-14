@@ -8,7 +8,9 @@ import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
@@ -455,17 +457,38 @@ public class GameController {
 						int x = Integer.parseInt(haven.get(0));
 						int y = Integer.parseInt(haven.get(1));
 						String havenType =  haven.get(2);
-						System.out.println("x: " + x +" y:"+ y);
 						int xEnd = calcEndPointX(x);
 						int yEnd = calcEndPointY(y);
-						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd));
+						Color color = Color.BLACK;
+						Image im = new Image("view/images/Vraagteken.png");
+						if(havenType != null)
+						{
+							switch(havenType)
+							{
+							case "G":
+								im = new Image("view/images/Hooi.png");
+								break;
+							case "B":
+								im = new Image("view/images/Steen.png");
+								break;
+							case "H":
+								im = new Image("view/images/Hout.png");
+								break;
+							case "E":
+								im = new Image("view/images/Erts.png");
+								break;
+							case "W":
+								im = new Image("view/images/Schaap.png");
+							}
+						}
+						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd),im);
+
 					}	
 				}catch (SQLException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 
 			});
 			players[this.usrPlayer].refresh();
