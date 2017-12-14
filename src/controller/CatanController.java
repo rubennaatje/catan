@@ -19,10 +19,12 @@ import view.ChallengerView;
 import view.ChallengesView;
 import view.LeaderBoardView;
 import view.LoginView;
+import view.LoseView;
 import view.MenuView;
 import view.RegisterView;
 import view.SplashScreenView;
 import view.WaitingView;
+import view.WinView;
 
 public class CatanController {
 	
@@ -79,6 +81,14 @@ public class CatanController {
 	
 	public void setWaitingOn(int WaitingOn) {
 		 this.WaitingOn = WaitingOn; 
+	}
+	
+	public void openWinView() {
+		new WinView(stage, this).show(); 
+	}
+	
+	public void openLoseView() {
+		new LoseView(stage, this).show(); 
 	}
 	
 	public void startGame(String gameid, boolean creation) {
