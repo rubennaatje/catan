@@ -6,8 +6,8 @@ import controller.DatabaseManager;
 
 public class VictoryPointCard extends DevelopmentCard { //deze kaart geeft 1 victory point
 	
-	public VictoryPointCard(String spelid, String kaartid, String username, String kaarttype, String kaartnaam) {
-		super(spelid, kaartid, username, kaarttype, kaartnaam);
+	public VictoryPointCard(PlayerUser player, String kaartid, String kaarttype, String kaartnaam) {
+		super(player, kaartid, kaarttype, kaartnaam);
 		// TODO Auto-generated constructor stub
 	}
 	

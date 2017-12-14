@@ -7,8 +7,8 @@ public class KnightCard extends DevelopmentCard { // met deze kaart kun je de ri
 	private DevelopCardController controller;
 
 	
-	public KnightCard(String spelid, String kaartid, String username, String kaarttype, String kaartnaam, DevelopCardController developCardController) {
-		super(spelid, kaartid, username, kaarttype, kaartnaam);
+	public KnightCard(PlayerUser player, String kaartid, String kaarttype, String kaartnaam, DevelopCardController developCardController) {
+		super(player, kaartid, kaarttype, kaartnaam);
 		this.controller = developCardController;
 	}
 	
