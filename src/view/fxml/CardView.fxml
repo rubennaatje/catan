@@ -25,7 +25,7 @@
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font></JFXButton>
-      <JFXButton fx:id="selectbutton" layoutX="579.0" layoutY="572.0" onAction="#selectCard" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: white;" text="Selecteer kaart">
+      <JFXButton fx:id="selectbutton" defaultButton="true" layoutX="579.0" layoutY="572.0" onAction="#selectCard" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: white;" text="Selecteer kaart">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
