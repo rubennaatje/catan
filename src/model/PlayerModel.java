@@ -81,7 +81,7 @@ public class PlayerModel extends Observable {
 	}
 
 	
-<<<<<<< HEAD
+
 	@Deprecated
 	public void removeResource(TileType t) {
 		try {
@@ -100,7 +100,7 @@ public class PlayerModel extends Observable {
 		}
 	}
 	
-	public void removeResource(TileType t, Integer amount) throws SQLException {
+	public void removeResources(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
 					+ " WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
@@ -113,8 +113,6 @@ public class PlayerModel extends Observable {
 		}
 	}
 	
-=======
->>>>>>> f1de59ecfa9402b08ee6a4f704f8d37311a9535c
 	private boolean hasTurn()
 	{
 		try

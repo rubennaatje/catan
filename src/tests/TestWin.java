@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package tests;
 
 import controller.CatanController;
@@ -44,4 +43,3 @@ public class TestWin extends Application {
 		controller.openWinView();
 	}
 }
->>>>>>> f1de59ecfa9402b08ee6a4f704f8d37311a9535c

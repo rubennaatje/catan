@@ -577,7 +577,7 @@ public class BoardHelper {
 		}
 		DatabaseManager.createStatement().executeUpdate(
 				"update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = "
-						+ volgnr + ") where spel.idspel = " + spelId);
+						+ volgnr + "), gedobbeld = 0 where spel.idspel = " + spelId);
 		refreshAll(spelId);
 	}
 
