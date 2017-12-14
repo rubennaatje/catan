@@ -240,7 +240,7 @@ public class GameController {
 			ResultSet result = DatabaseManager.createStatement()
 					.executeQuery("SELECT beurt_username FROM spel WHERE idspel = " + spelId);
 			result.next();
-			if (!result.getString(1).equals(players[usrPlayer].getUsername()) && !tradeController.isShown())
+			if (!result.getString(1).equals(players[usrPlayer].getUsername()))
 				await();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -457,8 +457,9 @@ public class GameController {
 	}
 
 	private boolean isTrade() throws SQLException {
-		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) AS a FROM ruilaanbod WHERE idspel = " + spelId +  "");
-		if(r.first() && r.getInt(1) >0) return true;
+		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND geaccepteerd IS NULL");
+		ResultSet r2 = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND username = '" + players[usrPlayer].getUsername() + "'");
+		if(r.first() && r2.first() && r.getInt(1) ==1 && r2.getInt(1)== 0) return true;
 		return false;
 	}
 

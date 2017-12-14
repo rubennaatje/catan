@@ -137,14 +137,24 @@ public class TradeController {
 	}
 	
 	public void showTrade() {
-		popUpTrade.show();
+		try {
+			TradeHelper.clearOffer(spelId);
+			popUpTrade.show();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void showTradeCounter() {
 		try {
+			String offerer =null;
 			ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT * FROM ruilaanbod WHERE idspel = " + spelId + " AND geaccepteerd IS NULL");
+			if(r.first()) {
+				offerer = r.getString("username");
+			}
 			popUpCounterTrade.show();
-			viewCounter.show(TradeHelper.retrieveOffer(r));
+			viewCounter.show(TradeHelper.retrieveOffer(r), offerer);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -157,6 +167,7 @@ public class TradeController {
 	
 	public void close() {
 		popUpTrade.close();
+		popUpCounterTrade.close();
 		superController.closeTrade();
 	}
 
