@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package view;
 
 import controller.CatanController;
@@ -56,4 +55,3 @@ public class WinView extends PaneTemplate{
 		});
 	}
 }
->>>>>>> f1de59ecfa9402b08ee6a4f704f8d37311a9535c
