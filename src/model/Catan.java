@@ -109,7 +109,7 @@ public class Catan {
 							+ " , 15 , 8 , 7  , 'H' , 3	)," + "(	" + gameId + " , 16 , 9 , 9  , 'G' , 15	),(	" + gameId
 							+ " , 17 , 8 , 4  , 'B' , 17	)," + "(	" + gameId + " , 18 , 9 , 6  , 'W' , 7	),(	"
 							+ gameId + " , 19 , 10, 8  , 'H' , 11	);");
-	
+			
 			addDevelopmentCards();
 			addResourceCards();
 			addRobber();
