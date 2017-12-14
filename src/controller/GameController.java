@@ -8,7 +8,9 @@ import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
@@ -36,7 +38,6 @@ public class GameController {
 	private EventHandler<MouseEvent> robber;
 	private DevelopCardController devCon;
 	private TradeController tradeController;
-	private ChatController chatController;
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -44,7 +45,7 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId);
+		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId, this);
 
 		buyEvent = ((e) -> {
 			refresh();
@@ -76,7 +77,7 @@ public class GameController {
 		EventHandler<MouseEvent> trade = ((e) -> {
 			refresh();
 			disableButtons();
-			tradeController.show();
+			tradeController.showTrade();
 		});
 
 		pieceEvent = ((e) -> {
@@ -87,6 +88,7 @@ public class GameController {
 		doubleStreetEvent = ((e) -> {
 			piecePlacement(e);
 			refresh();
+			disableButtons();
 			showStreetPlacable();
 		});
 
@@ -246,6 +248,20 @@ public class GameController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void showDoubleStreetPlacable() {
+		ArrayList<Street> listOfStreet;
+		try {
+			listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
+				for (Street piece : listOfStreet) {
+					playboardview.addStreet(piece, doubleStreetEvent);
+				}
+			});
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void robberPlacement(MouseEvent event) {
 		try {
@@ -361,7 +377,7 @@ public class GameController {
 		});
 	}
 
-	private void disableButtons() {
+	public void disableButtons() {
 		Platform.runLater(() -> {
 			buttons.setDisabled();
 		});
@@ -408,6 +424,7 @@ public class GameController {
 			GridLocation robberPos = BoardHelper.getRobberPos(spelId);
 			int longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
 			diceO.getDBThrow();
+			Boolean trade = isTrade();
 			Platform.runLater(() -> {
 				playboardview.getChildren().clear();
 				for (Tile t : hexes) {
@@ -429,6 +446,50 @@ public class GameController {
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
 				refreshButtons();
+				if(trade) startCounterTrade();
+				//havens plaatsen
+				
+				try
+				{
+					ArrayList<ArrayList<String>> havenList = BoardHelper.getAllHavens();
+					for(ArrayList<String> haven : havenList )
+					{
+						int x = Integer.parseInt(haven.get(0));
+						int y = Integer.parseInt(haven.get(1));
+						String havenType =  haven.get(2);
+						int xEnd = calcEndPointX(x);
+						int yEnd = calcEndPointY(y);
+						Color color = Color.BLACK;
+						Image im = new Image("view/images/Vraagteken.png");
+						if(havenType != null)
+						{
+							switch(havenType)
+							{
+							case "G":
+								im = new Image("view/images/Hooi.png");
+								break;
+							case "B":
+								im = new Image("view/images/Steen.png");
+								break;
+							case "H":
+								im = new Image("view/images/Hout.png");
+								break;
+							case "E":
+								im = new Image("view/images/Erts.png");
+								break;
+							case "W":
+								im = new Image("view/images/Schaap.png");
+							}
+						}
+						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd),im);
+
+					}	
+				}catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			});
 			players[this.usrPlayer].refresh();
 		} catch (SQLException e) {
@@ -436,8 +497,44 @@ public class GameController {
 		}
 	}
 
+	private boolean isTrade() throws SQLException {
+		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND geaccepteerd IS NULL");
+		ResultSet r2 = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND username = '" + players[usrPlayer].getUsername() + "'");
+		if(r.first() && r2.first() && r.getInt(1) ==1 && r2.getInt(1)== 0) return true;
+		return false;
+	}
+
+	private void startCounterTrade() {
+		
+		tradeController.showTradeCounter();
+	}
+	
 	public void closeTrade() {
 		refresh();
 		refreshButtons();
+	}
+	private int calcEndPointX(int point)
+	{
+		if(point == 1 || point ==  2 || point == 4)
+		{
+			point--;
+		}
+		else if(point == 6 || point == 9 || point == 11)
+		{
+			point++;
+		}
+		return point;
+	}
+	private int calcEndPointY(int point)
+	{
+		if(point == 1 || point ==  3 || point == 4 || point ==  6 || point  == 7)
+		{
+			point--;
+		}
+		else if(point == 8 || point == 10)
+		{
+			point++;
+		}
+		return point;
 	}
 }

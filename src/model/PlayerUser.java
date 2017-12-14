@@ -12,10 +12,15 @@ public class PlayerUser extends PlayerModel {
 
 	HashMap<TileType, Integer> resources;
 
+<<<<<<< HEAD
 	public PlayerUser(String username, String idspel){
+=======
+	public PlayerUser(String username, String idspel) {
+>>>>>>> f1de59ecfa9402b08ee6a4f704f8d37311a9535c
 		super(username, idspel);
 
 	}
+
 	public PlayerUser(String username) {
 		super(username);
 	}
@@ -23,13 +28,13 @@ public class PlayerUser extends PlayerModel {
 	@Override
 	public void refresh() {
 		resources = new HashMap<>();
+
 		try {
 			ResultSet resourcesVal = DatabaseManager.createStatement().executeQuery("SELECT"
 					+ " SUM(if(idgrondstofsoort = \"H\", 1, 0)) as H,"
 					+ " SUM(if(idgrondstofsoort = \"W\", 1, 0)) as W,"
 					+ " SUM(if(idgrondstofsoort = \"G\", 1, 0)) AS G,"
-					+ " SUM(if(idgrondstofsoort = \"B\", 1, 0)) AS B," 
-					+ " SUM(if(idgrondstofsoort = \"E\", 1, 0)) AS E"
+					+ " SUM(if(idgrondstofsoort = \"B\", 1, 0)) AS B," + " SUM(if(idgrondstofsoort = \"E\", 1, 0)) AS E"
 					+ " from spelergrondstofkaart s inner join grondstofkaart g on s.idgrondstofkaart = g.idgrondstofkaart where idspel = "
 					+ getSpelId() + " and username = '" + getUsername() + "' LIMIT 1");
 
@@ -41,38 +46,18 @@ public class PlayerUser extends PlayerModel {
 				resources.put(TileType.B, resourcesVal.getInt(4));
 				resources.put(TileType.E, resourcesVal.getInt(5));
 
+				setChanged();
+				notifyObservers();
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		super.refresh();
 	}
-	public HashMap<String, Boolean> getBuyableThings() throws Exception{
-		
-		
-		HashMap<String, Boolean> res = new HashMap<String, Boolean>();
-		res.put("street", false);
-		res.put("city", false);
-		res.put("town", false);
 
-		if(hasResource(TileType.B,1) && hasResource(TileType.H,1)) {
-			res.put("street", true);
-		}
-		
-		if(hasResource(TileType.B,1)&& hasResource(TileType.H,1) && hasResource(TileType.G,1) && hasResource(TileType.W,1)) {
-			res.put("town", true);
-		}
-		
-		if(hasResource(TileType.G,2) && hasResource(TileType.E,3)) {
-			res.put("city", true);
-		}
-		
-		return res;
-	}
-	
-	/**Returns True if 
+	/**
+	 * Returns True if
 	 * 
 	 * @param t
 	 * @param v
@@ -85,13 +70,35 @@ public class PlayerUser extends PlayerModel {
 		}
 		return false;
 	}
-	
+
+	public HashMap<String, Boolean> getBuyableThings() throws Exception {
+
+		HashMap<String, Boolean> res = new HashMap<String, Boolean>();
+		res.put("street", false);
+		res.put("city", false);
+		res.put("town", false);
+
+		if (hasResource(TileType.B, 1) && hasResource(TileType.H, 1)) {
+			res.put("street", true);
+		}
+
+		if (hasResource(TileType.B, 1) && hasResource(TileType.H, 1) && hasResource(TileType.G, 1)
+				&& hasResource(TileType.W, 1)) {
+			res.put("town", true);
+		}
+
+		if (hasResource(TileType.G, 2) && hasResource(TileType.E, 3)) {
+			res.put("city", true);
+		}
+
+		return res;
+	}
+
 	public void setType(PlayerType type) {
 		this.type = type;
 	}
-	
-	public HashMap<TileType, Integer> getResources()
-	{
+
+	public HashMap<TileType, Integer> getResources() {
 		return resources;
 	}
 }

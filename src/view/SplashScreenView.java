@@ -1,6 +1,9 @@
 package view;
 
+import java.sql.SQLException;
+
 import controller.CatanController;
+import controller.DatabaseManager;
 import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -20,6 +23,17 @@ public class SplashScreenView extends PaneTemplate
 		
 		PauseTransition pause = new PauseTransition(Duration.seconds(3));
 		pause.setOnFinished(e -> {
+			
+			try {
+				//DatabaseManager.createStatement().execute("DELETE FROM spelergrondstofkaart WHERE idspel = 788");
+				//DatabaseManager.createStatement().execute("DELETE FROM chatregel WHERE idspel = 788");
+				//DatabaseManager.createStatement().execute("DELETE FROM spelerontwikkelingskaart WHERE idspel = 788");
+				//DatabaseManager.createStatement().execute("DELETE FROM speler WHERE idspel = 788");
+				//DatabaseManager.createStatement().execute("DELETE FROM spel WHERE idspel = 788");
+			} catch (Exception ex) {
+				
+			}
+			
 			new LoginView(stage, controller).show();
 		});
 		

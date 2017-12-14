@@ -109,6 +109,7 @@ public class Catan {
 	
 			addDevelopmentCards();
 			addResourceCards();
+			addRobber();
 		}
 	}
 	/**
@@ -152,6 +153,10 @@ public class Catan {
 		}
 
 		DatabaseManager.createStatement().executeUpdate(query);
+	}
+	
+	public void addRobber() throws SQLException {
+		DatabaseManager.createStatement().executeUpdate("INSERT INTO `struikrover` (`idspel`, `idtegel`) VALUES ('" + Catan.getGameId() + "', '10');");
 	}
 	
     public PlayerModel[] getCurrentPlayers() throws Exception {

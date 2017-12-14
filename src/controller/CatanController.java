@@ -3,7 +3,8 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Arrays;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,10 +19,12 @@ import view.ChallengerView;
 import view.ChallengesView;
 import view.LeaderBoardView;
 import view.LoginView;
+import view.LoseView;
 import view.MenuView;
 import view.RegisterView;
 import view.SplashScreenView;
 import view.WaitingView;
+import view.WinView;
 
 public class CatanController {
 	
@@ -69,7 +72,7 @@ public class CatanController {
 	public void openWaitingScreen(Challenge selected) {
 		Waiting waitModel = new Waiting(this, selected);
 		setWaitingOn(waitModel.waitForPlayers());
-		new WaitingView(stage, this).show(); 
+		new WaitingView(stage, this, waitModel).show(); 
 	}
 
 	public int getWaitingOn() {
@@ -78,6 +81,14 @@ public class CatanController {
 	
 	public void setWaitingOn(int WaitingOn) {
 		 this.WaitingOn = WaitingOn; 
+	}
+	
+	public void openWinView() {
+		new WinView(stage, this).show(); 
+	}
+	
+	public void openLoseView() {
+		new LoseView(stage, this).show(); 
 	}
 	
 	public void startGame(String gameid, boolean creation) {
@@ -166,34 +177,23 @@ public class CatanController {
 			
 			DatabaseManager.createStatement().executeUpdate(
 					"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
-							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
+							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, TRUE);");
 			
-			ArrayList<String> kleuren = new ArrayList<>();
-			ResultSet kleurenResult = DatabaseManager.createStatement().executeQuery("SELECT kleur FROM speelkleur");
-			
-			while (kleurenResult.next()) {
-				kleuren.add(kleurenResult.getString(1));
-			}
-			
-			kleurenResult.close();
+			List<String> kleuren = Arrays.asList("wit", "rood", "blauw", "oranje");
 			
 			int count = 1;
-			String kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
-			kleuren.remove(kleur);
-			
-			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleur + "', 'uitdager', 0, " + count + ", 0)");
+			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitdager', 0, " + count + ", 0)");
 			
 			for (PlayerUser player : items) {
 				count++;
-				kleur = kleuren.get(ThreadLocalRandom.current().nextInt(0, kleuren.size()));
-				kleuren.remove(kleur);
-				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleur + "', 'uitgedaagde', 0, " + count + ", 0)");
+				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
 			}
+			
+			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET beurt_username = '" + getPlayer().getUsername() + "' WHERE idspel = " + gameId);
 			 
 			openWaitingScreen(new Challenge(getPlayer().getUsername(), gameId, getPlayer()));
 		}
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

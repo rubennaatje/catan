@@ -56,7 +56,7 @@ public class PlayerModel extends Observable {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
 		this.hasTurn = hasTurn();
-        if(this.score != null && Integer.parseInt(this.score) >= 10)
+		if(this.score != null && Integer.parseInt(this.score) >= 10)
 		{
 			hasWon = true;
 		}
@@ -81,6 +81,7 @@ public class PlayerModel extends Observable {
 	}
 
 	
+<<<<<<< HEAD
 	@Deprecated
 	public void removeResource(TileType t) {
 		try {
@@ -112,8 +113,9 @@ public class PlayerModel extends Observable {
 		}
 	}
 	
+=======
+>>>>>>> f1de59ecfa9402b08ee6a4f704f8d37311a9535c
 	private boolean hasTurn()
-
 	{
 		try
 		{
@@ -132,6 +134,19 @@ public class PlayerModel extends Observable {
 		return false;
 	}
 
+	public void removeResource(TileType t, Integer amount) throws SQLException {
+		for (int i = 0; i < amount; i++) {
+			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
+					+ " WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
+					+ " (SELECT idgrondstofkaart from (SELECT idgrondstofkaart FROM spelergrondstofkaart a natural join grondstofkaart where a.username = '" + username + "' and idgrondstofsoort = '"
+					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofsoort asc limit 1) as da);");
+			
+			if(rowsEffected == 0) {
+				throw new SQLException("No resource to remove");
+			}
+		}
+	}
+	
 	public void addResource(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
@@ -140,7 +155,7 @@ public class PlayerModel extends Observable {
 					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofkaart asc limit 1) as da);");
 
 			if(rowsEffected == 0) {
-				throw new SQLException("No resourceCard to add");
+				throw new SQLException("No " + t.toString() + " to add");
 			}
 		}
 	}
