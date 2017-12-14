@@ -28,6 +28,6 @@ public class CounterTradeView extends TradeViewTemplate {
 	}
 	
 	public void reject(MouseEvent e) {
-		
+		controller.registerReject();
 	}
 }

@@ -240,7 +240,7 @@ public class GameController {
 			ResultSet result = DatabaseManager.createStatement()
 					.executeQuery("SELECT beurt_username FROM spel WHERE idspel = " + spelId);
 			result.next();
-			if (!result.getString(1).equals(players[usrPlayer].getUsername()))
+			if (!result.getString(1).equals(players[usrPlayer].getUsername()) && !tradeController.isShown())
 				await();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -422,6 +422,7 @@ public class GameController {
 			GridLocation robberPos = BoardHelper.getRobberPos(spelId);
 			int longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
 			diceO.getDBThrow();
+			Boolean trade = isTrade();
 			Platform.runLater(() -> {
 				playboardview.getChildren().clear();
 				for (Tile t : hexes) {
@@ -443,6 +444,7 @@ public class GameController {
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
 				refreshButtons();
+				if(trade) startCounterTrade();
 				//havens plaatsen
 				playboardview.drawHaven(new GridLocation(3,1), new GridLocation(3,0));
 				playboardview.drawHaven(new GridLocation(4,1), new GridLocation(3,0));
@@ -454,8 +456,15 @@ public class GameController {
 		}
 	}
 
+	private boolean isTrade() throws SQLException {
+		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) AS a FROM ruilaanbod WHERE idspel = " + spelId +  "");
+		if(r.first() && r.getInt(1) >0) return true;
+		return false;
+	}
+
 	private void startCounterTrade() {
 		
+		tradeController.showTradeCounter();
 	}
 	
 	public void closeTrade() {

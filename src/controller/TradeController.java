@@ -69,7 +69,7 @@ public class TradeController {
 		new Thread(() -> {
 			int i = 0;
 			ArrayList<String> names = new ArrayList<>();
-			while (i < 3) {
+			while (i < 3 && popUpTrade.isShowing()) {
 				System.out.println("waiting for trade response");
 				try {
 					Thread.sleep(CatanController.refreshTime);
@@ -77,7 +77,7 @@ public class TradeController {
 							"SELECT username, geeft_baksteen, geeft_wol, geeft_erts, geeft_graan , geeft_hout, "
 							+ "vraagt_baksteen, vraagt_wol, vraagt_erts, vraagt_graan, vraagt_hout, geaccepteerd FROM catan.ruilaanbod "
 									+ "WHERE idspel = " + spelId + " AND username != '" + players[usrPlayer].getUsername() + "';");
-					while (r.first() && popUpTrade.isShowing()) {
+					while (r.next()) {
 						String playerName = r.getString("username");
 						System.out.println(playerName);
 						if (!names.contains(playerName)) {
@@ -150,6 +150,11 @@ public class TradeController {
 		}		
 	}
 
+	public boolean isShown() {
+		if(popUpCounterTrade.isShowing() || popUpTrade.isShowing()) return true;
+		return false;
+	}
+	
 	public void close() {
 		popUpTrade.close();
 		superController.closeTrade();

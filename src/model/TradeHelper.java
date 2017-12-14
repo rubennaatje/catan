@@ -35,6 +35,7 @@ public class TradeHelper {
 				+ tradeSuggestion[1].get(TileType.H) + ", "
 				+ accepted
 				+")");
+		BoardHelper.refreshAll(spelId);
 	}
 
 	/**
@@ -90,6 +91,7 @@ public class TradeHelper {
 			counterer.addResource(TileType.H, r.getInt("vraagt_hout"));      
 			counterer.addResource(TileType.W, r.getInt("vraagt_wol"));       
 		}
+		BoardHelper.refreshAll(spelId);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -113,4 +115,6 @@ public class TradeHelper {
 		HashMap[] bloob = {offer, request};
 		return bloob;
 	}
+	
+	
 }
