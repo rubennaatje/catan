@@ -573,8 +573,7 @@ public class BoardHelper {
 		DatabaseManager.createStatement().executeUpdate(
 				"update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = "
 						+ volgnr + ") where spel.idspel = " + spelId);
-		DatabaseManager.createStatement().executeUpdate(
-				"UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
+		refreshAll(spelId);
 	}
 
 	public static void nextTurnBackward(String spelId) throws SQLException {
@@ -591,8 +590,7 @@ public class BoardHelper {
 		DatabaseManager.createStatement().executeUpdate(
 				"update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = "
 						+ volgnr + ") where spel.idspel = " + spelId);
-		DatabaseManager.createStatement().executeUpdate(
-				"UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
+		refreshAll(spelId);
 	}
 
 	public static void placeRobber(String spelId, GridLocation loc) throws SQLException {
@@ -610,6 +608,7 @@ public class BoardHelper {
 		}
 		return null;
 	}
+
 	public static ArrayList<ArrayList<String>> getAllHavens() throws SQLException
 	{
 		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
@@ -623,5 +622,9 @@ public class BoardHelper {
 			list.add(tempList);
 		}
 		return list;
+	}
+
+	public static void refreshAll(String spelId) throws SQLException {
+		DatabaseManager.createStatement().executeUpdate("UPDATE speler SET shouldrefresh = 1 WHERE idspel = " + spelId + "");
 	}
 }
