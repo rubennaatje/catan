@@ -26,6 +26,9 @@ public class DiceView extends PaneTemplate {
 	}
 
 	public void showDice(int totalthrow) {
+		if(totalthrow < 2)
+			return;
+		
 		double max = (double)totalthrow / 2;
 		double min = (double)totalthrow - 6;
 	
@@ -36,7 +39,6 @@ public class DiceView extends PaneTemplate {
 		Random r = new Random();
 		int n1 = (int) (r.nextDouble() * (max - min) + min);
 		int n2 = totalthrow - n1;
-		
 		dice1.setImage(new Image("/view/images/dice" + Integer.toString(n1) +".png"));
 		dice2.setImage(new Image("/view/images/dice" + Integer.toString(n2) +".png"));
 	}

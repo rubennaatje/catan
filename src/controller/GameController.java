@@ -36,7 +36,6 @@ public class GameController {
 	private EventHandler<MouseEvent> robber;
 	private DevelopCardController devCon;
 	private TradeController tradeController;
-	private ChatController chatController;
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -44,7 +43,7 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId);
+		this.devCon = new DevelopCardController(players[usrPlayer].getUsername(), spelId, this);
 
 		buyEvent = ((e) -> {
 			refresh();
@@ -76,7 +75,7 @@ public class GameController {
 		EventHandler<MouseEvent> trade = ((e) -> {
 			refresh();
 			disableButtons();
-			tradeController.show();
+			tradeController.showTrade();
 		});
 
 		pieceEvent = ((e) -> {
@@ -87,6 +86,7 @@ public class GameController {
 		doubleStreetEvent = ((e) -> {
 			piecePlacement(e);
 			refresh();
+			disableButtons();
 			showStreetPlacable();
 		});
 
@@ -240,8 +240,22 @@ public class GameController {
 			ResultSet result = DatabaseManager.createStatement()
 					.executeQuery("SELECT beurt_username FROM spel WHERE idspel = " + spelId);
 			result.next();
-			if (!result.getString(1).equals(players[usrPlayer].getUsername()))
+			if (!result.getString(1).equals(players[usrPlayer].getUsername()) && !tradeController.isShown())
 				await();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showDoubleStreetPlacable() {
+		ArrayList<Street> listOfStreet;
+		try {
+			listOfStreet = BoardHelper.getPlacableStreePos(players[usrPlayer], spelId);
+			Platform.runLater(() -> {
+				for (Street piece : listOfStreet) {
+					playboardview.addStreet(piece, doubleStreetEvent);
+				}
+			});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -361,7 +375,7 @@ public class GameController {
 		});
 	}
 
-	private void disableButtons() {
+	public void disableButtons() {
 		Platform.runLater(() -> {
 			buttons.setDisabled();
 		});
@@ -408,6 +422,7 @@ public class GameController {
 			GridLocation robberPos = BoardHelper.getRobberPos(spelId);
 			int longestRoad = BoardHelper.getLongestRoad(players[usrPlayer], spelId);
 			diceO.getDBThrow();
+			Boolean trade = isTrade();
 			Platform.runLater(() -> {
 				playboardview.getChildren().clear();
 				for (Tile t : hexes) {
@@ -429,6 +444,7 @@ public class GameController {
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
 				refreshButtons();
+				if(trade) startCounterTrade();
 				//havens plaatsen
 				playboardview.drawHaven(new GridLocation(3,1), new GridLocation(3,0));
 				playboardview.drawHaven(new GridLocation(4,1), new GridLocation(3,0));
@@ -440,6 +456,17 @@ public class GameController {
 		}
 	}
 
+	private boolean isTrade() throws SQLException {
+		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) AS a FROM ruilaanbod WHERE idspel = " + spelId +  "");
+		if(r.first() && r.getInt(1) >0) return true;
+		return false;
+	}
+
+	private void startCounterTrade() {
+		
+		tradeController.showTradeCounter();
+	}
+	
 	public void closeTrade() {
 		refresh();
 		refreshButtons();

@@ -13,12 +13,21 @@ public class CounterTradeView extends TradeViewTemplate {
 	
 	@FXML private Label sendingPlayer;
 	
-	public CounterTradeView(HashMap<TileType, Integer>[] offerData, TradeController controller) {
+	public CounterTradeView(TradeController controller) {
 		super(CounterTradeView.class.getResource("fxml/counterTrade.fxml"), controller);
-		fillLabels(offerData);
+		
 	}
 	
 	public void offerBtnClick(MouseEvent e) {
 		controller.submitCounterTradeRequest(retrieveValues());
+	}
+	
+	
+	public void show(HashMap<TileType, Integer>[] offerData) {
+		fillLabels(offerData);
+	}
+	
+	public void reject(MouseEvent e) {
+		controller.registerReject();
 	}
 }

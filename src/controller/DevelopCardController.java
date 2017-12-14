@@ -17,10 +17,13 @@ public class DevelopCardController {
 	private String spelId;
 	private String username;
 	private ArrayList<DevelopmentCard> list = new ArrayList<>();
-
-	public DevelopCardController(String spelId, String username) {
+	private GameController superController;
+	
+	
+	public DevelopCardController(String spelId, String username, GameController controller) {
 		this.spelId = spelId;
 		this.username = username;
+		this.superController = controller;
 	}
 
 	public void givePlayerCard() {
@@ -75,10 +78,10 @@ public class DevelopCardController {
 
 				switch (kaarttype) { // create card object
 				case "ridder":
-					list.add(new KnightCard(spelId, cardId, username, kaarttype, kaartnaam));
+					list.add(new KnightCard(spelId, cardId, username, kaarttype, kaartnaam, this));
 					break;
 				case "gebouw":
-					list.add(new ProgressCard(spelId, cardId, username, kaarttype, kaartnaam, uitleg));
+					list.add(new ProgressCard(spelId, cardId, username, kaarttype, kaartnaam, uitleg, this));
 					break;
 				case "vooruitgang":
 					list.add(new VictoryPointCard(spelId, cardId, username, kaarttype, kaartnaam));
@@ -107,6 +110,16 @@ public class DevelopCardController {
 		list.remove(index);
 		refreshDevCards();
 
+	}
+
+	public void place2Streets() {
+		superController.disableButtons();
+		superController.showDoubleStreetPlacable();
+	}
+
+	public void moveRobber() {
+		superController.disableButtons();
+		superController.showRobberPlacable();
 	}
 
 }
