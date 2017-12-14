@@ -5,6 +5,7 @@ import java.awt.Point;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -25,6 +26,10 @@ public class HexView extends Group {
 			hex.getPoints().add(pointsIn[i].getY() - location.getY());
 		}
 
+		hex.setStroke(Color.BEIGE);
+		
+		hex.setStrokeWidth(0.5);
+		
 		Circle fiche = new Circle();
 		
 		fiche.getStyleClass().add("fische");
