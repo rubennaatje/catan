@@ -50,6 +50,5 @@ public class TestStartController extends Application {
         }
         devcard.playCard(0);
 		new Thread(() -> gameController.start()).start();
-	}
-
+  }
 }

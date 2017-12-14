@@ -40,7 +40,7 @@ public class ChatView extends PaneTemplate {
 	}
 
 	public ObservableValue<Number> getListWidth() {
-		return listView.widthProperty().subtract(30);
+		return listView.widthProperty().subtract(40);
 	}
 
 }

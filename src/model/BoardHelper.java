@@ -477,13 +477,18 @@ public class BoardHelper {
 
 	// for pieces
 	public static void registerPlacement(Piece pieceModel, String idSpel) throws SQLException {
+		if(pieceModel.getType() == PieceType.STAD) {
+		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = NULL "
+				+ ", y_van = NULL WHERE y_naar IS NULL AND x_naam IS NULL AND username = '" + pieceModel.getPlayer().getUsername() + "' AND x_van = " + pieceModel.getPos().x + " AND y_van=" + pieceModel.getPos().y);
+		}
+		
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + pieceModel.getPos().x
 				+ ", y_van = " + pieceModel.getPos().y
 				+ "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
 				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = '" + pieceModel.getType().toString()
 				+ "' AND username = '" + pieceModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel
 				+ " and username = '" + pieceModel.getPlayer().getUsername() + "'");
-
+		
 	}
 
 	// for street
@@ -572,9 +577,8 @@ public class BoardHelper {
 		}
 		DatabaseManager.createStatement().executeUpdate(
 				"update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = "
-						+ volgnr + ") where spel.idspel = " + spelId);
-		DatabaseManager.createStatement().executeUpdate(
-				"UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
+						+ volgnr + "), gedobbeld = 0 where spel.idspel = " + spelId);
+		refreshAll(spelId);
 	}
 
 	public static void nextTurnBackward(String spelId) throws SQLException {
@@ -591,8 +595,7 @@ public class BoardHelper {
 		DatabaseManager.createStatement().executeUpdate(
 				"update spel set beurt_username= (select username from speler where idspel = spel.idspel and volgnr = "
 						+ volgnr + ") where spel.idspel = " + spelId);
-		DatabaseManager.createStatement().executeUpdate(
-				"UPDATE speler set shouldrefresh = 1 where volgnr = " + volgnr + " and idspel = " + spelId);
+		refreshAll(spelId);
 	}
 
 	public static void placeRobber(String spelId, GridLocation loc) throws SQLException {
@@ -609,5 +612,24 @@ public class BoardHelper {
 			return new GridLocation(results.getInt(1), results.getInt(2));
 		}
 		return null;
+	}
+
+	public static ArrayList<ArrayList<String>> getAllHavens() throws SQLException
+	{
+		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		ResultSet results = DatabaseManager.createStatement().executeQuery("SELECT x,y,idgrondstofsoort FROM locatie WHERE haven = 1");
+		while(results.next())
+		{
+			ArrayList<String> tempList = new ArrayList<>();
+			tempList.add(results.getString(1));
+			tempList.add(results.getString(2));
+			tempList.add(results.getString(3));
+			list.add(tempList);
+		}
+		return list;
+	}
+
+	public static void refreshAll(String spelId) throws SQLException {
+		DatabaseManager.createStatement().executeUpdate("UPDATE speler SET shouldrefresh = 1 WHERE idspel = " + spelId + "");
 	}
 }

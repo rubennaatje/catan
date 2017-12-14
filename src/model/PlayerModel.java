@@ -80,6 +80,26 @@ public class PlayerModel extends Observable {
 		results.close();
 	}
 
+	
+
+	@Deprecated
+	public void removeResource(TileType t) {
+		try {
+			ResultSet results = DatabaseManager.createStatement().executeQuery(
+					"SELECT g.idgrondstofkaart FROM grondstofkaart AS g INNER JOIN spelergrondstofkaart AS s ON s.idgrondstofkaart = g.idgrondstofkaart WHERE idspel = '"
+							+ getSpelId() + "' AND username = '" + getUsername() + "' AND g.idgrondstofsoort = '"
+							+ t.toString() + "' ORDER BY s.idgrondstofkaart LIMIT 1;");
+			while (results.next()) {
+				DatabaseManager.createStatement()
+						.executeUpdate("UPDATE spelergrondstofkaart SET username = NULL WHERE idspel='" + getSpelId()
+								+ "' AND idgrondstofkaart = '" + results.getString(1) + "';");
+			}
+			results.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void removeResources(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
@@ -112,6 +132,19 @@ public class PlayerModel extends Observable {
 		return false;
 	}
 
+	public void removeResource(TileType t, Integer amount) throws SQLException {
+		for (int i = 0; i < amount; i++) {
+			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = NULL"
+					+ " WHERE idspel='" + getSpelId() + "' AND idgrondstofkaart = "
+					+ " (SELECT idgrondstofkaart from (SELECT idgrondstofkaart FROM spelergrondstofkaart a natural join grondstofkaart where a.username = '" + username + "' and idgrondstofsoort = '"
+					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofsoort asc limit 1) as da);");
+			
+			if(rowsEffected == 0) {
+				throw new SQLException("No resource to remove");
+			}
+		}
+	}
+	
 	public void addResource(TileType t, Integer amount) throws SQLException {
 		for (int i = 0; i < amount; i++) {
 			int rowsEffected = DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart SET username = '" + username
@@ -120,7 +153,7 @@ public class PlayerModel extends Observable {
 					+ t.toString() + "' and a.idspel = " + spelId + " order by idgrondstofkaart asc limit 1) as da);");
 
 			if(rowsEffected == 0) {
-				throw new SQLException("No resourceCard to add");
+				throw new SQLException("No " + t.toString() + " to add");
 			}
 		}
 	}
@@ -164,6 +197,10 @@ public class PlayerModel extends Observable {
 
 	public String getSpelId() {
 		return spelId;
+	}
+	
+	public void setSpelId(String spelId) {
+		this.spelId = spelId;
 	}
 
 	public boolean getPlayerTurn()

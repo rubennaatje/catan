@@ -19,10 +19,12 @@ import view.ChallengerView;
 import view.ChallengesView;
 import view.LeaderBoardView;
 import view.LoginView;
+import view.LoseView;
 import view.MenuView;
 import view.RegisterView;
 import view.SplashScreenView;
 import view.WaitingView;
+import view.WinView;
 
 public class CatanController {
 	
@@ -81,12 +83,22 @@ public class CatanController {
 		 this.WaitingOn = WaitingOn; 
 	}
 	
+	public void openWinView() {
+		new WinView(stage, this).show(); 
+	}
+	
+	public void openLoseView() {
+		new LoseView(stage, this).show(); 
+	}
+	
 	public void startGame(String gameid, boolean creation) {
-
+		getPlayer().setSpelId(gameid);
+		
 		try {
 			catan.initGame(gameid, creation);
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
+	        catan.addPlayerPieces(players);
 	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
 	        
 			new Thread(() -> gameController.start()).start();
@@ -167,7 +179,7 @@ public class CatanController {
 			
 			DatabaseManager.createStatement().executeUpdate(
 					"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
-							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
+							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, TRUE);");
 			
 			List<String> kleuren = Arrays.asList("wit", "rood", "blauw", "oranje");
 			
@@ -178,11 +190,13 @@ public class CatanController {
 				count++;
 				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
 			}
+			
+			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET beurt_username = '" + getPlayer().getUsername() + "' WHERE idspel = " + gameId);
 			 
 			openWaitingScreen(new Challenge(getPlayer().getUsername(), gameId, getPlayer()));
 		}
 		catch (SQLException e) {
-			
+			e.printStackTrace();
 		}
 	}
 	

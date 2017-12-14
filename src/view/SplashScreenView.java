@@ -23,6 +23,13 @@ public class SplashScreenView extends PaneTemplate
 		
 		PauseTransition pause = new PauseTransition(Duration.seconds(3));
 		pause.setOnFinished(e -> {
+			
+			try {
+				//DatabaseManager.createStatement().execute("DELETE FROM spel WHERE idspel = 789");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			
 			new LoginView(stage, controller).show();
 		});
 		

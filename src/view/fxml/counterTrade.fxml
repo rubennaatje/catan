@@ -143,6 +143,6 @@
       <Button fx:id="biedBtn" alignment="CENTER" layoutX="320.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#offerBtnClick" text="Accepteer" textAlignment="CENTER" />
       <Label layoutX="205.0" layoutY="89.0" text="Voorstel door:" />
       <Label fx:id="sendingPlayer" layoutX="320.0" layoutY="89.0" prefHeight="21.0" prefWidth="28.0" />
-      <Button fx:id="reject" alignment="CENTER" layoutX="214.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#reject" text="Afwijzen" textAlignment="CENTER" />
+      <Button alignment="CENTER" layoutX="214.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#reject" text="Afwijzen" textAlignment="CENTER" />
    </children>
 </fx:root>
