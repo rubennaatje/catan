@@ -337,7 +337,7 @@ public class BoardHelper {
 		ArrayList<Street> allPossibleStreets = populateStreetXYPairs(user);
 		ArrayList<Street> returnStreet = new ArrayList<>();
 		while (userStreetPos.next()) {
-			GridLocation GridLocationA = new GridLocation(userStreetPos.getInt(0), userStreetPos.getInt(1));
+			GridLocation GridLocationA = new GridLocation(userStreetPos.getInt(1), userStreetPos.getInt(2));
 			for (Street pos : allPossibleStreets) {
 				if (pos.getStartPos().equals(GridLocationA) || pos.getEndPos().equals(GridLocationA)) {
 					returnStreet.add(pos);
