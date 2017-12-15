@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="374.0" fitWidth="400.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/cardsBackgroundsmall.png" />
+            <Image url="@../images/cardsBackground2.png" />
          </image>
       </ImageView>
       <Pane layoutX="112.0" layoutY="19.0" prefHeight="262.0" prefWidth="177.0" style="-fx-background-color: white;">
@@ -57,3 +57,4 @@
       </JFXButton>
    </children>
 </fx:root>
+ 
