@@ -584,7 +584,7 @@ public class BoardHelper
 		{
 			DatabaseManager.createStatement()
 					.executeUpdate("UPDATE spelerstuk SET x_van = NULL "
-							+ ", y_van = NULL WHERE y_naar IS NULL AND x_naam IS NULL AND username = '"
+							+ ", y_van = NULL WHERE y_naar IS NULL AND x_naar IS NULL AND username = '"
 							+ pieceModel.getPlayer().getUsername() + "' AND x_van = " + pieceModel.getPos().x
 							+ " AND y_van=" + pieceModel.getPos().y);
 
