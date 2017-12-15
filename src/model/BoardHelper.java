@@ -177,7 +177,7 @@ public class BoardHelper
 		}
 
 		if (result > 6 && !sharedHigh) {
-			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET langste_hr_username= '" + name + "'");
+			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET langste_hr_username= '" + name + "' where idspel = '" + spelId + "'");
 		}
 	}
 	

@@ -112,10 +112,11 @@ public class PlayerUser extends PlayerModel {
 			lhrUsername = result.getString(2);
 		}
 		
-		if(grmUsername == username || lhrUsername == username) {
-			if(grmUsername == username && lhrUsername == username) {
-				newScore += 4;
-			}
+		if(grmUsername != null && grmUsername.equals(username)) {
+			newScore += 2;
+		}
+		
+		if(lhrUsername != null && lhrUsername.equals(username)) {
 			newScore += 2;
 		}
 		
