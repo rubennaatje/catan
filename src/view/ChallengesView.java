@@ -35,7 +35,7 @@ public class ChallengesView extends PaneTemplate {
 		
 		new Thread(() -> {
 			addBoard(controller.getChallenges());
-		});
+		}).start();
 		
 		btnAccept.setOnAction((ActionEvent e) -> {
 
