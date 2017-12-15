@@ -56,7 +56,7 @@ public class GameMergeView extends Pane {
 		setWidth(playBoard.getPrefWidth() + chatView.getPrefWidth());
 		
 		cardView.setLayoutX(playBoard.getLayoutX()+playBoard.getPrefWidth());
-		cardView.setLayoutY(chatView.getLayoutY()+chatView.getPrefHeight());
+		cardView.setLayoutY(chatView.getLayoutY()+ 400);
 		getChildren().add(cardView);
 		
 		
