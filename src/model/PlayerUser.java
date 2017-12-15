@@ -147,4 +147,40 @@ public class PlayerUser extends PlayerModel {
 			throw new SQLException("No points to add");
 		}	
 	}
+	
+	public void takeResources (PieceType pieceType) {
+		switch(pieceType){
+		case DORP:
+			try {
+				removeResources(TileType.B, 1);
+				removeResources(TileType.H, 1);
+				removeResources(TileType.W, 1);
+				removeResources(TileType.G, 1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case STAD:
+			try {
+				removeResources(TileType.E, 3);
+				removeResources(TileType.G, 2);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		}
+		
+		refresh();
+	}
+
+	public void takeResourcesStreet () {
+		try {
+			removeResources(TileType.B, 1);
+			removeResources(TileType.H, 1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		refresh();
+	}
 }
