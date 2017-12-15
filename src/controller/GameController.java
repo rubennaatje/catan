@@ -39,6 +39,8 @@ public class GameController {
 	private DevelopCardController devCon;
 	private TradeController tradeController;
 
+	private CardView cardView;
+
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer;
@@ -148,12 +150,15 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
+		//functionality for cardView
+		cardView = new CardView();
+		
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
 		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
-				chat.getView());
+				chat.getView(), cardView);
 
 		refresh();
 		mergeView.show();

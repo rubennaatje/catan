@@ -56,9 +56,14 @@ public class CardView extends PaneTemplate
 		loadWindow();
 	}
 
+	public CardView()
+	{
+		super(CardView.class.getResource("fxml/CardView.fxml"));
+		loadWindow();
+	}
 
 
-	public void loadWindow()
+	private void loadWindow()
 	{
 		addCards();
 		String amountnumber = "" + (cards.size() - 1);
