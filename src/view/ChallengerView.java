@@ -49,7 +49,7 @@ public class ChallengerView extends PaneTemplate {
 		
 		new Thread(() -> {
 			addBoard(controller.getPlayers());
-		});
+		}).start();
 		
 		btnChallenge.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -79,7 +79,7 @@ public class ChallengerView extends PaneTemplate {
 		    public void run() {
 		    	playerName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
 				uitdager.setItems(observableList);
-		    }
+			}
 		});
 	}
 	

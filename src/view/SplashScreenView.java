@@ -21,7 +21,7 @@ public class SplashScreenView extends PaneTemplate
 	public void show() {
 		super.show();
 		
-		PauseTransition pause = new PauseTransition(Duration.seconds(3));
+		PauseTransition pause = new PauseTransition(Duration.seconds(1));
 		pause.setOnFinished(e -> {
 			
 			try {
