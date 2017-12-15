@@ -98,6 +98,9 @@ public class CatanController {
 			catan.initGame(gameid, creation);
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
+	        if (creation) {
+	        	catan.addPlayerPieces(players);
+	        }
 	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
 	        
 			new Thread(() -> gameController.start()).start();

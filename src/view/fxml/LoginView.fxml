@@ -59,7 +59,7 @@
 						<Font name="Arial Bold" size="14.0" />
 					</font>
 				</JFXButton>
-				<JFXButton fx:id="btnLogin" layoutX="133.0" layoutY="280.0" prefHeight="37.0"
+				<JFXButton fx:id="btnLogin" defaultButton="true" layoutX="133.0" layoutY="280.0" prefHeight="37.0"
 					prefWidth="103.0" style="-fx-background-color: #ef8200;" text="Login"
 					textFill="WHITE">
 					<font>
