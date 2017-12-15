@@ -13,8 +13,8 @@ public class PlayerUser extends PlayerModel {
 	HashMap<TileType, Integer> resources;
 
 
-	public PlayerUser(String username, String idspel){
-		super(username, idspel);
+	public PlayerUser(String username, String idspel, PlayerType type){
+		super(username, idspel, type);
 
 	}
 
@@ -27,6 +27,7 @@ public class PlayerUser extends PlayerModel {
 		resources = new HashMap<>();
 
 		try {
+			refreshVictoryPoints();
 			ResultSet resourcesVal = DatabaseManager.createStatement().executeQuery("SELECT"
 					+ " SUM(if(idgrondstofsoort = \"H\", 1, 0)) as H,"
 					+ " SUM(if(idgrondstofsoort = \"W\", 1, 0)) as W,"
@@ -97,5 +98,55 @@ public class PlayerUser extends PlayerModel {
 
 	public HashMap<TileType, Integer> getResources() {
 		return resources;
+	}
+	
+	public void refreshVictoryPoints() throws SQLException{
+		String grmUsername = null;
+		String lhrUsername = null;
+		int Score = 0;
+		int newScore = 0;
+		
+		//check if player has longest road or biggest knight army
+		ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT grootste_rm_username, langste_hr_username FROM spel where idspel = '"+spelId+"'");
+		while(result.next()) {
+			grmUsername = result.getString(1);
+			lhrUsername = result.getString(2);
+		}
+		
+		if(grmUsername == username || lhrUsername == username) {
+			if(grmUsername == username && lhrUsername == username) {
+				Score += 4;
+			}
+			Score += 2;
+		}
+		
+		//check towns and cities
+		for(Piece piece: BoardHelper.getPiecesPlayer(this, spelId)) {
+			if(piece.getType() == PieceType.DORP) {
+				Score += 1;
+			} else if(piece.getType() == PieceType.STAD) {
+				Score +=2;
+			}
+		}
+		
+		//check played victory point cards
+		ResultSet list = DatabaseManager.createStatement().executeQuery("SELECT gespeeld, username FROM spelerontwikkelingskaart s inner join ontwikkelingskaart o on s.idontwikkelingskaart = o.idontwikkelingskaart ");
+		while(result.next()) {
+			int iGespeeld = list.getInt(1);
+			String sUsername = list.getString(2);
+			if(iGespeeld == 1 && sUsername == username) {
+				Score += 1;
+			}
+		}
+	
+		//add score to old score and update cell behaaldepunten
+		if(score == null)
+			score = "0";
+		newScore = Integer.parseInt(score) + Score;
+		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"'");
+		
+		if(rowsAffected == 0) {
+			throw new SQLException("No points to add");
+		}	
 	}
 }

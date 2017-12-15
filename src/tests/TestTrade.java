@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import model.BoardHelper;
 import model.Catan;
 import model.PlayerModel;
+import model.PlayerType;
 import model.PlayerUser;
 
 public class TestTrade extends Application {
@@ -19,8 +20,8 @@ public class TestTrade extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		PlayerUser player = new PlayerUser("lesley", "770");
-        TradeController some = new TradeController(player, "770", null);
+		PlayerUser player = new PlayerUser("lesley", "770", PlayerType.BLAUW);
+//        TradeController some = new TradeController(player, "770");
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 	}
 }

@@ -107,9 +107,8 @@ public class GameController {
 		// event handler for first round street placement
 		firstRndStreet = ((e) -> {
 			piecePlacement(e);
-			ResultSet result;
 			try {
-				result = DatabaseManager.createStatement().executeQuery(
+				ResultSet result = DatabaseManager.createStatement().executeQuery(
 						"select (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
 								+ players[usrPlayer].getUsername() + "' and x_van is not null) from spel where idspel ="
 								+ spelId);
@@ -119,12 +118,12 @@ public class GameController {
 				} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 					DatabaseManager.createStatement()
 							.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
-					enableButtons();
 				} else if (result.getInt(1) > 2) {
 					BoardHelper.nextTurnBackward(spelId);
 				} else {
 					BoardHelper.nextTurnForward(spelId);
 				}
+				refresh();
 			} catch (SQLException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -286,7 +285,9 @@ public class GameController {
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
+				BoardHelper.setLongestRoad(players, spelId);
 			}
+			BoardHelper.refreshAll(spelId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
