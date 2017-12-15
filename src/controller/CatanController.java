@@ -139,13 +139,11 @@ public class CatanController {
 		} catch (Exception e) {
 			
 		}
-		
 		return data; 
 	}
 	
 	public ObservableList<PlayerRank> getLeaderboard(){
 		ObservableList<PlayerRank> data = FXCollections.observableArrayList();
-		
 		try {
 			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, aantal_spellen_gewonnen FROM speelresultaat ORDER BY som_behaalde_punten DESC");
 			int count = 0;
@@ -154,9 +152,7 @@ public class CatanController {
 				data.add(new PlayerRank(String.valueOf(count), result.getString(1), result.getString(2)));
 			}
 		} catch (Exception e) {
-			
 		}
-		
 		return data; 
 	}
 	

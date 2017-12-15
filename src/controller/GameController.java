@@ -102,6 +102,10 @@ public class GameController {
 		// event handler for first round piece placement
 		firstRndPiece = ((e) -> {
 			piecePlacement(e);
+			if(isFirstRound) {
+				PieceView piece = (PieceView)e.getSource();
+				BoardHelper.giveResourcesFrstRound(spelId, piece.getPieceModel(), players[usrPlayer]);
+			}
 			refresh();
 			showFrstRndStreet();
 		});
@@ -119,7 +123,7 @@ public class GameController {
 				} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 					DatabaseManager.createStatement()
 							.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
-					isFirstRound=false;
+					
 					usrTurn();
 				} else if (result.getInt(1) > 2) {
 					BoardHelper.nextTurnBackward(spelId);
@@ -199,7 +203,6 @@ public class GameController {
 			@Override
 			public void run() {
 				await();
-				refreshButtons();
 				int nThrow;
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
@@ -522,8 +525,13 @@ public class GameController {
 	}
 
 	public void closeTrade() {
-		refresh();
-		refreshButtons();
+		try {
+			TradeHelper.clearOffer(spelId);
+			refresh();
+			refreshButtons();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private int calcEndPointX(int point) {

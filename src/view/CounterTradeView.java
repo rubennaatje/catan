@@ -19,6 +19,7 @@ public class CounterTradeView extends TradeViewTemplate {
 	
 	public void offerBtnClick(MouseEvent e) {
 		controller.submitCounterTradeRequest(retrieveValues());
+		controller.close();
 	}
 	
 	public void show(HashMap<TileType, Integer>[] offerData, String offerer) {
