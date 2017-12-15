@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import controller.TradeController;
@@ -51,6 +52,14 @@ public class TradeView extends TradeViewTemplate {
 		clearTradeFld();		
 		getChildren().clear();
 		
+	}
+	public void setBankLabels(HashMap<TileType,Integer> tradeHavens)
+	{
+		houtBnkLbl.setText((tradeHavens.get(TileType.H)).toString());
+		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString());
+		graanBnkLbl.setText((tradeHavens.get(TileType.G)).toString());
+		baksteenBnkLbl.setText((tradeHavens.get(TileType.B)).toString());
+		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString());
 	}
 
 }
