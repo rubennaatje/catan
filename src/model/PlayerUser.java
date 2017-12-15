@@ -13,8 +13,8 @@ public class PlayerUser extends PlayerModel {
 	HashMap<TileType, Integer> resources;
 
 
-	public PlayerUser(String username, String idspel){
-		super(username, idspel);
+	public PlayerUser(String username, String idspel, PlayerType type){
+		super(username, idspel, type);
 
 	}
 
@@ -140,6 +140,8 @@ public class PlayerUser extends PlayerModel {
 		}
 	
 		//add score to old score and update cell behaaldepunten
+		if(score == null)
+			score = "0";
 		newScore = Integer.parseInt(score) + Score;
 		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"'");
 		

@@ -23,7 +23,7 @@ public class TestClassChatView extends Application{
 		DatabaseManager.connect();
 		
 
-		Runnable chat = new ChatController(player, primaryStage, "770");
+		Runnable chat = new ChatController(player, "770");
 		
 		Thread p = new Thread(chat);
 		p.start();

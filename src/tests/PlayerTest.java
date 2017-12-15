@@ -32,7 +32,7 @@ public class PlayerTest extends Application{
 		playerModels[3] = new PlayerModel("ger", "770");
 		
 		PlayBoardView playView = new PlayBoardView();
-		GameControlerView buttons = new GameControlerView(null, null);
+		GameControlerView buttons = new GameControlerView(null, null, null);
 		
 		for (int i = 0; i < playerModels.length; i++)
 		{
@@ -45,7 +45,7 @@ public class PlayerTest extends Application{
 		ChatController chat = new ChatController(playerModels[1], "770");
 		
 		DiceView dice = new DiceView();
-		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews, resourceView, dice, chat.getView());
+		GameMergeView view = new  GameMergeView(playView, buttons, primaryStage, playerViews, resourceView, dice, chat.getView(), null);
 		
 		view.show();
 	}
