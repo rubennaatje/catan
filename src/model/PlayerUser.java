@@ -13,8 +13,8 @@ public class PlayerUser extends PlayerModel {
 	HashMap<TileType, Integer> resources;
 
 
-	public PlayerUser(String username, String idspel){
-		super(username, idspel);
+	public PlayerUser(String username, String idspel, PlayerType type){
+		super(username, idspel, type);
 
 	}
 
