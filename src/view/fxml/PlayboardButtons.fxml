@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="townBtn" layoutX="163.0" layoutY="14.0" mnemonicParsing="false" text="Town +" />
-      <Button fx:id="streetBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Street +" />
-      <Button fx:id="cityBtn" layoutX="97.0" layoutY="14.0" mnemonicParsing="false" text="City +" />
-      <Button fx:id="endTurnBtn" layoutX="280.0" layoutY="14.0" mnemonicParsing="false" text="end Turn" />
-      <Button fx:id="tradeButton" layoutX="350.0" layoutY="14.0" mnemonicParsing="false" text="Trade" />
       <Label layoutX="14.0" layoutY="59.0" text="Longest Road:" />
       <Label fx:id="road" layoutX="122.0" layoutY="59.0" text="Label" />
+      <JFXButton fx:id="townBtn" layoutX="163.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Town +" />
+      <JFXButton fx:id="streetBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Street +" />
+      <JFXButton fx:id="cityBtn" layoutX="97.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="City +" />
+      <JFXButton fx:id="endTurnBtn" layoutX="280.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="end Turn" />
+      <JFXButton fx:id="tradeButton" layoutX="350.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Trade" />
    </children>
 </fx:root>
