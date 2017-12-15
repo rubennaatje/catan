@@ -21,7 +21,7 @@ public class TestStartController extends Application {
 		
 		Catan catan = new Catan();
 		//catan.initGame();
-		Catan.setGameId("792");
+		Catan.setGameId("770");
 		//catan.addResourceCards();
 		launch(args);
 		System.exit(0);
@@ -30,25 +30,25 @@ public class TestStartController extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		String spelId = "792";
+		String spelId = "770";
 
         Catan catan = new Catan();
         //catan.initGame();
-        Catan.setGameId("792");
+        Catan.setGameId("770");
         
-        PlayerUser player = new PlayerUser("wouter2", Catan.getGameId());
+        PlayerUser player = new PlayerUser("ger", Catan.getGameId());
         catan.setPlayer(player);
         PlayerModel[] players = catan.getCurrentPlayers();
         gameController = new GameController(spelId, players, player.getPlayerNumber() -1 ,primaryStage);
       
         primaryStage.setTitle(player.getUsername());
         //tests wouter
-        DevelopCardController devcard = new DevelopCardController(player, gameController );
+     /*   DevelopCardController devcard = new DevelopCardController(player, gameController );
         devcard.refreshDevCards();
         if(devcard.checkForResource(0)) {
         	 devcard.setResourceType(0, "hout");
         }
-        devcard.playCard(0);
+        devcard.playCard(0);*/
 		new Thread(() -> gameController.start()).start();
   }
 }
