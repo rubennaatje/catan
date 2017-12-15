@@ -9,13 +9,13 @@ import model.BoardHelper;
 public class PlayerModel extends Observable {
 
 	protected PlayerType type;
-	private String username = null;
+	protected String username = null;
 	private String cards = null;
 	private String devCards = null;
 	private String knights = null;
-	private String score = null;
+	protected String score = null;
 	private String road = null;
-	private String spelId = null;
+	protected String spelId = null;
 	private int playerNumber;
 	private boolean hasTurn=false;
 	private boolean hasWon=false;
