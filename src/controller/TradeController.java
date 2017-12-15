@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.BoardHelper;
 import model.PlayerModel;
 import model.PlayerUser;
 import model.TileType;
@@ -170,6 +171,17 @@ public class TradeController {
 		popUpTrade.close();
 		popUpCounterTrade.close();
 		superController.closeTrade();
+	}
+	public void setTradeRatio()
+	{
+		try
+		{
+			viewTrade.setBankLabels(BoardHelper.getTradeRatio(players[usrPlayer], spelId));
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void registerCounterReject() {
