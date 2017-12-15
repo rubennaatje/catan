@@ -337,7 +337,7 @@ public class BoardHelper {
 		ArrayList<Street> allPossibleStreets = populateStreetXYPairs(user);
 		ArrayList<Street> returnStreet = new ArrayList<>();
 		while (userStreetPos.next()) {
-			GridLocation GridLocationA = new GridLocation(userStreetPos.getInt(0), userStreetPos.getInt(1));
+			GridLocation GridLocationA = new GridLocation(userStreetPos.getInt(1), userStreetPos.getInt(2));
 			for (Street pos : allPossibleStreets) {
 				if (pos.getStartPos().equals(GridLocationA) || pos.getEndPos().equals(GridLocationA)) {
 					returnStreet.add(pos);
@@ -479,7 +479,7 @@ public class BoardHelper {
 	public static void registerPlacement(Piece pieceModel, String idSpel) throws SQLException {
 		if(pieceModel.getType() == PieceType.STAD) {
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = NULL "
-				+ ", y_van = NULL WHERE y_naar IS NULL AND x_naam IS NULL AND username = '" + pieceModel.getPlayer().getUsername() + "' AND x_van = " + pieceModel.getPos().x + " AND y_van=" + pieceModel.getPos().y);
+				+ ", y_van = NULL WHERE y_naar IS NULL AND x_naar IS NULL AND username = '" + pieceModel.getPlayer().getUsername() + "' AND x_van = " + pieceModel.getPos().x + " AND y_van=" + pieceModel.getPos().y);
 		}
 		
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + pieceModel.getPos().x
