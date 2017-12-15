@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import controller.DatabaseManager;
@@ -150,6 +152,35 @@ public class BoardHelper
 		return sCurrentLargestArmy;
 	}
 
+	public static void setLongestRoad(PlayerModel[] players, String spelId) throws SQLException {
+		HashMap<String, Integer> roadCount = new HashMap<String, Integer>();
+
+		for (PlayerModel player : players) {
+			roadCount.put(player.getUsername(), getLongestRoad(player, spelId));
+		}
+		// int var van de hoogste zet op 0
+		Integer result = 0;
+		String name = null;
+		boolean sharedHigh = false;
+		
+		Iterator<Entry<String, Integer>> it = roadCount.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, Integer> pair = (Entry<String, Integer>) it.next();
+			if (result < pair.getValue()) {
+				result = pair.getValue();
+				name = pair.getKey();
+				sharedHigh = false;
+			} else if (result == pair.getValue()) {
+				sharedHigh = true;
+			}
+			it.remove();
+		}
+
+		if (result > 6 && !sharedHigh) {
+			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET langste_hr_username= '" + name + "'");
+		}
+	}
+	
 	// retrieves count for longest road for player and game
 	public static int getLongestRoad(PlayerModel player, String spelId) throws SQLException
 	{
