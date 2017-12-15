@@ -36,6 +36,7 @@ public class HexView extends Group {
 		
 		fiche.setRadius(15);
 		Label val = new Label();
+		val.setTranslateX(-10);
 		
 		val.setText(value.toString());
 		
