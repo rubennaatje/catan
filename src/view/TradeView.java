@@ -52,6 +52,19 @@ public class TradeView extends TradeViewTemplate {
 		clearTradeFld();		
 		getChildren().clear();
 		
+		
+	}
+	
+	public void addRejectBtn() {
+		Button rejectbtn = new Button("Afwijzen");
+		getChildren().add(rejectbtn);
+		rejectbtn.setLayoutX((getWidth()-rejectbtn.getWidth())/2);
+		rejectbtn.setLayoutY(470);
+		rejectbtn.setOnMouseClicked((e) -> rejectCounters(e));
+	}
+	
+	public void rejectCounters(MouseEvent e) {
+		controller.registerCounterReject();
 	}
 	public void setBankLabels(HashMap<TileType,Integer> tradeHavens)
 	{
@@ -62,4 +75,8 @@ public class TradeView extends TradeViewTemplate {
 		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString());
 	}
 
+	public void reset() {
+		getChildren().clear();
+		loadFxml(TradeView.class.getResource("fxml/trade.fxml"), this);
+	}
 }
