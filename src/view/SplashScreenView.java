@@ -25,7 +25,7 @@ public class SplashScreenView extends PaneTemplate
 		pause.setOnFinished(e -> {
 			
 			try {
-				DatabaseManager.createStatement().execute("DELETE FROM spel WHERE idspel = 793");
+				//DatabaseManager.createStatement().execute("DELETE FROM spel WHERE idspel = 793");
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
