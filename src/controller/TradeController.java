@@ -59,6 +59,7 @@ public class TradeController {
 		popUpTrade.setScene(sceneTrade);
 		popUpTrade.setResizable(false);
 		popUpTrade.initStyle(StageStyle.UNDECORATED);
+		popUpTrade.setOnHidden((e) -> superController.closeTrade());
 	}
 	
 	public void submitTradeRequest(HashMap<TileType, Integer>[] tradeSuggestion) {
