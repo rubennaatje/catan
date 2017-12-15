@@ -137,8 +137,6 @@ public class PlayerUser extends PlayerModel {
 				newScore += 1;
 			}
 		}
-	
-		System.out.println( " " + newScore);
 		
 		//add score to old score and update cell behaaldepunten
 
