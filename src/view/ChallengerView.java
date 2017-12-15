@@ -1,15 +1,9 @@
 package view;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-
 import com.sun.javafx.tk.Toolkit;
 
 import controller.AlertManager;
 import controller.CatanController;
-import controller.DatabaseManager;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,8 +18,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Challenge;
-import model.PlayerUser;
 import view.javaFXTemplates.PaneTemplate;
 
 public class ChallengerView extends PaneTemplate {
@@ -35,8 +27,8 @@ public class ChallengerView extends PaneTemplate {
 	@FXML private Button btnChallenge; 
 	@FXML private Button btnBack;
 	
-	@FXML private TableView<PlayerUser> uitdager;
-	@FXML private TableColumn<PlayerUser, String> playerName;
+	@FXML private TableView<String> uitdager;
+	@FXML private TableColumn<String, String> playerName;
 	
 	public ChallengerView(Stage stage, CatanController controller) {
 		super(ChallengerView.class.getResource("fxml/ChallengerView.fxml"), stage);
@@ -80,11 +72,11 @@ public class ChallengerView extends PaneTemplate {
 		});
 	}
 	
-	public void addBoard(ObservableList<PlayerUser> data) {
+	public void addBoard(ObservableList<String> data) {
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
-		    	playerName.setCellValueFactory(new PropertyValueFactory<PlayerUser, String>("username"));
+		    	playerName.setCellValueFactory(new PropertyValueFactory<String, String>("username"));
 				uitdager.setItems(data);
 		    }
 		});
