@@ -9,50 +9,51 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: darkgreen;" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="374.0" prefWidth="400.0" style="-fx-background-color: darkgreen;" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="374.0" fitWidth="400.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/cardsBackground.png" />
+            <Image url="@../images/cardsBackgroundsmall.png" />
          </image>
       </ImageView>
-      <Pane layoutX="520.0" layoutY="152.0" prefHeight="370.0" prefWidth="250.0" style="-fx-background-color: white;">
+      <Pane layoutX="112.0" layoutY="19.0" prefHeight="262.0" prefWidth="177.0" style="-fx-background-color: white;">
          <children>
-            <ImageView fx:id="imageview" fitHeight="370.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageview" fitHeight="262.0" fitWidth="177.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
-      <JFXButton fx:id="nextbutton" layoutX="860.0" layoutY="316.0" onAction="#nextCard" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: white;" text="Volgende kaart">
+      <JFXButton fx:id="selectbutton" defaultButton="true" layoutX="147.0" layoutY="317.0" onAction="#selectCard" prefHeight="43.0" prefWidth="108.0" style="-fx-background-color: white;" text="Selecteer kaart">
          <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font></JFXButton>
-      <JFXButton fx:id="selectbutton" defaultButton="true" layoutX="579.0" layoutY="572.0" onAction="#selectCard" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: white;" text="Selecteer kaart">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
+            <Font name="Arial Bold" size="11.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="previousbutton" layoutX="320.0" layoutY="316.0" onAction="#previousCard" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: white;" text="Vorige kaart">
+      <JFXButton fx:id="previousbutton" layoutX="14.0" layoutY="150.0" onAction="#previousCard" prefHeight="43.0" prefWidth="88.0" style="-fx-background-color: white;" text="Vorige kaart">
          <font>
-            <Font name="Arial Bold" size="12.0" />
+            <Font name="Arial Bold" size="11.0" />
          </font></JFXButton>
-      <Label layoutX="569.0" layoutY="644.0" text="Kaart" textFill="WHITE">
+      <Label layoutX="130.0" layoutY="288.0" text="Kaart" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="21.0" />
          </font>
       </Label>
-      <Label fx:id="selected" layoutX="634.0" layoutY="644.0" text="0" textFill="WHITE">
+      <Label fx:id="selected" layoutX="195.0" layoutY="288.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="21.0" />
          </font>
       </Label>
-      <Label layoutX="654.0" layoutY="644.0" text="van" textFill="WHITE">
+      <Label layoutX="215.0" layoutY="288.0" text="van" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="21.0" />
          </font>
       </Label>
-      <Label fx:id="amount" layoutX="700.0" layoutY="644.0" text="0" textFill="WHITE">
+      <Label fx:id="amount" layoutX="261.0" layoutY="288.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="21.0" />
          </font>
       </Label>
+      <JFXButton fx:id="nextbutton" layoutX="296.0" layoutY="149.0" onAction="#nextCard" prefHeight="43.0" prefWidth="97.0" style="-fx-background-color: white;" text="Volgende kaart">
+         <font>
+            <Font name="Arial Bold" size="11.0" />
+         </font>
+      </JFXButton>
    </children>
 </fx:root>
