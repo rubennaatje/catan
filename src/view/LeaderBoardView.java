@@ -36,7 +36,7 @@ public class LeaderBoardView extends PaneTemplate {
 		
 		new Thread(() -> {
 			addBoard(controller.getLeaderboard());
-		});
+		}).start();
 		
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 			
