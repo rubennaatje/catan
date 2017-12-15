@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import controller.AlertManager;
 import controller.CatanController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,13 +31,25 @@ public class LoginView extends PaneTemplate {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
-					controller.setPlayer(txtUsername.getText());
-					controller.openMenuScreen();
-				} else {
-					new AlertManager(AlertType.ERROR, "Login error!", "username and/or password are incorrect");
-					txtPassword.setText("");
-				}
+				new Thread(()->  {
+					if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
+						controller.setPlayer(txtUsername.getText());
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+						    	controller.openMenuScreen();
+						    }
+						});
+					} else {
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+								txtPassword.setText("");
+								new AlertManager(AlertType.ERROR, "Login error!", "username and/or password are incorrect");
+						    }
+						});
+					}
+				}).start();
 			}
 		});
 

@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import controller.AlertManager;
 import controller.CatanController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,16 +31,34 @@ public class RegisterView extends PaneTemplate {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				if (txtPassword.getText().equals(txtRePassword.getText())) {
-					if (controller.getCatan().register(txtUsername.getText(), txtPassword.getText())) {
-						controller.openLoginScreen();
+				new Thread(() ->  {
+					if (txtPassword.getText().equals(txtRePassword.getText())) {
+						if (controller.getCatan().register(txtUsername.getText(), txtPassword.getText())) {
+							Platform.runLater(new Runnable() {
+							    @Override
+							    public void run() {
+							    	controller.openLoginScreen();
+							    }
+							});
+						} else {
+							Platform.runLater(new Runnable() {
+							    @Override
+							    public void run() {
+							    	new AlertManager(AlertType.ERROR, "Register error!", "could not register");
+							    }
+							});
+						}
 					} else {
-						new AlertManager(AlertType.ERROR, "Register error!", "could not register");
+						
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+						    	new AlertManager(AlertType.ERROR, "Register error!", "please fill in the same passwords");
+								txtRePassword.setText("");
+						    }
+						});
 					}
-				} else {
-					new AlertManager(AlertType.ERROR, "Register error!", "please fill in the same passwords");
-					txtRePassword.setText("");
-				}
+				}).start();
 			}
 		});
 		

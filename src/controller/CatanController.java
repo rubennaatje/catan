@@ -100,7 +100,6 @@ public class CatanController {
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
 	        if (creation) {
-	    		getPlayer().setType(PlayerType.ROOD);
 	        	catan.addPlayerPieces(players);
 	        }
 	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
