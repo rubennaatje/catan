@@ -85,9 +85,6 @@ public class CardView extends PaneTemplate {
 
 	public void addCards() {
 		
-
-		
-
 		selectbutton.setDisable(false);
 		
 		cards.add("ridder");
