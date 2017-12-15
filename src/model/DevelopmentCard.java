@@ -12,13 +12,15 @@ public class DevelopmentCard {
 	protected String username;
 	protected String kaarttype;
 	protected String kaartnaam;
+	protected PlayerUser player;
 
-	public DevelopmentCard(String spelid, String cardId, String username, String kaarttype, String kaartnaam) {
+	public DevelopmentCard(PlayerUser player, String cardId, String kaarttype, String kaartnaam) {
 		this.spelid = spelid;
 		this.cardId = cardId;
 		this.username = username;
 		this.kaarttype = kaarttype;
 		this.kaartnaam = kaartnaam;
+		this.player = player;
 		try {
 			DatabaseManager.createStatement().executeUpdate("UPDATE spelerontwikkelingskaart SET username = '"
 					+ this.username + "' WHERE idspel = '" + spelid + "'AND idontwikkelingskaart = '" + cardId + "';");
@@ -36,8 +38,8 @@ public class DevelopmentCard {
 		try {
 			DatabaseManager.createStatement()
 					.executeUpdate("UPDATE `spelerontwikkelingskaart` SET gespeeld = 1 "
-							+ "WHERE idontwikkelingskaart = '" + this.cardId + "' AND `idspel` ='" + this.spelid
-							+ "' AND username = '" + this.username + "';");
+							+ "WHERE idontwikkelingskaart = '" + this.cardId + "' AND `idspel` ='" + player.getSpelId()
+							+ "' AND username = '" + player.getUsername() + "';");
 			System.out.println("query");
 		} catch (SQLException e) {
 			e.printStackTrace();

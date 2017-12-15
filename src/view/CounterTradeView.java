@@ -15,19 +15,19 @@ public class CounterTradeView extends TradeViewTemplate {
 	
 	public CounterTradeView(TradeController controller) {
 		super(CounterTradeView.class.getResource("fxml/counterTrade.fxml"), controller);
-		
 	}
 	
 	public void offerBtnClick(MouseEvent e) {
 		controller.submitCounterTradeRequest(retrieveValues());
 	}
 	
-	
-	public void show(HashMap<TileType, Integer>[] offerData) {
+	public void show(HashMap<TileType, Integer>[] offerData, String offerer) {
 		fillLabels(offerData);
+		sendingPlayer.setText(offerer);
 	}
 	
 	public void reject(MouseEvent e) {
 		controller.registerReject();
+		controller.close();
 	}
 }

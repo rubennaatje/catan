@@ -13,6 +13,7 @@ import model.Catan;
 import model.Challenge;
 import model.PlayerModel;
 import model.PlayerRank;
+import model.PlayerType;
 import model.PlayerUser;
 import model.Waiting;
 import view.ChallengerView;
@@ -92,11 +93,16 @@ public class CatanController {
 	}
 	
 	public void startGame(String gameid, boolean creation) {
-
+		getPlayer().setSpelId(gameid);
+		
 		try {
 			catan.initGame(gameid, creation);
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
+	        if (creation) {
+	    		getPlayer().setType(PlayerType.ROOD);
+	        	catan.addPlayerPieces(players);
+	        }
 	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
 	        
 			new Thread(() -> gameController.start()).start();
@@ -176,10 +182,10 @@ public class CatanController {
 			result.close();
 			
 			DatabaseManager.createStatement().executeUpdate(
-					"INSERT INTO spel   (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
-							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, 0);");
+					"INSERT INTO spel (idspel, grootste_rm_username, langste_hr_username, beurt_username, gedobbeld, laatste_worp, israndomboard, eersteronde) VALUES ("
+							+ gameId + ", NULL, NULL, NULL, NULL, NULL, TRUE, TRUE);");
 			
-			List<String> kleuren = Arrays.asList("wit", "rood", "blauw", "oranje");
+			List<String> kleuren = Arrays.asList("rood", "wit", "blauw", "oranje");
 			
 			int count = 1;
 			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitdager', 0, " + count + ", 0)");
@@ -188,11 +194,13 @@ public class CatanController {
 				count++;
 				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
 			}
+			
+			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET beurt_username = '" + getPlayer().getUsername() + "' WHERE idspel = " + gameId);
 			 
 			openWaitingScreen(new Challenge(getPlayer().getUsername(), gameId, getPlayer()));
 		}
 		catch (SQLException e) {
-			
+			e.printStackTrace();
 		}
 	}
 	

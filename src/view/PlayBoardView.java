@@ -3,8 +3,11 @@ package view;
 import java.awt.Point;
 
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
@@ -124,13 +127,24 @@ public class PlayBoardView extends PaneTemplate {
 		return robber;
 	}
 
-	public void drawHaven(GridLocation location, GridLocation location2) {
+	public void drawHaven(GridLocation location, GridLocation location2, Image im) {
 		Polyline line = new Polyline();
+		Circle circle = new Circle();
 		line.getPoints().addAll(new Double[] {
 			locs.getCoordinate(location).getX(), locs.getCoordinate(location).getY(), locs.getCoordinate(location2).getX(), locs.getCoordinate(location2).getY()	
 		});
-		line.setStrokeWidth(0.5);
+		line.setStrokeWidth(1);
+		line.setStroke(Color.BLACK);
 		getChildren().add(line);
+		if(im != null)
+		{
+			circle.setLayoutX(locs.getCoordinate(location2).getX());
+			circle.setLayoutY(locs.getCoordinate(location2).getY());
+			circle.setRadius(15);
+			circle.setFill(new ImagePattern(im));
+			getChildren().add(circle);
+		}
+		
 		
 	}
 

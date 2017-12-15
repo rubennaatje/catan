@@ -27,7 +27,7 @@
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="txtUsername" layoutX="100.0" layoutY="70.0" strokeType="OUTSIDE" text="">
+            <Text fx:id="txtUsername" layoutX="-5.0" layoutY="73.0" strokeType="OUTSIDE" text="" wrappingWidth="395.0" textAlignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>

@@ -10,7 +10,7 @@ public class GameMergeView extends Pane {
 
 	GameControlerView buttons;
 	
-	public GameMergeView(PlayBoardView playBoard, GameControlerView buttons, Stage stage, PlayerView[] players, ResourceView resourceView, DiceView dice, ChatView chatView) {
+	public GameMergeView(PlayBoardView playBoard, GameControlerView buttons, Stage stage, PlayerView[] players, ResourceView resourceView, DiceView dice, ChatView chatView, CardView cardView) {
 		this.stage = stage;
 		this.playBoard = playBoard;
 		this.buttons = buttons;
@@ -22,18 +22,18 @@ public class GameMergeView extends Pane {
 
 		players[0].setLayoutX(0);
 		players[0].setLayoutY(0);
-
-		players[1].setLayoutX(0);
-		players[1].setLayoutY(playBoard.getPrefHeight() - 180.0);
 		
 
+		players[1].setLayoutX(playBoard.getPrefWidth() - 225.0);
+		players[1].setLayoutY(0);
+		
 		players[2].setLayoutX(playBoard.getPrefWidth() - 225.0);
-		players[2].setLayoutY(0);
+		players[2].setLayoutY(playBoard.getPrefHeight() - 180.0);
 		
-
-		players[3].setLayoutX(playBoard.getPrefWidth() - 225.0);
+		
+		players[3].setLayoutX(0);
 		players[3].setLayoutY(playBoard.getPrefHeight() - 180.0);
-		
+
 		for (int i = 0; i < players.length; i++) {
 			getChildren().add(players[i]);
 		}
@@ -54,6 +54,12 @@ public class GameMergeView extends Pane {
 		
 		setPrefHeight(playBoard.getPrefHeight());
 		setWidth(playBoard.getPrefWidth() + chatView.getPrefWidth());
+		
+		cardView.setLayoutX(playBoard.getLayoutX()+playBoard.getPrefWidth());
+		cardView.setLayoutY(chatView.getLayoutY()+ 400);
+		getChildren().add(cardView);
+		
+		
 	}
 	
 	

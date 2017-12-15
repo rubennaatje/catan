@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import controller.TradeController;
@@ -51,6 +52,31 @@ public class TradeView extends TradeViewTemplate {
 		clearTradeFld();		
 		getChildren().clear();
 		
+		
+	}
+	
+	public void addRejectBtn() {
+		Button rejectbtn = new Button("Afwijzen");
+		getChildren().add(rejectbtn);
+		rejectbtn.setLayoutX((getWidth()-rejectbtn.getWidth())/2);
+		rejectbtn.setLayoutY(470);
+		rejectbtn.setOnMouseClicked((e) -> rejectCounters(e));
+	}
+	
+	public void rejectCounters(MouseEvent e) {
+		controller.registerCounterReject();
+	}
+	public void setBankLabels(HashMap<TileType,Integer> tradeHavens)
+	{
+		houtBnkLbl.setText((tradeHavens.get(TileType.H)).toString());
+		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString());
+		graanBnkLbl.setText((tradeHavens.get(TileType.G)).toString());
+		baksteenBnkLbl.setText((tradeHavens.get(TileType.B)).toString());
+		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString());
 	}
 
+	public void reset() {
+		getChildren().clear();
+		loadFxml(TradeView.class.getResource("fxml/trade.fxml"), this);
+	}
 }
