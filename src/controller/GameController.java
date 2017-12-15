@@ -286,6 +286,7 @@ public class GameController {
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
+				BoardHelper.setLongestRoad(players, spelId);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
