@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<fx:root type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="14.0" prefHeight="720.0" prefWidth="1280.0">
+         <children>
+            <ImageView fitHeight="720.0" fitWidth="1307.0" layoutX="-19.0">
+               <image>
+                  <Image url="@../images/cardsBackground.png" />
+               </image>
+            </ImageView>
+            <HBox alignment="CENTER" layoutX="385.0" layoutY="281.0" prefHeight="158.0" prefWidth="480.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="erts">
+                     <image>
+                        <Image url="@../images/grondstofkaart-erts.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="graan">
+                     <image>
+                        <Image url="@../images/grondstofkaart-graan.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="hout">
+                     <image>
+                        <Image url="@../images/grondstofkaart-hout.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="steen">
+                     <image>
+                        <Image url="@../images/grondstofkaart-steen.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wol">
+                     <image>
+                        <Image url="@../images/grondstofkaart-wol.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </children>
+
+</fx:root>
