@@ -56,8 +56,7 @@ public class PlayerModel extends Observable {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
 		this.hasTurn = hasTurn();
-		if(this.score != null && Integer.parseInt(this.score) >= 10)
-		{
+		if(this.score != null && Integer.parseInt(this.score) >= 10){
 			hasWon = true;
 		}
 		setChanged();

@@ -103,7 +103,6 @@ public class PlayerUser extends PlayerModel {
 	public void refreshVictoryPoints() throws SQLException{
 		String grmUsername = null;
 		String lhrUsername = null;
-		int Score = 0;
 		int newScore = 0;
 		
 		//check if player has longest road or biggest knight army
@@ -115,17 +114,17 @@ public class PlayerUser extends PlayerModel {
 		
 		if(grmUsername == username || lhrUsername == username) {
 			if(grmUsername == username && lhrUsername == username) {
-				Score += 4;
+				newScore += 4;
 			}
-			Score += 2;
+			newScore += 2;
 		}
 		
 		//check towns and cities
 		for(Piece piece: BoardHelper.getPiecesPlayer(this, spelId)) {
 			if(piece.getType() == PieceType.DORP) {
-				Score += 1;
+				newScore += 1;
 			} else if(piece.getType() == PieceType.STAD) {
-				Score +=2;
+				newScore +=2;
 			}
 		}
 		
@@ -135,13 +134,15 @@ public class PlayerUser extends PlayerModel {
 			int iGespeeld = list.getInt(1);
 			String sUsername = list.getString(2);
 			if(iGespeeld == 1 && sUsername == username) {
-				Score += 1;
+				newScore += 1;
 			}
 		}
 	
+		System.out.println( " " + newScore);
+		
 		//add score to old score and update cell behaaldepunten
 
-		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ Score +"' WHERE username = '"+ username +"' AND idspel='"+spelId+"'");
+		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"' AND idspel='"+spelId+"'");
 		
 		if(rowsAffected == 0) {
 			throw new SQLException("No points to add");
