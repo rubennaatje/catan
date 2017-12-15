@@ -34,8 +34,8 @@ public class ChallengerView extends PaneTemplate {
 	@FXML private Button btnChallenge; 
 	@FXML private Button btnBack;
 	
-	@FXML private TableView<PlayerUser> uitdager;
-	@FXML private TableColumn<PlayerUser, String> playerName;
+	@FXML private TableView<String> uitdager;
+	@FXML private TableColumn<String, String> playerName;
 	
 	public ChallengerView(Stage stage, CatanController controller) {
 		super(ChallengerView.class.getResource("fxml/ChallengerView.fxml"), stage);
@@ -77,9 +77,9 @@ public class ChallengerView extends PaneTemplate {
 		});
 	}
 	
-	public void addBoard(ObservableList<PlayerUser> data) {
-		playerName.setCellValueFactory(new PropertyValueFactory<PlayerUser, String>("username"));
-		uitdager.setItems(data);
+	public void addBoard(ObservableList<String> observableList) {
+		playerName.setCellValueFactory(new PropertyValueFactory<String, String>("username"));
+		uitdager.setItems(observableList);
 	}
 	
 	private MouseEvent cloneMouseEvent( MouseEvent event )

@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
@@ -40,6 +39,8 @@ public class GameController {
 	private TradeController tradeController;
 
 	private CardView cardView;
+
+	private boolean isFirstRound = false;
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -118,6 +119,7 @@ public class GameController {
 				} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 					DatabaseManager.createStatement()
 							.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
+					isFirstRound=false;
 					usrTurn();
 				} else if (result.getInt(1) > 2) {
 					BoardHelper.nextTurnBackward(spelId);
@@ -174,10 +176,8 @@ public class GameController {
 		refresh();
 		try {
 			BoardHelper.refreshAll(spelId);
-			ResultSet result = DatabaseManager.createStatement()
-					.executeQuery("select eersteronde from spel where idspel =" + spelId);
-			result.next();
-			if (result.getInt(1) == 1) {
+
+			if (isFirstRound) {
 				frstRnd();
 			} else {
 				usrTurn();
@@ -376,12 +376,6 @@ public class GameController {
 
 	}
 
-	private void enableButtons() {
-		Platform.runLater(() -> {
-			buttons.setEnabled();
-		});
-	}
-
 	public void disableButtons() {
 		Platform.runLater(() -> {
 			buttons.setDisabled();
@@ -390,7 +384,7 @@ public class GameController {
 
 	private void refreshButtons() {
 		try {
-			if (players[usrPlayer].getPlayerTurn()) {
+			if (players[usrPlayer].getPlayerTurn() && !isFirstRound) {
 				PlayerUser p = (PlayerUser) players[usrPlayer];
 				HashMap<String, Boolean> buyable = p.getBuyableThings();
 				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true);
@@ -419,6 +413,13 @@ public class GameController {
 		// fetching all data in seperate thread
 		System.out.println("board is refreshing");
 		try {
+			//check if is firstRound
+			
+			ResultSet r = DatabaseManager.createStatement()
+					.executeQuery("select eersteronde from spel where idspel =" + spelId);
+			if(r.first() && r.getInt(1) == 1) {isFirstRound = true;} else {isFirstRound = false;};
+			
+			
 			ArrayList<Tile> hexes = BoardHelper.getAllHexes(spelId);
 			ArrayList<ArrayList<Street>> allStreets = new ArrayList<>();
 			ArrayList<ArrayList<Piece>> allPieces = new ArrayList<>();
@@ -449,7 +450,6 @@ public class GameController {
 					String havenType = haven.get(2);
 					int xEnd = calcEndPointX(x);
 					int yEnd = calcEndPointY(y);
-					Color color = Color.BLACK;
 					Image im = new Image("view/images/Vraagteken.png");
 					if (havenType != null) {
 						switch (havenType) {
@@ -470,7 +470,6 @@ public class GameController {
 						}
 					}
 					playboardview.drawHaven(new GridLocation(x, y), new GridLocation(xEnd, yEnd), im);
-
 				}
 				for (ArrayList<Piece> pieces : allPieces) {
 					// places all cities and towns for player
@@ -481,12 +480,24 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
+
+				//refresh for players
+				for (int i = 0; i < players.length; i++) {
+					if(i != usrPlayer) {
+						players[i].refresh();
+					} else {
+						PlayerUser usr = (PlayerUser)players[i];
+						usr.refresh();
+					}
+				}
+
+				
 				refreshButtons();
 				if (trade)
 					startCounterTrade();
-
+				
 			});
-			players[this.usrPlayer].refresh();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
