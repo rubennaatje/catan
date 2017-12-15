@@ -5,6 +5,7 @@ import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Catan;
+import model.PlayerType;
 import model.PlayerUser;
 
 public class TestClassChatView extends Application{
@@ -19,7 +20,7 @@ public class TestClassChatView extends Application{
 		
 		
 		
-		PlayerUser player = new PlayerUser("ger", Catan.getGameId());
+		PlayerUser player = new PlayerUser("ger", Catan.getGameId(), PlayerType.BLAUW);
 		DatabaseManager.connect();
 		
 
