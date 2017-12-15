@@ -10,6 +10,7 @@ import com.sun.javafx.tk.Toolkit;
 import controller.AlertManager;
 import controller.CatanController;
 import controller.DatabaseManager;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -78,7 +79,7 @@ public class ChallengerView extends PaneTemplate {
 	}
 	
 	public void addBoard(ObservableList<String> observableList) {
-		playerName.setCellValueFactory(new PropertyValueFactory<String, String>("username"));
+		playerName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
 		uitdager.setItems(observableList);
 	}
 	
