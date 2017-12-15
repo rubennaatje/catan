@@ -140,10 +140,8 @@ public class PlayerUser extends PlayerModel {
 		}
 	
 		//add score to old score and update cell behaaldepunten
-		if(score == null)
-			score = "0";
-		newScore = Integer.parseInt(score) + Score;
-		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"' AND idspel='"+spelId+"'");
+
+		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ Score +"' WHERE username = '"+ username +"' AND idspel='"+spelId+"'");
 		
 		if(rowsAffected == 0) {
 			throw new SQLException("No points to add");
