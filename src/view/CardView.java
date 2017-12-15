@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 
 import controller.DatabaseManager;
 import controller.DevelopCardController;
+import controller.GameController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,9 +15,10 @@ import model.PlayerUser;
 import view.javaFXTemplates.PaneTemplate;
 
 public class CardView extends PaneTemplate {
-
+	
 	private ArrayList<String> cards = new ArrayList<>();
 	private int selectedCard = 0;
+	private boolean firstGo = true;
 
 	@FXML
 	public ImageView imageview;
@@ -41,29 +43,24 @@ public class CardView extends PaneTemplate {
 	private Image parlement = new Image("/view/images/ParlementKaart.png");
 
 	private String amountnumber;
+	private GameController controller;
 
-	private DevelopCardController control;
-
-	public CardView(Stage primaryStage) throws Exception {
-		super(CardView.class.getResource("fxml/CardView.fxml"), primaryStage);
-		cards.add(""); // adding card number 0
-		
-		addCards();
-		loadWindow();
-	}
-
-	public CardView() {
+	public CardView(GameController controller) {
 		super(CardView.class.getResource("fxml/CardView.fxml"));
-		cards.add(""); // adding card number 0
+		//cards.add(""); // adding card number 0
+		//addCards(cards);
+		this.controller = controller;
 		
-		addCards();
-		loadWindow();
 	}
 
 	private void loadWindow() {
 
 		if (cards.size() > 0) {
-			selectedCard++;
+			if(firstGo)
+			{
+				selectedCard++;
+				firstGo = false;
+			}
 			reloadAmount();
 			showCard();
 		} else {
@@ -76,40 +73,28 @@ public class CardView extends PaneTemplate {
 
 	private void reloadAmount() {
 
-		amountnumber = "" + (cards.size() - 1);
+		amountnumber = "" + (cards.size());
 		amount.setText(amountnumber);
-		String selectednumber = "" + selectedCard;
-		selected.setText(selectednumber);
+		selected.setText(((Integer)(selectedCard +1)).toString());
 
 	}
 
-	public void addCards() {
-		
+	public void addCards(ArrayList<String> cards) {
+		;
+		this.cards = cards;
 		selectbutton.setDisable(false);
-		
-		cards.add("ridder");
-		cards.add("markt");
-		cards.add("bibliotheek");
-		cards.add("parlement");
-
-		/*
-		 * for(int x = 0; x < control.getPlayerCards().size(); x++) {
-		 * cards.add(control.getPlayerCards().get(x).getCardname()); }
-		 */
-		
-		reloadAmount();
+		loadWindow();
+	
 	}
 
 	public void nextCard() {
-
 		// amount labels
-		if (selectedCard < (cards.size() - 1)) {
+		if (selectedCard < cards.size()) {
 			previousbutton.setDisable(false);
 			selectedCard++;
-			String selectednumber = "" + selectedCard;
-			selected.setText(selectednumber);
+			selected.setText(((Integer)(selectedCard +1)).toString());
 		}
-		if (selectedCard == (cards.size() - 1)) {
+		if (selectedCard >= (cards.size() - 1)) {
 			nextbutton.setDisable(true);
 		}
 
@@ -121,6 +106,8 @@ public class CardView extends PaneTemplate {
 		// use card function
 
 		// remove card funcion
+
+		controller.playDevCard(selectedCard);
 		System.out.println("kaart " + cards.get(selectedCard) + " is gebruikt");
 		removeSelected();
 
@@ -128,13 +115,12 @@ public class CardView extends PaneTemplate {
 
 	public void previousCard() {
 
-		if (selectedCard > 1) {
+		if (selectedCard >= 1) {
 			nextbutton.setDisable(false);
 			selectedCard--;
-			String selectednumber = "" + selectedCard;
-			selected.setText(selectednumber);
+			selected.setText(((Integer)(selectedCard +1)).toString());
 		}
-		if (selectedCard == 1) {
+		if (selectedCard == 0) {
 			previousbutton.setDisable(true);
 		}
 			showCard();
@@ -194,6 +180,7 @@ public class CardView extends PaneTemplate {
 			selectbutton.setDisable(true);
 			noCards();
 			selected.setText("0");
+			amount.setText("0");
 		}
 
 	}

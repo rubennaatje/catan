@@ -11,6 +11,7 @@ import model.PlayerUser;
 import model.ProgressCard;
 import model.TileType;
 import model.VictoryPointCard;
+import view.CardView;
 
 public class DevelopCardController {
 	private Random random = new Random();
@@ -58,10 +59,18 @@ public class DevelopCardController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		superController.setDevCards(setCardView());
 	}
 
-	public ArrayList<DevelopmentCard> getPlayerCards() { // returns arraylist of playercards
-		return list;
+	public ArrayList<String> setCardView() { // returns arraylist of playercards
+	ArrayList<String> cards = new ArrayList<String>();
+		for(int x =0 ; x < list.size(); x++)
+		{
+			String temp = list.get(x).getCardname();
+			cards.add(temp);
+		}
+		return cards;
+		
 	}
 
 	private void assignCard(String cardId) { // method to assign devcards to player
@@ -130,6 +139,7 @@ public class DevelopCardController {
 		
 	}
 	
+	
 	public void playCard(int index) { //plays card
 
 		if (list.get(index) instanceof ProgressCard) {
@@ -142,7 +152,6 @@ public class DevelopCardController {
 			System.out.println("VictoryPointCard");
 			((VictoryPointCard) list.get(index)).playCard();
 		}
-		list.remove(index);
 		refreshDevCards();
 
 	}

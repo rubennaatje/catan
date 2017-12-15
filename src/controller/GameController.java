@@ -47,7 +47,10 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
+		//functionality for cardView
+		cardView = new CardView(this);
 		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
+		
 
 		buyEvent = ((e) -> {
 			refresh();
@@ -149,8 +152,7 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
-		//functionality for cardView
-		cardView = new CardView();
+	
 		
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
@@ -485,6 +487,7 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
+				devCon.refreshDevCards();
 				refreshButtons();
 				if(trade) startCounterTrade();
 				
@@ -535,5 +538,13 @@ public class GameController {
 			point++;
 		}
 		return point;
+	}
+	public void playDevCard(int i)
+	{
+		devCon.playCard(i);
+	}
+	
+	public void setDevCards(ArrayList<String> cards){
+		cardView.addCards(cards);
 	}
 }
