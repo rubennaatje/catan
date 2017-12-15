@@ -5,6 +5,7 @@ import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.PlayerModel;
+import model.PlayerType;
 import model.PlayerUser;
 import view.DiceView;
 import view.GameControlerView;
@@ -26,10 +27,10 @@ public class PlayerTest extends Application{
 		PlayerView[] playerViews = new PlayerView[4];
 		PlayerModel[] playerModels = new PlayerModel[4];
 		
-		playerModels[0] = new PlayerUser("bart", "770");
-		playerModels[1] = new PlayerModel("rik", "770");
-		playerModels[2] = new PlayerModel("lesley", "770");
-		playerModels[3] = new PlayerModel("ger", "770");
+		playerModels[0] = new PlayerUser("bart", "770", PlayerType.BLAUW);
+		playerModels[1] = new PlayerModel("rik", "770", PlayerType.BLAUW);
+		playerModels[2] = new PlayerModel("lesley", "770", PlayerType.BLAUW);
+		playerModels[3] = new PlayerModel("ger", "770", PlayerType.BLAUW);
 		
 		PlayBoardView playView = new PlayBoardView();
 		GameControlerView buttons = new GameControlerView(null, null, null);

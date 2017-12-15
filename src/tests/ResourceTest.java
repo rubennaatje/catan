@@ -4,6 +4,7 @@ import controller.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.PlayerModel;
+import model.PlayerType;
 import model.PlayerUser;
 import view.PlayerView;
 
@@ -23,7 +24,7 @@ public class ResourceTest extends Application
 	public void start(Stage primaryStage) throws Exception
 	{
 		PlayerView playerView = new PlayerView();
-		PlayerModel playerModel = new PlayerUser("bart", "770");
+		PlayerModel playerModel = new PlayerUser("bart", "770", PlayerType.BLAUW);
 		playerModel.addObserver(playerView);
 		
 	}

@@ -584,7 +584,7 @@ public class BoardHelper
 		{
 			DatabaseManager.createStatement()
 					.executeUpdate("UPDATE spelerstuk SET x_van = NULL "
-							+ ", y_van = NULL WHERE y_naar IS NULL AND x_naam IS NULL AND username = '"
+							+ ", y_van = NULL WHERE y_naar IS NULL AND x_naar IS NULL AND username = '"
 							+ pieceModel.getPlayer().getUsername() + "' AND x_van = " + pieceModel.getPos().x
 							+ " AND y_van=" + pieceModel.getPos().y);
 
@@ -600,16 +600,16 @@ public class BoardHelper
 	}
 
 	// for street
-	public static void registerPlacement(Street streetModel, String spelId) throws SQLException
+	public static void registerPlacement(Street streetModel, String idSpel) throws SQLException
 	{
 		DatabaseManager.createStatement().executeUpdate("UPDATE spelerstuk SET x_van = " + streetModel.getStartPos().x
 				+ ", y_van = " + streetModel.getStartPos().y + ", x_naar = " + streetModel.getEndPos().x + ", y_naar = "
 				+ streetModel.getEndPos().y
 				+ "	WHERE idstuk = (select one from (SELECT MIN(s2.idstuk) as one FROM stuk s1 LEFT JOIN spelerstuk s2 ON s1.idstuk = s2.idstuk WHERE s2.idspel = "
-				+ spelId + " AND x_van IS NULL AND s1.stuksoort = 'straat" + "' AND username = '"
-				+ streetModel.getPlayer().getUsername() + "')as a) and idspel = " + spelId + " and username = '"
+				+ idSpel + " AND x_van IS NULL AND s1.stuksoort = 'straat" + "' AND username = '"
+				+ streetModel.getPlayer().getUsername() + "')as a) and idspel = " + idSpel + " and username = '"
 				+ streetModel.getPlayer().getUsername() + "'");
-		
+
 	}
 
 	public static ArrayList<Piece> getPlacableCity(PlayerModel player, String spelId) throws SQLException
