@@ -127,7 +127,6 @@ public class CardView extends PaneTemplate {
 		System.out.println("kaart " + cards.get(selectedCard) + " is gebruikt");
 		removeSelected();
 
-
 	}
 
 	public void previousCard() {
