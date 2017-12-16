@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package controller;
 
 import javafx.scene.Scene;
@@ -56,4 +55,3 @@ public class StealResourceController {
 		popUpPickResources.hide();
 	}
 }
->>>>>>> 612cf58feefd92651da25faad3191335256141a9
