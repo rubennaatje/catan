@@ -140,7 +140,7 @@ public class TradeController {
 	public void showTrade() {
 		try {
 			TradeHelper.clearOffer(spelId);
-			viewTrade.reset();
+			viewTrade.reset(BoardHelper.getTradeRatio(players[usrPlayer], spelId));
 			popUpTrade.show();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -172,18 +172,6 @@ public class TradeController {
 		popUpCounterTrade.close();
 		superController.closeTrade();
 	}
-	public void setTradeRatio()
-	{
-		try
-		{
-			viewTrade.setBankLabels(BoardHelper.getTradeRatio(players[usrPlayer], spelId));
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public void registerCounterReject() {
 		try {
 			TradeHelper.clearOffer(spelId);

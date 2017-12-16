@@ -66,7 +66,7 @@ public class TradeView extends TradeViewTemplate {
 	public void rejectCounters(MouseEvent e) {
 		controller.registerCounterReject();
 	}
-	public void setBankLabels(HashMap<TileType,Integer> tradeHavens)
+	private void setBankLabels(HashMap<TileType,Integer> tradeHavens)
 	{
 		houtBnkLbl.setText((tradeHavens.get(TileType.H)).toString());
 		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString());
@@ -75,8 +75,9 @@ public class TradeView extends TradeViewTemplate {
 		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString());
 	}
 
-	public void reset() {
+	public void reset(HashMap<TileType, Integer> tradeHavens) {
 		getChildren().clear();
 		loadFxml(TradeView.class.getResource("fxml/trade.fxml"), this);
+		setBankLabels(tradeHavens);
 	}
 }

@@ -10,7 +10,7 @@ import model.PlayerUser;
 
 public class TestStartController extends Application {
 
-	
+	 
 	static GameController gameController;
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
