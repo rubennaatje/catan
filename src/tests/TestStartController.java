@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Catan;
 import model.PlayerModel;
+import model.PlayerType;
 import model.PlayerUser;
 
 public class TestStartController extends Application {
@@ -34,7 +35,7 @@ public class TestStartController extends Application {
         //catan.initGame();
         Catan.setGameId("770");
         
-        PlayerUser player = new PlayerUser("bart", Catan.getGameId());
+        PlayerUser player = new PlayerUser("bart", Catan.getGameId(), PlayerType.BLAUW);
         catan.setPlayer(player);
         PlayerModel[] players = catan.getCurrentPlayers();
         gameController = new GameController(spelId, players, player.getPlayerNumber() -1 ,primaryStage);

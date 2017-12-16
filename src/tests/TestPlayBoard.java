@@ -34,7 +34,7 @@ public class TestPlayBoard extends Application {
 		}));
 		launch(args);
 		
-		Dice dice = new Dice(771);
+		Dice dice = new Dice("");
 		dice.throwDice();
 		//DevelopmentCard test = new DevelopmentCard();
 		//System.out.println(test.getType());

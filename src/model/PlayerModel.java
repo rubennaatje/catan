@@ -9,13 +9,13 @@ import model.BoardHelper;
 public class PlayerModel extends Observable {
 
 	protected PlayerType type;
-	private String username = null;
+	protected String username = null;
 	private String cards = null;
 	private String devCards = null;
 	private String knights = null;
-	private String score = null;
+	protected String score = null;
 	private String road = null;
-	private String spelId = null;
+	protected String spelId = null;
 	private int playerNumber;
 	private boolean hasTurn=false;
 	private boolean hasWon=false;
@@ -27,12 +27,13 @@ public class PlayerModel extends Observable {
 		refresh();
 	}
 
-	public PlayerModel(String username, String idspel) {
-		this(username, idspel, null);
+	public PlayerModel(String username, String spelId) {
+		this.username = username;
+		this.spelId = spelId;
 	}
 
 	public PlayerModel(String username) {
-		this(username, null, null);
+		this.username = username;
 	}
 
 	public void refresh() {
@@ -56,8 +57,7 @@ public class PlayerModel extends Observable {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
 		this.hasTurn = hasTurn();
-		if(this.score != null && Integer.parseInt(this.score) >= 10)
-		{
+		if(this.score != null && Integer.parseInt(this.score) >= 10){
 			hasWon = true;
 		}
 		setChanged();
@@ -201,6 +201,14 @@ public class PlayerModel extends Observable {
 	
 	public void setSpelId(String spelId) {
 		this.spelId = spelId;
+	}
+	
+	public PlayerType getPlayerType() {
+		return type;
+	}
+	
+	public void setSpelId(PlayerType type) {
+		this.type = type;
 	}
 
 	public boolean getPlayerTurn()

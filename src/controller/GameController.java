@@ -47,7 +47,10 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
+		//functionality for cardView
+		cardView = new CardView(this);
 		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
+		
 
 		buyEvent = ((e) -> {
 			refresh();
@@ -107,9 +110,8 @@ public class GameController {
 		// event handler for first round street placement
 		firstRndStreet = ((e) -> {
 			piecePlacement(e);
-			ResultSet result;
 			try {
-				result = DatabaseManager.createStatement().executeQuery(
+				ResultSet result = DatabaseManager.createStatement().executeQuery(
 						"select (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
 								+ players[usrPlayer].getUsername() + "' and x_van is not null) from spel where idspel ="
 								+ spelId);
@@ -119,18 +121,19 @@ public class GameController {
 				} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 					DatabaseManager.createStatement()
 							.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
-					enableButtons();
 				} else if (result.getInt(1) > 2) {
 					BoardHelper.nextTurnBackward(spelId);
 				} else {
 					BoardHelper.nextTurnForward(spelId);
 				}
+				refresh();
 			} catch (SQLException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 		});
 
+		
 		// binding and creating playerDataview and model via observer
 		PlayerView[] playerViews = new PlayerView[4];
 		for (int i = 0; i < players.length; i++) {
@@ -150,8 +153,7 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
-		//functionality for cardView
-		cardView = new CardView();
+	
 		
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
@@ -286,7 +288,9 @@ public class GameController {
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
+				BoardHelper.setLongestRoad(players, spelId);
 			}
+			BoardHelper.refreshAll(spelId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -484,6 +488,7 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
+				devCon.refreshDevCards();
 				refreshButtons();
 				if(trade) startCounterTrade();
 				
@@ -534,5 +539,13 @@ public class GameController {
 			point++;
 		}
 		return point;
+	}
+	public void playDevCard(int i)
+	{
+		devCon.playCard(i);
+	}
+	
+	public void setDevCards(ArrayList<String> cards){
+		cardView.addCards(cards);
 	}
 }

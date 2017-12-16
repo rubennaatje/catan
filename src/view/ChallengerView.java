@@ -1,15 +1,11 @@
 package view;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-
 import com.sun.javafx.tk.Toolkit;
 
 import controller.AlertManager;
 import controller.CatanController;
-import controller.DatabaseManager;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -20,11 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Challenge;
-import model.PlayerUser;
 import view.javaFXTemplates.PaneTemplate;
 
 public class ChallengerView extends PaneTemplate {
@@ -34,8 +27,8 @@ public class ChallengerView extends PaneTemplate {
 	@FXML private Button btnChallenge; 
 	@FXML private Button btnBack;
 	
-	@FXML private TableView<PlayerUser> uitdager;
-	@FXML private TableColumn<PlayerUser, String> playerName;
+	@FXML private TableView<String> uitdager;
+	@FXML private TableColumn<String, String> playerName;
 	
 	public ChallengerView(Stage stage, CatanController controller) {
 		super(ChallengerView.class.getResource("fxml/ChallengerView.fxml"), stage);
@@ -54,7 +47,9 @@ public class ChallengerView extends PaneTemplate {
 		uitdager.addEventFilter( MouseEvent.MOUSE_PRESSED, eventHandler );
 		uitdager.addEventFilter( MouseEvent.MOUSE_RELEASED, eventHandler );
 		
-		addBoard(controller.getPlayers());
+		new Thread(() -> {
+			addBoard(controller.getPlayers());
+		}).start();
 		
 		btnChallenge.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -77,9 +72,15 @@ public class ChallengerView extends PaneTemplate {
 		});
 	}
 	
-	public void addBoard(ObservableList<PlayerUser> data) {
-		playerName.setCellValueFactory(new PropertyValueFactory<PlayerUser, String>("username"));
-		uitdager.setItems(data);
+
+	public void addBoard(ObservableList<String> observableList) {
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	playerName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+				uitdager.setItems(observableList);
+			}
+		});
 	}
 	
 	private MouseEvent cloneMouseEvent( MouseEvent event )

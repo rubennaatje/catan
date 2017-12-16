@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 
 import controller.DatabaseManager;
 import controller.DevelopCardController;
+import controller.GameController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,25 +14,24 @@ import javafx.stage.Stage;
 import model.PlayerUser;
 import view.javaFXTemplates.PaneTemplate;
 
-public class CardView extends PaneTemplate
-{
-
+public class CardView extends PaneTemplate {
+	
 	private ArrayList<String> cards = new ArrayList<>();
 	private int selectedCard = 0;
+	private boolean firstGo = true;
 
 	@FXML
 	public ImageView imageview;
 
 	@FXML
 	public JFXButton nextbutton, previousbutton, selectbutton;
-	
+
 	@FXML
 	public Label amount, selected;
 
-	
 	private Image notfound = new Image("/view/images/notfound.png");
 	private Image nocards = new Image("/view/images/nocards.png");
-	
+
 	private Image ridder = new Image("/view/images/Ridderkaart.png");
 	private Image bibliotheek = new Image("/view/images/BibliotheekKaart.png");
 	private Image kathedraal = new Image("/view/images/KathedraalKaart.png");
@@ -41,156 +41,149 @@ public class CardView extends PaneTemplate
 	private Image uitvinding = new Image("/view/images/Uitvindingkaart.png");
 	private Image universiteit = new Image("/view/images/UniversiteitKaart.png");
 	private Image parlement = new Image("/view/images/ParlementKaart.png");
-	
-	private DevelopCardController control;
-	
-	
-	
 
-	
-	public CardView(Stage primaryStage) throws Exception
-	{
-		super(CardView.class.getResource("fxml/CardView.fxml"), primaryStage);
+	private String amountnumber;
+	private GameController controller;
 
-		//this.control = control;
-		loadWindow();
-	}
-
-	public CardView()
-	{
+	public CardView(GameController controller) {
 		super(CardView.class.getResource("fxml/CardView.fxml"));
-		loadWindow();
+		//cards.add(""); // adding card number 0
+		//addCards(cards);
+		this.controller = controller;
+		
 	}
 
+	private void loadWindow() {
 
-	private void loadWindow()
-	{
-		addCards();
-		String amountnumber = "" + (cards.size() - 1);
-		amount.setText(amountnumber);
-
-		if (cards.size() > 0)
-		{
-			previousbutton.setDisable(true);
-			selectedCard++;
-			String selectednumber = "" + selectedCard;
-			selected.setText(selectednumber);
+		if (cards.size() > 0) {
+			if(firstGo)
+			{
+				selectedCard++;
+				firstGo = false;
+			}
+			reloadAmount();
 			showCard();
-		}
-		else {
+		} else {
 			amount.setText("0");
 			nextbutton.setDisable(true);
 			previousbutton.setDisable(true);
 			noCards();
 		}
 	}
-	
-	
-	
-	public void addCards()
+
+	private void reloadAmount() 
 	{
-		cards.add(""); //kaart nummer 0
-		cards.add("ridder"); //kaart nummer 0
-		cards.add("markt"); //kaart nummer 0
-		cards.add("bibliotheek"); //kaart nummer 0
-		
-		
-/*		for(int x = 0; x < control.getPlayerCards().size(); x++) {
-			cards.add(control.getPlayerCards().get(x).getCardname());
-		}*/
+
+		amountnumber = "" + (cards.size());
+		amount.setText(amountnumber);
+		selected.setText(((Integer)(selectedCard +1)).toString());
+
 	}
 
-	public void nextCard()
-	{
+	public void addCards(ArrayList<String> cards) {
+		;
+		this.cards = cards;
+		selectbutton.setDisable(false);
+		loadWindow();
+	
+	}
 
+	public void nextCard() {
 		// amount labels
-		if (selectedCard < (cards.size() - 1))
-		{
+		if (selectedCard < cards.size()) {
 			previousbutton.setDisable(false);
 			selectedCard++;
-			String selectednumber = "" + selectedCard;
-			selected.setText(selectednumber);
+			selected.setText(((Integer)(selectedCard +1)).toString());
 		}
-		if(selectedCard == (cards.size() - 1)) {
+		if (selectedCard >= (cards.size() - 1)) {
 			nextbutton.setDisable(true);
 		}
 
 		showCard();
 
 	}
-	
-	public void selectCard()
-	{
 
-		System.out.println("Geselecteerde kaart is " + cards.get(selectedCard));
+	public void selectCard() {
+		// use card function
+
+		// remove card funcion
+
+		controller.playDevCard(selectedCard);
+		System.out.println("kaart " + cards.get(selectedCard) + " is gebruikt");
+		removeSelected();
 
 	}
 
-	public void previousCard()
-	{
+	public void previousCard() {
 
-		if (selectedCard > 1)
-		{
+		if (selectedCard >= 1) {
 			nextbutton.setDisable(false);
 			selectedCard--;
-			String selectednumber = "" + selectedCard;
-			selected.setText(selectednumber);
-		} 
-		if(selectedCard == 1) {
+			selected.setText(((Integer)(selectedCard +1)).toString());
+		}
+		if (selectedCard == 0) {
 			previousbutton.setDisable(true);
 		}
-		
-		showCard();
+			showCard();
 
 	}
 
-	private void showCard()
-	{
-		if (cards.get(selectedCard).equals("ridder"))
-		{
+	private void showCard() {
+		if (cards.get(selectedCard).equals("ridder")) {
 			imageview.setImage(ridder);
-		} else if (cards.get(selectedCard).equals("bibliotheek"))
-		{
+		} else if (cards.get(selectedCard).equals("bibliotheek")) {
 			imageview.setImage(bibliotheek);
-		
-		} else if (cards.get(selectedCard).equals("kathedraal"))
-		{
+
+		} else if (cards.get(selectedCard).equals("kathedraal")) {
 			imageview.setImage(kathedraal);
-		} else if (cards.get(selectedCard).equals("markt"))
-		{
+		} else if (cards.get(selectedCard).equals("markt")) {
 			imageview.setImage(markt);
-		} else if (cards.get(selectedCard).equals("monopolie"))
-		{
+		} else if (cards.get(selectedCard).equals("monopolie")) {
 			imageview.setImage(monopolie);
-		} else if (cards.get(selectedCard).equals("stratenbouw"))
-		{
+		} else if (cards.get(selectedCard).equals("stratenbouw")) {
 			imageview.setImage(stratenbouw);
-		} else if (cards.get(selectedCard).equals("uitvinding"))
-		{
+		} else if (cards.get(selectedCard).equals("uitvinding")) {
 			imageview.setImage(uitvinding);
-		} else if (cards.get(selectedCard).equals("universiteit"))
-		{
+		} else if (cards.get(selectedCard).equals("universiteit")) {
 			imageview.setImage(universiteit);
-		}
-		else if (cards.get(selectedCard).equals("parlement"))
-		{
+		} else if (cards.get(selectedCard).equals("parlement")) {
 			imageview.setImage(parlement);
-		} else
-		{
+		} else {
 			imageview.setImage(notfound);
 		}
 	}
-	
-	
-	private void noCards()
-	{
-		imageview.setImage(nocards);
+
+	private void noCards() {
 		
+		nextbutton.setDisable(true);
+		selectbutton.setDisable(true);
+		previousbutton.setDisable(true);
+		imageview.setImage(nocards);
+
 	}
 
-	
+	private void removeSelected() {
 
+		cards.remove(selectedCard);
+		if (selectedCard == 1) {
+			// do nothing
+		} else {
+			selectedCard--;
+		}
+		
+		if (cards.size() != 1) {
+			showCard();
+			reloadAmount();
+		}
+		else {
+			
+			selectbutton.setDisable(true);
+			selectbutton.setDisable(true);
+			noCards();
+			selected.setText("0");
+			amount.setText("0");
+		}
 
-
+	}
 
 }
