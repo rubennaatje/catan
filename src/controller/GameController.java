@@ -110,8 +110,9 @@ public class GameController {
 		// event handler for first round street placement
 		firstRndStreet = ((e) -> {
 			piecePlacement(e);
+			ResultSet result;
 			try {
-				ResultSet result = DatabaseManager.createStatement().executeQuery(
+				result = DatabaseManager.createStatement().executeQuery(
 						"select (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
 								+ players[usrPlayer].getUsername() + "' and x_van is not null) from spel where idspel ="
 								+ spelId);
@@ -121,6 +122,9 @@ public class GameController {
 				} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 					DatabaseManager.createStatement()
 							.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
+
+					enableButtons();
+
 				} else if (result.getInt(1) > 2) {
 					BoardHelper.nextTurnBackward(spelId);
 				} else {
@@ -153,7 +157,6 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
-	
 		
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
@@ -274,12 +277,36 @@ public class GameController {
 		try {
 			RobberView view = (RobberView) event.getSource();
 			BoardHelper.placeRobber(spelId, view.getLoc());
+			stealResource(spelId, view.getLoc());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	
+	private void stealResource(String spelId, GridLocation loc) {
+		try {
+			ArrayList<Piece> pieceLocs;
+			ArrayList<PlayerModel> surroundingPlayers = null;
+			pieceLocs = BoardHelper.getSurroundingPieces(spelId, loc.x, loc.y);
+			for(int x = 0; x < pieceLocs.size(); x++)
+			{
+				if(pieceLocs.get(x).getPlayer() != null || pieceLocs.get(x).getPlayer() != players[usrPlayer] )
+				surroundingPlayers.add(pieceLocs.get(x).getPlayer());
+			}
+			//View select
+			PlayerModel selectedPlayer = null;
+			//Update resource
+			DatabaseManager.createStatement().executeUpdate(""
+					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
+					+ "(SELECT idgrondstofkaart FROM "
+					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + selectedPlayer.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void piecePlacement(MouseEvent event) {
 		try {
 			if (event.getSource() instanceof PieceView) {
@@ -288,9 +315,7 @@ public class GameController {
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
-				BoardHelper.setLongestRoad(players, spelId);
 			}
-			BoardHelper.refreshAll(spelId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -488,7 +513,9 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
+
 				devCon.refreshDevCards();
+
 				refreshButtons();
 				if(trade) startCounterTrade();
 				
