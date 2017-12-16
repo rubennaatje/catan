@@ -29,6 +29,7 @@ public class GameController {
 	DiceView dice;
 	Dice diceO;
 	ResourceView resourceView;
+	StealResourceController steal;
 	private EventHandler<MouseEvent> pieceEvent;
 	private EventHandler<MouseEvent> firstRndStreet;
 	private EventHandler<MouseEvent> buyEvent;
@@ -50,6 +51,7 @@ public class GameController {
 		//functionality for cardView
 		cardView = new CardView(this);
 		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
+		this.steal =  new StealResourceController(devCon);
 		
 
 		buyEvent = ((e) -> {
@@ -156,8 +158,12 @@ public class GameController {
 		// functionality for chat
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
+<<<<<<< HEAD
+	
+=======
 
 		
+>>>>>>> 1a8e0932d006e471fcfb406f7ada72be7a09534a
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
 		playboardview = new PlayBoardView();
@@ -277,7 +283,7 @@ public class GameController {
 		try {
 			RobberView view = (RobberView) event.getSource();
 			BoardHelper.placeRobber(spelId, view.getLoc());
-			stealResource(spelId, view.getLoc());
+			//stealResource(spelId, view.getLoc());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -513,9 +519,15 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
+<<<<<<< HEAD
+				devCon.refreshDevCards();
+
+
+=======
 
 				devCon.refreshDevCards();
 
+>>>>>>> 1a8e0932d006e471fcfb406f7ada72be7a09534a
 				refreshButtons();
 				if(trade) startCounterTrade();
 				
@@ -569,7 +581,15 @@ public class GameController {
 	}
 	public void playDevCard(int i)
 	{
-		devCon.playCard(i);
+		if(devCon.checkForResource(i))
+		{
+			steal.showResources(i,players[usrPlayer]);
+		}
+		else
+		{
+			devCon.playCard(i);
+		}
+			
 	}
 	
 	public void setDevCards(ArrayList<String> cards){

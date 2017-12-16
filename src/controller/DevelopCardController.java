@@ -54,7 +54,9 @@ public class DevelopCardController {
 					.executeQuery("SELECT idontwikkelingskaart FROM spelerontwikkelingskaart WHERE username = '"
 							 + player.getUsername() + "'   AND idspel = " + player.getSpelId() + " AND gespeeld = 0;");
 			while (cardsUsed.next()) {
-				assignCard(cardsUsed.getString("idontwikkelingskaart"));
+				//assignCard(cardsUsed.getString("idontwikkelingskaart"));
+				assignCard(cardsUsed.getString(1));
+				System.out.println(cardsUsed.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -68,6 +70,7 @@ public class DevelopCardController {
 		{
 			String temp = list.get(x).getCardname();
 			cards.add(temp);
+			System.out.println(cards.get(x));
 		}
 		return cards;
 		
@@ -103,7 +106,7 @@ public class DevelopCardController {
 	
 	public boolean checkForResource(int index) { //checks if devcard needs resourcetype
 		if(list.get(index) instanceof ProgressCard) {
-			if(((ProgressCard) list.get(index)).getCardname() != "stratenbouw") {
+			if(!((ProgressCard) list.get(index)).getCardname().equals("stratenbouw")) {
 				return true;
 			}	
 		}
@@ -111,7 +114,6 @@ public class DevelopCardController {
 	}
 	
 	public void setResourceType(int index, String resource) { // assigns resourcetype to progresscard when needed
-		
 		switch(resource) {
 			case("baksteen"):
 				t = TileType.valueOf("B");

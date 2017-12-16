@@ -3,15 +3,11 @@ package view;
 import java.util.ArrayList;
 import com.jfoenix.controls.JFXButton;
 
-import controller.DatabaseManager;
-import controller.DevelopCardController;
 import controller.GameController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import model.PlayerUser;
 import view.javaFXTemplates.PaneTemplate;
 
 public class CardView extends PaneTemplate {
@@ -56,34 +52,32 @@ public class CardView extends PaneTemplate {
 	private void loadWindow() {
 
 		if (cards.size() > 0) {
+			if(cards.size() == 1) {
+				selectedCard = 0;
+			}
 			if(firstGo)
-			{
+			{	
+				
 				selectedCard++;
 				firstGo = false;
 			}
 			reloadAmount();
 			showCard();
 		} else {
-			amount.setText("0");
-			nextbutton.setDisable(true);
-			previousbutton.setDisable(true);
 			noCards();
 		}
 	}
 
-	private void reloadAmount() 
-	{
+	private void reloadAmount() {
 
 		amountnumber = "" + (cards.size());
 		amount.setText(amountnumber);
-		selected.setText(((Integer)(selectedCard +1)).toString());
+		selected.setText(((Integer)(selectedCard+1)).toString());
 
 	}
 
 	public void addCards(ArrayList<String> cards) {
-		;
 		this.cards = cards;
-		selectbutton.setDisable(false);
 		loadWindow();
 	
 	}
@@ -104,14 +98,7 @@ public class CardView extends PaneTemplate {
 	}
 
 	public void selectCard() {
-		// use card function
-
-		// remove card funcion
-
 		controller.playDevCard(selectedCard);
-		System.out.println("kaart " + cards.get(selectedCard) + " is gebruikt");
-		removeSelected();
-
 	}
 
 	public void previousCard() {
@@ -133,7 +120,6 @@ public class CardView extends PaneTemplate {
 			imageview.setImage(ridder);
 		} else if (cards.get(selectedCard).equals("bibliotheek")) {
 			imageview.setImage(bibliotheek);
-
 		} else if (cards.get(selectedCard).equals("kathedraal")) {
 			imageview.setImage(kathedraal);
 		} else if (cards.get(selectedCard).equals("markt")) {
@@ -155,34 +141,12 @@ public class CardView extends PaneTemplate {
 
 	private void noCards() {
 		
+		amount.setText("0");
+		selectedCard = 0;
 		nextbutton.setDisable(true);
 		selectbutton.setDisable(true);
 		previousbutton.setDisable(true);
 		imageview.setImage(nocards);
-
-	}
-
-	private void removeSelected() {
-
-		cards.remove(selectedCard);
-		if (selectedCard == 1) {
-			// do nothing
-		} else {
-			selectedCard--;
-		}
-		
-		if (cards.size() != 1) {
-			showCard();
-			reloadAmount();
-		}
-		else {
-			
-			selectbutton.setDisable(true);
-			selectbutton.setDisable(true);
-			noCards();
-			selected.setText("0");
-			amount.setText("0");
-		}
 
 	}
 
