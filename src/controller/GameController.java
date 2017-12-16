@@ -158,12 +158,6 @@ public class GameController {
 		// functionality for chat
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
-<<<<<<< HEAD
-	
-=======
-
-		
->>>>>>> 1a8e0932d006e471fcfb406f7ada72be7a09534a
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
 		playboardview = new PlayBoardView();
@@ -519,15 +513,6 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
-<<<<<<< HEAD
-				devCon.refreshDevCards();
-
-
-=======
-
-				devCon.refreshDevCards();
-
->>>>>>> 1a8e0932d006e471fcfb406f7ada72be7a09534a
 				refreshButtons();
 				if(trade) startCounterTrade();
 				
