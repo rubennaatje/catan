@@ -2,13 +2,16 @@ package view;
 
 import com.jfoenix.controls.JFXButton;
 
+import controller.AlertManager;
 import controller.CatanController;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.PlayerRank;
@@ -31,7 +34,9 @@ public class LeaderBoardView extends PaneTemplate {
 				
 		this.controller = controller;
 		
-		addBoard(controller.getLeaderboard());
+		new Thread(() -> {
+			addBoard(controller.getLeaderboard());
+		}).start();
 		
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -43,10 +48,15 @@ public class LeaderBoardView extends PaneTemplate {
 	}
 
 	public void addBoard(ObservableList<PlayerRank> fillLeaderboard) {
-		PlayerPosition.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("rank"));
-		PlayerName.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("name"));
-		AmountOfWins.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("gamesWon"));
-		TableView.setItems(fillLeaderboard);
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	PlayerPosition.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("rank"));
+				PlayerName.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("name"));
+				AmountOfWins.setCellValueFactory(new PropertyValueFactory<PlayerRank, String>("gamesWon"));
+				TableView.setItems(fillLeaderboard);
+		    }
+		});
 	}	
 	
 }

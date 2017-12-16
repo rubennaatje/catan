@@ -68,7 +68,7 @@ public class PlayBoardView extends PaneTemplate {
 		endPoint = locs.getCoordinate(streetData.getEndPos());
 		double squareSize = Math.sqrt(Math.pow((startPoint.getX() - endPoint.getX()), 2)
 				+ Math.pow((startPoint.getY() - endPoint.getY()), 2));
-		double squareWidth = squareSize / 5;
+		double squareWidth = squareSize / 8;
 
 		// calculates Rectangle size according to difference between points
 		street.getStyleClass().add(streetData.getPlayer().getType().getCSSClass());

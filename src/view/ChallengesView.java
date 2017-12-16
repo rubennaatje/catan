@@ -2,6 +2,7 @@ package view;
 
 import controller.AlertManager;
 import controller.CatanController;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Challenge;
+import model.PlayerRank;
 import view.javaFXTemplates.PaneTemplate;
 
 public class ChallengesView extends PaneTemplate {
@@ -31,7 +33,9 @@ public class ChallengesView extends PaneTemplate {
 		super(ChallengesView.class.getResource("fxml/ChallengesView.fxml"), stage);
 		this.controller = controller;
 		
-		addBoard(controller.getChallenges());
+		new Thread(() -> {
+			addBoard(controller.getChallenges());
+		}).start();
 		
 		btnAccept.setOnAction((ActionEvent e) -> {
 
@@ -78,9 +82,14 @@ public class ChallengesView extends PaneTemplate {
 	}
 	
 	public void addBoard(ObservableList<Challenge> data) {
-		uitdager.getItems().clear();
-		playerName.setCellValueFactory(new PropertyValueFactory<Challenge, String>("uitdager"));
-		gameId.setCellValueFactory(new PropertyValueFactory<Challenge, String>("gameId")); 
-		uitdager.setItems(data);
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	uitdager.getItems().clear();
+				playerName.setCellValueFactory(new PropertyValueFactory<Challenge, String>("uitdager"));
+				gameId.setCellValueFactory(new PropertyValueFactory<Challenge, String>("gameId")); 
+				uitdager.setItems(data);
+		    }
+		});
 	}	
 }

@@ -177,7 +177,7 @@ public class BoardHelper
 		}
 
 		if (result > 6 && !sharedHigh) {
-			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET langste_hr_username= '" + name + "'");
+			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET langste_hr_username= '" + name + "' where idspel = '" + spelId + "'");
 		}
 	}
 	
@@ -821,5 +821,13 @@ public class BoardHelper
 	{
 		DatabaseManager.createStatement()
 				.executeUpdate("UPDATE speler SET shouldrefresh = 1 WHERE idspel = " + spelId + "");
+	}
+
+	public static void giveResourcesFrstRound(String spelId, Piece pieceModel, PlayerModel players) {
+		ResultSet results = DatabaseManager.createStatement()
+				.executeQuery("SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = '"
+						+ spelId + "' AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - " + x
+						+ ") <= 1 AND (s.x_van - " + x + ") >= - 1) AND ((s.y_van - " + y + ") <= 1 AND (s.y_van - " + y
+						+ ") >= - 1);  ");
 	}
 }

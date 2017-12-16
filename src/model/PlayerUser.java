@@ -103,7 +103,6 @@ public class PlayerUser extends PlayerModel {
 	public void refreshVictoryPoints() throws SQLException{
 		String grmUsername = null;
 		String lhrUsername = null;
-		int Score = 0;
 		int newScore = 0;
 		
 		//check if player has longest road or biggest knight army
@@ -113,19 +112,20 @@ public class PlayerUser extends PlayerModel {
 			lhrUsername = result.getString(2);
 		}
 		
-		if(grmUsername == username || lhrUsername == username) {
-			if(grmUsername == username && lhrUsername == username) {
-				Score += 4;
-			}
-			Score += 2;
+		if(grmUsername != null && grmUsername.equals(username)) {
+			newScore += 2;
+		}
+		
+		if(lhrUsername != null && lhrUsername.equals(username)) {
+			newScore += 2;
 		}
 		
 		//check towns and cities
 		for(Piece piece: BoardHelper.getPiecesPlayer(this, spelId)) {
 			if(piece.getType() == PieceType.DORP) {
-				Score += 1;
+				newScore += 1;
 			} else if(piece.getType() == PieceType.STAD) {
-				Score +=2;
+				newScore +=2;
 			}
 		}
 		
@@ -135,18 +135,52 @@ public class PlayerUser extends PlayerModel {
 			int iGespeeld = list.getInt(1);
 			String sUsername = list.getString(2);
 			if(iGespeeld == 1 && sUsername == username) {
-				Score += 1;
+				newScore += 1;
 			}
 		}
-	
+		
 		//add score to old score and update cell behaaldepunten
-		if(score == null)
-			score = "0";
-		newScore = Integer.parseInt(score) + Score;
-		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"'");
+
+		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"' AND idspel='"+spelId+"'");
 		
 		if(rowsAffected == 0) {
 			throw new SQLException("No points to add");
 		}	
+	}
+	
+	public void takeResources (PieceType pieceType) {
+		switch(pieceType){
+		case DORP:
+			try {
+				removeResources(TileType.B, 1);
+				removeResources(TileType.H, 1);
+				removeResources(TileType.W, 1);
+				removeResources(TileType.G, 1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case STAD:
+			try {
+				removeResources(TileType.E, 3);
+				removeResources(TileType.G, 2);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		}
+		
+		refresh();
+	}
+
+	public void takeResourcesStreet () {
+		try {
+			removeResources(TileType.B, 1);
+			removeResources(TileType.H, 1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		refresh();
 	}
 }

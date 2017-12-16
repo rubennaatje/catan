@@ -100,7 +100,6 @@ public class CatanController {
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
 	        if (creation) {
-	    		getPlayer().setType(PlayerType.ROOD);
 	        	catan.addPlayerPieces(players);
 	        }
 	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
@@ -128,25 +127,23 @@ public class CatanController {
 		return data; 
 	}
 	 
-	public ObservableList<PlayerUser> getPlayers(){
-		ObservableList<PlayerUser> data = FXCollections.observableArrayList();
+	public ObservableList<String> getPlayers(){
+		ObservableList<String> data = FXCollections.observableArrayList();
 		
 		try {
 			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username FROM account WHERE username != '" + player.getUsername() + "';");
 			
 			while (result.next()) {
-				data.add(new PlayerUser(result.getString(1)));
+				data.add(result.getString(1));
 			}
 		} catch (Exception e) {
 			
 		}
-		
 		return data; 
 	}
 	
 	public ObservableList<PlayerRank> getLeaderboard(){
 		ObservableList<PlayerRank> data = FXCollections.observableArrayList();
-		
 		try {
 			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT username, aantal_spellen_gewonnen FROM speelresultaat ORDER BY som_behaalde_punten DESC");
 			int count = 0;
@@ -155,9 +152,7 @@ public class CatanController {
 				data.add(new PlayerRank(String.valueOf(count), result.getString(1), result.getString(2)));
 			}
 		} catch (Exception e) {
-			
 		}
-		
 		return data; 
 	}
 	
@@ -174,7 +169,7 @@ public class CatanController {
 		this.player = new PlayerUser(username);
 	}
 	
-	public void createGame(ObservableList<PlayerUser> items) {
+	public void createGame(ObservableList<String> observableList) {
 		try {
 			ResultSet result = DatabaseManager.createStatement().executeQuery("SELECT MAX(idspel) as idspel FROM spel");
 			result.next();
@@ -190,9 +185,9 @@ public class CatanController {
 			int count = 1;
 			DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + getPlayer().getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitdager', 0, " + count + ", 0)");
 			
-			for (PlayerUser player : items) {
+			for (String player : observableList) {
 				count++;
-				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player.getUsername() + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
+				DatabaseManager.createStatement().executeUpdate("INSERT INTO speler VALUES('" + gameId + "', '" + player + "', '" + kleuren.get(count - 1) + "', 'uitgedaagde', 0, " + count + ", 0)");
 			}
 			
 			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET beurt_username = '" + getPlayer().getUsername() + "' WHERE idspel = " + gameId);

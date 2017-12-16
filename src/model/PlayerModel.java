@@ -27,12 +27,13 @@ public class PlayerModel extends Observable {
 		refresh();
 	}
 
-	public PlayerModel(String username, String idspel) {
-		this(username, idspel, null);
+	public PlayerModel(String username, String spelId) {
+		this.username = username;
+		this.spelId = spelId;
 	}
 
 	public PlayerModel(String username) {
-		this(username, null, null);
+		this.username = username;
 	}
 
 	public void refresh() {
@@ -56,8 +57,7 @@ public class PlayerModel extends Observable {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
 		this.hasTurn = hasTurn();
-		if(this.score != null && Integer.parseInt(this.score) >= 10)
-		{
+		if(this.score != null && Integer.parseInt(this.score) >= 10){
 			hasWon = true;
 		}
 		setChanged();
