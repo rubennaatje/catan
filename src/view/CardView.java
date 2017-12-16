@@ -71,7 +71,8 @@ public class CardView extends PaneTemplate {
 		}
 	}
 
-	private void reloadAmount() {
+	private void reloadAmount() 
+	{
 
 		amountnumber = "" + (cards.size());
 		amount.setText(amountnumber);

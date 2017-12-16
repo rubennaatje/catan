@@ -133,7 +133,6 @@ public class DevelopCardController {
 				t = TileType.valueOf("E");
 			((ProgressCard) list.get(index)).setResourceType(t);
 			break;
-			
 		}
 		
 		

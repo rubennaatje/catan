@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
@@ -39,8 +40,6 @@ public class GameController {
 	private TradeController tradeController;
 
 	private CardView cardView;
-
-	private boolean isFirstRound = false;
 
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
@@ -105,10 +104,6 @@ public class GameController {
 		// event handler for first round piece placement
 		firstRndPiece = ((e) -> {
 			piecePlacement(e);
-			if(isFirstRound) {
-				PieceView piece = (PieceView)e.getSource();
-				BoardHelper.giveResourcesFrstRound(spelId, piece.getPieceModel(), players[usrPlayer]);
-			}
 			refresh();
 			showFrstRndStreet();
 		});
@@ -126,21 +121,19 @@ public class GameController {
 				} else if (result.getInt(1) == 4 && players[usrPlayer].getPlayerNumber() == 1) {
 					DatabaseManager.createStatement()
 							.executeUpdate("UPDATE spel SET eersteronde=0 WHERE idspel = " + spelId);
-					
-					usrTurn();
 				} else if (result.getInt(1) > 2) {
 					BoardHelper.nextTurnBackward(spelId);
-					frstRnd();
 				} else {
 					BoardHelper.nextTurnForward(spelId);
-					frstRnd();
 				}
+				refresh();
 			} catch (SQLException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 		});
 
+		
 		// binding and creating playerDataview and model via observer
 		PlayerView[] playerViews = new PlayerView[4];
 		for (int i = 0; i < players.length; i++) {
@@ -160,14 +153,8 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
-<<<<<<< HEAD
 	
 		
-=======
-		// functionality for cardView
-		cardView = new CardView();
-
->>>>>>> 612cf58feefd92651da25faad3191335256141a9
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
 		playboardview = new PlayBoardView();
@@ -187,9 +174,10 @@ public class GameController {
 	public void start() {
 		refresh();
 		try {
-			BoardHelper.refreshAll(spelId);
-
-			if (isFirstRound) {
+			ResultSet result = DatabaseManager.createStatement()
+					.executeQuery("select eersteronde from spel where idspel =" + spelId);
+			result.next();
+			if (result.getInt(1) == 1) {
 				frstRnd();
 			} else {
 				usrTurn();
@@ -200,10 +188,13 @@ public class GameController {
 	}
 
 	private void frstRnd() {
-		new Thread(() -> {
-			await();
-			showFrstRndPieces();
-		}).start();
+		new Thread() {
+			@Override
+			public void run() {
+				await();
+				showFrstRndPieces();
+			}
+		}.start();
 	}
 
 	private void usrTurn() {
@@ -211,6 +202,7 @@ public class GameController {
 			@Override
 			public void run() {
 				await();
+				refreshButtons();
 				int nThrow;
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
@@ -219,6 +211,7 @@ public class GameController {
 					if (newThrow)
 						BoardHelper.giveResources(Catan.getGameId(), nThrow);
 					dice.showDice(diceO.getTotalthrow());
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -241,7 +234,7 @@ public class GameController {
 				result.next();
 				check = result.getInt(1) == 1;
 				if (!check)
-					Thread.sleep(CatanController.refreshTime);
+				Thread.sleep(CatanController.refreshTime);
 				result.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -262,7 +255,7 @@ public class GameController {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void showDoubleStreetPlacable() {
 		ArrayList<Street> listOfStreet;
 		try {
@@ -292,13 +285,10 @@ public class GameController {
 			if (event.getSource() instanceof PieceView) {
 				PieceView caller = (PieceView) event.getSource();
 				BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
-				
-				((PlayerUser) players[usrPlayer]).takeResources((caller.getPieceModel().getType()));
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
 				BoardHelper.setLongestRoad(players, spelId);
-				((PlayerUser) players[usrPlayer]).takeResourcesStreet();
 			}
 			BoardHelper.refreshAll(spelId);
 		} catch (SQLException e) {
@@ -390,6 +380,12 @@ public class GameController {
 
 	}
 
+	private void enableButtons() {
+		Platform.runLater(() -> {
+			buttons.setEnabled();
+		});
+	}
+
 	public void disableButtons() {
 		Platform.runLater(() -> {
 			buttons.setDisabled();
@@ -398,7 +394,7 @@ public class GameController {
 
 	private void refreshButtons() {
 		try {
-			if (players[usrPlayer].getPlayerTurn() && !isFirstRound) {
+			if (players[usrPlayer].getPlayerTurn()) {
 				PlayerUser p = (PlayerUser) players[usrPlayer];
 				HashMap<String, Boolean> buyable = p.getBuyableThings();
 				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true);
@@ -425,15 +421,8 @@ public class GameController {
 	// update ing field
 	public void refresh() {
 		// fetching all data in seperate thread
-		System.out.println("board is refreshing");
+				System.out.println("board is refreshing");
 		try {
-			//check if is firstRound
-			
-			ResultSet r = DatabaseManager.createStatement()
-					.executeQuery("select eersteronde from spel where idspel =" + spelId);
-			if(r.first() && r.getInt(1) == 1) {isFirstRound = true;} else {isFirstRound = false;};
-			
-			
 			ArrayList<Tile> hexes = BoardHelper.getAllHexes(spelId);
 			ArrayList<ArrayList<Street>> allStreets = new ArrayList<>();
 			ArrayList<ArrayList<Piece>> allPieces = new ArrayList<>();
@@ -457,34 +446,39 @@ public class GameController {
 						playboardview.addStreet(street);
 					}
 				}
-				// havens plaatsen
-				for (ArrayList<String> haven : havenList) {
-					int x = Integer.parseInt(haven.get(0));
-					int y = Integer.parseInt(haven.get(1));
-					String havenType = haven.get(2);
-					int xEnd = calcEndPointX(x);
-					int yEnd = calcEndPointY(y);
-					Image im = new Image("view/images/Vraagteken.png");
-					if (havenType != null) {
-						switch (havenType) {
-						case "G":
-							im = new Image("view/images/Hooi.png");
-							break;
-						case "B":
-							im = new Image("view/images/Steen.png");
-							break;
-						case "H":
-							im = new Image("view/images/Hout.png");
-							break;
-						case "E":
-							im = new Image("view/images/Erts.png");
-							break;
-						case "W":
-							im = new Image("view/images/Schaap.png");
+				//havens plaatsen
+					for(ArrayList<String> haven : havenList )
+					{
+						int x = Integer.parseInt(haven.get(0));
+						int y = Integer.parseInt(haven.get(1));
+						String havenType =  haven.get(2);
+						int xEnd = calcEndPointX(x);
+						int yEnd = calcEndPointY(y);
+						Color color = Color.BLACK;
+						Image im = new Image("view/images/Vraagteken.png");
+						if(havenType != null)
+						{
+							switch(havenType)
+							{
+							case "G":
+								im = new Image("view/images/Hooi.png");
+								break;
+							case "B":
+								im = new Image("view/images/Steen.png");
+								break;
+							case "H":
+								im = new Image("view/images/Hout.png");
+								break;
+							case "E":
+								im = new Image("view/images/Erts.png");
+								break;
+							case "W":
+								im = new Image("view/images/Schaap.png");
+							}
 						}
-					}
-					playboardview.drawHaven(new GridLocation(x, y), new GridLocation(xEnd, yEnd), im);
-				}
+						playboardview.drawHaven(new GridLocation(x,y), new GridLocation(xEnd,yEnd),im);
+
+					}	
 				for (ArrayList<Piece> pieces : allPieces) {
 					// places all cities and towns for player
 					for (Piece street : pieces) {
@@ -494,71 +488,54 @@ public class GameController {
 				buttons.setLongestRoad(longestRoad);
 				playboardview.addRobber(robberPos);
 				dice.showDice(diceO.getTotalthrow());
-<<<<<<< HEAD
 				devCon.refreshDevCards();
-=======
-
-				//refresh for players
-				for (int i = 0; i < players.length; i++) {
-					if(i != usrPlayer) {
-						players[i].refresh();
-					} else {
-						PlayerUser usr = (PlayerUser)players[i];
-						usr.refresh();
-					}
-				}
-
-				
->>>>>>> 612cf58feefd92651da25faad3191335256141a9
 				refreshButtons();
-				if (trade)
-					startCounterTrade();
+				if(trade) startCounterTrade();
 				
+
 			});
-			
+			players[this.usrPlayer].refresh();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private boolean isTrade() throws SQLException {
-		ResultSet r = DatabaseManager.createStatement()
-				.executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId + " AND geaccepteerd IS NULL");
-		ResultSet r2 = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = "
-				+ spelId + " AND username = '" + players[usrPlayer].getUsername() + "'");
-		if (r.first() && r2.first() && r.getInt(1) == 1 && r2.getInt(1) == 0)
-			return true;
+		ResultSet r = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND geaccepteerd IS NULL");
+		ResultSet r2 = DatabaseManager.createStatement().executeQuery("SELECT COUNT(*) FROM ruilaanbod WHERE idspel = " + spelId +  " AND username = '" + players[usrPlayer].getUsername() + "'");
+		if(r.first() && r2.first() && r.getInt(1) ==1 && r2.getInt(1)== 0) return true;
 		return false;
 	}
 
 	private void startCounterTrade() {
-
+		
 		tradeController.showTradeCounter();
 	}
-
+	
 	public void closeTrade() {
-		try {
-			TradeHelper.clearOffer(spelId);
-			refresh();
-			refreshButtons();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		refresh();
+		refreshButtons();
 	}
-
-	private int calcEndPointX(int point) {
-		if (point == 1 || point == 2 || point == 4) {
+	private int calcEndPointX(int point)
+	{
+		if(point == 1 || point ==  2 || point == 4)
+		{
 			point--;
-		} else if (point == 6 || point == 9 || point == 11) {
+		}
+		else if(point == 6 || point == 9 || point == 11)
+		{
 			point++;
 		}
 		return point;
 	}
-
-	private int calcEndPointY(int point) {
-		if (point == 1 || point == 3 || point == 4 || point == 6 || point == 7) {
+	private int calcEndPointY(int point)
+	{
+		if(point == 1 || point ==  3 || point == 4 || point ==  6 || point  == 7)
+		{
 			point--;
-		} else if (point == 8 || point == 10) {
+		}
+		else if(point == 8 || point == 10)
+		{
 			point++;
 		}
 		return point;
