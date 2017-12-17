@@ -287,13 +287,14 @@ public class GameController {
 		try {
 			RobberView view = (RobberView) event.getSource();
 			BoardHelper.placeRobber(spelId, view.getLoc());
+			stealResource(spelId,view.getLoc());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void stealResource(String spelId, GridLocation loc, PlayerModel selectedPlayer) {
+	public void stealResource(String spelId, GridLocation loc) {
 		try {
 			ArrayList<Piece> pieceLocs;
 			PlayerModel[] surroundingPlayers = new PlayerModel[3];
