@@ -42,6 +42,8 @@ public class GameController {
 	private CardView cardView;
 	private boolean isFirstRound = false;
 
+	private GameMergeView mergeView;
+
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer;
@@ -177,7 +179,7 @@ public class GameController {
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
+		mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
 				chat.getView(), cardView);
 
 		refresh();
@@ -557,6 +559,9 @@ public class GameController {
 						PlayerUser usr = (PlayerUser)players[i];
 						usr.refresh();
 					}
+                    if(players[i].getPlayerWon()) {
+                        endGame();
+                    }
 				}
 				
 				refreshButtons();
@@ -586,6 +591,21 @@ public class GameController {
 		tradeController.showTradeCounter();
 	}
 
+    public void endGame() {
+        if(players[usrPlayer].getPlayerWon()) {
+        	
+        	for (int i = 0; i < players.length; i++) {
+        		//players[i].setPlayerFinished();
+        	}
+        	
+        	if(players[usrPlayer].getPlayerWon())
+        		System.out.println("wwwwwooooowwww");
+        	else 
+        		System.out.println("awww");
+        	
+        }
+    }
+	
 	public void closeTrade() {
 		refresh();
 		refreshButtons();

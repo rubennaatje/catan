@@ -219,4 +219,12 @@ public class PlayerModel extends Observable {
 	{
 		return hasWon;
 	}
+	
+	public void setPlayerFinished() {
+		try {
+			DatabaseManager.createStatement().executeUpdate("UPDATE `speler` SET `speelstatus`='uitgespeeld' WHERE  `idspel`=" + getSpelId() + " AND `username`='" + getUsername() + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
