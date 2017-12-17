@@ -27,6 +27,9 @@ public class PlayerView extends PaneTemplate implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1)
 	{
+		
+		getStyleClass().clear();
+		
 		PlayerModel playerData = (PlayerModel)arg0;
 		cards.setText(playerData.getCards());
 		devcards.setText(playerData.getDevCards());
