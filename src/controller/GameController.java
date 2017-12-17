@@ -161,6 +161,7 @@ public class GameController {
 		// functionality for chat
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
+
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
 		playboardview = new PlayBoardView();

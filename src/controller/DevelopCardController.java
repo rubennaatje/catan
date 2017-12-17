@@ -56,6 +56,7 @@ public class DevelopCardController {
 			while (cardsUsed.next()) {
 				//assignCard(cardsUsed.getString("idontwikkelingskaart"));
 				assignCard(cardsUsed.getString(1));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -69,6 +70,7 @@ public class DevelopCardController {
 		{
 			String temp = list.get(x).getCardname();
 			cards.add(temp);
+
 		}
 		return cards;
 		
