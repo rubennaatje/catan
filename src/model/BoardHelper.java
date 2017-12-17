@@ -817,7 +817,7 @@ public class BoardHelper
 		return tradeRatio;
 	}
 	
-	public ArrayList<PlayerModel> getPlayersSurroundingTile(String spelId, GridLocation loc) throws SQLException {
+	public static ArrayList<PlayerModel> getPlayersSurroundingTile(String spelId, GridLocation loc) throws SQLException {
 		ArrayList<Piece> pieces = getSurroundingPieces(spelId, loc.x, loc.y);
 		ArrayList<PlayerModel> result = new ArrayList<>();
 		ArrayList<String> usernames = new ArrayList<>();
@@ -828,7 +828,6 @@ public class BoardHelper
 			}
 		}
 		return result;
-		
 	}
 
 	public static void refreshAll(String spelId) throws SQLException
