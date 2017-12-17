@@ -2,7 +2,11 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -65,23 +69,32 @@ public class Catan {
 	 */
 	public void initGame(String gameId) throws Exception {		
 		setGameId(gameId);
-
-		//TODO: remove after implementing Geordi's function. 
-		// Board board = new Board();
-		// board.createBoard(gameId);
+		
+		List<String> hextypes = Arrays.asList("H","G","E","W","H","G","E","B","W","G","E","B","W","H","G","B","W","H");
+		
+		Collections.shuffle(hextypes);
+		hextypes.get(0);
 		DatabaseManager.createStatement()
-				.executeUpdate("INSERT INTO tegel (idspel, idtegel,X,Y,idgrondstofsoort,idgetalfiche) VALUES(	"
-						+ gameId + " , 1  , 2 , 4  , 'H' , 12	)," + "(	" + gameId
-						+ " , 2  , 3 , 6  , 'G' , 18	),(	" + gameId + " , 3  , 4 , 8  , 'E' , 14	)," + "(	"
-						+ gameId + " , 4  , 3 , 3  , 'W' , 10	),(	" + gameId + " , 5  , 4 , 5  , 'H' , 16	),"
-						+ "(	" + gameId + " , 6  , 5 , 7  , 'G' , 8	),(	" + gameId + " , 7  , 6 , 9  , 'E' , 1	),"
-						+ "(	" + gameId + " , 8  , 4 , 2  , 'B' , 6	),(	" + gameId + " , 9  , 5 , 4  , 'W' , 2	),"
-						+ "(	" + gameId + " , 10 , 6 , 6  , 'X' , NULL ),(	" + gameId
-						+ " , 11 , 7 , 8  , 'G' , 4	)," + "(	" + gameId + " , 12 , 8 , 10 , 'E' , 13	),(	" + gameId
-						+ " , 13 , 6 , 3  , 'B' , 9	)," + "(	" + gameId + " , 14 , 7 , 5  , 'W' , 5	),(	" + gameId
-						+ " , 15 , 8 , 7  , 'H' , 3	)," + "(	" + gameId + " , 16 , 9 , 9  , 'G' , 15	),(	" + gameId
-						+ " , 17 , 8 , 4  , 'B' , 17	)," + "(	" + gameId + " , 18 , 9 , 6  , 'W' , 7	),(	"
-						+ gameId + " , 19 , 10, 8  , 'H' , 11	);");
+				.executeUpdate("INSERT INTO tegel (idspel, idtegel,X,Y,idgrondstofsoort,idgetalfiche) VALUES"
+								+ "(" + gameId + " , 1  , 2 , 4  , '" + hextypes.get(0) + "' , 12	)," 
+								+ "(" + gameId + " , 2  , 3 , 6  , '" + hextypes.get(1) + "' , 18	),"
+								+ "(" + gameId + " , 3  , 4 , 8  , '" + hextypes.get(2) + "' , 14	),"
+								+ "(" + gameId + " , 4  , 3 , 3  , '" + hextypes.get(3) + "' , 10	),"
+								+ "(" + gameId + " , 5  , 4 , 5  , '" + hextypes.get(4) + "' , 16	),"
+								+ "(" + gameId + " , 6  , 5 , 7  , '" + hextypes.get(5) + "' , 8	),"
+								+ "(" + gameId + " , 7  , 6 , 9  , '" + hextypes.get(6) + "' , 1	),"
+								+ "(" + gameId + " , 8  , 4 , 2  , '" + hextypes.get(7) + "' , 6	),"
+								+ "(" + gameId + " , 9  , 5 , 4  , '" + hextypes.get(8) + "' , 2	),"
+								+ "(" + gameId + " , 10 , 6 , 6  , 'X' , NULL ),"
+								+ "(" + gameId + " , 11 , 7 , 8  , '" + hextypes.get(9) + "' , 4	),"
+								+ "(" + gameId + " , 12 , 8 , 10 , '" + hextypes.get(10) + "' , 13	),"
+								+ "(" + gameId + " , 13 , 6 , 3  , '" + hextypes.get(11) + "' , 9	),"
+								+ "(" + gameId + " , 14 , 7 , 5  , '" + hextypes.get(12) + "' , 5	),"
+								+ "(" + gameId + " , 15 , 8 , 7  , '" + hextypes.get(13) + "' , 3	),"
+								+ "(" + gameId + " , 16 , 9 , 9  , '" + hextypes.get(14) + "' , 15	),"
+								+ "(" + gameId + " , 17 , 8 , 4  , '" + hextypes.get(15) + "' , 17	),"
+								+ "(" + gameId + " , 18 , 9 , 6  , '" + hextypes.get(16) + "' , 7	),"
+								+ "(" + gameId + " , 19 , 10, 8  , '" + hextypes.get(17) + "' , 11	);");
 
 		addDevelopmentCards();
 		addResourceCards();
@@ -93,22 +106,31 @@ public class Catan {
 		System.out.println(gameId);
 
 		if (creation) {
-			//TODO: remove after implementing Geordi's function. 
-			// Board board = new Board();
-			// board.createBoard(gameId);
+			List<String> hextypes = Arrays.asList("H","G","E","W","H","G","E","B","W","G","E","B","W","H","G","B","W","H");
+			
+			Collections.shuffle(hextypes);
+			hextypes.get(0);
 			DatabaseManager.createStatement()
-					.executeUpdate("INSERT INTO tegel (idspel, idtegel,X,Y,idgrondstofsoort,idgetalfiche) VALUES(	"
-							+ gameId + " , 1  , 2 , 4  , 'H' , 12	)," + "(	" + gameId
-							+ " , 2  , 3 , 6  , 'G' , 18	),(	" + gameId + " , 3  , 4 , 8  , 'E' , 14	)," + "(	"
-							+ gameId + " , 4  , 3 , 3  , 'W' , 10	),(	" + gameId + " , 5  , 4 , 5  , 'H' , 16	),"
-							+ "(	" + gameId + " , 6  , 5 , 7  , 'G' , 8	),(	" + gameId + " , 7  , 6 , 9  , 'E' , 1	),"
-							+ "(	" + gameId + " , 8  , 4 , 2  , 'B' , 6	),(	" + gameId + " , 9  , 5 , 4  , 'W' , 2	),"
-							+ "(	" + gameId + " , 10 , 6 , 6  , 'X' , NULL ),(	" + gameId
-							+ " , 11 , 7 , 8  , 'G' , 4	)," + "(	" + gameId + " , 12 , 8 , 10 , 'E' , 13	),(	" + gameId
-							+ " , 13 , 6 , 3  , 'B' , 9	)," + "(	" + gameId + " , 14 , 7 , 5  , 'W' , 5	),(	" + gameId
-							+ " , 15 , 8 , 7  , 'H' , 3	)," + "(	" + gameId + " , 16 , 9 , 9  , 'G' , 15	),(	" + gameId
-							+ " , 17 , 8 , 4  , 'B' , 17	)," + "(	" + gameId + " , 18 , 9 , 6  , 'W' , 7	),(	"
-							+ gameId + " , 19 , 10, 8  , 'H' , 11	);");
+					.executeUpdate("INSERT INTO tegel (idspel, idtegel,X,Y,idgrondstofsoort,idgetalfiche) VALUES"
+									+ "(" + gameId + " , 1  , 2 , 4  , '" + hextypes.get(0) + "' , 12	)," 
+									+ "(" + gameId + " , 2  , 3 , 6  , '" + hextypes.get(1) + "' , 18	),"
+									+ "(" + gameId + " , 3  , 4 , 8  , '" + hextypes.get(2) + "' , 14	),"
+									+ "(" + gameId + " , 4  , 3 , 3  , '" + hextypes.get(3) + "' , 10	),"
+									+ "(" + gameId + " , 5  , 4 , 5  , '" + hextypes.get(4) + "' , 16	),"
+									+ "(" + gameId + " , 6  , 5 , 7  , '" + hextypes.get(5) + "' , 8	),"
+									+ "(" + gameId + " , 7  , 6 , 9  , '" + hextypes.get(6) + "' , 1	),"
+									+ "(" + gameId + " , 8  , 4 , 2  , '" + hextypes.get(7) + "' , 6	),"
+									+ "(" + gameId + " , 9  , 5 , 4  , '" + hextypes.get(8) + "' , 2	),"
+									+ "(" + gameId + " , 10 , 6 , 6  , 'X' , NULL ),"
+									+ "(" + gameId + " , 11 , 7 , 8  , '" + hextypes.get(9) + "' , 4	),"
+									+ "(" + gameId + " , 12 , 8 , 10 , '" + hextypes.get(10) + "' , 13	),"
+									+ "(" + gameId + " , 13 , 6 , 3  , '" + hextypes.get(11) + "' , 9	),"
+									+ "(" + gameId + " , 14 , 7 , 5  , '" + hextypes.get(12) + "' , 5	),"
+									+ "(" + gameId + " , 15 , 8 , 7  , '" + hextypes.get(13) + "' , 3	),"
+									+ "(" + gameId + " , 16 , 9 , 9  , '" + hextypes.get(14) + "' , 15	),"
+									+ "(" + gameId + " , 17 , 8 , 4  , '" + hextypes.get(15) + "' , 17	),"
+									+ "(" + gameId + " , 18 , 9 , 6  , '" + hextypes.get(16) + "' , 7	),"
+									+ "(" + gameId + " , 19 , 10, 8  , '" + hextypes.get(17) + "' , 11	);");
 			
 			addDevelopmentCards();
 			addResourceCards();
@@ -228,5 +250,8 @@ public class Catan {
     	DatabaseManager.createStatement().executeUpdate(sql);
     }
 
+    public void randomBoard() {
+    	
+    }
 
 }

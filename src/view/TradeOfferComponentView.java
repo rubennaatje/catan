@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import model.TileType;
 import view.javaFXTemplates.TradeViewTemplate;
 
@@ -15,7 +16,9 @@ public class TradeOfferComponentView extends TradeViewTemplate {
 	@FXML
 	private Label offerer;
 	private String offerPlayer;
-
+	private HBox background; 
+	
+	
 	public TradeOfferComponentView(TradeController controller, String playerName,
 			HashMap<TileType, Integer>[] offerData) {
 		super(TradeOfferComponentView.class.getResource("fxml/TradeOfferComponentView.fxml"), controller);
@@ -24,6 +27,7 @@ public class TradeOfferComponentView extends TradeViewTemplate {
 		offerer.setText(playerName);
 		fillLabels(offerData);
 		offerer.setLayoutX(getPrefWidth()/2);
+		background.setStyle("-fx-background-color: #ffc100;");
 	}
 	
 	@Override
@@ -36,5 +40,8 @@ public class TradeOfferComponentView extends TradeViewTemplate {
 		if(controller.acceptOffer(offerPlayer)) {
 			controller.closeTrade();
 		}
+	}
+	public void background() {
+		background.setStyle("-fx-background-color: #336699;");
 	}
 }

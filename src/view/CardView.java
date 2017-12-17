@@ -31,10 +31,10 @@ public class CardView extends PaneTemplate {
 	private Image ridder = new Image("/view/images/Ridderkaart.png");
 	private Image bibliotheek = new Image("/view/images/BibliotheekKaart.png");
 	private Image kathedraal = new Image("/view/images/KathedraalKaart.png");
-	private Image markt = new Image("/view/images/Marktkaart.png");
+	private Image markt = new Image("/view/images/MarktKaart.png");
 	private Image monopolie = new Image("/view/images/MonopolieKaart.png");
 	private Image stratenbouw = new Image("/view/images/StratenbouwKaart.png");
-	private Image uitvinding = new Image("/view/images/Uitvindingkaart.png");
+	private Image uitvinding = new Image("/view/images/UitvindingKaart.png");
 	private Image universiteit = new Image("/view/images/UniversiteitKaart.png");
 	private Image parlement = new Image("/view/images/ParlementKaart.png");
 

@@ -3,10 +3,8 @@ import controller.StealResourceController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import view.javaFXTemplates.PaneTemplate;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 public class PickResourceView extends PaneTemplate{
 
@@ -15,7 +13,7 @@ public class PickResourceView extends PaneTemplate{
 	@FXML private ImageView hout; 
 	@FXML private ImageView steen; 
 	@FXML private ImageView wol; 
-	DropShadow ds = new DropShadow( 20, Color.RED );
+
 	private StealResourceController controller;
 	
 	public PickResourceView(StealResourceController controller) {

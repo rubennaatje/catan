@@ -288,26 +288,53 @@ public class GameController {
 		try {
 			RobberView view = (RobberView) event.getSource();
 			BoardHelper.placeRobber(spelId, view.getLoc());
+			stealResource(spelId,view.getLoc());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void stealResource(String spelId, GridLocation loc, PlayerModel selectedPlayer) {
+	public void stealResource(String spelId, GridLocation loc) {
 		try {
 			ArrayList<Piece> pieceLocs;
-			ArrayList<PlayerModel> surroundingPlayers = new ArrayList<>();
+			ArrayList<PlayerModel> list = new ArrayList<>();
+			PlayerModel[] surroundingPlayers;
 			pieceLocs = BoardHelper.getSurroundingPieces(spelId, loc.x, loc.y);
+			boolean contains = false;
 			for(int x = 0; x < pieceLocs.size(); x++)
 			{
-				if(pieceLocs.get(x).getPlayer() != null || pieceLocs.get(x).getPlayer() != players[usrPlayer] )
-				surroundingPlayers.add(pieceLocs.get(x).getPlayer());
+				if(pieceLocs.get(x).getPlayer() != null && pieceLocs.get(x).getPlayer() != players[usrPlayer] )
+				{
+					for(int i = 0; i < list.size(); i++)
+					{
+						if(list.get(i).getUsername().equals(pieceLocs.get(x).getPlayer().getUsername()))
+						{
+							System.out.println(list.get(i).getUsername() + " " + pieceLocs.get(x).getPlayer().getUsername());
+							contains = true;
+						}
+					}
+					if(!contains)
+					{
+						list.add(pieceLocs.get(x).getPlayer());
+					}
+					contains = false;
+				}
+				
 			}
-			DatabaseManager.createStatement().executeUpdate(""
-					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
-					+ "(SELECT idgrondstofkaart FROM "
-					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + selectedPlayer.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
+			System.out.println(list);
+			if(list.size() > 0)
+			{
+				surroundingPlayers = new PlayerModel[list.size()];
+				for(int i = 0; i < list.size(); i++)
+				{
+					surroundingPlayers[i] = list.get(i); 
+				}
+				StealFromPlayerController stealFromPlayer = new StealFromPlayerController(this, surroundingPlayers);
+				stealFromPlayer.showPlayers();
+			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -318,18 +345,20 @@ public class GameController {
 			if (event.getSource() instanceof PieceView) {
 				PieceView caller = (PieceView) event.getSource();
 				BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
-				 ((PlayerUser) players[usrPlayer]).takeResources(caller.getPieceModel().getType());
+				if(!isFirstRound)
+					((PlayerUser) players[usrPlayer]).takeResources(caller.getPieceModel().getType());
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
 				BoardHelper.setLongestRoad(players, spelId);
-				((PlayerUser) players[usrPlayer]).takeResourcesStreet();
+				if(!isFirstRound)
+					((PlayerUser) players[usrPlayer]).takeResourcesStreet();
 			}
 			BoardHelper.refreshAll(spelId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	};
+	}
 
 	public void showRobberPlacable() {
 		ArrayList<GridLocation> locations;
@@ -594,5 +623,20 @@ public class GameController {
 	
 	public void setDevCards(ArrayList<String> cards){
 		cardView.addCards(cards);
+	}
+
+	public void registerSteal(PlayerModel playermodel) {
+		try
+		{
+			DatabaseManager.createStatement().executeUpdate(""
+					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
+					+ "(SELECT idgrondstofkaart FROM "
+					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
+			players[usrPlayer].refresh();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
