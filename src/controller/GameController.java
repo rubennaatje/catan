@@ -297,15 +297,42 @@ public class GameController {
 	public void stealResource(String spelId, GridLocation loc) {
 		try {
 			ArrayList<Piece> pieceLocs;
-			PlayerModel[] surroundingPlayers = new PlayerModel[3];
+			ArrayList<PlayerModel> list = new ArrayList<>();
+			PlayerModel[] surroundingPlayers;
 			pieceLocs = BoardHelper.getSurroundingPieces(spelId, loc.x, loc.y);
+			boolean contains = false;
 			for(int x = 0; x < pieceLocs.size(); x++)
 			{
-				if(pieceLocs.get(x).getPlayer() != null || pieceLocs.get(x).getPlayer() != players[usrPlayer] )
-				surroundingPlayers[x] = pieceLocs.get(x).getPlayer();
+				if(pieceLocs.get(x).getPlayer() != null && pieceLocs.get(x).getPlayer() != players[usrPlayer] )
+				{
+					for(int i = 0; i < list.size(); i++)
+					{
+						if(list.get(i).getUsername().equals(pieceLocs.get(x).getPlayer().getUsername()))
+						{
+							System.out.println(list.get(i).getUsername() + " " + pieceLocs.get(x).getPlayer().getUsername());
+							contains = true;
+						}
+					}
+					if(!contains)
+					{
+						list.add(pieceLocs.get(x).getPlayer());
+					}
+					contains = false;
+				}
+				
 			}
-			StealFromPlayerController stealFromPlayer = new StealFromPlayerController(this, surroundingPlayers);
-			stealFromPlayer.showPlayers();
+			System.out.println(list);
+			if(list.size() > 0)
+			{
+				surroundingPlayers = new PlayerModel[list.size()];
+				for(int i = 0; i < list.size(); i++)
+				{
+					surroundingPlayers[i] = list.get(i); 
+				}
+				StealFromPlayerController stealFromPlayer = new StealFromPlayerController(this, surroundingPlayers);
+				stealFromPlayer.showPlayers();
+			}
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -609,6 +636,7 @@ public class GameController {
 					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
 					+ "(SELECT idgrondstofkaart FROM "
 					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
+			players[usrPlayer].refresh();
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
