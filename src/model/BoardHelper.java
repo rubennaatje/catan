@@ -816,6 +816,20 @@ public class BoardHelper
 		}
 		return tradeRatio;
 	}
+	
+	public ArrayList<PlayerModel> getPlayersSurroundingTile(String spelId, GridLocation loc) throws SQLException {
+		ArrayList<Piece> pieces = getSurroundingPieces(spelId, loc.x, loc.y);
+		ArrayList<PlayerModel> result = new ArrayList<>();
+		ArrayList<String> usernames = new ArrayList<>();
+		for(Piece piece: pieces) {
+			if(!usernames.contains(piece.getPlayer().getUsername())) {
+				usernames.add(piece.getPlayer().getUsername());
+				result.add(piece.getPlayer());
+			}
+		}
+		return result;
+		
+	}
 
 	public static void refreshAll(String spelId) throws SQLException
 	{
@@ -823,11 +837,12 @@ public class BoardHelper
 				.executeUpdate("UPDATE speler SET shouldrefresh = 1 WHERE idspel = " + spelId + "");
 	}
 
-	public static void giveResourcesFrstRound(String spelId, Piece pieceModel, PlayerModel players) {
+	public static void giveResourcesFrstRound(String spelId, Piece pieceModel, PlayerModel[] players) throws SQLException {
 		ResultSet results = DatabaseManager.createStatement()
 				.executeQuery("SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = '"
-						+ spelId + "' AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - " + x
-						+ ") <= 1 AND (s.x_van - " + x + ") >= - 1) AND ((s.y_van - " + y + ") <= 1 AND (s.y_van - " + y
+						+ spelId + "' AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - "
+						+ ") <= 1 AND (s.x_van - " + ") >= - 1) AND ((s.y_van - " +  ") <= 1 AND (s.y_van - " 
 						+ ") >= - 1);  ");
+		
 	}
 }
