@@ -836,7 +836,7 @@ public class BoardHelper
 				.executeUpdate("UPDATE speler SET shouldrefresh = 1 WHERE idspel = " + spelId + "");
 	}
 
-	public static void giveResourcesFrstRound(String spelId, Piece pieceModel, PlayerModel[] players) throws SQLException {
+	public static void giveResourcesFrstRound(String spelId, Piece pieceModel, PlayerModel player) throws SQLException {
 		ResultSet results = DatabaseManager.createStatement()
 				.executeQuery("SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = '"
 						+ spelId + "' AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - "
