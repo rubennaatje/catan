@@ -108,7 +108,13 @@ public class GameController {
 			if(isFirstRound) {
 				PieceView piece = (PieceView)e.getSource();
 				try {
-					BoardHelper.giveResourcesFrstRound(spelId, piece.getPieceModel(), players[usrPlayer]);
+					ResultSet result = DatabaseManager.createStatement().executeQuery(
+							"select (select count(*) from spelerstuk where spelerstuk.idspel = spel.idspel and username = '"
+									+ players[usrPlayer].getUsername() + "' and x_van is not null) from spel where idspel ="
+									+ spelId);
+					if (result.first() && result.getInt(1) > 2) {
+						BoardHelper.giveResourcesFrstRound(spelId, piece.getPieceModel(), players[usrPlayer]);
+					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -134,7 +140,7 @@ public class GameController {
 					usrTurn();
 				} else if (result.getInt(1) > 2) {
 					BoardHelper.nextTurnBackward(spelId);
-					frstRnd();
+					usrTurn();
 				} else {
 					BoardHelper.nextTurnForward(spelId);
 					frstRnd();
@@ -164,6 +170,7 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
+		// functionality for cardView
 		//functionality for cardView
 		cardView = new CardView(this);
 		// merging all individual components into 1 view
@@ -209,17 +216,19 @@ public class GameController {
 			@Override
 			public void run() {
 				await();
-				int nThrow;
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
-					nThrow = diceO.getTotalthrow();
-					if (newThrow)
-						BoardHelper.giveResources(Catan.getGameId(), nThrow);
+					int nThrow = diceO.getTotalthrow();
+					if (newThrow && nThrow != 7) {
+						BoardHelper.giveResources(Catan.getGameId(), nThrow);} 
+					else if (nThrow ==7) {
+							disableButtons();
+							showRobberPlacable();
+					};
 					dice.showDice(diceO.getTotalthrow());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		}.start();
 	}
@@ -517,7 +526,6 @@ public class GameController {
 						usr.refresh();
 					}
 				}
-
 				
 				refreshButtons();
 				if (trade)

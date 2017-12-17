@@ -837,11 +837,16 @@ public class BoardHelper
 	}
 
 	public static void giveResourcesFrstRound(String spelId, Piece pieceModel, PlayerModel player) throws SQLException {
-		ResultSet results = DatabaseManager.createStatement()
-				.executeQuery("SELECT * FROM spelerstuk s INNER JOIN stuk s2 ON s.idstuk = s2.idstuk WHERE idspel = '"
-						+ spelId + "' AND s2.stuksoort IN ('dorp' , 'stad') AND ((s.x_van - "
-						+ ") <= 1 AND (s.x_van - " + ") >= - 1) AND ((s.y_van - " +  ") <= 1 AND (s.y_van - " 
-						+ ") >= - 1);  ");
-		
+		ResultSet r = DatabaseManager.createStatement()
+				.executeQuery("SELECT idgrondstofsoort FROM tegel WHERE x in (" + pieceModel.getPos().x + "+1, "
+						+ pieceModel.getPos().x +"-1, " + + pieceModel.getPos().x + ") AND y in (" 
+						+ pieceModel.getPos().y + "+1, " + pieceModel.getPos().y + "-1, " + pieceModel.getPos().y 
+						+ ") AND idspel = " + spelId + ";");
+		while(r.next()) {
+			TileType val = TileType.valueOf(r.getString(1));
+			if(!(val == TileType.X)) {
+				player.addResource(val, 1);
+			}
+		}
 	}
 }

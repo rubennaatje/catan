@@ -14,6 +14,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		stage.setResizable(false);
 		CatanController controller = new CatanController(stage);
 		controller.openSplashScreen();
 	}
