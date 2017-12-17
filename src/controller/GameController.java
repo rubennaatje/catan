@@ -296,17 +296,16 @@ public class GameController {
 	public void stealResource(String spelId, GridLocation loc, PlayerModel selectedPlayer) {
 		try {
 			ArrayList<Piece> pieceLocs;
-			ArrayList<PlayerModel> surroundingPlayers = new ArrayList<>();
+			PlayerModel[] surroundingPlayers = new PlayerModel[3];
 			pieceLocs = BoardHelper.getSurroundingPieces(spelId, loc.x, loc.y);
 			for(int x = 0; x < pieceLocs.size(); x++)
 			{
 				if(pieceLocs.get(x).getPlayer() != null || pieceLocs.get(x).getPlayer() != players[usrPlayer] )
-				surroundingPlayers.add(pieceLocs.get(x).getPlayer());
+				surroundingPlayers[x] = pieceLocs.get(x).getPlayer();
 			}
-			DatabaseManager.createStatement().executeUpdate(""
-					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
-					+ "(SELECT idgrondstofkaart FROM "
-					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + selectedPlayer.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
+			StealFromPlayerController stealFromPlayer = new StealFromPlayerController(this, surroundingPlayers);
+			stealFromPlayer.showPlayers();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -330,7 +329,7 @@ public class GameController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	};
+	}
 
 	public void showRobberPlacable() {
 		ArrayList<GridLocation> locations;
@@ -603,6 +602,16 @@ public class GameController {
 	}
 
 	public void registerSteal(PlayerModel playermodel) {
-		//mark doe je ding :D
+		try
+		{
+			DatabaseManager.createStatement().executeUpdate(""
+					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
+					+ "(SELECT idgrondstofkaart FROM "
+					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
