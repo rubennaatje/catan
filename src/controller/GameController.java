@@ -516,6 +516,8 @@ public class GameController {
 				refreshButtons();
 				if(trade) startCounterTrade();
 				
+				devCon.refreshDevCards();
+				
 
 			});
 			players[this.usrPlayer].refresh();
