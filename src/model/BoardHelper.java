@@ -187,7 +187,7 @@ public class BoardHelper
 
 		ArrayList<GridLocation> enemyPieces = getEnemyPieceLocation(player, spelId);
 		ArrayList<GridLocation> endStreets = getDeadEndGridlocation(player, spelId);
-		int returnVal = 0;
+		int returnVal = 1;
 		for (GridLocation street : endStreets)
 		{
 			int result = getStreetLength(getStreetsPlayer(player, spelId), street, enemyPieces);
@@ -236,8 +236,7 @@ public class BoardHelper
 	public static int getStreetLength(ArrayList<Street> streetsIn, GridLocation start,
 			ArrayList<GridLocation> enemyPieces)
 	{
-		GridLocation a = null;
-		GridLocation b = null;
+		//ends road if enemy piece is on location
 		for (GridLocation gridLocation : enemyPieces)
 		{
 			if (start.equals(gridLocation))

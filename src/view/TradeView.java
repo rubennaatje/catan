@@ -30,10 +30,16 @@ public class TradeView extends TradeViewTemplate {
 	
 	//data for creating counteroffer boxes 
 	private int boxAmount = 0;
-	private final int[][] positions = {{162, 183}, {0, 457}, {323, 457}};
+	private final int[][] positions = {{162, 133}, {0, 407}, {323, 407}};
 	
 	public TradeView(TradeController controller) {
 		super(TradeView.class.getResource("fxml/trade.fxml"), controller);
+		
+		houtBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
+		wolBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
+		graanBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
+		baksteenBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
+		ertsBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
 	}
 
 	public void addPlayerOffer(HashMap<TileType, Integer>[] offer, String username) {
@@ -45,13 +51,17 @@ public class TradeView extends TradeViewTemplate {
 			boxAmount++;
 		}
 	}
-
+	
+	@Override
+	protected void checkInput() {
+		super.checkInput();
+		biedBtn.setDisable(!controller.checkAllSufficient(retrieveValues()));
+	}
+	
 	public void offerBtnClick(MouseEvent e) {
 		controller.submitTradeRequest(retrieveValues());
 		clearTradeFld();		
 		getChildren().clear();
-		
-		
 	}
 	
 	public void addRejectBtn() {
@@ -67,13 +77,15 @@ public class TradeView extends TradeViewTemplate {
 	}
 	private void setBankLabels(HashMap<TileType,Integer> tradeHavens)
 	{
-		houtBnkLbl.setText((tradeHavens.get(TileType.H)).toString());
-		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString());
-		graanBnkLbl.setText((tradeHavens.get(TileType.G)).toString());
-		baksteenBnkLbl.setText((tradeHavens.get(TileType.B)).toString());
-		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString());
+		houtBnkLbl.setText((tradeHavens.get(TileType.H)).toString() + ":1");
+		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString()+ ":1");
+		graanBnkLbl.setText((tradeHavens.get(TileType.G)).toString()+ ":1");
+		baksteenBnkLbl.setText((tradeHavens.get(TileType.B)).toString()+ ":1");
+		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString()+ ":1");
 	}
 
+	
+	
 	public void reset(HashMap<TileType, Integer> tradeHavens) {
 		getChildren().clear();
 		loadFxml(TradeView.class.getResource("fxml/trade.fxml"), this);

@@ -11,8 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import model.TileType;
 
-public abstract class TradeViewTemplate  extends PaneTemplate{
-	
+public abstract class TradeViewTemplate extends PaneTemplate {
+
 	protected TradeController controller;
 	@FXML
 	private Label sendingPlayer;
@@ -37,14 +37,12 @@ public abstract class TradeViewTemplate  extends PaneTemplate{
 	protected TextField baksteenAanLbl;
 	@FXML
 	protected TextField ertsAanLbl;
-	
-	
-	
+
 	public TradeViewTemplate(URL url, TradeController controller) {
 		super(url);
 		this.controller = controller;
 	}
-	
+
 	public void addBtnClick(MouseEvent e) {
 		Node source = (Node) e.getSource();
 		switch (source.getParent().getId()) {
@@ -71,38 +69,53 @@ public abstract class TradeViewTemplate  extends PaneTemplate{
 		case "houtAanbGrp":
 			if (Integer.parseInt(houtAanLbl.getText()) < 9)
 				houtAanLbl.setText(((Integer) (Integer.parseInt(houtAanLbl.getText()) + 1)).toString());
-			if (!controller.checkSufficient(TileType.H, (Integer.parseInt(houtAanLbl.getText())))
-					&& !houtAanLbl.getStyleClass().contains("warning"))
-				houtAanLbl.getStyleClass().add("warning");
 			break;
 		case "wolAanbGrp":
 			if (Integer.parseInt(wolAanLbl.getText()) < 9)
 				wolAanLbl.setText(((Integer) (Integer.parseInt(wolAanLbl.getText()) + 1)).toString());
-			if (!controller.checkSufficient(TileType.W, (Integer.parseInt(wolAanLbl.getText())))
-					&& !wolAanLbl.getStyleClass().contains("warning"))
-				wolAanLbl.getStyleClass().add("warning");
 			break;
 		case "graanAanbGrp":
 			if (Integer.parseInt(graanAanLbl.getText()) < 9)
 				graanAanLbl.setText(((Integer) (Integer.parseInt(graanAanLbl.getText()) + 1)).toString());
-			if (!controller.checkSufficient(TileType.G, (Integer.parseInt(graanAanLbl.getText())))
-					&& !graanAanLbl.getStyleClass().contains("warning"))
-				graanAanLbl.getStyleClass().add("warning");
+
 			break;
 		case "baksteenAanbGrp":
 			if (Integer.parseInt(baksteenAanLbl.getText()) < 9)
 				baksteenAanLbl.setText(((Integer) (Integer.parseInt(baksteenAanLbl.getText()) + 1)).toString());
-			if (!controller.checkSufficient(TileType.B, (Integer.parseInt(baksteenAanLbl.getText())))
-					&& !baksteenAanLbl.getStyleClass().contains("warning"))
-				baksteenAanLbl.getStyleClass().add("warning");
 			break;
 		case "ertsAanbGrp":
 			if (Integer.parseInt(ertsAanLbl.getText()) < 9)
 				ertsAanLbl.setText(((Integer) (Integer.parseInt(ertsAanLbl.getText()) + 1)).toString());
-			if (!controller.checkSufficient(TileType.E, (Integer.parseInt(ertsAanLbl.getText())))
-					&& !ertsAanLbl.getStyleClass().contains("warning"))
-				ertsAanLbl.getStyleClass().add("warning");
 			break;
+		}
+		checkInput();
+	}
+
+	protected void checkInput() {
+		if (controller.checkSufficient(TileType.H, (Integer.parseInt(houtAanLbl.getText())))) {
+			houtAanLbl.getStyleClass().remove("warning");
+		} else if (!houtAanLbl.getStyleClass().contains("warning")) {
+			houtAanLbl.getStyleClass().add("warning");
+		}
+		if (controller.checkSufficient(TileType.W, (Integer.parseInt(wolAanLbl.getText())))) {
+			wolAanLbl.getStyleClass().remove("warning");
+		} else if (!wolAanLbl.getStyleClass().contains("warning")) {
+			wolAanLbl.getStyleClass().add("warning");
+		}
+		if (controller.checkSufficient(TileType.G, (Integer.parseInt(graanAanLbl.getText())))) {
+			graanAanLbl.getStyleClass().remove("warning");
+		} else if (!graanAanLbl.getStyleClass().contains("warning")) {
+			graanAanLbl.getStyleClass().add("warning");
+		}
+		if (controller.checkSufficient(TileType.B, (Integer.parseInt(baksteenAanLbl.getText())))) {
+			baksteenAanLbl.getStyleClass().remove("warning");
+		} else if (!baksteenAanLbl.getStyleClass().contains("warning")) {
+			baksteenAanLbl.getStyleClass().add("warning");
+		}
+		if (controller.checkSufficient(TileType.E, (Integer.parseInt(ertsAanLbl.getText())))) {
+			ertsAanLbl.getStyleClass().remove("warning");
+		} else if (!ertsAanLbl.getStyleClass().contains("warning")) {
+			ertsAanLbl.getStyleClass().add("warning");
 		}
 	}
 
@@ -132,34 +145,25 @@ public abstract class TradeViewTemplate  extends PaneTemplate{
 		case "houtAanbGrp":
 			if (Integer.parseInt(houtAanLbl.getText()) > 0)
 				houtAanLbl.setText(((Integer) (Integer.parseInt(houtAanLbl.getText()) - 1)).toString());
-			if (controller.checkSufficient(TileType.H, (Integer.parseInt(houtAanLbl.getText()))))
-				houtAanLbl.getStyleClass().remove("warning");
 			break;
 		case "wolAanbGrp":
 			if (Integer.parseInt(wolAanLbl.getText()) > 0)
 				wolAanLbl.setText(((Integer) (Integer.parseInt(wolAanLbl.getText()) - 1)).toString());
-			if (controller.checkSufficient(TileType.W, (Integer.parseInt(wolAanLbl.getText()))))
-				wolAanLbl.getStyleClass().remove("warning");
 			break;
 		case "graanAanbGrp":
 			if (Integer.parseInt(graanAanLbl.getText()) > 0)
 				graanAanLbl.setText(((Integer) (Integer.parseInt(graanAanLbl.getText()) - 1)).toString());
-			if (controller.checkSufficient(TileType.G, (Integer.parseInt(graanAanLbl.getText()))))
-				graanAanLbl.getStyleClass().remove("warning");
 			break;
 		case "baksteenAanbGrp":
 			if (Integer.parseInt(baksteenAanLbl.getText()) > 0)
 				baksteenAanLbl.setText(((Integer) (Integer.parseInt(baksteenAanLbl.getText()) - 1)).toString());
-			if (controller.checkSufficient(TileType.B, (Integer.parseInt(baksteenAanLbl.getText()))))
-				baksteenAanLbl.getStyleClass().remove("warning");
 			break;
 		case "ertsAanbGrp":
 			if (Integer.parseInt(ertsAanLbl.getText()) > 0)
 				ertsAanLbl.setText(((Integer) (Integer.parseInt(ertsAanLbl.getText()) - 1)).toString());
-			if (controller.checkSufficient(TileType.E, (Integer.parseInt(ertsAanLbl.getText()))))
-				ertsAanLbl.getStyleClass().remove("warning");
 			break;
 		}
+		checkInput();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -180,10 +184,10 @@ public abstract class TradeViewTemplate  extends PaneTemplate{
 		request.put(TileType.W, Integer.parseInt(wolVraLbl.getText()));
 
 		@SuppressWarnings("rawtypes")
-		HashMap[] bloob = {offer, request};
+		HashMap[] bloob = { offer, request };
 		return bloob;
 	}
-	
+
 	protected void fillLabels(HashMap<TileType, Integer>[] offerData) {
 		houtVraLbl.setText(offerData[0].get(TileType.H).toString());
 		wolVraLbl.setText(offerData[0].get(TileType.W).toString());
@@ -197,11 +201,11 @@ public abstract class TradeViewTemplate  extends PaneTemplate{
 		baksteenAanLbl.setText(offerData[1].get(TileType.B).toString());
 		ertsAanLbl.setText(offerData[1].get(TileType.E).toString());
 	}
-	
+
 	protected void clearTradeFld() {
 		baksteenAanLbl.setText("0");
 		baksteenAanLbl.getStyleClass().remove("warning");
-		baksteenVraLbl.setText("0");		
+		baksteenVraLbl.setText("0");
 
 		ertsAanLbl.setText("0");
 		ertsAanLbl.getStyleClass().remove("warning");
@@ -219,5 +223,5 @@ public abstract class TradeViewTemplate  extends PaneTemplate{
 		wolAanLbl.getStyleClass().remove("warning");
 		wolVraLbl.setText("0");
 	}
-	
+
 }

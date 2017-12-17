@@ -181,6 +181,7 @@ public class GameController {
 				chat.getView(), cardView);
 
 		refresh();
+		stage.setResizable(true);
 		mergeView.show();
 	}
 
@@ -557,13 +558,8 @@ public class GameController {
 	}
 
 	public void closeTrade() {
-		try {
-			TradeHelper.clearOffer(spelId);
-			refresh();
-			refreshButtons();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		refresh();
+		refreshButtons();
 	}
 
 	private int calcEndPointX(int point) {
