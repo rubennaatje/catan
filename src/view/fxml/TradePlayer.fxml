@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root prefHeight="277.0" prefWidth="194.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox fx:id="background" alignment="CENTER" layoutX="20.0" layoutY="13.0" prefHeight="222.0" prefWidth="154.0">
+         <children>
+            <ImageView fitHeight="185.0" fitWidth="137.0">
+               <image>
+                  <Image url="@../images/Playericon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <Button fx:id="PlayerName" alignment="BOTTOM_CENTER" layoutX="47.0" layoutY="237.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: white;" textFill="WHITE" />
+   </children>
+</fx:root>

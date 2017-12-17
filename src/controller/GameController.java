@@ -601,4 +601,8 @@ public class GameController {
 	public void setDevCards(ArrayList<String> cards){
 		cardView.addCards(cards);
 	}
+
+	public void registerSteal(PlayerModel playermodel) {
+		//mark doe je ding :D
+	}
 }
