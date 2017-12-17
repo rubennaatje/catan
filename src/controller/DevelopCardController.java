@@ -56,7 +56,6 @@ public class DevelopCardController {
 			while (cardsUsed.next()) {
 				//assignCard(cardsUsed.getString("idontwikkelingskaart"));
 				assignCard(cardsUsed.getString(1));
-				System.out.println(cardsUsed.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -70,7 +69,6 @@ public class DevelopCardController {
 		{
 			String temp = list.get(x).getCardname();
 			cards.add(temp);
-			System.out.println(cards.get(x));
 		}
 		return cards;
 		
@@ -144,13 +142,10 @@ public class DevelopCardController {
 	public void playCard(int index) { //plays card
 
 		if (list.get(index) instanceof ProgressCard) {
-			System.out.println("progresscard");
 			((ProgressCard) list.get(index)).playCard();
 		} else if (list.get(index) instanceof KnightCard) {
-			System.out.println("knightcard");
 			((KnightCard) list.get(index)).playCard();
 		} else if(list.get(index) instanceof VictoryPointCard) {
-			System.out.println("VictoryPointCard");
 			((VictoryPointCard) list.get(index)).playCard();
 		}
 		refreshDevCards();

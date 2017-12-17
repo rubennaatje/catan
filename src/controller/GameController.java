@@ -67,6 +67,9 @@ public class GameController {
 			case "cityBtn":
 				showCityPlacable();
 				break;
+			case "devCardButton":
+				buyCard();
+				break;
 			}
 		});
 
@@ -421,9 +424,9 @@ public class GameController {
 			if (players[usrPlayer].getPlayerTurn()) {
 				PlayerUser p = (PlayerUser) players[usrPlayer];
 				HashMap<String, Boolean> buyable = p.getBuyableThings();
-				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true);
+				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true, buyable.get("devcard"));
 			} else {
-				buttons.setButtons(false, false, false, false, false);
+				buttons.setButtons(false, false, false, false, false, false);
 			}
 
 		} catch (Exception e) {
@@ -431,7 +434,7 @@ public class GameController {
 		}
 	}
 
-	public void checkEnoughForDevCard() {
+	public void buyCard() {
 		try {
 			players[usrPlayer].removeResource(TileType.W, 1);
 			players[usrPlayer].removeResource(TileType.E, 1);

@@ -75,6 +75,7 @@ public class PlayerUser extends PlayerModel {
 		res.put("street", false);
 		res.put("city", false);
 		res.put("town", false);
+		res.put("devcard", false);
 
 		if (hasResource(TileType.B, 1) && hasResource(TileType.H, 1)) {
 			res.put("street", true);
@@ -87,6 +88,10 @@ public class PlayerUser extends PlayerModel {
 
 		if (hasResource(TileType.G, 2) && hasResource(TileType.E, 3)) {
 			res.put("city", true);
+		}
+		
+		if(hasResource(TileType.G, 1) && hasResource(TileType.E, 1) && hasResource(TileType.W, 1)) {
+			res.put("devcard", true);
 		}
 
 		return res;
