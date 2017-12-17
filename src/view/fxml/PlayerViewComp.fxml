@@ -26,7 +26,7 @@
             </ImageView>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="90.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/PlayerIcon.png" />
+                  <Image url="@../images/Playericon.png" />
                </image>
             </ImageView>
             <Text fx:id="cards" layoutX="60.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
