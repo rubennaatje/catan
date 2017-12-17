@@ -54,12 +54,8 @@ public class CardView extends PaneTemplate {
 		if (cards.size() > 0) {
 			if(cards.size() == 1) {
 				selectedCard = 0;
-			}
-			if(firstGo)
-			{	
-				
-				selectedCard++;
-				firstGo = false;
+				previousbutton.setDisable(true);
+				nextbutton.setDisable(true);
 			}
 			reloadAmount();
 			showCard();
@@ -72,7 +68,12 @@ public class CardView extends PaneTemplate {
 
 		amountnumber = "" + (cards.size());
 		amount.setText(amountnumber);
-		selected.setText(((Integer)(selectedCard+1)).toString());
+		if(cards.size() > 0) {
+			selected.setText(((Integer)(selectedCard + 1)).toString());
+		}
+		else {
+			selected.setText(((Integer)(selectedCard)).toString());
+		}
 
 	}
 
@@ -98,7 +99,10 @@ public class CardView extends PaneTemplate {
 	}
 
 	public void selectCard() {
+		
 		controller.playDevCard(selectedCard);
+		reloadAmount();
+
 	}
 
 	public void previousCard() {

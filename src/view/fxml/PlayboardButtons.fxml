@@ -10,12 +10,13 @@
 
 <fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="14.0" layoutY="59.0" text="Longest Road:" />
-      <Label fx:id="road" layoutX="122.0" layoutY="59.0" text="Label" />
-      <JFXButton fx:id="townBtn" layoutX="163.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Town +" />
-      <JFXButton fx:id="streetBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Street +" />
-      <JFXButton fx:id="cityBtn" layoutX="97.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="City +" />
-      <JFXButton fx:id="endTurnBtn" layoutX="280.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="end Turn" />
-      <JFXButton fx:id="tradeButton" layoutX="350.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Trade" />
+      <Label layoutX="14.0" layoutY="79.0" text="Jouw langste handelsroute:" />
+      <Label fx:id="road" layoutX="160.0" layoutY="79.0" text="Label" />
+      <JFXButton fx:id="townBtn" layoutX="163.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Dorp +" />
+      <JFXButton fx:id="streetBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Straat +" />
+      <JFXButton fx:id="cityBtn" layoutX="93.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Stad +" />
+      <JFXButton fx:id="endTurnBtn" layoutX="270.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Beëindig beurt" />
+      <JFXButton fx:id="tradeButton" layoutX="380.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Ruilen" />
+      <JFXButton fx:id="devCardButton" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" style="-fx-background-color: #dfe1e0;" text="Ontwikkelings kaart +" />
    </children>
 </fx:root>

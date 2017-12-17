@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
@@ -49,8 +48,6 @@ public class GameController {
 		this.spelId = spelId;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-				//functionality for cardView
-		cardView = new CardView(this);
 		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
 		this.steal =  new StealResourceController(devCon);	
 		buyEvent = ((e) -> {
@@ -65,6 +62,9 @@ public class GameController {
 				break;
 			case "cityBtn":
 				showCityPlacable();
+				break;
+			case "devCardButton":
+				buyCard();
 				break;
 			}
 		});
@@ -164,9 +164,8 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
-		// functionality for cardView
+		//functionality for cardView
 		cardView = new CardView(this);
-
 		// merging all individual components into 1 view
 		buttons = new GameControlerView(buyEvent, endTurn, trade);
 		playboardview = new PlayBoardView();
@@ -415,9 +414,9 @@ public class GameController {
 			if (players[usrPlayer].getPlayerTurn() && !isFirstRound) {
 				PlayerUser p = (PlayerUser) players[usrPlayer];
 				HashMap<String, Boolean> buyable = p.getBuyableThings();
-				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true);
+				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true, buyable.get("devcard"));
 			} else {
-				buttons.setButtons(false, false, false, false, false);
+				buttons.setButtons(false, false, false, false, false, false);
 			}
 
 		} catch (Exception e) {
@@ -425,7 +424,7 @@ public class GameController {
 		}
 	}
 
-	public void checkEnoughForDevCard() {
+	public void buyCard() {
 		try {
 			players[usrPlayer].removeResource(TileType.W, 1);
 			players[usrPlayer].removeResource(TileType.E, 1);
