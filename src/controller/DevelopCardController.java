@@ -142,7 +142,7 @@ public class DevelopCardController {
 	
 	
 	public void playCard(int index) { //plays card
-
+		
 		if (list.get(index) instanceof ProgressCard) {
 			((ProgressCard) list.get(index)).playCard();
 		} else if (list.get(index) instanceof KnightCard) {
@@ -150,6 +150,7 @@ public class DevelopCardController {
 		} else if(list.get(index) instanceof VictoryPointCard) {
 			((VictoryPointCard) list.get(index)).playCard();
 		}
+
 		refreshDevCards();
 
 	}
