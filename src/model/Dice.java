@@ -22,6 +22,7 @@ public class Dice {
 		totalThrow = diceThrow[0] + diceThrow[1];
 		try {
             DatabaseManager.createStatement().executeUpdate("UPDATE SPEL SET LAATSTE_WORP = "+ totalThrow + ", gedobbeld = 1 WHERE idspel = "+ spelid +";");
+            BoardHelper.refreshAll(spelid);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

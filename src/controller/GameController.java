@@ -210,7 +210,6 @@ public class GameController {
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
 					nThrow = diceO.getTotalthrow();
-					System.out.println("dice: " + nThrow + " " + newThrow);
 					if (newThrow)
 						BoardHelper.giveResources(Catan.getGameId(), nThrow);
 					dice.showDice(diceO.getTotalthrow());
