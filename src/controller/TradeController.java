@@ -186,6 +186,7 @@ public class TradeController {
 			TradeHelper.clearOffer(spelId);
 			viewTrade = new TradeView(this);
 			popUpTrade.setScene(new Scene(viewTrade));
+			viewTrade.setBankLabels(BoardHelper.getTradeRatio(players[usrPlayer], spelId));
 			popUpTrade.show();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
