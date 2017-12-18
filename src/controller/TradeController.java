@@ -16,6 +16,7 @@ import model.PlayerModel;
 import model.PlayerUser;
 import model.TileType;
 import model.TradeHelper;
+import view.BankTradeComponentView;
 import view.CounterTradeView;
 import view.TradeView;
 
@@ -104,23 +105,23 @@ public class TradeController {
 		return ((PlayerUser) players[usrPlayer]).hasResource(type, amount);
 	}
 
-	public boolean checkAllSufficient(HashMap<TileType, Integer>[] bloob) {
-		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.B, bloob[0].get(TileType.B)))
+	public boolean checkAllSufficient(HashMap<TileType, Integer> offer) {
+		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.B, offer.get(TileType.B)))
 			return false;
-		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.E, bloob[0].get(TileType.E)))
+		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.E, offer.get(TileType.E)))
 			return false;
-		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.G, bloob[0].get(TileType.G)))
+		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.G, offer.get(TileType.G)))
 			return false;
-		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.H, bloob[0].get(TileType.H)))
+		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.H, offer.get(TileType.H)))
 			return false;
-		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.W, bloob[0].get(TileType.W)))
+		if (!((PlayerUser) players[usrPlayer]).hasResource(TileType.W, offer.get(TileType.W)))
 			return false;
 		return true;
 	}
 
-	public void submitCounterTradeRequest(HashMap<TileType, Integer>[] data) {
+	public void submitCounterTradeRequest(HashMap<TileType, Integer>[] hashMap) {
 		try {
-			TradeHelper.registerTrade(spelId, players[usrPlayer], data, "TRUE");
+			TradeHelper.registerTrade(spelId, players[usrPlayer], hashMap, "TRUE");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -150,25 +151,18 @@ public class TradeController {
 		return false;
 	}
 
-	public void purchaseBank(MouseEvent e) {
-		Node source = (Node) e.getSource();
+	public void purchaseBank(TileType targetResource, HashMap<TileType, Integer> hashMap) {
 		try {
-			HashMap<TileType, Integer> map = BoardHelper.getTradeRatio(players[usrPlayer], spelId);
-			PlayerUser user= (PlayerUser)players[usrPlayer]; 
-			
-			switch (source.getId()) {
-			case "houtBnkLbl":
-				
-				break;
-			case "wolBnkLbl":
-				break;
-			case "graanBnkLbl":
-				break;
-			case "baksteenBnkLbl":
-				break;
-			case "ertsBnkLbl":
-				break;
-			}
+
+			PlayerUser user = (PlayerUser) players[usrPlayer];
+
+			user.removeResource(TileType.H, hashMap.get(TileType.H));
+			user.removeResource(TileType.W, hashMap.get(TileType.W));
+			user.removeResource(TileType.G, hashMap.get(TileType.G));
+			user.removeResource(TileType.B, hashMap.get(TileType.B));
+			user.removeResource(TileType.E, hashMap.get(TileType.E));
+			user.addResource(targetResource, 1);
+
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -221,8 +215,39 @@ public class TradeController {
 		try {
 			TradeHelper.clearOffer(spelId);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	public void resetTrade() {
+		showTrade();
+	}
+
+	public void showBank(MouseEvent e) {
+		System.out.println("trying to show");
+		try {
+			Node source = (Node) e.getSource();
+			HashMap<TileType, Integer> map = BoardHelper.getTradeRatio(players[usrPlayer], spelId);
+			switch (source.getId()) {
+			case "houtBnkLbl":
+				viewTrade.showBankTradeWindow(this, map.get(TileType.H), TileType.H);
+				break;
+			case "wolBnkLbl":
+				viewTrade.showBankTradeWindow(this, map.get(TileType.W), TileType.W);
+				break;
+			case "graanBnkLbl":
+				viewTrade.showBankTradeWindow(this, map.get(TileType.G), TileType.G);
+				break;
+			case "baksteenBnkLbl":
+				viewTrade.showBankTradeWindow(this, map.get(TileType.B), TileType.B);
+				break;
+			case "ertsBnkLbl":
+				viewTrade.showBankTradeWindow(this, map.get(TileType.E), TileType.E);
+				break;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 

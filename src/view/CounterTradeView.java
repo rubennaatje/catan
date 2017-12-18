@@ -28,7 +28,7 @@ public class CounterTradeView extends TradeViewTemplate {
 	@Override
 	protected void checkInput() {
 		super.checkInput();
-		biedBtn.setDisable(!controller.checkAllSufficient(retrieveValues()));
+		biedBtn.setDisable(!controller.checkAllSufficient(retrieveOfferValues()));
 	}
 	
 	public void show(HashMap<TileType, Integer>[] offerData, String offerer) {

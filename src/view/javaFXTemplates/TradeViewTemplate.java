@@ -119,6 +119,17 @@ public abstract class TradeViewTemplate extends PaneTemplate {
 		}
 	}
 
+	protected HashMap<TileType, Integer> retrieveOfferValues() {
+		
+		HashMap<TileType, Integer> offer = new HashMap<>();
+		offer.put(TileType.B, Integer.parseInt(baksteenAanLbl.getText()));
+		offer.put(TileType.E, Integer.parseInt(ertsAanLbl.getText()));
+		offer.put(TileType.G, Integer.parseInt(graanAanLbl.getText()));
+		offer.put(TileType.H, Integer.parseInt(houtAanLbl.getText()));
+		offer.put(TileType.W, Integer.parseInt(wolAanLbl.getText()));
+		return offer;
+	}
+	
 	public void subBtnClick(MouseEvent e) {
 		Node source = (Node) e.getSource();
 		switch (source.getParent().getId()) {

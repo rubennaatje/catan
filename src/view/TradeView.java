@@ -2,6 +2,8 @@ package view;
 
 import java.util.HashMap;
 
+import com.jfoenix.controls.JFXButton;
+
 import controller.TradeController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,15 +16,15 @@ public class TradeView extends TradeViewTemplate {
 
 	// labels for trade ratios to bank
 	@FXML
-	private Label houtBnkLbl;
+	private JFXButton houtBnkLbl;
 	@FXML
-	private Label wolBnkLbl;
+	private JFXButton wolBnkLbl;
 	@FXML
-	private Label graanBnkLbl;
+	private JFXButton graanBnkLbl;
 	@FXML
-	private Label baksteenBnkLbl;
+	private JFXButton baksteenBnkLbl;
 	@FXML
-	private Label ertsBnkLbl;
+	private JFXButton ertsBnkLbl;
 	
 	//button for creating offer
 	@FXML
@@ -35,13 +37,12 @@ public class TradeView extends TradeViewTemplate {
 	public TradeView(TradeController controller) {
 		super(TradeView.class.getResource("fxml/trade.fxml"), controller);
 		
-		houtBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
-		wolBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
-		graanBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
-		baksteenBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
-		ertsBnkLbl.setOnMouseClicked((e) -> controller.purchaseBank(e));
 	}
 
+	public void bnkTrade(MouseEvent e) {
+		controller.showBank(e);
+	}
+	
 	public void addPlayerOffer(HashMap<TileType, Integer>[] offer, String username) {
 		if(boxAmount <3) {
 			TradeOfferComponentView comView = new TradeOfferComponentView(controller, username, offer);
@@ -55,7 +56,7 @@ public class TradeView extends TradeViewTemplate {
 	@Override
 	protected void checkInput() {
 		super.checkInput();
-		biedBtn.setDisable(!controller.checkAllSufficient(retrieveValues()));
+		biedBtn.setDisable(!controller.checkAllSufficient(retrieveOfferValues()));
 	}
 	
 	public void offerBtnClick(MouseEvent e) {
@@ -90,5 +91,18 @@ public class TradeView extends TradeViewTemplate {
 		getChildren().clear();
 		loadFxml(TradeView.class.getResource("fxml/trade.fxml"), this);
 		setBankLabels(tradeHavens);
+	}
+
+
+	public void showBankTradeWindow(TradeController tradeController, Integer integer, TileType h) {
+		BankTradeComponentView bnk = new BankTradeComponentView(tradeController, integer, h);
+		getChildren().clear();
+		getChildren().add(bnk);
+		
+		bnk.setLayoutY(50);
+	}
+	
+	public void cancel(MouseEvent e) {
+		controller.closeTrade();
 	}
 }
