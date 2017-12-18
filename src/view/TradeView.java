@@ -25,26 +25,26 @@ public class TradeView extends TradeViewTemplate {
 	private JFXButton baksteenBnkLbl;
 	@FXML
 	private JFXButton ertsBnkLbl;
-	
-	//button for creating offer
+
+	// button for creating offer
 	@FXML
 	private Button biedBtn;
-	
-	//data for creating counteroffer boxes 
+
+	// data for creating counteroffer boxes
 	private int boxAmount = 0;
-	private final int[][] positions = {{162, 133}, {0, 407}, {323, 407}};
-	
+	private final int[][] positions = { { 162, 133 }, { 0, 407 }, { 323, 407 } };
+
 	public TradeView(TradeController controller) {
 		super(TradeView.class.getResource("fxml/trade.fxml"), controller);
-		
+
 	}
 
 	public void bnkTrade(MouseEvent e) {
 		controller.showBank(e);
 	}
-	
+
 	public void addPlayerOffer(HashMap<TileType, Integer>[] offer, String username) {
-		if(boxAmount <3) {
+		if (boxAmount < 3) {
 			TradeOfferComponentView comView = new TradeOfferComponentView(controller, username, offer);
 			comView.setLayoutX(positions[boxAmount][0]);
 			comView.setLayoutY(positions[boxAmount][1]);
@@ -52,47 +52,47 @@ public class TradeView extends TradeViewTemplate {
 			boxAmount++;
 		}
 	}
-	
+
 	@Override
 	protected void checkInput() {
 		super.checkInput();
 		biedBtn.setDisable(!controller.checkAllSufficient(retrieveOfferValues()));
 	}
-	
+
 	public void offerBtnClick(MouseEvent e) {
 		controller.submitTradeRequest(retrieveValues());
-		clearTradeFld();		
+		clearTradeFld();
 		getChildren().clear();
 	}
-	
+
 	public void addRejectBtn() {
 		Button rejectbtn = new Button("Afwijzen");
 		getChildren().add(rejectbtn);
-		rejectbtn.setLayoutX((getWidth()-rejectbtn.getWidth())/2);
-		rejectbtn.setLayoutY(470);
-		rejectbtn.setOnMouseClicked((e) -> rejectCounters(e));
+		rejectbtn.setLayoutX(260);
+		rejectbtn.setLayoutY(600);
+		rejectbtn.setOnMouseClicked((e) -> {
+			rejectCounters(e);
+			System.out.println("clicking button");
+		});
 	}
-	
+
 	public void rejectCounters(MouseEvent e) {
 		controller.registerCounterReject();
 	}
-	private void setBankLabels(HashMap<TileType,Integer> tradeHavens)
-	{
+
+	private void setBankLabels(HashMap<TileType, Integer> tradeHavens) {
 		houtBnkLbl.setText((tradeHavens.get(TileType.H)).toString() + ":1");
-		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString()+ ":1");
-		graanBnkLbl.setText((tradeHavens.get(TileType.G)).toString()+ ":1");
-		baksteenBnkLbl.setText((tradeHavens.get(TileType.B)).toString()+ ":1");
-		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString()+ ":1");
+		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString() + ":1");
+		graanBnkLbl.setText((tradeHavens.get(TileType.G)).toString() + ":1");
+		baksteenBnkLbl.setText((tradeHavens.get(TileType.B)).toString() + ":1");
+		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString() + ":1");
 	}
 
-	
-	
 	public void reset(HashMap<TileType, Integer> tradeHavens) {
 		getChildren().clear();
 		loadFxml(TradeView.class.getResource("fxml/trade.fxml"), this);
 		setBankLabels(tradeHavens);
 	}
-
 
 	public void showBankTradeWindow(TradeController tradeController, Integer integer, TileType h) {
 		BankTradeComponentView bnk = new BankTradeComponentView(tradeController, integer, h);
@@ -100,7 +100,7 @@ public class TradeView extends TradeViewTemplate {
 		getChildren().add(bnk);
 		bnk.setLayoutY(50);
 	}
-	
+
 	public void cancel(MouseEvent e) {
 		controller.closeTrade();
 	}
