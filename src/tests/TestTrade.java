@@ -1,13 +1,9 @@
 package tests;
 
 import controller.DatabaseManager;
-import controller.TradeController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import model.BoardHelper;
-import model.Catan;
-import model.PlayerModel;
 import model.PlayerType;
 import model.PlayerUser;
 

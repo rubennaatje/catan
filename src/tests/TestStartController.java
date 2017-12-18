@@ -29,13 +29,14 @@ public class TestStartController extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		String spelId = "770";
+		String spelId = "803";
 
         Catan catan = new Catan();
         //catan.initGame();
-        Catan.setGameId("770");
+        Catan.setGameId("803");
         
-        PlayerUser player = new PlayerUser("bart", Catan.getGameId(), PlayerType.BLAUW);
+        PlayerUser player = new PlayerUser("bart"
+        		+ "", Catan.getGameId(), PlayerType.BLAUW);
         catan.setPlayer(player);
         PlayerModel[] players = catan.getCurrentPlayers();
         gameController = new GameController(spelId, players, player.getPlayerNumber() -1 ,primaryStage);

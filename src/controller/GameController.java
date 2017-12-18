@@ -11,8 +11,29 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.*;
-import view.*;
+import model.BoardHelper;
+import model.Catan;
+import model.Dice;
+import model.GridLocation;
+import model.Piece;
+import model.PlayerModel;
+import model.PlayerUser;
+import model.Street;
+import model.Tile;
+import model.TileType;
+import view.CardView;
+import view.DiceView;
+import view.GameControlerView;
+import view.GameMergeView;
+import view.LoginView;
+import view.LoseView;
+import view.PieceView;
+import view.PlayBoardView;
+import view.PlayerView;
+import view.ResourceView;
+import view.RobberView;
+import view.StreetView;
+import view.WinView;
 
 public class GameController {
 
@@ -45,7 +66,9 @@ public class GameController {
 
 	private GameMergeView mergeView;
 
-	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
+	private CatanController catanController;
+
+	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage, CatanController catanController) {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer;
 		this.spelId = spelId;
@@ -55,6 +78,7 @@ public class GameController {
 		PlayerUser player = (PlayerUser) players[usrPlayer];
 		this.devCon = new DevelopCardController(player, this);
 		this.steal =  new StealResourceController(devCon);	
+		this.catanController = catanController;
 		buyEvent = ((e) -> {
 			refresh();
 			Node caller = (Node) e.getSource();
@@ -227,6 +251,7 @@ public class GameController {
 		new Thread() {
 			@Override
 			public void run() {
+
 				await();
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
@@ -236,6 +261,9 @@ public class GameController {
 					else if (nThrow ==7) {
 							disableButtons();
 							showRobberPlacable();
+							for (int i = 0; i < players.length; i++) {
+								players[i].removeCardsIfMoreThan8();
+							}
 					};
 					dice.showDice(diceO.getTotalthrow());
 				} catch (Exception e) {
@@ -599,19 +627,17 @@ public class GameController {
 	}
 
     public void endGame() {
-        if(players[usrPlayer].getPlayerWon()) {
-        	
-        	for (int i = 0; i < players.length; i++) {
-        		//players[i].setPlayerFinished();
-        	}
-        	
-        	CatanController CatanController = new CatanController(stage);
-			if(players[usrPlayer].getPlayerWon())
-        		new LoginView(stage, CatanController ).show();
-        	else 
-        		System.out.println("awww");
-        	
-        }
+    	
+    	for (int i = 0; i < players.length; i++) {
+    		players[i].setPlayerFinished();
+    	}
+    	
+    	
+		if(players[usrPlayer].getPlayerWon())
+    		new WinView(stage, catanController ).show();
+    	else 
+    		new LoseView(stage, catanController ).show();
+
     }
 	
 	public void closeTrade() {

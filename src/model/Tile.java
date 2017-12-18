@@ -1,7 +1,5 @@
 package model;
 
-import java.awt.Point;
-
 public class Tile {
 
 	private GridLocation location;

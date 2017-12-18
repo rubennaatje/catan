@@ -1,7 +1,6 @@
 package tests;
 
 import controller.DatabaseManager;
-import model.PlayerModel;
 import model.PlayerType;
 import model.PlayerUser;
 import model.TileType;

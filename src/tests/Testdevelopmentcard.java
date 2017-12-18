@@ -1,18 +1,6 @@
 package tests;
 
-import java.util.HashMap;
-
-import controller.CatanController;
 import controller.DatabaseManager;
-import controller.DevelopCardController;
-import controller.GameController;
-import model.DevelopmentCard;
-import model.Dice;
-import model.KnightCard;
-import model.PlayerUser;
-import model.ProgressCard;
-import model.VictoryPointCard;
-import view.CardView;
 
 public class Testdevelopmentcard {
 

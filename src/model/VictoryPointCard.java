@@ -1,9 +1,5 @@
 package model;
 
-import java.sql.SQLException;
-
-import controller.DatabaseManager;
-
 public class VictoryPointCard extends DevelopmentCard { //deze kaart geeft 1 victory point
 	
 	public VictoryPointCard(PlayerUser player, String kaartid, String kaarttype, String kaartnaam) {

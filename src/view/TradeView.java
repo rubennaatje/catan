@@ -7,7 +7,6 @@ import com.jfoenix.controls.JFXButton;
 import controller.TradeController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import model.TileType;
 import view.javaFXTemplates.TradeViewTemplate;

@@ -2,7 +2,6 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import model.Catan;
 import model.Challenge;
 import model.PlayerModel;
 import model.PlayerRank;
-import model.PlayerType;
 import model.PlayerUser;
 import model.Waiting;
 import view.ChallengerView;
@@ -32,6 +30,7 @@ public class CatanController {
 	private Catan catan;
 	private Stage stage;
 	private PlayerUser player;
+	private boolean random = false;
 	public final static int refreshTime = 1000;
 	
 	private int WaitingOn; 
@@ -96,14 +95,14 @@ public class CatanController {
 		getPlayer().setSpelId(gameid);
 		
 		try {
-			catan.initGame(gameid, creation);
+			catan.initGame(gameid, creation, random);
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
 	        if (creation) {
 	        	catan.addPlayerPieces(players);
 	        }
 	        player.refresh();
-	        GameController gameController = new GameController(gameid, players, (player.getPlayerNumber() -1) , stage);
+	        GameController gameController = new GameController(gameid, players, (player.getPlayerNumber() -1) , stage, this);
 			new Thread(() -> gameController.start()).start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -211,5 +210,13 @@ public class CatanController {
 		}
 		
 		return gameid;
+	}
+
+	public boolean isRandom() {
+		return random;
+	}
+
+	public void setRandom(boolean random) {
+		this.random = random;
 	}
 }

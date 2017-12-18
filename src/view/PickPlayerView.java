@@ -1,15 +1,8 @@
 package view;
 
-import controller.CatanController;
 import controller.GameController;
 import controller.StealFromPlayerController;
-import controller.StealResourceController;
-import javafx.fxml.FXML;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import model.PickPlayer;
 import model.PlayerModel;
-
 import view.javaFXTemplates.PaneTemplate;
 
 public class PickPlayerView extends PaneTemplate {

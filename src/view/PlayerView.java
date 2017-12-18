@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import model.PlayerModel;
 import view.javaFXTemplates.PaneTemplate;

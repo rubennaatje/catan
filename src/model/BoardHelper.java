@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+
 import controller.DatabaseManager;
 
 public class BoardHelper
@@ -175,7 +176,7 @@ public class BoardHelper
 			it.remove();
 		}
 
-		if (result > 6 && !sharedHigh) {
+		if (result >= 5 && !sharedHigh) {
 			DatabaseManager.createStatement().executeUpdate("UPDATE spel SET langste_hr_username= '" + name + "' where idspel = '" + spelId + "'");
 		}
 	}

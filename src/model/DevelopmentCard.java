@@ -3,7 +3,6 @@ package model;
 import java.sql.SQLException;
 
 import controller.DatabaseManager;
-import controller.GameController;
 
 public class DevelopmentCard {
 

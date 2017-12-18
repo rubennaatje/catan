@@ -2,9 +2,9 @@ package view;
 import controller.StealResourceController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import view.javaFXTemplates.PaneTemplate;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import view.javaFXTemplates.PaneTemplate;
 
 public class PickResourceView extends PaneTemplate{
 

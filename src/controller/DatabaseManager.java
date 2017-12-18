@@ -39,8 +39,8 @@ public final class DatabaseManager {
 			System.out.println("Could not close connection");
 		}
     }
+    
     public static Statement createStatement() throws SQLException {
 		return connection.createStatement();
 	}
-
 }

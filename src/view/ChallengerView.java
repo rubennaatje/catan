@@ -4,8 +4,8 @@ import com.sun.javafx.tk.Toolkit;
 
 import controller.AlertManager;
 import controller.CatanController;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,6 +27,7 @@ public class ChallengerView extends PaneTemplate {
 	
 	@FXML private Button btnChallenge; 
 	@FXML private Button btnBack;
+	@FXML private CheckBox random;
 	
 	@FXML private TableView<String> uitdager;
 	@FXML private TableColumn<String, String> playerName;
@@ -55,12 +57,22 @@ public class ChallengerView extends PaneTemplate {
 			
 			@Override
 			public void handle(ActionEvent event) {
+				
+				//checkbox
+				if (random.isSelected()) {
+					controller.setRandom(true);
+		            
+		        } else {
+		        	controller.setRandom(false);
+		        }
+				
 				 if (uitdager.getSelectionModel().getSelectedItems().size() == 3) {
 					controller.createGame(uitdager.getSelectionModel().getSelectedItems());
 				 } else {
 					 new AlertManager(AlertType.ERROR, "Challenge error!", "Please challenge 3 players");
 				 }
 			}
+			
 		});
 
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
@@ -70,6 +82,7 @@ public class ChallengerView extends PaneTemplate {
 				controller.openMenuScreen();
 			}
 		});
+		
 	}
 	
 
