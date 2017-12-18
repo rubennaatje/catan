@@ -40,7 +40,7 @@ public class PlayerModel extends Observable {
 		try {
 			ResultSet list = DatabaseManager.createStatement().executeQuery(
 					"SELECT s1.behaaldepunten, count(idgrondstofkaart) as grond, (SELECT COUNT(idontwikkelingskaart)"
-							+ " FROM spelerontwikkelingskaart s3 WHERE username = s1.username and s3.idspel = s1.idspel) as ontwikkel,(SELECT COUNT(*)"
+							+ " FROM spelerontwikkelingskaart s3 WHERE username = s1.username and s3.idspel = s1.idspel AND s3.gespeeld = 0) as ontwikkel,(SELECT COUNT(*)"
 							+ " FROM spelerontwikkelingskaart s4 WHERE username = s1.username AND s4.idspel = s1.idspel AND s4.gespeeld = 1 AND s4.idontwikkelingskaart IN"
 							+ " (SELECT idontwikkelingskaart FROM ontwikkelingskaart WHERE naam =  'ridder')) as knights, volgnr FROM speler s1 left join spelergrondstofkaart s2 "
 							+ "on s1.idspel = s2.idspel and s1.username = s2.username WHERE s1.username ='"
@@ -165,8 +165,13 @@ public class PlayerModel extends Observable {
 			rs.next();
 			if(rs.getInt(1) > 7) {
 				ResultSet rs2 = DatabaseManager.createStatement().executeQuery("select idgrondstofkaart from spelergrondstofkaart where username = '" + username + "' and idspel=" + getSpelId());
+				int counter = 0;
 				while(rs.next()) {
 					DatabaseManager.createStatement().executeUpdate("UPDATE `catan2`.`spelergrondstofkaart` SET `username`=NULL WHERE  `idspel`=" + getSpelId() + " AND `idgrondstofkaart`='" + rs2.getInt(1) +"'");
+					counter++;
+					
+					if(counter > (rs.getInt(1) / 2))
+						return;
 				}
 			}
 			
