@@ -16,10 +16,8 @@ public abstract class PaneTemplate extends Pane {
 
 	private @FXML Pane extension;
 	
-	@Deprecated
 	protected Stage stage;
 
-	@Deprecated
 	public PaneTemplate(URL url, Stage stage) {
 		super();
 		this.stage = stage;
@@ -48,7 +46,6 @@ public abstract class PaneTemplate extends Pane {
 	 * in one scene, not created in its object.
 	 * 
 	 */
-	@Deprecated
 	public void show() {
 		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("/view/style/application.css").toExternalForm());
