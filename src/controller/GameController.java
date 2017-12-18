@@ -258,12 +258,13 @@ public class GameController {
 					int nThrow = diceO.getTotalthrow();
 					if (newThrow && nThrow != 7) {
 						BoardHelper.giveResources(Catan.getGameId(), nThrow);} 
-					else if (nThrow ==7) {
+					else if (nThrow == 7) {
 							disableButtons();
-							showRobberPlacable();
 							for (int i = 0; i < players.length; i++) {
 								players[i].removeCardsIfMoreThan8();
 							}
+							showRobberPlacable();
+							
 					};
 					dice.showDice(diceO.getTotalthrow());
 				} catch (Exception e) {

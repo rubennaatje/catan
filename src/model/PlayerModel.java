@@ -166,8 +166,8 @@ public class PlayerModel extends Observable {
 			if(rs.getInt(1) > 7) {
 				ResultSet rs2 = DatabaseManager.createStatement().executeQuery("select idgrondstofkaart from spelergrondstofkaart where username = '" + username + "' and idspel=" + getSpelId());
 				int counter = 0;
-				while(rs.next()) {
-					DatabaseManager.createStatement().executeUpdate("UPDATE `catan2`.`spelergrondstofkaart` SET `username`=NULL WHERE  `idspel`=" + getSpelId() + " AND `idgrondstofkaart`='" + rs2.getInt(1) +"'");
+				while(rs2.next()) {
+					DatabaseManager.createStatement().executeUpdate("UPDATE `spelergrondstofkaart` SET `username`=NULL WHERE  `idspel`=" + getSpelId() + " AND `idgrondstofkaart`='" + rs2.getString(1) +"'");
 					counter++;
 					
 					if(counter > (rs.getInt(1) / 2))
