@@ -79,7 +79,7 @@ public class TradeView extends TradeViewTemplate {
 		controller.registerCounterReject();
 	}
 
-	private void setBankLabels(HashMap<TileType, Integer> tradeHavens) {
+	public void setBankLabels(HashMap<TileType, Integer> tradeHavens) {
 		houtBnkLbl.setText((tradeHavens.get(TileType.H)).toString() + ":1");
 		wolBnkLbl.setText((tradeHavens.get(TileType.W)).toString() + ":1");
 		graanBnkLbl.setText((tradeHavens.get(TileType.G)).toString() + ":1");
@@ -87,11 +87,6 @@ public class TradeView extends TradeViewTemplate {
 		ertsBnkLbl.setText((tradeHavens.get(TileType.E)).toString() + ":1");
 	}
 
-	public void reset(HashMap<TileType, Integer> tradeHavens) {
-		getChildren().clear();
-		loadFxml(TradeView.class.getResource("fxml/trade.fxml"), this);
-		setBankLabels(tradeHavens);
-	}
 
 	public void showBankTradeWindow(TradeController tradeController, Integer integer, TileType h) {
 		BankTradeComponentView bnk = new BankTradeComponentView(tradeController, integer, h);
