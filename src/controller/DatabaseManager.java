@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public final class DatabaseManager {
 	
-	private final static String sUrl = "jdbc:mysql://databases.aii.avans.nl/";    
+	private final static String sUrl = "jdbc:mysql://databases.aii.avans.nl";    
     private final static String sDriverName = "com.mysql.jdbc.Driver";
     private static Connection connection;
     private static Statement statement;

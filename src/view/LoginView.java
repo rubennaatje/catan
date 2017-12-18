@@ -32,8 +32,8 @@ public class LoginView extends PaneTemplate {
 			@Override
 			public void handle(ActionEvent event) {
 				new Thread(()->  {
-					if (controller.getCatan().login(txtUsername.getText(), txtPassword.getText())) {
-						controller.setPlayer(txtUsername.getText());
+					if (controller.getCatan().login(txtUsername.getText().toLowerCase(), txtPassword.getText().toLowerCase())) {
+						controller.setPlayer(txtUsername.getText().toLowerCase());
 						Platform.runLater(new Runnable() {
 						    @Override
 						    public void run() {

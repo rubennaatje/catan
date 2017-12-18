@@ -33,7 +33,7 @@ public class RegisterView extends PaneTemplate {
 			public void handle(ActionEvent event) {
 				new Thread(() ->  {
 					if (txtPassword.getText().equals(txtRePassword.getText())) {
-						if (controller.getCatan().register(txtUsername.getText(), txtPassword.getText())) {
+						if (controller.getCatan().register(txtUsername.getText().toLowerCase(), txtPassword.getText().toLowerCase())) {
 							Platform.runLater(new Runnable() {
 							    @Override
 							    public void run() {
