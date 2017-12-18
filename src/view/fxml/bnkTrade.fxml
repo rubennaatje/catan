@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="424.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/bankTradeBackground.png" />
+            <Image url="@../images/bankBackground.png" />
          </image>
       </ImageView>
       <Label contentDisplay="CENTER" layoutX="258.0" layoutY="14.0" prefHeight="74.0" prefWidth="125.0" text="Ruilen" textOverrun="CENTER_ELLIPSIS">
