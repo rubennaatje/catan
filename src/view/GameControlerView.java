@@ -16,8 +16,9 @@ public class GameControlerView extends PaneTemplate {
 	private @FXML Button tradeButton;
 	private @FXML Button devCardButton;
 	private @FXML Label road; 
+	private CardView cardView;
 	
-	public GameControlerView(EventHandler<? super MouseEvent> clickHandler, EventHandler<MouseEvent> endTurnEvent, EventHandler<MouseEvent> tradeEvent) {
+	public GameControlerView(EventHandler<? super MouseEvent> clickHandler, EventHandler<MouseEvent> endTurnEvent, EventHandler<MouseEvent> tradeEvent, CardView cardView) {
 		super(GameControlerView.class.getResource("fxml/PlayboardButtons.fxml"));
 		townBtn.setOnMouseClicked(clickHandler);
 		streetBtn.setOnMouseClicked(clickHandler);
@@ -25,7 +26,10 @@ public class GameControlerView extends PaneTemplate {
 		endTurnBtn.setOnMouseClicked(endTurnEvent);
 		tradeButton.setOnMouseClicked(tradeEvent);
 		devCardButton.setOnMouseClicked(clickHandler);
+		this.cardView = cardView;
 		setDisabled();
+		
+		
 	}
 	
 	public void setDisabled() {
@@ -35,6 +39,7 @@ public class GameControlerView extends PaneTemplate {
 		endTurnBtn.setDisable(true);
 		tradeButton.setDisable(true);
 		devCardButton.setDisable(true);
+		cardView.devCardButtons(true);
 	}
 	
 	public void setEnabled() {
@@ -43,18 +48,20 @@ public class GameControlerView extends PaneTemplate {
 		cityBtn.setDisable(false);
 		endTurnBtn.setDisable(false);
 		devCardButton.setDisable(true);
+		cardView.devCardButtons(false);
 	}
 	
 	public void setLongestRoad(Integer i) {
 		road.setText(i.toString());
 	}
-	public void setButtons(boolean town,boolean city, boolean street, boolean endTurn, boolean trade, boolean devCard) {
+	public void setButtons(boolean town,boolean city, boolean street, boolean endTurn, boolean trade, boolean devCard, boolean devCardButtons) {
 		townBtn.setDisable(!town);
 		cityBtn.setDisable(!city);
 		streetBtn.setDisable(!street);
 		endTurnBtn.setDisable(!endTurn);
 		tradeButton.setDisable(!trade);
 		devCardButton.setDisable(!devCard);
+		cardView.devCardButtons(!devCardButtons);
 	}
 
 }

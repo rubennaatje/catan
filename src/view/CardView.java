@@ -99,7 +99,6 @@ public class CardView extends PaneTemplate {
 	}
 
 	public void selectCard() {
-		
 		controller.playDevCard(selectedCard);
 		reloadAmount();
 
@@ -147,11 +146,21 @@ public class CardView extends PaneTemplate {
 		
 		amount.setText("0");
 		selectedCard = 0;
+		disableDevCardButtons();
+		imageview.setImage(nocards);
+
+	}
+	
+	public void devCardButtons(boolean b) {
+		nextbutton.setDisable(b);
+		selectbutton.setDisable(b);
+		previousbutton.setDisable(b);
+	}
+	
+	public void disableDevCardButtons() {
 		nextbutton.setDisable(true);
 		selectbutton.setDisable(true);
 		previousbutton.setDisable(true);
-		imageview.setImage(nocards);
-
 	}
 
 }

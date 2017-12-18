@@ -42,6 +42,8 @@ public class GameController {
 	private CardView cardView;
 	private boolean isFirstRound = false;
 
+	private GameMergeView mergeView;
+
 	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer;
@@ -170,14 +172,13 @@ public class GameController {
 		ChatController chat = new ChatController(players[this.usrPlayer], spelId);
 		new Thread(chat).start();
 
-		// functionality for cardView
 		//functionality for cardView
 		cardView = new CardView(this);
 		// merging all individual components into 1 view
-		buttons = new GameControlerView(buyEvent, endTurn, trade);
+		buttons = new GameControlerView(buyEvent, endTurn, trade, cardView);
 		playboardview = new PlayBoardView();
 		dice = new DiceView();
-		GameMergeView mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
+		mergeView = new GameMergeView(playboardview, buttons, stage, playerViews, resourceView, dice,
 				chat.getView(), cardView);
 
 		refresh();
@@ -455,9 +456,10 @@ public class GameController {
 			if (players[usrPlayer].getPlayerTurn() && !isFirstRound) {
 				PlayerUser p = (PlayerUser) players[usrPlayer];
 				HashMap<String, Boolean> buyable = p.getBuyableThings();
-				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true, buyable.get("devcard"));
-			} else {
-				buttons.setButtons(false, false, false, false, false, false);
+				buttons.setButtons(buyable.get("town"), buyable.get("city"), buyable.get("street"), true, true, buyable.get("devcard"), true);
+			} else 
+			{
+				buttons.setButtons(false, false, false, false, false, false, false);
 			}
 
 		} catch (Exception e) {
@@ -557,6 +559,9 @@ public class GameController {
 						PlayerUser usr = (PlayerUser)players[i];
 						usr.refresh();
 					}
+                    if(players[i].getPlayerWon()) {
+                        endGame();
+                    }
 				}
 				
 				refreshButtons();
@@ -586,6 +591,21 @@ public class GameController {
 		tradeController.showTradeCounter();
 	}
 
+    public void endGame() {
+        if(players[usrPlayer].getPlayerWon()) {
+        	
+        	for (int i = 0; i < players.length; i++) {
+        		//players[i].setPlayerFinished();
+        	}
+        	
+        	if(players[usrPlayer].getPlayerWon())
+        		System.out.println("wwwwwooooowwww");
+        	else 
+        		System.out.println("awww");
+        	
+        }
+    }
+	
 	public void closeTrade() {
 		refresh();
 		refreshButtons();
@@ -608,7 +628,7 @@ public class GameController {
 		}
 		return point;
 	}
-		public void playDevCard(int i)
+	public void playDevCard(int i)
 	{
 		if(devCon.checkForResource(i))
 		{
