@@ -475,10 +475,11 @@ public class GameController {
 			players[usrPlayer].removeResource(TileType.W, 1);
 			players[usrPlayer].removeResource(TileType.E, 1);
 			players[usrPlayer].removeResource(TileType.G, 1);
+			devCon.givePlayerCard();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		devCon.givePlayerCard();
+		
 	}
 
 	// update ing field
