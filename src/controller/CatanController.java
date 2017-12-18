@@ -30,6 +30,7 @@ public class CatanController {
 	private Catan catan;
 	private Stage stage;
 	private PlayerUser player;
+	private boolean random = false;
 	public final static int refreshTime = 1000;
 	
 	private int WaitingOn; 
@@ -94,7 +95,7 @@ public class CatanController {
 		getPlayer().setSpelId(gameid);
 		
 		try {
-			catan.initGame(gameid, creation, false);
+			catan.initGame(gameid, creation, random);
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
 	        if (creation) {
@@ -209,5 +210,13 @@ public class CatanController {
 		}
 		
 		return gameid;
+	}
+
+	public boolean isRandom() {
+		return random;
+	}
+
+	public void setRandom(boolean random) {
+		this.random = random;
 	}
 }

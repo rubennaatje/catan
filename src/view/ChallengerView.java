@@ -59,12 +59,11 @@ public class ChallengerView extends PaneTemplate {
 			public void handle(ActionEvent event) {
 				
 				//checkbox
-				if (random.isSelected()) 
-				{
-		            System.out.println("random is geselecteerd");
-		        } else 
-		        {
-		           System.out.println("random is niet geselecteerd");
+				if (random.isSelected()) {
+					controller.setRandom(true);
+		            
+		        } else {
+		        	controller.setRandom(false);
 		        }
 				
 				 if (uitdager.getSelectionModel().getSelectedItems().size() == 3) {
