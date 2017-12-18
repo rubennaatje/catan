@@ -21,7 +21,7 @@ public class PlayerModel extends Observable {
 	private boolean hasWon=false;
 
 	public PlayerModel(String username, String spelId, PlayerType type) {
-		this.username = username;
+		this.username = username.toLowerCase();
 		this.spelId = spelId;
 		this.type = type;
 		refresh();
@@ -44,7 +44,7 @@ public class PlayerModel extends Observable {
 							+ " FROM spelerontwikkelingskaart s4 WHERE username = s1.username AND s4.idspel = s1.idspel AND s4.gespeeld = 1 AND s4.idontwikkelingskaart IN"
 							+ " (SELECT idontwikkelingskaart FROM ontwikkelingskaart WHERE naam =  'ridder')) as knights, volgnr FROM speler s1 left join spelergrondstofkaart s2 "
 							+ "on s1.idspel = s2.idspel and s1.username = s2.username WHERE s1.username ='"
-							+ this.username + "' AND s1.idspel =" + this.getSpelId());
+							+ this.username.toLowerCase() + "' AND s1.idspel =" + this.getSpelId());
 			while (list.next()) {
 				this.score = list.getString(1);
 				this.cards = list.getString(2);

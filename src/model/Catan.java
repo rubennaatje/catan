@@ -193,15 +193,15 @@ public class Catan {
         
         while (results.next()) {
             
-            if(!results.getString("username").equals(player.getUsername())) {
+            if(!results.getString("username").toLowerCase().equals(player.getUsername().toLowerCase())) {
                 PlayerModel competitor = new PlayerModel(results.getString("username"), Catan.getGameId(), PlayerType.valueOf(results.getString("kleur").toUpperCase()));
                 competitor.setPlayerNumber(results.getInt("volgnr"));
-                
                 players[results.getInt("volgnr") - 1] = competitor;
             } else {
                 player.setPlayerNumber(results.getInt("volgnr"));
                 player.setType(PlayerType.valueOf(results.getString("kleur").toUpperCase()));
-                
+                player.setSpelId(Catan.getGameId());
+                player.refresh();
                 players[results.getInt("volgnr") - 1] = player;
             }
             
