@@ -98,7 +98,6 @@ public class TradeView extends TradeViewTemplate {
 		BankTradeComponentView bnk = new BankTradeComponentView(tradeController, integer, h);
 		getChildren().clear();
 		getChildren().add(bnk);
-		
 		bnk.setLayoutY(50);
 	}
 	
