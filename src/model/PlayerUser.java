@@ -135,22 +135,19 @@ public class PlayerUser extends PlayerModel {
 		}
 		
 		//check played victory point cards
-		ResultSet list = DatabaseManager.createStatement().executeQuery("SELECT gespeeld, username FROM spelerontwikkelingskaart s inner join ontwikkelingskaart o on s.idontwikkelingskaart = o.idontwikkelingskaart ");
-		while(result.next()) {
-			int iGespeeld = list.getInt(1);
-			String sUsername = list.getString(2);
-			if(iGespeeld == 1 && sUsername == username) {
-				newScore += 1;
+		int iGespeeld = 0;
+		ResultSet list = DatabaseManager.createStatement().executeQuery("SELECT username FROM spelerontwikkelingskaart WHERE idspel = '"+spelId+"' and gespeeld = 1 and idontwikkelingskaart between 'o01' and 'o05'");
+		while(list.next()) {
+			String sUsername = list.getString(1);
+		if(sUsername.equals(username)) {
+			iGespeeld++;
 			}
 		}
+		newScore += iGespeeld;
 		
 		//add score to old score and update cell behaaldepunten
-
-		int rowsAffected = DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"' AND idspel='"+spelId+"'");
+		 DatabaseManager.createStatement().executeUpdate("UPDATE speler SET behaaldepunten = '"+ newScore +"' WHERE username = '"+ username +"' AND idspel='"+spelId+"'");
 		
-		if(rowsAffected == 0) {
-			throw new SQLException("No points to add");
-		}	
 	}
 	
 	public void takeResources (PieceType pieceType) {
