@@ -46,6 +46,7 @@ public class ProgressCard extends DevelopmentCard { // 2 grondstoffen naar keuze
 				} 
 			break;
 			}	
+			player.refresh();
 	}
 	
 	public String getUitleg() {

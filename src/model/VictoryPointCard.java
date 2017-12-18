@@ -10,6 +10,7 @@ public class VictoryPointCard extends DevelopmentCard { //deze kaart geeft 1 vic
 	public void playCard() {
 		System.out.println("ontwikkeling");
 		super.updateDatabase(); //ontwikkelingspunten worden geteld zodra deze kaart gespeeld is
+		player.refresh();
 	}
 	
 }
