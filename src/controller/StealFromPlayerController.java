@@ -1,14 +1,10 @@
 package controller;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.PickPlayer;
 import model.PlayerModel;
-import model.PlayerUser;
 import view.PickPlayerView;
-import view.SplashScreenView;
 
 public class StealFromPlayerController {
 	

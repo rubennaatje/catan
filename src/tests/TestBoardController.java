@@ -1,10 +1,9 @@
 package tests;
 
-import controller.GameController;
 import controller.DatabaseManager;
+import controller.GameController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.DevelopmentCard;
 
 public class TestBoardController extends Application{
 

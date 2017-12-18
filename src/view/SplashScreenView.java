@@ -1,7 +1,5 @@
 package view;
 
-import java.sql.SQLException;
-
 import controller.CatanController;
 import controller.DatabaseManager;
 import javafx.animation.PauseTransition;

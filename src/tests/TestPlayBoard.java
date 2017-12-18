@@ -1,27 +1,12 @@
 
 package tests;
 
-import view.*;
-
-import java.awt.Point;
-import java.util.ArrayList;
-
-import com.sun.javafx.geom.Shape;
-
 import controller.DatabaseManager;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.DevelopmentCard;
-import model.Dice;
 import model.BoardHelper;
-import model.LocationGenerator;
+import model.Dice;
 import model.PlayerModel;
-import model.PlayerType;
-import model.Street;
-import model.Tile;
 
 public class TestPlayBoard extends Application {
 

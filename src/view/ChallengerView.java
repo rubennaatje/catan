@@ -4,8 +4,8 @@ import com.sun.javafx.tk.Toolkit;
 
 import controller.AlertManager;
 import controller.CatanController;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;

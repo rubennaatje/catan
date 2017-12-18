@@ -11,7 +11,6 @@ import model.PlayerUser;
 import model.ProgressCard;
 import model.TileType;
 import model.VictoryPointCard;
-import view.CardView;
 
 public class DevelopCardController {
 	private Random random = new Random();

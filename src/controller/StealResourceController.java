@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.PlayerModel;
-import model.PlayerUser;
 import view.PickResourceView;
 
 public class StealResourceController {

@@ -3,6 +3,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
+
 import controller.DatabaseManager;
 
 public class Dice {

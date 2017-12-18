@@ -2,6 +2,7 @@ package view.javaFXTemplates;
 
 import java.io.IOException;
 import java.net.URL;
+
 import javafx.beans.DefaultProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

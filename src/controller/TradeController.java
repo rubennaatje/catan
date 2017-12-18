@@ -18,7 +18,6 @@ import model.PlayerModel;
 import model.PlayerUser;
 import model.TileType;
 import model.TradeHelper;
-import view.BankTradeComponentView;
 import view.CounterTradeView;
 import view.TradeView;
 

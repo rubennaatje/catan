@@ -3,10 +3,9 @@ package tests;
 
 import controller.CatanController;
 import controller.StealFromPlayerController;
+import javafx.application.Application;
 import javafx.stage.Stage;
 import model.PlayerModel;
-import model.PlayerType;
-import javafx.application.Application;
 
 public class TestWin extends Application {
 	

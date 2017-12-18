@@ -11,8 +11,27 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.*;
-import view.*;
+import model.BoardHelper;
+import model.Catan;
+import model.Dice;
+import model.GridLocation;
+import model.Piece;
+import model.PlayerModel;
+import model.PlayerUser;
+import model.Street;
+import model.Tile;
+import model.TileType;
+import view.CardView;
+import view.DiceView;
+import view.GameControlerView;
+import view.GameMergeView;
+import view.LoginView;
+import view.PieceView;
+import view.PlayBoardView;
+import view.PlayerView;
+import view.ResourceView;
+import view.RobberView;
+import view.StreetView;
 
 public class GameController {
 
