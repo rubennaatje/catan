@@ -52,7 +52,8 @@ public class GameController {
 		this.stage = stage;
 		this.players = players;
 		this.diceO = new Dice(spelId);
-		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
+		PlayerUser player = (PlayerUser) players[usrPlayer];
+		this.devCon = new DevelopCardController(player, this);
 		this.steal =  new StealResourceController(devCon);	
 		buyEvent = ((e) -> {
 			refresh();

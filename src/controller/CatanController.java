@@ -102,11 +102,10 @@ public class CatanController {
 	        if (creation) {
 	        	catan.addPlayerPieces(players);
 	        }
-	        GameController gameController = new GameController(gameid, players, player.getPlayerNumber() -1 , stage);
-	        
+	        player.refresh();
+	        GameController gameController = new GameController(gameid, players, (player.getPlayerNumber() -1) , stage);
 			new Thread(() -> gameController.start()).start();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
