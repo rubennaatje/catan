@@ -184,7 +184,8 @@ public class TradeController {
 	public void showTrade() {
 		try {
 			TradeHelper.clearOffer(spelId);
-			viewTrade.reset(BoardHelper.getTradeRatio(players[usrPlayer], spelId));
+			viewTrade = new TradeView(this);
+			popUpTrade.setScene(new Scene(viewTrade));
 			popUpTrade.show();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -226,6 +227,7 @@ public class TradeController {
 	public void registerCounterReject() {
 		try {
 			TradeHelper.clearOffer(spelId);
+			closeTrade();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
