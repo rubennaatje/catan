@@ -26,12 +26,14 @@ import view.DiceView;
 import view.GameControlerView;
 import view.GameMergeView;
 import view.LoginView;
+import view.LoseView;
 import view.PieceView;
 import view.PlayBoardView;
 import view.PlayerView;
 import view.ResourceView;
 import view.RobberView;
 import view.StreetView;
+import view.WinView;
 
 public class GameController {
 

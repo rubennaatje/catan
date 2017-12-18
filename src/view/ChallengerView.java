@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,6 +27,7 @@ public class ChallengerView extends PaneTemplate {
 	
 	@FXML private Button btnChallenge; 
 	@FXML private Button btnBack;
+	@FXML private CheckBox random;
 	
 	@FXML private TableView<String> uitdager;
 	@FXML private TableColumn<String, String> playerName;
@@ -55,12 +57,23 @@ public class ChallengerView extends PaneTemplate {
 			
 			@Override
 			public void handle(ActionEvent event) {
+				
+				//checkbox
+				if (random.isSelected()) 
+				{
+		            System.out.println("random is geselecteerd");
+		        } else 
+		        {
+		           System.out.println("random is niet geselecteerd");
+		        }
+				
 				 if (uitdager.getSelectionModel().getSelectedItems().size() == 3) {
 					controller.createGame(uitdager.getSelectionModel().getSelectedItems());
 				 } else {
 					 new AlertManager(AlertType.ERROR, "Challenge error!", "Please challenge 3 players");
 				 }
 			}
+			
 		});
 
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
@@ -70,6 +83,7 @@ public class ChallengerView extends PaneTemplate {
 				controller.openMenuScreen();
 			}
 		});
+		
 	}
 	
 
