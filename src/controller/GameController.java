@@ -90,6 +90,13 @@ public class GameController {
 
 		pieceEvent = ((e) -> {
 			piecePlacement(e);
+
+			if (e.getSource() instanceof PieceView) {
+				PieceView caller = (PieceView) e.getSource();
+					((PlayerUser) players[usrPlayer]).takeResources(caller.getPieceModel().getType());
+			} else if (e.getSource() instanceof StreetView) {
+					((PlayerUser) players[usrPlayer]).takeResourcesStreet();
+			}
 			refresh();
 		});
 
@@ -346,14 +353,10 @@ public class GameController {
 			if (event.getSource() instanceof PieceView) {
 				PieceView caller = (PieceView) event.getSource();
 				BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
-				if(!isFirstRound)
-					((PlayerUser) players[usrPlayer]).takeResources(caller.getPieceModel().getType());
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
 				BoardHelper.setLongestRoad(players, spelId);
-				if(!isFirstRound)
-					((PlayerUser) players[usrPlayer]).takeResourcesStreet();
 			}
 			BoardHelper.refreshAll(spelId);
 		} catch (SQLException e) {

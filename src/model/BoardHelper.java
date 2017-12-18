@@ -108,7 +108,6 @@ public class BoardHelper
 	 */
 	public static String getLargestArmy(PlayerModel player, String spelId) throws SQLException
 	{
-
 		String sNewLargestArmy = null;
 		String sCurrentLargestArmy = null;
 		String sCurrentPlayer = player.getUsername();

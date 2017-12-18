@@ -53,6 +53,7 @@ public class PlayerModel extends Observable {
 				this.playerNumber = list.getInt(5);
 			}
 			this.road = Integer.toString(BoardHelper.getLongestRoad(this, getSpelId()));
+			BoardHelper.getLargestArmy(this, getSpelId());
 		} catch (SQLException e) {
 			System.out.println("PlayerInfo error : " + e.getMessage());
 		}
