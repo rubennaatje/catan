@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
@@ -7,11 +9,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.Pane" prefHeight="424.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="424.0" prefWidth="600.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label contentDisplay="CENTER" layoutX="257.0" layoutY="14.0" prefHeight="74.0" prefWidth="97.0" text="Ruilen" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+      <ImageView fitHeight="424.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/bankBackground.png" />
+         </image>
+      </ImageView>
+      <Label contentDisplay="CENTER" layoutX="258.0" layoutY="14.0" prefHeight="74.0" prefWidth="125.0" text="Ruilen" textOverrun="CENTER_ELLIPSIS">
          <font>
-            <Font size="34.0" />
+            <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
       <Label layoutX="282.0" layoutY="115.0" text="Bank">
@@ -33,7 +40,10 @@
                </font>
             </Button>
             <Button layoutX="-28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#subBtnClick" prefHeight="31.0" prefWidth="28.0" text="-" textOverrun="CLIP" />
-            <Label layoutY="-14.0" prefHeight="21.0" prefWidth="29.0" text="Erts" />
+            <Label layoutY="-14.0" prefHeight="21.0" prefWidth="29.0" text="Erts">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font></Label>
          </children>
       </Group>
       <Group id="baksteenAanbGrp" fx:id="baksteenAanbGrp" layoutX="405.0" layoutY="294.0">
@@ -45,7 +55,10 @@
                </font>
             </Button>
             <Button layoutX="-28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#subBtnClick" prefHeight="31.0" prefWidth="28.0" text="-" textOverrun="CLIP" />
-            <Label layoutX="-16.0" layoutY="-13.0" prefHeight="23.0" prefWidth="60.0" text="Baksteen" />
+            <Label layoutX="-16.0" layoutY="-13.0" prefHeight="23.0" prefWidth="60.0" text="Baksteen">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font></Label>
          </children>
       </Group>
       <Group id="graanAanbGrp" fx:id="graanAanbGrp" layoutX="291.0" layoutY="294.0">
@@ -69,7 +82,10 @@
                </font>
             </Button>
             <Button layoutX="-28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#subBtnClick" prefHeight="31.0" prefWidth="28.0" text="-" textOverrun="CLIP" />
-            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Wol" />
+            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Wol">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font></Label>
          </children>
       </Group>
       <Group id="houtAanbGrp" fx:id="houtAanbGrp" layoutX="64.0" layoutY="294.0">
@@ -81,11 +97,22 @@
                </font>
             </Button>
             <Button layoutX="-28.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#subBtnClick" prefHeight="31.0" prefWidth="28.0" text="-" textOverrun="CLIP" />
-            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Hout" />
+            <Label layoutX="-4.0" layoutY="-16.0" prefHeight="23.0" prefWidth="36.0" text="Hout">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font></Label>
          </children>
       </Group>
       <Label layoutX="277.0" layoutY="246.0" prefHeight="32.0" prefWidth="60.0" text="Aanbod" />
-      <Button fx:id="biedBtn" alignment="CENTER" layoutX="320.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#offerBtnClick" text="Accepteer" textAlignment="CENTER" />
-      <Button alignment="CENTER" layoutX="214.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#reject" text="Annuleren" textAlignment="CENTER" />
+      <JFXButton fx:id="biedBtn" alignment="CENTER" layoutX="320.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#offerBtnClick" style="-fx-background-color: #39b218;" text="Accepteer" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton alignment="CENTER" layoutX="214.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#reject" style="-fx-background-color: RED;" text="Annuleren" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </JFXButton>
    </children>
 </fx:root>

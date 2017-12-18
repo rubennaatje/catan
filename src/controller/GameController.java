@@ -41,6 +41,7 @@ public class GameController {
 
 	private CardView cardView;
 	private boolean isFirstRound = false;
+	private Stage stage;
 
 	private GameMergeView mergeView;
 
@@ -48,6 +49,7 @@ public class GameController {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer;
 		this.spelId = spelId;
+		this.stage = stage;
 		this.players = players;
 		this.diceO = new Dice(spelId);
 		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
@@ -90,6 +92,13 @@ public class GameController {
 
 		pieceEvent = ((e) -> {
 			piecePlacement(e);
+
+			if (e.getSource() instanceof PieceView) {
+				PieceView caller = (PieceView) e.getSource();
+					((PlayerUser) players[usrPlayer]).takeResources(caller.getPieceModel().getType());
+			} else if (e.getSource() instanceof StreetView) {
+					((PlayerUser) players[usrPlayer]).takeResourcesStreet();
+			}
 			refresh();
 		});
 
@@ -305,7 +314,8 @@ public class GameController {
 			boolean contains = false;
 			for(int x = 0; x < pieceLocs.size(); x++)
 			{
-				if(pieceLocs.get(x).getPlayer() != null && pieceLocs.get(x).getPlayer() != players[usrPlayer] )
+				if(pieceLocs.get(x).getPlayer() != null && !
+						pieceLocs.get(x).getPlayer().getUsername().equals(players[usrPlayer].getUsername()) )
 				{
 					for(int i = 0; i < list.size(); i++)
 					{
@@ -323,7 +333,6 @@ public class GameController {
 				}
 				
 			}
-			System.out.println(list);
 			if(list.size() > 0)
 			{
 				surroundingPlayers = new PlayerModel[list.size()];
@@ -346,14 +355,10 @@ public class GameController {
 			if (event.getSource() instanceof PieceView) {
 				PieceView caller = (PieceView) event.getSource();
 				BoardHelper.registerPlacement(caller.getPieceModel(), spelId);
-				if(!isFirstRound)
-					((PlayerUser) players[usrPlayer]).takeResources(caller.getPieceModel().getType());
 			} else if (event.getSource() instanceof StreetView) {
 				StreetView caller = (StreetView) event.getSource();
 				BoardHelper.registerPlacement(caller.getStreetModel(), spelId);
 				BoardHelper.setLongestRoad(players, spelId);
-				if(!isFirstRound)
-					((PlayerUser) players[usrPlayer]).takeResourcesStreet();
 			}
 			BoardHelper.refreshAll(spelId);
 		} catch (SQLException e) {
@@ -472,10 +477,11 @@ public class GameController {
 			players[usrPlayer].removeResource(TileType.W, 1);
 			players[usrPlayer].removeResource(TileType.E, 1);
 			players[usrPlayer].removeResource(TileType.G, 1);
+			devCon.givePlayerCard();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		devCon.givePlayerCard();
+		
 	}
 
 	// update ing field
@@ -598,8 +604,9 @@ public class GameController {
         		//players[i].setPlayerFinished();
         	}
         	
-        	if(players[usrPlayer].getPlayerWon())
-        		System.out.println("wwwwwooooowwww");
+        	CatanController CatanController = new CatanController(stage);
+			if(players[usrPlayer].getPlayerWon())
+        		new LoginView(stage, CatanController ).show();
         	else 
         		System.out.println("awww");
         	
@@ -648,11 +655,10 @@ public class GameController {
 	public void registerSteal(PlayerModel playermodel) {
 		try
 		{
-			DatabaseManager.createStatement().executeUpdate(""
-					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
+			DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
 					+ "(SELECT idgrondstofkaart FROM "
-					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
-			players[usrPlayer].refresh();
+					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "' ORDER BY RAND() LIMIT 1) as Doge) AND idspel ='" + playermodel.getSpelId() +"' LIMIT 1");
+			refresh();
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
