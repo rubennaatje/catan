@@ -1,7 +1,5 @@
 package view;
 
-import java.sql.SQLException;
-
 import controller.CatanController;
 import controller.DatabaseManager;
 import javafx.animation.PauseTransition;
@@ -23,13 +21,6 @@ public class SplashScreenView extends PaneTemplate
 		
 		PauseTransition pause = new PauseTransition(Duration.seconds(1));
 		pause.setOnFinished(e -> {
-			
-			try {
-				//DatabaseManager.createStatement().execute("DELETE FROM spel WHERE idspel = 800");
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			
 			new LoginView(stage, controller).show();
 		});
 		

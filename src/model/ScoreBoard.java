@@ -2,6 +2,7 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import controller.DatabaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

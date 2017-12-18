@@ -39,12 +39,8 @@ public final class DatabaseManager {
 			System.out.println("Could not close connection");
 		}
     }
+    
     public static Statement createStatement() throws SQLException {
 		return connection.createStatement();
 	}
-    //this produces funky errors, use createStatement instead ref: https://stackoverflow.com/questions/5840866/getting-java-sql-sqlexception-operation-not-allowed-after-resultset-closed
-    @Deprecated
-    public static Statement getStatement() {
-    	return statement;
-    }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+
 import com.jfoenix.controls.JFXButton;
 
 import controller.GameController;

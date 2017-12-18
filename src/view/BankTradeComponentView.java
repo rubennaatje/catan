@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import controller.TradeController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import model.TileType;
 import view.javaFXTemplates.PaneTemplate;
-import view.javaFXTemplates.TradeViewTemplate;
 
 public class BankTradeComponentView extends PaneTemplate {
 

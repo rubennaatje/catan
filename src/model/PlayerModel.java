@@ -3,8 +3,8 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Observable;
+
 import controller.DatabaseManager;
-import model.BoardHelper;
 
 public class PlayerModel extends Observable {
 

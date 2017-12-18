@@ -1,7 +1,6 @@
 package view;
 
 import javafx.scene.shape.Rectangle;
-import model.Piece;
 import model.Street;
 
 public class StreetView extends Rectangle {
