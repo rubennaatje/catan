@@ -158,6 +158,23 @@ public class PlayerModel extends Observable {
 			}
 		}
 	}
+	
+	public void removeCardsIfMoreThan8() {
+		try {
+			ResultSet rs = DatabaseManager.createStatement().executeQuery("select count(idgrondstofkaart) from spelergrondstofkaart where username = '" + username + "' and idspel=" + getSpelId());
+			rs.next();
+			if(rs.getInt(1) > 7) {
+				ResultSet rs2 = DatabaseManager.createStatement().executeQuery("select idgrondstofkaart from spelergrondstofkaart where username = '" + username + "' and idspel=" + getSpelId());
+				while(rs.next()) {
+					DatabaseManager.createStatement().executeUpdate("UPDATE `catan2`.`spelergrondstofkaart` SET `username`=NULL WHERE  `idspel`=" + getSpelId() + " AND `idgrondstofkaart`='" + rs2.getInt(1) +"'");
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public PlayerType getType() {
 		return type;

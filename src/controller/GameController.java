@@ -251,6 +251,7 @@ public class GameController {
 		new Thread() {
 			@Override
 			public void run() {
+
 				await();
 				try {
 					boolean newThrow = diceO.throwDiceIfNotThrown();
@@ -260,6 +261,9 @@ public class GameController {
 					else if (nThrow ==7) {
 							disableButtons();
 							showRobberPlacable();
+							for (int i = 0; i < players.length; i++) {
+								players[i].removeCardsIfMoreThan8();
+							}
 					};
 					dice.showDice(diceO.getTotalthrow());
 				} catch (Exception e) {
