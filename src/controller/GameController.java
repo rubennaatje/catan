@@ -653,8 +653,8 @@ public class GameController {
 		{
 			DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
 					+ "(SELECT idgrondstofkaart FROM "
-					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "' AND idspel ='" + playermodel.getSpelId() +"'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
-			players[usrPlayer].refresh();
+					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "' ORDER BY RAND() LIMIT 1) as Doge) AND idspel ='" + playermodel.getSpelId() +"' LIMIT 1");
+			refresh();
 		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
