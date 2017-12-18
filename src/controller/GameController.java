@@ -41,6 +41,7 @@ public class GameController {
 
 	private CardView cardView;
 	private boolean isFirstRound = false;
+	private Stage stage;
 
 	private GameMergeView mergeView;
 
@@ -48,6 +49,7 @@ public class GameController {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer;
 		this.spelId = spelId;
+		this.stage = stage;
 		this.players = players;
 		this.diceO = new Dice(spelId);
 		this.devCon = new DevelopCardController((PlayerUser) players[usrPlayer], this);
@@ -602,8 +604,9 @@ public class GameController {
         		//players[i].setPlayerFinished();
         	}
         	
-        	if(players[usrPlayer].getPlayerWon())
-        		System.out.println("wwwwwooooowwww");
+        	CatanController CatanController = new CatanController(stage);
+			if(players[usrPlayer].getPlayerWon())
+        		new LoginView(stage, CatanController ).show();
         	else 
         		System.out.println("awww");
         	
