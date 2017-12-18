@@ -79,7 +79,7 @@ public class TradeController {
 					Thread.sleep(CatanController.refreshTime);
 					ResultSet r = DatabaseManager.createStatement().executeQuery(
 							"SELECT username, geeft_baksteen, geeft_wol, geeft_erts, geeft_graan , geeft_hout, "
-									+ "vraagt_baksteen, vraagt_wol, vraagt_erts, vraagt_graan, vraagt_hout, geaccepteerd FROM catan.ruilaanbod "
+									+ "vraagt_baksteen, vraagt_wol, vraagt_erts, vraagt_graan, vraagt_hout, geaccepteerd FROM ruilaanbod "
 									+ "WHERE idspel = " + spelId + " AND NOT username = '"
 									+ players[usrPlayer].getUsername() + "';");
 					while (r.next()) {
