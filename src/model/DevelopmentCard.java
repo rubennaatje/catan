@@ -15,9 +15,9 @@ public class DevelopmentCard {
 	protected PlayerUser player;
 
 	public DevelopmentCard(PlayerUser player, String cardId, String kaarttype, String kaartnaam) {
-		this.spelid = spelid;
+		this.spelid = player.getSpelId();
 		this.cardId = cardId;
-		this.username = username;
+		this.username = player.getUsername();
 		this.kaarttype = kaarttype;
 		this.kaartnaam = kaartnaam;
 		this.player = player;
