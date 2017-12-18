@@ -648,8 +648,7 @@ public class GameController {
 	public void registerSteal(PlayerModel playermodel) {
 		try
 		{
-			DatabaseManager.createStatement().executeUpdate(""
-					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
+			DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
 					+ "(SELECT idgrondstofkaart FROM "
 					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "' AND idspel ='" + playermodel.getSpelId() +"'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
 			players[usrPlayer].refresh();
