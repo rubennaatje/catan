@@ -312,7 +312,8 @@ public class GameController {
 			boolean contains = false;
 			for(int x = 0; x < pieceLocs.size(); x++)
 			{
-				if(pieceLocs.get(x).getPlayer() != null && pieceLocs.get(x).getPlayer() != players[usrPlayer] )
+				if(pieceLocs.get(x).getPlayer() != null && !
+						pieceLocs.get(x).getPlayer().getUsername().equals(players[usrPlayer].getUsername()) )
 				{
 					for(int i = 0; i < list.size(); i++)
 					{
@@ -330,7 +331,6 @@ public class GameController {
 				}
 				
 			}
-			System.out.println(list);
 			if(list.size() > 0)
 			{
 				surroundingPlayers = new PlayerModel[list.size()];
@@ -651,10 +651,9 @@ public class GameController {
 	public void registerSteal(PlayerModel playermodel) {
 		try
 		{
-			DatabaseManager.createStatement().executeUpdate(""
-					+ "UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
+			DatabaseManager.createStatement().executeUpdate("UPDATE spelergrondstofkaart a SET username = '" + players[usrPlayer].getUsername() + "' WHERE idgrondstofkaart = "
 					+ "(SELECT idgrondstofkaart FROM "
-					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
+					+ "( SELECT idgrondstofkaart FROM spelergrondstofkaart WHERE username = '" + playermodel.getUsername() + "' AND idspel ='" + playermodel.getSpelId() +"'  ORDER BY RAND() LIMIT 1) as Doge) LIMIT 1");
 			players[usrPlayer].refresh();
 		} catch (SQLException e)
 		{
