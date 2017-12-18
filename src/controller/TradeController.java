@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -155,14 +157,25 @@ public class TradeController {
 		try {
 
 			PlayerUser user = (PlayerUser) players[usrPlayer];
-
-			user.removeResource(TileType.H, hashMap.get(TileType.H));
-			user.removeResource(TileType.W, hashMap.get(TileType.W));
-			user.removeResource(TileType.G, hashMap.get(TileType.G));
-			user.removeResource(TileType.B, hashMap.get(TileType.B));
-			user.removeResource(TileType.E, hashMap.get(TileType.E));
-			user.addResource(targetResource, 1);
-
+			
+			
+			user.addResource(TileType.H, hashMap.get(TileType.H));
+			user.addResource(TileType.W, hashMap.get(TileType.W));
+			user.addResource(TileType.G, hashMap.get(TileType.G));
+			user.addResource(TileType.B, hashMap.get(TileType.B));
+			user.addResource(TileType.E, hashMap.get(TileType.E));
+			
+			HashMap<TileType, Integer> value = BoardHelper.getTradeRatio(user, spelId);
+			
+			int result = 0;
+			java.util.Iterator<Entry<TileType, Integer>> it = hashMap.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry<TileType, Integer> pair = (Map.Entry<TileType, Integer>) it.next();
+				result += pair.getValue() * value.get(targetResource);
+				it.remove();
+			}
+			
+			user.removeResource(targetResource, result);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

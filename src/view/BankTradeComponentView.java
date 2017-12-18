@@ -26,25 +26,28 @@ public class BankTradeComponentView extends PaneTemplate {
 
 	
 	@FXML
-	protected TextField houtAanLbl;
+	private TextField houtAanLbl;
 	@FXML
-	protected TextField wolAanLbl;
+	private TextField wolAanLbl;
 	@FXML
-	protected TextField graanAanLbl;
+	private TextField graanAanLbl;
 	@FXML
-	protected TextField baksteenAanLbl;
+	private TextField baksteenAanLbl;
 	@FXML
-	protected TextField ertsAanLbl;
+	private TextField ertsAanLbl;
 
+	@FXML private Label ratio;
+	
 	private TradeController controller;
-	private int requiredAmount;
+	private Integer requiredAmount;
 	private TileType targetResource;
 	
-	public BankTradeComponentView(TradeController controller, int requiredAmount, TileType resource) {
+	public BankTradeComponentView(TradeController controller, Integer requiredAmount, TileType resource) {
 		super(BankTradeComponentView.class.getResource("fxml/bnkTrade.fxml"));
 		this.controller = controller;
 		this.requiredAmount = requiredAmount;
 		this.targetResource = resource;
+		ratio.setText( targetResource.getCssClass() + " " + requiredAmount + ":1");
 	}
 
 	public void offerBtnClick(MouseEvent e) {
@@ -62,7 +65,7 @@ public class BankTradeComponentView extends PaneTemplate {
 		return offer;
 	}
 
-	private int retrieveTotalOfferValue() {
+	private int retrieveTotalRequestValue() {
 		HashMap<TileType, Integer> offer = retrieveOfferValues();
 		int result = 0;
 		java.util.Iterator<Entry<TileType, Integer>> it = offer.entrySet().iterator();
@@ -130,33 +133,33 @@ public class BankTradeComponentView extends PaneTemplate {
 	}
 
 	protected void checkInput() {
-		if (controller.checkSufficient(TileType.H, (Integer.parseInt(houtAanLbl.getText())))) {
+		if (controller.checkSufficient(targetResource, (Integer.parseInt(houtAanLbl.getText())*requiredAmount))) {
 			houtAanLbl.getStyleClass().remove("warning");
 		} else if (!houtAanLbl.getStyleClass().contains("warning")) {
 			houtAanLbl.getStyleClass().add("warning");
 		}
-		if (controller.checkSufficient(TileType.W, (Integer.parseInt(wolAanLbl.getText())))) {
+		if (controller.checkSufficient(targetResource, (Integer.parseInt(wolAanLbl.getText())*requiredAmount))) {
 			wolAanLbl.getStyleClass().remove("warning");
 		} else if (!wolAanLbl.getStyleClass().contains("warning")) {
 			wolAanLbl.getStyleClass().add("warning");
 		}
-		if (controller.checkSufficient(TileType.G, (Integer.parseInt(graanAanLbl.getText())))) {
+		if (controller.checkSufficient(targetResource, (Integer.parseInt(graanAanLbl.getText())*requiredAmount))) {
 			graanAanLbl.getStyleClass().remove("warning");
 		} else if (!graanAanLbl.getStyleClass().contains("warning")) {
 			graanAanLbl.getStyleClass().add("warning");
 		}
-		if (controller.checkSufficient(TileType.B, (Integer.parseInt(baksteenAanLbl.getText())))) {
+		if (controller.checkSufficient(targetResource, (Integer.parseInt(baksteenAanLbl.getText())*requiredAmount))) {
 			baksteenAanLbl.getStyleClass().remove("warning");
 		} else if (!baksteenAanLbl.getStyleClass().contains("warning")) {
 			baksteenAanLbl.getStyleClass().add("warning");
 		}
-		if (controller.checkSufficient(TileType.E, (Integer.parseInt(ertsAanLbl.getText())))) {
+		if (controller.checkSufficient(targetResource, (Integer.parseInt(ertsAanLbl.getText())*requiredAmount))) {
 			ertsAanLbl.getStyleClass().remove("warning");
 		} else if (!ertsAanLbl.getStyleClass().contains("warning")) {
 			ertsAanLbl.getStyleClass().add("warning");
 		}
 
-		if (controller.checkAllSufficient(retrieveOfferValues())&& (retrieveTotalOfferValue() == requiredAmount)) {
+		if (controller.checkSufficient(targetResource ,retrieveTotalRequestValue()*requiredAmount)) {
 			biedBtn.setDisable(false);
 		} else {
 			biedBtn.setDisable(true);

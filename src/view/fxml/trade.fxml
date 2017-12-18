@@ -30,22 +30,34 @@
 			<children>
 				<Label layoutX="-18.0" layoutY="-62.0" prefHeight="23.0"
 					prefWidth="36.0" text="Hout" />
-				<JFXButton fx:id="houtBnkLbl" layoutX="-10.0" layoutY="-10.0"
-					onMouseClicked="#bnkTrade" text="4:1" />
+				<JFXButton fx:id="houtBnkLbl" style="-fx-background-color: #ef8200;" textFill="WHITE" layoutX="-20.0" layoutY="-10.0"
+					onMouseClicked="#bnkTrade" text="4:1">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</JFXButton>
 			</children>
 		</Group>
 		<Group layoutX="184.0" layoutY="241.0">
 			<children>
 				<Label layoutX="-14.0" layoutY="-65.0" prefHeight="23.0"
 					prefWidth="28.0" text="Wol" />
-				<JFXButton fx:id="wolBnkLbl" layoutX="-10.0"
-					onMouseClicked="#bnkTrade" layoutY="-10.0" text="2:1" />
+				<JFXButton fx:id="wolBnkLbl" layoutX="-20.0" style="-fx-background-color: #ef8200;" textFill="WHITE"
+					onMouseClicked="#bnkTrade" layoutY="-10.0" text="2:1">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</JFXButton>
 			</children>
 		</Group>
 		<Group layoutX="300.0" layoutY="241.0">
 			<children>
-				<JFXButton fx:id="graanBnkLbl" layoutX="-10.0"
-					onMouseClicked="#bnkTrade" layoutY="-10.0" text="4:1" />
+				<JFXButton fx:id="graanBnkLbl" layoutX="-20.0"
+					onMouseClicked="#bnkTrade" layoutY="-10.0" text="4:1" style="-fx-background-color: #ef8200;" textFill="WHITE">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</JFXButton>
 				<Label layoutX="-21.0" layoutY="-67.0" prefHeight="23.0"
 					prefWidth="43.0" text="Graan" />
 			</children>
@@ -54,16 +66,24 @@
 			<children>
 				<Label layoutX="-31.0" layoutY="-67.0" prefHeight="23.0"
 					prefWidth="62.0" text="Baksteen" />
-				<JFXButton fx:id="baksteenBnkLbl" layoutX="-10.0"
-					onMouseClicked="#bnkTrade" layoutY="-10.0" text="4:1" />
+				<JFXButton fx:id="baksteenBnkLbl" layoutX="-20.0" style="-fx-background-color: #ef8200;" textFill="WHITE"
+					onMouseClicked="#bnkTrade" layoutY="-10.0" text="4:1">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</JFXButton>
 			</children>
 		</Group>
 		<Group layoutX="520.0" layoutY="241.0">
 			<children>
 				<Label layoutX="-14.0" layoutY="-65.0" prefHeight="23.0"
 					prefWidth="28.0" text="Erts" />
-				<JFXButton fx:id="ertsBnkLbl" layoutX="-10.0"
-					onMouseClicked="#bnkTrade" layoutY="-10.0" text="2:1" />
+				<JFXButton fx:id="ertsBnkLbl" layoutX="-20.0" style="-fx-background-color: #ef8200;" textFill="WHITE"
+					onMouseClicked="#bnkTrade" layoutY="-10.0" text="2:1">
+					<font>
+						<Font name="Arial Bold" size="14.0" />
+					</font>
+				</JFXButton>
 			</children>
 		</Group>
 		<Label layoutX="265.0" layoutY="306.0" text="Spelers">
@@ -266,7 +286,7 @@
 			prefWidth="60.0" text="Aanbod" />
 		<Button fx:id="biedBtn" layoutX="240.0" layoutY="555.0"
 			mnemonicParsing="false" onMouseClicked="#offerBtnClick" text="Bied" />
-		<Button fx:id="biedBtn" layoutX="300.0" layoutY="555.0"
+		<Button fx:id="annuleer" layoutX="300.0" layoutY="555.0"
 			mnemonicParsing="false" onMouseClicked="#cancel" text="Annuleer" />
 	</children>
 </fx:root>
