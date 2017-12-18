@@ -100,7 +100,7 @@ public class Catan {
 		addResourceCards();
 	}
 	
-	public void initGame(String gameId, boolean creation) throws Exception {		
+	public void initGame(String gameId, boolean creation, boolean random) throws Exception {		
 		setGameId(gameId);
 		
 		System.out.println(gameId);
@@ -108,8 +108,9 @@ public class Catan {
 		if (creation) {
 			List<String> hextypes = Arrays.asList("H","G","E","W","H","G","E","B","W","G","E","B","W","H","G","B","W","H");
 			
-			Collections.shuffle(hextypes);
-			hextypes.get(0);
+			if(random)
+				Collections.shuffle(hextypes);
+
 			DatabaseManager.createStatement()
 					.executeUpdate("INSERT INTO tegel (idspel, idtegel,X,Y,idgrondstofsoort,idgetalfiche) VALUES"
 									+ "(" + gameId + " , 1  , 2 , 4  , '" + hextypes.get(0) + "' , 12	)," 

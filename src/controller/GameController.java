@@ -45,7 +45,9 @@ public class GameController {
 
 	private GameMergeView mergeView;
 
-	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage) {
+	private CatanController catanController;
+
+	public GameController(String spelId, PlayerModel[] players, int usrPlayer, Stage stage, CatanController catanController) {
 		this.players = new PlayerModel[4];
 		this.usrPlayer = usrPlayer;
 		this.spelId = spelId;
@@ -55,6 +57,7 @@ public class GameController {
 		PlayerUser player = (PlayerUser) players[usrPlayer];
 		this.devCon = new DevelopCardController(player, this);
 		this.steal =  new StealResourceController(devCon);	
+		this.catanController = catanController;
 		buyEvent = ((e) -> {
 			refresh();
 			Node caller = (Node) e.getSource();
@@ -599,19 +602,17 @@ public class GameController {
 	}
 
     public void endGame() {
-        if(players[usrPlayer].getPlayerWon()) {
-        	
-        	for (int i = 0; i < players.length; i++) {
-        		//players[i].setPlayerFinished();
-        	}
-        	
-        	CatanController CatanController = new CatanController(stage);
-			if(players[usrPlayer].getPlayerWon())
-        		new LoginView(stage, CatanController ).show();
-        	else 
-        		System.out.println("awww");
-        	
-        }
+    	
+    	for (int i = 0; i < players.length; i++) {
+    		players[i].setPlayerFinished();
+    	}
+    	
+    	
+		if(players[usrPlayer].getPlayerWon())
+    		new WinView(stage, catanController ).show();
+    	else 
+    		new LoseView(stage, catanController ).show();
+
     }
 	
 	public void closeTrade() {

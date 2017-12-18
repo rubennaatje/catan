@@ -96,14 +96,14 @@ public class CatanController {
 		getPlayer().setSpelId(gameid);
 		
 		try {
-			catan.initGame(gameid, creation);
+			catan.initGame(gameid, creation, false);
 			catan.setPlayer(player);
 	        PlayerModel[] players = catan.getCurrentPlayers();
 	        if (creation) {
 	        	catan.addPlayerPieces(players);
 	        }
 	        player.refresh();
-	        GameController gameController = new GameController(gameid, players, (player.getPlayerNumber() -1) , stage);
+	        GameController gameController = new GameController(gameid, players, (player.getPlayerNumber() -1) , stage, this);
 			new Thread(() -> gameController.start()).start();
 		} catch (Exception e) {
 			e.printStackTrace();
