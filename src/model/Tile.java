@@ -5,14 +5,11 @@ public class Tile {
 	private GridLocation location;
 	private TileType tileType;
 	private Integer value;
-	
-	//TODO: remove after pulling from 'geordie' branch
 		
 	public Tile(GridLocation location,TileType resource, Integer value) {
 		setTileType(resource);
 		this.setLocation(location);
 		this.value = value;
-
 	}
 
 	public Integer getValue() {
@@ -32,8 +29,5 @@ public class Tile {
 
 	public void setTileType(TileType tileType) {
 		this.tileType = tileType;
-	}
-	
-	
-	
+	}	
 }

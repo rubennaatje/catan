@@ -17,7 +17,6 @@ public class ChatController implements Runnable {
 		try {
 			view = new ChatView(model.getChatLines(), this);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.player = player;

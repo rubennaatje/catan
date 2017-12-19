@@ -90,7 +90,7 @@ public class Waiting {
 				return waitingFor; 
 			}
 		} catch (SQLException e1) {
-			
+			e1.printStackTrace();
 		}
 		
 		return -1;

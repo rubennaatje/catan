@@ -74,7 +74,6 @@ public class TradeController {
 			int i = 0;
 			ArrayList<String> names = new ArrayList<>();
 			while (i < 3 && popUpTrade.isShowing()) {
-				System.out.println("waiting for trade response");
 				try {
 					Thread.sleep(CatanController.refreshTime);
 					ResultSet r = DatabaseManager.createStatement().executeQuery(
@@ -84,7 +83,6 @@ public class TradeController {
 									+ players[usrPlayer].getUsername() + "';");
 					while (r.next()) {
 						String playerName = r.getString("username");
-						System.out.println(playerName);
 						if (!names.contains(playerName)) {
 							names.add(playerName);
 							HashMap<TileType, Integer>[] offer = TradeHelper.retrieveOffer(r);
@@ -176,7 +174,6 @@ public class TradeController {
 			
 			user.removeResource(targetResource, result);
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -189,7 +186,6 @@ public class TradeController {
 			viewTrade.setBankLabels(BoardHelper.getTradeRatio(players[usrPlayer], spelId));
 			popUpTrade.show();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -239,7 +235,6 @@ public class TradeController {
 	}
 
 	public void showBank(MouseEvent e) {
-		System.out.println("trying to show");
 		try {
 			Node source = (Node) e.getSource();
 			HashMap<TileType, Integer> map = BoardHelper.getTradeRatio(players[usrPlayer], spelId);
@@ -261,7 +256,6 @@ public class TradeController {
 				break;
 			}
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

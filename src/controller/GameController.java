@@ -25,7 +25,6 @@ import view.CardView;
 import view.DiceView;
 import view.GameControlerView;
 import view.GameMergeView;
-import view.LoginView;
 import view.LoseView;
 import view.PieceView;
 import view.PlayBoardView;
@@ -152,7 +151,6 @@ public class GameController {
 						BoardHelper.giveResourcesFrstRound(spelId, piece.getPieceModel(), players[usrPlayer]);
 					}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -182,7 +180,6 @@ public class GameController {
 					frstRnd();
 				}
 			} catch (SQLException e2) {
-				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 		});
@@ -330,7 +327,6 @@ public class GameController {
 			BoardHelper.placeRobber(spelId, view.getLoc());
 			stealResource(spelId,view.getLoc());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -351,7 +347,6 @@ public class GameController {
 					{
 						if(list.get(i).getUsername().equals(pieceLocs.get(x).getPlayer().getUsername()))
 						{
-							System.out.println(list.get(i).getUsername() + " " + pieceLocs.get(x).getPlayer().getUsername());
 							contains = true;
 						}
 					}
@@ -376,7 +371,6 @@ public class GameController {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -429,7 +423,6 @@ public class GameController {
 				}
 			});
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -444,7 +437,6 @@ public class GameController {
 				}
 			});
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -459,7 +451,6 @@ public class GameController {
 				}
 			});
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -474,7 +465,6 @@ public class GameController {
 				}
 			});
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -517,7 +507,6 @@ public class GameController {
 	// update ing field
 	public void refresh() {
 		// fetching all data in seperate thread
-		System.out.println("board is refreshing");
 		try {
 			//check if is firstRound
 			
@@ -689,7 +678,6 @@ public class GameController {
 			refresh();
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

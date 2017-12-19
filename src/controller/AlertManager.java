@@ -10,5 +10,5 @@ public class AlertManager extends Alert {
 		this.setContentText(content);
 		this.showAndWait();
 	}
-	
+
 }

@@ -15,7 +15,6 @@ public class ProgressCard extends DevelopmentCard { // 2 grondstoffen naar keuze
 		super(player, kaartid, kaarttype, kaartnaam);
 		this.uitleg = uitleg;
 		this.controller = developCardController;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setResourceType(TileType t) {
@@ -24,7 +23,6 @@ public class ProgressCard extends DevelopmentCard { // 2 grondstoffen naar keuze
 	}
 	
 	public void playCard() {
-		System.out.println("vooruitgang");
 		super.updateDatabase();
 			switch(kaartnaam) {
 			case("stratenbouw"):// bouw 2 straten

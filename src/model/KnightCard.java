@@ -13,7 +13,6 @@ public class KnightCard extends DevelopmentCard { // met deze kaart kun je de ri
 	}
 	
 	public void playCard() {
-		System.out.println("ridder");
 		controller.moveRobber();
 		
 		super.updateDatabase();

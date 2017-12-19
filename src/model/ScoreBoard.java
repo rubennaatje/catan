@@ -29,7 +29,7 @@ public class ScoreBoard
 			return data;
 		} catch (SQLException e)
 		{
-			System.out.println("Scoreboard error : " + e.getMessage());
+			e.printStackTrace();
 		}
 		return null;
 	}

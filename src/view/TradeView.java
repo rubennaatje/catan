@@ -71,7 +71,6 @@ public class TradeView extends TradeViewTemplate {
 		rejectbtn.setLayoutY(600);
 		rejectbtn.setOnMouseClicked((e) -> {
 			rejectCounters(e);
-			System.out.println("clicking button");
 		});
 	}
 

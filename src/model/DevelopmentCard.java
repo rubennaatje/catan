@@ -39,7 +39,6 @@ public class DevelopmentCard {
 					.executeUpdate("UPDATE `spelerontwikkelingskaart` SET gespeeld = 1 "
 							+ "WHERE idontwikkelingskaart = '" + this.cardId + "' AND `idspel` ='" + player.getSpelId()
 							+ "' AND username = '" + player.getUsername() + "';");
-			System.out.println("query");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

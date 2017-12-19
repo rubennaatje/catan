@@ -45,7 +45,6 @@ public class PlayBoardView extends PaneTemplate {
 					t.getTileType().getCssClass());
 			getChildren().add(poly);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

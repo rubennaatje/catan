@@ -6,8 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class DatabaseManager {
-	
-//	private final static String sUrl = "jdbc:mysql://projcatan.westeurope.cloudapp.azure.com/";    
+	  
 	private final static String sUrl = "jdbc:mysql://databases.aii.avans.nl/";    
     private final static String sDriverName = "com.mysql.jdbc.Driver";
     private static Connection connection;
@@ -17,19 +16,17 @@ public final class DatabaseManager {
     	try {
 			Class.forName(sDriverName);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Driver not found");
+			e.printStackTrace();
 		}
     	try {
-//    		connection = DriverManager.getConnection(sUrl + "catan", "tajlinde", "Vtb1avans");
     		connection = DriverManager.getConnection(sUrl + "2017_vsoprj2_catan_abcd", "42IN02VTSOb", "bedrijfsauto");
     		statement = connection.createStatement();
 		} catch (SQLException e) {
-			System.out.println("Could not open connection");
+			e.printStackTrace();
 		}
     	
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			disconnect();
-			System.out.println("databasemanager shut down");
 		}));
     }
     
@@ -38,7 +35,7 @@ public final class DatabaseManager {
     		connection.close();
     		statement.close();
 		} catch (SQLException e) {
-			System.out.println("Could not close connection");
+			e.printStackTrace();
 		}
     }
     

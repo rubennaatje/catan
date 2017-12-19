@@ -1,7 +1,6 @@
 package view;
 
 import controller.CatanController;
-import controller.DatabaseManager;
 import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
 import javafx.util.Duration;

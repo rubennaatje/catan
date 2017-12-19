@@ -38,7 +38,7 @@ public class Catan {
 			return DatabaseManager.createStatement().executeUpdate(String.format("INSERT INTO account VALUES ('%s', '%s')", username, password)) == 1 ? true : false;
 			
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 
 		return false;
@@ -100,8 +100,6 @@ public class Catan {
 	
 	public void initGame(String gameId, boolean creation, boolean random) throws Exception {		
 		setGameId(gameId);
-		
-		System.out.println(gameId);
 
 		if (creation) {
 			List<String> hextypes = Arrays.asList("H","G","E","W","H","G","E","B","W","G","E","B","W","H","G","B","W","H");

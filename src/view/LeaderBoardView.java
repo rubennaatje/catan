@@ -29,7 +29,6 @@ public class LeaderBoardView extends PaneTemplate {
 	
 	public LeaderBoardView(Stage stage, CatanController controller) {
 		super(LeaderBoardView.class.getResource("fxml/testLeaderBoard.fxml"), stage);
-		System.out.println(LeaderBoardView.class.getResource("fxml/testLeaderBoard.fxml").toString());
 		this.controller = controller;
 		
 		new Thread(() -> {
